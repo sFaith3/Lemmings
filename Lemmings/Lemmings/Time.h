@@ -1,7 +1,7 @@
 #pragma once
-#include "Element.h"
+#include "ElementHUD.h"
 class Time :
-	public Element
+	public ElementHUD
 {
 public:
 	Time();

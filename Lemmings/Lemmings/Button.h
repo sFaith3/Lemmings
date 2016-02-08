@@ -1,7 +1,7 @@
 #pragma once
-#include "Element.h"
+#include "ElementHUD.h"
 class Button :
-	public Element
+	public ElementHUD
 {
 public:
 	Button();

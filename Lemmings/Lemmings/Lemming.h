@@ -1,7 +1,7 @@
 #pragma once
-#include "Element.h"
+#include "ElementGame.h"
 class Lemming :
-	public Element
+	public ElementGame
 {
 public:
 	Lemming();

@@ -1,11 +1,11 @@
-#include "Trap.h"
+#include "Time.h"
 
 
-Trap::Trap()
+Time::Time()
 {
 }
 
 
-Trap::~Trap()
+Time::~Time()
 {
 }
