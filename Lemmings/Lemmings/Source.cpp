@@ -4,39 +4,32 @@
 
 int main(int argc, char* args[]){
 
-	VideoManager* video = VideoManager::getInstanceVideo();
-	InputManager* input = InputManager::getInstanceInput();
-	SceneManager sceneManager;
-
-
-	cout << "Introduce el numeor de la escena que quieres cargar:" << endl << "1 - Tank" << endl << "2 - Music Player" << endl;
-
 	int scene = 0;
 
 	cin >> scene;
 
 
-	sceneManager.Init(scene);
+	// Init escena.
 
-	while (!input->CheckQuit()){
+	//while (){
 
 		/*UPDATE DELTATIME*/
-		video->UpdateTime();
+		//video->UpdateTime();
 		
 		/*CHECK INPUT*/
-		input->Update();
+		//input->Update();
 		
 		/*UPDATE GAME*/
-		sceneManager.Update();
+		//sceneManager.Update();
 		
 		/*RENDER*/
-		video->clearScreen(0xFFFFFF);
+		/*video->clearScreen(0xFFFFFF);
 		sceneManager.Render();
 
-		video->updateScreen();
-	}
+		video->updateScreen();*/
+	//}
 
 
-	video->close();
+	//video->close();
 	return 0;
 }

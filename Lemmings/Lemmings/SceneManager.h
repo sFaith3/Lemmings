@@ -1,11 +1,7 @@
 #pragma once
-#include "TankScene.h"
-#include "MusicPlayer.h"
 class SceneManager
 {
 private:
-	TankScene* tank;
-	MusicPlayer* music;
 	int currentScene;
 
 public:

@@ -12,31 +12,26 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init(int scene){
 	currentScene = scene;
-	if (currentScene == 1){
-		tank = new TankScene();
-		tank->Init();
-	}
-	else if (currentScene == 2){
-		music = new MusicPlayer();
-		music->Init();
-	}
-	
+	/*if (currentScene == 1){
+		// Crear escena de joc.
+		// Inicialitzar-la.		
+	}*/
 }
 
 void SceneManager::Update(){
-	if (currentScene == 1){
-		tank->Update();
-	}
-	else if (currentScene == 2){
-		music->Update();
-	}
+	//if (currentScene == 1){
+		// Updates
+	//}
+	//else if (currentScene == 2){
+		
+	//}
 }
 
 void SceneManager::Render(){
-	if (currentScene == 1){
-		tank->Render();
-	}
-	else if (currentScene == 2){
-		music->Render();
-	}
+	//if (currentScene == 1){
+		
+	//}
+	//else if (currentScene == 2){
+		
+	//}
 }

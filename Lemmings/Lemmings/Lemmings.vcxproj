@@ -38,20 +38,29 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -61,6 +70,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
