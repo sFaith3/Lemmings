@@ -1,3 +1,6 @@
+#ifndef SCENEMANAGER_H
+#define SCENEMANAGER_H
+
 #include "Utils.h"
 
 class SceneManager
@@ -17,3 +20,5 @@ public:
 	void Update();
 	void Render();
 };
+
+#endif

@@ -1,7 +1,4 @@
-#include "SceneManager.h"
-#include "InputManager.h"
-#include "VideoManager.h"
-#include "ResourceManager.h"
+#include "Utils.h"
 
 class SingletonManager
 {

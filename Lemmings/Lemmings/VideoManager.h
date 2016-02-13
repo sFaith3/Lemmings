@@ -1,3 +1,6 @@
+#ifndef VIDEOMANAGER_H
+#define VIDEOMANAGER_H
+
 #include "Utils.h"
 
 class VideoManager
@@ -43,3 +46,5 @@ public:
 	SDL_Surface* gScreenSurface;
 	SDL_Renderer* renderer;
 };
+
+#endif

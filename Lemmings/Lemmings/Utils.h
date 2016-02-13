@@ -12,10 +12,24 @@
 #include <vector>
 using namespace std;
 
-#include "SingletonManager.h"
-
 #define SCREEN_WIDTH  854
 #define SCREEN_HEIGHT  480
 #define FPS 60
 
+#endif
+
+#ifndef SCENEMANAGER_H
+#include "SceneManager.h"
+#endif
+
+#ifndef INPUTMANAGER_H
+#include "InputManager.h"
+#endif
+
+#ifndef VIDEOMANAGER_H
+#include "VideoManager.h"
+#endif
+
+#ifndef RESOURCEMANAGER_H
+#include "ResourceManager.h"
 #endif

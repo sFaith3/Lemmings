@@ -1,3 +1,6 @@
+#ifndef RESOURCEMANAGER_H
+#define RESOURCEMANAGER_H
+
 #include "Utils.h"
 
 //! ResourceManager class
@@ -188,3 +191,5 @@ private:
 	static ResourceManager*			pInstance;		/*!<  Singleton instance*/
 
 };
+
+#endif
