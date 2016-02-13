@@ -9,9 +9,17 @@ ResourceManager::ResourceManager()
 	mFirstFreeSlotAudio = -1;
 }
 
-
 ResourceManager::~ResourceManager()
 {
+}
+
+ResourceManager* ResourceManager::getInstanceResourceManager(){
+	if (pInstance == NULL){
+
+		pInstance = new ResourceManager();
+	}
+
+	return pInstance;
 }
 
 void ResourceManager::removeGraphic(const char* file){
@@ -119,15 +127,6 @@ Sint32 ResourceManager::createGraphic(const char* name, Uint16 width, Uint16 hei
 		mGraphicsVector[pos]->w = width;
 	}
 	return pos;
-}
-
-ResourceManager* ResourceManager::getInstanceResourceManager(){
-	if (pInstance == NULL){
-
-		pInstance = new ResourceManager();
-	}
-
-	return pInstance;
 }
 
 

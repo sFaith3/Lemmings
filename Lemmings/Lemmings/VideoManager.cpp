@@ -1,5 +1,6 @@
 #include "VideoManager.h"
 
+
 VideoManager* VideoManager::vInstance = NULL;
 
 VideoManager::VideoManager(){
@@ -44,17 +45,19 @@ VideoManager::VideoManager(){
 	Mix_AllocateChannels(128);
 
 	msFrame =(float)FPS / 1000.0f;
-
-
-
-
-
 }
 
 VideoManager::~VideoManager(){
 
 }
 
+VideoManager* VideoManager::getInstanceVideo(){
+	if (vInstance == NULL){
+
+		vInstance = new VideoManager();
+	}
+	return vInstance;
+}
 
 void VideoManager::playAudio(int audio){
 	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getAudioByID(audio);
@@ -82,12 +85,10 @@ void VideoManager::setCursorRelative(bool active){
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 	else
 		SDL_SetRelativeMouseMode(SDL_FALSE);
-
 }
 
 
 void VideoManager::renderTexture(int img, int src_posX, int src_posY, int src_width, int src_height, int dst_posX, int dst_posY, double angle, int centerX, int centerY){
-
 	SDL_Rect r, rectAux;
 	rectAux.x = src_posX;
 	rectAux.y = src_posY;
@@ -105,18 +106,7 @@ void VideoManager::renderTexture(int img, int src_posX, int src_posY, int src_wi
 	center.y = centerY;
 
 	SDL_RenderCopyEx(renderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
-
 }
-
-
-
-
-
-
-
-
-
-
 
 void VideoManager::clearScreen(unsigned int color_key){
 	//Clear screen
@@ -131,23 +121,17 @@ void VideoManager::updateScreen(){
 int VideoManager::getTime(){
 	return SDL_GetTicks();
 }
+
 void VideoManager::waitTime(int ms){
 	deltaTime = 0;
 	lastTime = -1;
 	SDL_Delay(ms);
 	lastTime = getTime();
 }
+
 void VideoManager::close(){
 	SDL_DestroyWindow(gWindow);
 	SDL_Quit();
-}
-
-VideoManager* VideoManager::getInstanceVideo(){
-	if (vInstance == NULL){
-
-		vInstance = new VideoManager();
-	}
-	return vInstance;
 }
 
 float VideoManager::getDeltaTime(){

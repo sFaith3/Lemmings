@@ -1,8 +1,4 @@
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
-
 #include "Utils.h"
-
 
 //! ResourceManager class
 /*!
@@ -14,6 +10,8 @@ public:
 
 	//! Destructor.
 	~ResourceManager();
+
+	static ResourceManager* getInstanceResourceManager();
 
 	//! Deletes a graphic from the ResourceManager map
 	/*!
@@ -139,7 +137,6 @@ public:
 	/*!
 	\return Instance of ResourceManager (Singleton).
 	*/
-	static ResourceManager* getInstanceResourceManager();
 
 protected:
 	//! Constructor of an empty ResourceManager.
@@ -191,5 +188,3 @@ private:
 	static ResourceManager*			pInstance;		/*!<  Singleton instance*/
 
 };
-
-#endif

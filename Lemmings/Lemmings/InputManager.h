@@ -1,11 +1,10 @@
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
-
 #include "Utils.h"
 
 class InputManager
 {
 private:
+	static InputManager* iInstance;
+
 	bool quit;
 	bool back;
 	bool next;
@@ -13,10 +12,12 @@ private:
 	bool pause;
 	bool stop;
 	bool click;
-	static InputManager* instance;
+
 public:
 	InputManager();
 	~InputManager();
+
+	static InputManager* getInstanceInput();
 
 	void Update();
 
@@ -40,8 +41,4 @@ public:
 	void GetMouseXY(int& x, int& y);
 
 	bool MouseClick();
-
-	static InputManager* getInstanceInput();
 };
-
-#endif

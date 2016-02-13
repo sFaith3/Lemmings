@@ -1,9 +1,9 @@
 #include "InputManager.h"
 
 
-InputManager* InputManager::instance = NULL;
-InputManager::InputManager()
-{
+InputManager* InputManager::iInstance = NULL;
+
+InputManager::InputManager(){
 
 	quit = false;
 	back = false;
@@ -14,10 +14,16 @@ InputManager::InputManager()
 	click = false;
 }
 
+InputManager::~InputManager(){
 
-InputManager::~InputManager()
-{
+}
 
+InputManager* InputManager::getInstanceInput(){
+	if (iInstance == NULL){
+
+		iInstance = new InputManager();
+	}
+	return iInstance;
 }
 
 void InputManager::Update(){
@@ -68,11 +74,9 @@ void InputManager::Update(){
 	}
 }
 
-
 bool InputManager::CheckQuit(){
 	return quit;
 }
-
 
 bool InputManager::CheckBack(){
 	return back;
@@ -93,21 +97,8 @@ bool InputManager::CheckNext(){
 	return next;
 }
 
-
-InputManager* InputManager::getInstanceInput(){
-	if (instance == NULL){
-
-		instance = new InputManager();
-	}
-	return instance;
-}
-
-
-
 void InputManager::GetMouseXY(int& x, int& y){
-
 	SDL_GetMouseState(&x, &y);
-
 }
 
 bool InputManager::MouseClick(){
@@ -117,5 +108,4 @@ bool InputManager::MouseClick(){
 		return true;
 	}
 	return false;
-
 }

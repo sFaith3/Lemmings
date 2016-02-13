@@ -1,19 +1,19 @@
-#ifndef VIDEOMANAGER_H
-#define VIDEOMANAGER_H
-
 #include "Utils.h"
 
 class VideoManager
 {
 private:
+	static VideoManager* vInstance;
+
 	float deltaTime;
 	int lastTime;
 	float msFrame; 
-	static VideoManager* vInstance;
 
 public:
 	VideoManager();
 	~VideoManager();
+
+	static VideoManager* getInstanceVideo();
 
 	void playAudio(int audio);
 	
@@ -38,11 +38,8 @@ public:
 	void setCursorRelative(bool active);
 
 	void close();
-	static VideoManager* getInstanceVideo();
 
 	SDL_Window* gWindow;
 	SDL_Surface* gScreenSurface;
 	SDL_Renderer* renderer;
-
 };
-#endif

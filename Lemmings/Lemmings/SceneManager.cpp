@@ -1,13 +1,22 @@
 #include "SceneManager.h"
 
 
-SceneManager::SceneManager()
-{
+SceneManager* SceneManager::smInstance = NULL;
+
+SceneManager::SceneManager(){
+
 }
 
+SceneManager::~SceneManager(){
 
-SceneManager::~SceneManager()
-{
+}
+
+SceneManager* SceneManager::getInstanceSM(){
+	if (smInstance == NULL){
+
+		smInstance = new SceneManager();
+	}
+	return smInstance;
 }
 
 void SceneManager::Init(int scene){
