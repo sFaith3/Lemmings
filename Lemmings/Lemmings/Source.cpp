@@ -8,28 +8,31 @@ int main(int argc, char* args[]){
 
 	cin >> scene;
 
+	static SingletonManager* sManager;
+	sManager = sManager->getInstanceSingleton();
 
-	// Init escena.
+	/* --- INIT ESCENA --- */
+	sManager->getScene()->Init(scene);
 
-	//while (){
+	bool fi = false;
+	while (!fi){
 
-		/*UPDATE DELTATIME*/
-		//video->UpdateTime();
+		/* --- UPDATE DELTATIME --- */
+		sManager->getVideo()->UpdateTime();
 		
-		/*CHECK INPUT*/
 		//input->Update();
 		
-		/*UPDATE GAME*/
-		//sceneManager.Update();
+		/* --- UPDATE GAME --- */
+		sManager->getScene()->Update();
 		
-		/*RENDER*/
-		/*video->clearScreen(0xFFFFFF);
-		sceneManager.Render();
+		/* --- RENDER --- */
+		sManager->getVideo()->clearScreen(0xFFFFFF);
+		sManager->getScene()->Render();
 
-		video->updateScreen();*/
-	//}
+		sManager->getVideo()->updateScreen();
+	}
 
 
-	//video->close();
+	sManager->getVideo()->close();
 	return 0;
 }

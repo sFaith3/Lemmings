@@ -10,10 +10,7 @@ private:
 
 	bool quit;
 	bool back;
-	bool next;
-	bool play;
 	bool pause;
-	bool stop;
 	bool click;
 
 public:
@@ -24,26 +21,12 @@ public:
 
 	void Update();
 
-	//bool CheckFire(int player);
-
-
 	bool CheckQuit();
 	bool CheckBack();
-
-	bool CheckPlay();
-
 	bool CheckPause();
-
-	bool CheckStop();
-	bool CheckNext();
-
-
-
-	int GetDirection(int player);
+	bool CheckClick();
 
 	void GetMouseXY(int& x, int& y);
-
-	bool MouseClick();
 };
 
 #endif

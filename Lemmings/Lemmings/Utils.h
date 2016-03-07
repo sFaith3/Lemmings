@@ -18,6 +18,10 @@ using namespace std;
 
 #endif
 
+#ifndef SINGLETONMANAGER_H
+#include "SingletonManager.h"
+#endif
+
 #ifndef SCENEMANAGER_H
 #include "SceneManager.h"
 #endif

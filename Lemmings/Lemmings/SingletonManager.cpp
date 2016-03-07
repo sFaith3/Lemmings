@@ -15,8 +15,24 @@ SingletonManager::~SingletonManager(){
 }
 
 SingletonManager* SingletonManager::getInstanceSingleton(){
-	if (sInstance = NULL){
+	if (sInstance == NULL){
 		sInstance = new SingletonManager();
 	}
 	return sInstance;
+}
+
+SceneManager* SingletonManager::getScene(){
+	return sceneManager->getInstanceSM();
+}
+
+InputManager* SingletonManager::getInput(){
+	return inputManager->getInstanceInput();
+}
+
+VideoManager* SingletonManager::getVideo(){
+	return videoManager->getInstanceVideo();
+}
+
+ResourceManager* SingletonManager::getResource(){
+	return resourceManager->getInstanceResourceManager();
 }
