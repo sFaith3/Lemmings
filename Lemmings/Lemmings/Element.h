@@ -1,5 +1,5 @@
 #pragma once
-#include "Utils.h"
+#include "SingletonManager.h"
 class Element
 {
 protected:

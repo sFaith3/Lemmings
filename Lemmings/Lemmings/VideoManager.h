@@ -1,7 +1,7 @@
 #ifndef VIDEOMANAGER_H
 #define VIDEOMANAGER_H
 
-#include "Utils.h"
+#include "SDL.h"
 
 class VideoManager
 {
@@ -23,6 +23,7 @@ public:
 	void ResumeAudio();
 	bool isAudioPaused();
 
+	Sint32 graphicID(const char* file);
 	void renderTexture(int img, int src_posX, int src_posY, int src_width, int src_height, int dst_posX, int dst_posY, double angle, int centerX, int centerY);
 	
 	void clearScreen(unsigned int color_key);

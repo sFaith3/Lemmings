@@ -1,7 +1,12 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-#include "Utils.h"
+#include "SDL.h"
+#include "SDL_Mixer.h"
+#include <string>
+#include <vector>
+#include <map>
+using namespace std;
 
 //! ResourceManager class
 /*!
@@ -38,7 +43,7 @@ public:
 	\param file Filepath to the graphic
 	\return ID of the graphic
 	*/
-	Sint32 getGraphicID(const char* file);
+	Sint32 getGraphicID(const char* file, SDL_Texture* newTexture);
 
 
 	Sint32 getAudioID(const char* file);
@@ -125,7 +130,7 @@ public:
 	\param name for the graphic
 	\return -1 if there's an error when loading
 	*/
-	Sint32 createGraphic(const char* name);
+	Sint32 createGraphic(const char* name, SDL_Texture* newTexture);
 
 	//! Create a new surface graphic to the ResourceManager
 	/*!
@@ -134,7 +139,7 @@ public:
 	\param height Height for the graphic
 	\return -1 if there's an error when loading
 	*/
-	Sint32 createGraphic(const char* name, Uint16 width, Uint16 height);
+	Sint32 createGraphic(const char* name, SDL_Texture* newTexture, Uint16 width, Uint16 height);
 
 	//! Gets Singleton instance
 	/*!
@@ -152,7 +157,7 @@ private:
 	\param file Filepath to the graphic
 	\return -1 if there's an error when loading
 	*/
-	Sint32 addGraphic(const char* file);
+	Sint32 addGraphic(const char* file, SDL_Texture* newTexture);
 
 
 	Sint32 addAudio(const char* file);
@@ -162,7 +167,7 @@ private:
 	\param file Filepath of the graphic
 	\return SDL_Surface
 	*/
-	SDL_Surface* getGraphic(const char* file);
+	SDL_Surface* getGraphic(const char* file, SDL_Texture* newTexture);
 
 	//! Searches the Texture in the vector and returns its ID
 	/*!

@@ -1,5 +1,8 @@
 #include "ResourceManager.h"
 
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include "Utils.h"
 
 ResourceManager* ResourceManager::pInstance = NULL;
 
@@ -56,12 +59,12 @@ void ResourceManager::removeGraphic(Sint32 ID){
 	}
 }
 
-Sint32 ResourceManager::getGraphicID(const char* file){
+Sint32 ResourceManager::getGraphicID(const char* file, SDL_Texture* newTexture){
 	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
 		if (it->first == file)
 			return it->second;
 	}
-	return addGraphic(file);
+	return addGraphic(file, newTexture);
 
 }
 
@@ -113,15 +116,15 @@ void ResourceManager::printLoadedGraphics(){
 
 }
 
-Sint32 ResourceManager::createGraphic(const char* name){
+Sint32 ResourceManager::createGraphic(const char* name, SDL_Texture* newTexture){
 
-	return addGraphic(name);
+	return addGraphic(name, newTexture);
 
 }
 
-Sint32 ResourceManager::createGraphic(const char* name, Uint16 width, Uint16 height){
+Sint32 ResourceManager::createGraphic(const char* name, SDL_Texture* newTexture, Uint16 width, Uint16 height){
 
-	Sint32 pos = addGraphic(name);
+	Sint32 pos = addGraphic(name, newTexture);
 	if (pos != -1){
 		mGraphicsVector[pos]->h = height;
 		mGraphicsVector[pos]->w = width;
@@ -186,29 +189,7 @@ Sint32 ResourceManager::addGraphic(const char* file){
 
 
 
-Sint32 ResourceManager::addGraphic(const char* file){
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load(file);
-	if (loadedSurface == NULL)
-	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", file, IMG_GetError());
-	}
-	else
-	{
-		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(VideoManager::getInstanceVideo()->renderer, loadedSurface);
-		if (newTexture == NULL)
-		{
-			printf("Unable to create texture from %s! SDL Error: %s\n", file, SDL_GetError());
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface(loadedSurface);
-	}
-
+Sint32 ResourceManager::addGraphic(const char* file, SDL_Texture* newTexture){	
 	Sint32 pos = -1;
 	if (mFirstFreeSlot != -1){
 		mTextureVector[mFirstFreeSlot] = newTexture;
@@ -225,14 +206,14 @@ Sint32 ResourceManager::addGraphic(const char* file){
 }
 
 
-SDL_Surface* ResourceManager::getGraphic(const char* file){
+SDL_Surface* ResourceManager::getGraphic(const char* file, SDL_Texture* newTexture){
 	map<string, Sint32>::iterator it = mIDMap.find(file);
 
 	if (it != mIDMap.end()){
 		Sint32 pos = it->second;
 		return mGraphicsVector[pos];
 	}
-	return mGraphicsVector[addGraphic(file)];
+	return mGraphicsVector[addGraphic(file, newTexture)];
 
 
 }

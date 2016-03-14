@@ -1,5 +1,6 @@
 #include "InputManager.h"
 
+#include "SDL.h"
 
 InputManager* InputManager::iInstance = NULL;
 

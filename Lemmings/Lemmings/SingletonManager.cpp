@@ -1,5 +1,6 @@
 #include "SingletonManager.h"
 
+#include"SDL.h"
 
 SingletonManager* SingletonManager::sInstance = NULL;
 

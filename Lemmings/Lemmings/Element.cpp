@@ -23,5 +23,5 @@ void Element::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int 
 }
 
 void Element::Render(){
-	singletonManager->videoManager->renderTexture(singletonManager->resourceManager->getGraphicID(sprite), srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
+	singletonManager->videoManager->renderTexture(singletonManager->videoManager->graphicID(sprite), srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
 }

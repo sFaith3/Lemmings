@@ -1,8 +1,6 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
-#include "Utils.h"
-
 class InputManager
 {
 private:

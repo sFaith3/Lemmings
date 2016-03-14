@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "SingletonManager.h"
 
 
 int main(int argc, char* args[]){

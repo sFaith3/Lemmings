@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 
+#include "SDL.h"
 
 SceneManager* SceneManager::smInstance = NULL;
 

@@ -1,7 +1,6 @@
 #ifndef SINGLETONMANAGER_H
 #define SINGLETONMANAGER_H
 
-#include "Utils.h"
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "VideoManager.h"

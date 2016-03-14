@@ -1,5 +1,10 @@
 #include "VideoManager.h"
+#include "ResourceManager.h"
 
+#include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include "Utils.h"
 
 VideoManager* VideoManager::vInstance = NULL;
 
@@ -37,6 +42,7 @@ VideoManager::VideoManager(){
 		}
 	}
 
+	//Audio.
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
@@ -87,6 +93,30 @@ void VideoManager::setCursorRelative(bool active){
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
+Sint32 VideoManager::graphicID(const char* file){
+	//The final texture
+	SDL_Texture* newTexture = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(file);
+	if (loadedSurface == NULL)
+	{
+		printf("Unable to load image %s! SDL_image Error: %s\n", file, IMG_GetError());
+	}
+	else
+	{
+		//Create texture from surface pixels
+		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+		if (newTexture == NULL)
+		{
+			printf("Unable to create texture from %s! SDL Error: %s\n", file, SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+	}
+	return ResourceManager::getInstanceResourceManager()->getGraphicID(file, newTexture);
+}
 
 void VideoManager::renderTexture(int img, int src_posX, int src_posY, int src_width, int src_height, int dst_posX, int dst_posY, double angle, int centerX, int centerY){
 	SDL_Rect r, rectAux;
