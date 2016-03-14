@@ -21,19 +21,3 @@ using namespace std;
 #ifndef SINGLETONMANAGER_H
 #include "SingletonManager.h"
 #endif
-
-#ifndef SCENEMANAGER_H
-#include "SceneManager.h"
-#endif
-
-#ifndef INPUTMANAGER_H
-#include "InputManager.h"
-#endif
-
-#ifndef VIDEOMANAGER_H
-#include "VideoManager.h"
-#endif
-
-#ifndef RESOURCEMANAGER_H
-#include "ResourceManager.h"
-#endif

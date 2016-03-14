@@ -1,5 +1,4 @@
 #include "Utils.h"
-#include "SceneManager.h"
 
 
 int main(int argc, char* args[]){
@@ -8,31 +7,31 @@ int main(int argc, char* args[]){
 
 	cin >> scene;
 
-	static SingletonManager* sManager;
+	SingletonManager* sManager;
 	sManager = sManager->getInstanceSingleton();
 
 	/* --- INIT ESCENA --- */
-	sManager->getScene()->Init(scene);
+	sManager->sceneManager->Init(scene);
 
 	bool fi = false;
 	while (!fi){
 
 		/* --- UPDATE DELTATIME --- */
-		sManager->getVideo()->UpdateTime();
+		sManager->videoManager->UpdateTime();
 		
 		//input->Update();
 		
 		/* --- UPDATE GAME --- */
-		sManager->getScene()->Update();
+		sManager->sceneManager->Update();
 		
 		/* --- RENDER --- */
-		sManager->getVideo()->clearScreen(0xFFFFFF);
-		sManager->getScene()->Render();
+		sManager->videoManager->clearScreen(0xFFFFFF);
+		sManager->sceneManager->Render();
 
-		sManager->getVideo()->updateScreen();
+		sManager->videoManager->updateScreen();
 	}
 
 
-	sManager->getVideo()->close();
+	sManager->videoManager->close();
 	return 0;
 }
