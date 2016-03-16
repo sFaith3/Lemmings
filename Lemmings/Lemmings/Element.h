@@ -1,5 +1,7 @@
 #pragma once
+#include "Utils.h"
 #include "SingletonManager.h"
+
 class Element
 {
 protected:
@@ -8,7 +10,7 @@ protected:
 	int srcPosX, srcPosY; //Posició inicial en el sprite. Per agafar una regió de l'sprite, cal fer el requadre amb width i height.
 	int width, height; //Amplada i alçada de l'sprite.
 
-	SingletonManager* singletonManager;
+	SingletonManager* sManager;
 
 public:
 	Element();

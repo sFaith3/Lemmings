@@ -1,13 +1,11 @@
 #include "SceneGame.h"
 
-
-SceneGame::SceneGame()
-{
+SceneGame::SceneGame(){
+	sManager = SingletonManager::getInstanceSingleton();
 }
 
 
-SceneGame::~SceneGame()
-{
+SceneGame::~SceneGame(){
 }
 
 
@@ -18,13 +16,14 @@ void SceneGame::Init(){
 }
 
 void SceneGame::Update(){
-	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		itLem->Update();
-	}
+	sManager->videoManager->UpdateTime();
 }
 
 void SceneGame::Render(){
-	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		itLem->Render();
-	}
+	sManager->videoManager->clearScreen(0xFFFFFF);
+	sManager->videoManager->updateScreen();
 }

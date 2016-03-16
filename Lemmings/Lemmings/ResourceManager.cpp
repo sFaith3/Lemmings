@@ -2,7 +2,7 @@
 
 #include "SDL_image.h"
 #include "SDL_mixer.h"
-#include "Utils.h"
+#include <iostream>
 
 ResourceManager* ResourceManager::pInstance = NULL;
 

@@ -6,6 +6,8 @@
 class VideoManager
 {
 private:
+	VideoManager();
+
 	static VideoManager* vInstance;
 
 	float deltaTime;
@@ -13,15 +15,9 @@ private:
 	float msFrame; 
 
 public:
-	VideoManager();
 	~VideoManager();
 
 	static VideoManager* getInstanceVideo();
-
-	void playAudio(int audio);
-	void PauseAudio();
-	void ResumeAudio();
-	bool isAudioPaused();
 
 	Sint32 graphicID(const char* file);
 	void renderTexture(int img, int src_posX, int src_posY, int src_width, int src_height, int dst_posX, int dst_posY, double angle, int centerX, int centerY);

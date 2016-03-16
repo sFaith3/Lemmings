@@ -1,9 +1,9 @@
 #ifndef SINGLETONMANAGER_H
 #define SINGLETONMANAGER_H
 
-#include "SceneManager.h"
 #include "InputManager.h"
 #include "VideoManager.h"
+#include "AudioManager.h"
 #include "ResourceManager.h"
 
 class SingletonManager
@@ -18,9 +18,9 @@ public:
 
 	static SingletonManager* getInstanceSingleton();
 
-	SceneManager* sceneManager;
 	InputManager* inputManager;
 	VideoManager* videoManager;
+	AudioManager* audioManager;
 	ResourceManager* resourceManager;
 };
 

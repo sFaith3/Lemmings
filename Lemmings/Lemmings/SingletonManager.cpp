@@ -7,9 +7,9 @@ SingletonManager* SingletonManager::sInstance = NULL;
 SingletonManager::SingletonManager(){
 	sInstance = getInstanceSingleton();
 
-	sceneManager = SceneManager::getInstanceSM();
 	inputManager = InputManager::getInstanceInput();
 	videoManager = VideoManager::getInstanceVideo();
+	audioManager = AudioManager::getInstanceAudio();
 	resourceManager = ResourceManager::getInstanceResourceManager();
 }
 
