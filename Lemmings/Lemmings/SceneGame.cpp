@@ -22,8 +22,10 @@ void SceneGame::Update(){
 }
 
 void SceneGame::Render(){
+	sManager->videoManager->clearScreen(0xFFFFFF);
+
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		itLem->Render();
-	sManager->videoManager->clearScreen(0xFFFFFF);
+	
 	sManager->videoManager->updateScreen();
 }
