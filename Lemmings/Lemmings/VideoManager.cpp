@@ -9,33 +9,45 @@ VideoManager* VideoManager::vInstance = NULL;
 VideoManager::VideoManager(){
 	gWindow = NULL;
 	gScreenSurface = NULL;
-	renderer = NULL;
+	gScreenRenderer = NULL;
+
 	SDL_Init(SDL_INIT_EVERYTHING);
-	gWindow = SDL_CreateWindow("Examen SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+
+	gWindow = SDL_CreateWindow("Lemmings", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+		SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (gWindow == NULL)
 		cout << "Window could not be created! SDL Error: " << SDL_GetError() << endl;
 	else{
-		//Create renderer for window
-		renderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-		if (renderer == NULL)
-			cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << endl;
+		if (!texture){
+			gScreenSurface = SDL_GetWindowSurface(gWindow);
+			if (gScreenSurface == NULL)
+				cout << "Window surface could not be created! SDL Error: " << SDL_GetError() << endl;
+		}
 		else{
-			//Initialize renderer color
-			SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+			//Create gScreenRenderer for window
+			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			if (gScreenRenderer == NULL)
+				cout << "gScreenRenderer could not be created! SDL Error: " << SDL_GetError() << endl;
+			else{
+				//Initialize gScreenRenderer color
+				SDL_SetRenderDrawColor(gScreenRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-			//Initialize PNG loading
-			int imgFlags = IMG_INIT_PNG;
-			if (!(IMG_Init(imgFlags) & imgFlags))
-				cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;
+				//Initialize PNG loading
+				int imgFlags = IMG_INIT_PNG;
+				if (!(IMG_Init(imgFlags) & imgFlags))
+					cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << endl;
+			}
 		}
 	}
 
+	deltaTime = lastTime = 0;
 	msFrame = (float)FPS / 1000.0f;
 }
 
 VideoManager::~VideoManager(){
 
 }
+
 
 VideoManager* VideoManager::getInstanceVideo(){
 	if (vInstance == NULL)
@@ -44,14 +56,46 @@ VideoManager* VideoManager::getInstanceVideo(){
 	return vInstance;
 }
 
-void VideoManager::setCursorRelative(bool active){
-	if (active)
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-	else
-		SDL_SetRelativeMouseMode(SDL_FALSE);
+
+Sint32 VideoManager::getGraphicID(const char* file){
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+	SDL_Surface* surfaceFormatInfo = gScreenSurface;
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(file);
+	if (loadedSurface == NULL){
+		cout << "Unable to load image " << file << "! SDL_image Error: " << IMG_GetError() << endl;
+		return -1;
+	}
+
+	SDL_SetSurfaceBlendMode(surfaceFormatInfo, SDL_BLENDMODE_BLEND);
+	//Convert surface to screen format
+	// Save Alpha values from surface info
+	Uint32 Old_Amask = surfaceFormatInfo->format->Amask;
+	Uint32 Old_Aloss = surfaceFormatInfo->format->Aloss;
+	Uint32 Old_Ashift = surfaceFormatInfo->format->Ashift;
+	// Force Alpha values
+	surfaceFormatInfo->format->Amask = 0xFF000000;
+	surfaceFormatInfo->format->Aloss = 0;
+	surfaceFormatInfo->format->Ashift = 24;
+	// Convert to screen format
+	optimizedSurface = SDL_ConvertSurface(loadedSurface, surfaceFormatInfo->format, NULL);
+	// Restore alpha values for surface info
+	surfaceFormatInfo->format->Amask = (Uint8)Old_Amask;
+	surfaceFormatInfo->format->Aloss = (Uint8)Old_Aloss;
+	surfaceFormatInfo->format->Ashift = (Uint8)Old_Ashift;
+	if (optimizedSurface == NULL){
+		cout << "Unable to optimize image " << file << "! SDL Error: " << SDL_GetError() << endl;
+		return -1;
+	}
+
+	//Get rid of old loaded surface
+	SDL_FreeSurface(loadedSurface);
+
+	return ResourceManager::getInstanceResourceManager()->getGraphicID(file, optimizedSurface);
 }
 
-Sint32 VideoManager::graphicID(const char* file){
+Sint32 VideoManager::getTextureID(const char* file){
 	//The final texture
 	SDL_Texture* newTexture = NULL;
 
@@ -61,48 +105,104 @@ Sint32 VideoManager::graphicID(const char* file){
 		cout << "Unable to load image %s! SDL_image Error: " << file << " " << IMG_GetError() << endl;
 	else{
 		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+		newTexture = SDL_CreateTextureFromSurface(gScreenRenderer, loadedSurface);
 		if (newTexture == NULL)
 			cout << "Unable to create texture from %s! SDL Error: " << file << " " << SDL_GetError() << endl;
 
 		//Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
 	}
-	return ResourceManager::getInstanceResourceManager()->getGraphicID(file, newTexture);
+
+	return ResourceManager::getInstanceResourceManager()->getTextureID(file, newTexture);
 }
 
-void VideoManager::renderTexture(int img, int src_posX, int src_posY, int src_width, int src_height, int dst_posX, int dst_posY, double angle, int centerX, int centerY){
-	SDL_Rect r, rectAux;
-	rectAux.x = src_posX;
-	rectAux.y = src_posY;
-	rectAux.w = src_width;
-	rectAux.h = src_height;
-	r.x = dst_posX;
-	r.y = dst_posY;
-	r.w = src_width;
-	r.h = src_height;
-	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getGraphicByID(img);
-
-	SDL_Point center;
-
-	center.x = centerX;
-	center.y = centerY;
-
-	SDL_RenderCopyEx(renderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
-}
-
-void VideoManager::clearScreen(unsigned int color_key){
-	//Clear screen
-	SDL_SetRenderDrawColor(renderer, color_key, color_key, color_key, color_key);
-	SDL_RenderClear(renderer);
-}
-void VideoManager::updateScreen(){
-	//Update screen
-	SDL_RenderPresent(renderer);
-}
 
 int VideoManager::getTime(){
 	return SDL_GetTicks();
+}
+
+float VideoManager::getDeltaTime(){
+	return deltaTime;
+}
+
+
+void VideoManager::setCursorRelative(bool active){
+	if (active)
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	else
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+}
+
+
+void VideoManager::renderGraphic(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY){
+	SDL_Rect rectAux, r;
+	rectAux.x = srcPosX;
+	rectAux.y = srcPosY;
+	rectAux.w = width;
+	rectAux.h = height;
+	r.x = dstPosX;
+	r.y = dstPosY;
+	r.w = width;
+	r.h = height;
+	
+	SDL_Surface *origin = ResourceManager::getInstanceResourceManager()->getGraphicByID(img);
+
+	SDL_BlitSurface(origin, &rectAux, gScreenSurface, &r);
+}
+
+void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY, double angle, int centerX, int centerY){
+	SDL_Rect rectAux, r;
+	rectAux.x = srcPosX;
+	rectAux.y = srcPosY;
+	rectAux.w = width;
+	rectAux.h = height;
+	r.x = dstPosX;
+	r.y = dstPosY;
+	r.w = width;
+	r.h = height;
+
+	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
+
+	SDL_Point center;
+	center.x = centerX;
+	center.y = centerY;
+
+	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
+}
+
+
+void VideoManager::clearScreen(unsigned int color_key){
+	if (!texture)
+		SDL_FillRect(gScreenSurface, NULL, color_key);
+	else{
+		//Clear screen
+		SDL_SetRenderDrawColor(gScreenRenderer, color_key, color_key, color_key, color_key);
+		SDL_RenderClear(gScreenRenderer);
+	}
+}
+
+void VideoManager::updateScreen(){
+	if (!texture)
+		SDL_UpdateWindowSurface(gWindow);
+	else{
+		//Update screen
+		SDL_RenderPresent(gScreenRenderer);
+	}
+}
+
+
+void VideoManager::updateTime(){
+	if (lastTime != -1){
+		int currentTime = getTime();
+		deltaTime = (float)(currentTime - lastTime) / 1000;
+
+		//Per evitar que l'input del ratolí es ralentitzi, s'elimina la restricció de FPS.
+		if (deltaTime < msFrame){
+			//waitTime((msFrame - deltaTime) * 1000);
+			//deltaTime = msFrame;
+		}
+		lastTime = currentTime;
+	}
 }
 
 void VideoManager::waitTime(int ms){
@@ -112,25 +212,9 @@ void VideoManager::waitTime(int ms){
 	lastTime = getTime();
 }
 
+
 void VideoManager::close(){
+	SDL_FreeSurface(gScreenSurface);
 	SDL_DestroyWindow(gWindow);
 	SDL_Quit();
-}
-
-float VideoManager::getDeltaTime(){
-	return deltaTime;
-}
-
-void VideoManager::UpdateTime(){
-	if (lastTime != -1){
-		int currentTime = getTime();
-		deltaTime = (float)(currentTime - lastTime) / 1000;
-
-		//Para evitar que el input del raton se ralentize, se elima la restriccion de FPS.
-		if (deltaTime < msFrame){
-			//waitTime((msFrame - deltaTime) * 1000);
-			//deltaTime = msFrame;
-		}
-		lastTime = currentTime;
-	}
 }

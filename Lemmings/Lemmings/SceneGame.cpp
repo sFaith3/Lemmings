@@ -18,7 +18,7 @@ void SceneGame::Init(){
 void SceneGame::Update(){
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		itLem->Update();
-	sManager->videoManager->UpdateTime();
+	sManager->videoManager->updateTime();
 }
 
 void SceneGame::Render(){

@@ -4,16 +4,17 @@
 #include "SDL_mixer.h"
 #include <iostream>
 
+
 ResourceManager* ResourceManager::pInstance = NULL;
 
-ResourceManager::ResourceManager()
-{
-	mFirstFreeSlot = -1;
-	mFirstFreeSlotAudio = -1;
+ResourceManager::ResourceManager(){
+	mFirstFreeSlotGraphics = -1;
+	mFirstFreeSlotTextures = -1;
+	mFirstFreeSlotAudios = -1;
 }
 
-ResourceManager::~ResourceManager()
-{
+ResourceManager::~ResourceManager(){
+
 }
 
 ResourceManager* ResourceManager::getInstanceResourceManager(){
@@ -23,200 +24,134 @@ ResourceManager* ResourceManager::getInstanceResourceManager(){
 	}
 
 	return pInstance;
-}
-
-void ResourceManager::removeGraphic(const char* file){
-	Sint32 pos = -1;
-	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
-		if (it->first == file){
-			pos = it->second;
-			mIDMap.erase(it);
-			break;
-		}
-	}
-	if (pos != -1){
-		SDL_FreeSurface(mGraphicsVector[pos]);
-		mGraphicsVector[pos] = NULL;
-		if (pos < mFirstFreeSlot)
-			mFirstFreeSlot = pos;
-	}
-}
-
-void ResourceManager::removeGraphic(Sint32 ID){
-	Sint32 pos = -1;
-	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
-		if (it->second == ID){
-			pos = it->second;
-			mIDMap.erase(it);
-			break;
-		}
-	}
-	if (pos != -1){
-		SDL_FreeSurface(mGraphicsVector[pos]);
-		mGraphicsVector[pos] = NULL;
-		if (pos < mFirstFreeSlot)
-			mFirstFreeSlot = pos;
-	}
-}
-
-Sint32 ResourceManager::getGraphicID(const char* file, SDL_Texture* newTexture){
-	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
-		if (it->first == file)
-			return it->second;
-	}
-	return addGraphic(file, newTexture);
 
 }
 
-string ResourceManager::getGraphicPathByID(Sint32 ID){
-	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
-		if (it->second == ID)
-			return (string)it->first;
-	}
-	return "Error";
+
+/*--- SURFACE ---*/
+
+Sint32 ResourceManager::createGraphic(const char* name, SDL_Surface* newSurface){
+	return addGraphic(name, newSurface);
 }
 
-void ResourceManager::getGraphicSize(Sint32 img, int &width, int &height){
-	width = mGraphicsVector[img]->w;
-	height = mGraphicsVector[img]->h;
 
-}
-
-int ResourceManager::getGraphicWidth(Sint32 img){
-	return mGraphicsVector[img]->w;
-
-}
-
-int ResourceManager::getGraphicHeight(Sint32 img){
-	return mGraphicsVector[img]->h;
-
-
-}
-
-void ResourceManager::getColorGraphic(Sint32 ID, Uint8* R, Uint8* G, Uint8* B){
-	SDL_GetSurfaceColorMod(mGraphicsVector[ID], R, G, B);
-}
-
-SDL_Texture* ResourceManager::getGraphicByID(Sint32 ID){
-	return mTextureVector[ID];
-}
-
-void ResourceManager::setAlphaGraphic(Sint32 ID, Uint8 alpha_value){
-	SDL_SetSurfaceAlphaMod(mGraphicsVector[ID], alpha_value);
-}
-
-void ResourceManager::setColorGraphic(Sint32 ID, Uint8 R, Uint8 G, Uint8 B){
-	SDL_SetSurfaceColorMod(mGraphicsVector[ID], R, G, B);
-}
-
-void ResourceManager::printLoadedGraphics(){
-	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
-		cout << it->first << endl;
-	}
-
-}
-
-Sint32 ResourceManager::createGraphic(const char* name, SDL_Texture* newTexture){
-
-	return addGraphic(name, newTexture);
-
-}
-
-Sint32 ResourceManager::createGraphic(const char* name, SDL_Texture* newTexture, Uint16 width, Uint16 height){
-
-	Sint32 pos = addGraphic(name, newTexture);
+Sint32 ResourceManager::createGraphic(const char* name, SDL_Surface* newSurface, Uint16 width, Uint16 height){
+	Sint32 pos = addGraphic(name, newSurface);
 	if (pos != -1){
 		mGraphicsVector[pos]->h = height;
 		mGraphicsVector[pos]->w = width;
 	}
 	return pos;
+
 }
 
 
-
-/*
-Sint32 ResourceManager::addGraphic(const char* file){
-	//The final optimized image
-	SDL_Surface* optimizedSurface = NULL;
-	VideoManager* sVideo = VideoManager::getInstanceVideo();
-	SDL_Surface* surfaceFormatInfo = sVideo->gScreenSurface;
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load(file);
-	if (loadedSurface == NULL)
-	{
-		cout << "Unable to load image " << file << "! SDL_image Error: " << IMG_GetError() << endl;
-		return -1;
-	}
-
-	SDL_SetSurfaceBlendMode(surfaceFormatInfo, SDL_BLENDMODE_BLEND);
-	//Convert surface to screen format
-	// Save Alpha values from surface info
-	Uint32 Old_Amask = surfaceFormatInfo->format->Amask;
-	Uint32 Old_Aloss = surfaceFormatInfo->format->Aloss;
-	Uint32 Old_Ashift = surfaceFormatInfo->format->Ashift;
-	// Force Alpha values
-	surfaceFormatInfo->format->Amask = 0xFF000000;
-	surfaceFormatInfo->format->Aloss = 0;
-	surfaceFormatInfo->format->Ashift = 24;
-	// Convert to screen format
-	optimizedSurface = SDL_ConvertSurface(loadedSurface, surfaceFormatInfo->format, NULL);
-	// Restore alpha values for surface info
-	surfaceFormatInfo->format->Amask = (Uint8) Old_Amask;
-	surfaceFormatInfo->format->Aloss = (Uint8) Old_Aloss;
-	surfaceFormatInfo->format->Ashift =(Uint8) Old_Ashift;
-	if (optimizedSurface == NULL)
-	{
-		cout << "Unable to optimize image " << file << "! SDL Error: " << SDL_GetError() << endl;
-		return -1;
-	}
-
-	//Get rid of old loaded surface
-	SDL_FreeSurface(loadedSurface);
+Sint32 ResourceManager::addGraphic(const char* file, SDL_Surface* newSurface){
 	Sint32 pos = -1;
-	if (mFirstFreeSlot != -1){
-		mGraphicsVector[mFirstFreeSlot] = optimizedSurface;
-		mIDMap.emplace(file, mFirstFreeSlot);
-		pos = mFirstFreeSlot;
+	if (mFirstFreeSlotGraphics != -1){
+		mGraphicsVector[mFirstFreeSlotGraphics] = newSurface;
+		mIDMapGraphics.emplace(file, mFirstFreeSlotGraphics);
+		pos = mFirstFreeSlotGraphics;
 		updateFirstFreeSlotGraphic();
 	}
 	else{
-		mGraphicsVector.push_back(optimizedSurface);
+		mGraphicsVector.push_back(newSurface);
 		pos = mGraphicsVector.size() - 1;
-		mIDMap.emplace(file, pos);
+		mIDMapGraphics.emplace(file, pos);
 	}
 	return pos;
-}*/
+
+}
 
 
-
-Sint32 ResourceManager::addGraphic(const char* file, SDL_Texture* newTexture){	
+void ResourceManager::removeGraphic(const char* file){
 	Sint32 pos = -1;
-	if (mFirstFreeSlot != -1){
-		mTextureVector[mFirstFreeSlot] = newTexture;
-		mIDMap.emplace(file, mFirstFreeSlot);
-		pos = mFirstFreeSlot;
-		updateFirstFreeSlotGraphic();
+	for (map<string, Sint32>::iterator it = mIDMapGraphics.begin(); it != mIDMapGraphics.end(); it++){
+		if (it->first == file){
+			pos = it->second;
+			mIDMapGraphics.erase(it);
+			break;
+		}
 	}
-	else{
-		mTextureVector.push_back(newTexture);
-		pos = mTextureVector.size() - 1;
-		mIDMap.emplace(file, pos);
+	if (pos != -1){
+		SDL_FreeSurface(mGraphicsVector[pos]);
+		mGraphicsVector[pos] = NULL;
+		if (pos < mFirstFreeSlotGraphics)
+			mFirstFreeSlotGraphics = pos;
 	}
-	return pos;
+
 }
 
 
-SDL_Surface* ResourceManager::getGraphic(const char* file, SDL_Texture* newTexture){
-	map<string, Sint32>::iterator it = mIDMap.find(file);
-
-	if (it != mIDMap.end()){
-		Sint32 pos = it->second;
-		return mGraphicsVector[pos];
+void ResourceManager::removeGraphic(Sint32 ID){
+	Sint32 pos = -1;
+	for (map<string, Sint32>::iterator it = mIDMapGraphics.begin(); it != mIDMapGraphics.end(); it++){
+		if (it->second == ID){
+			pos = it->second;
+			mIDMapGraphics.erase(it);
+			break;
+		}
 	}
-	return mGraphicsVector[addGraphic(file, newTexture)];
-
+	if (pos != -1){
+		SDL_FreeSurface(mGraphicsVector[pos]);
+		mGraphicsVector[pos] = NULL;
+		if (pos < mFirstFreeSlotGraphics)
+			mFirstFreeSlotGraphics = pos;
+	}
 
 }
+
+
+Sint32 ResourceManager::getGraphicID(const char* file, SDL_Surface* newSurface){
+	for (map<string, Sint32>::iterator it = mIDMapGraphics.begin(); it != mIDMapGraphics.end(); it++){
+		if (it->first == file)
+			return it->second;
+	}
+	return addGraphic(file, newSurface);
+
+}
+
+
+string ResourceManager::getGraphicPathByID(Sint32 ID){
+	for (map<string, Sint32>::iterator it = mIDMapGraphics.begin(); it != mIDMapGraphics.end(); it++){
+		if (it->second == ID)
+			return (string)it->first;
+	}
+	return "Error";
+
+}
+
+
+void ResourceManager::getGraphicSize(Sint32 img, int &width, int &height){
+	width = mGraphicsVector[img]->w;
+	height = mGraphicsVector[img]->h;
+}
+
+
+int ResourceManager::getGraphicWidth(Sint32 img){
+	return mGraphicsVector[img]->w;
+}
+
+
+int ResourceManager::getGraphicHeight(Sint32 img){
+	return mGraphicsVector[img]->h;
+}
+
+
+void ResourceManager::getColorGraphic(Sint32 ID, Uint8* R, Uint8* G, Uint8* B){
+	SDL_GetSurfaceColorMod(mGraphicsVector[ID], R, G, B);
+}
+
+
+SDL_Surface* ResourceManager::getGraphicByID(Sint32 ID){
+	return mGraphicsVector[ID];
+}
+
+
+void ResourceManager::setAlphaGraphic(Sint32 ID, Uint8 alpha_value){
+	SDL_SetSurfaceAlphaMod(mGraphicsVector[ID], alpha_value);
+}
+
 
 Sint32 ResourceManager::searchGraphic(SDL_Surface* img){
 	for (unsigned int i = 0; i < mGraphicsVector.size(); i++){
@@ -227,28 +162,13 @@ Sint32 ResourceManager::searchGraphic(SDL_Surface* img){
 	return -1;
 }
 
-Uint32 ResourceManager::updateFirstFreeSlotGraphic(){
-	mFirstFreeSlot = -1;
-	for (unsigned int i = 0; i < mGraphicsVector.size(); i++){
-		if (mGraphicsVector[i] == NULL){
-			mFirstFreeSlot = i;
-			break;
-		}
-	}
-	return mFirstFreeSlot;
-}
 
-
-
-
-//Comprueba si el pixel no tiene mucha transparencia en la posision X Y de la surface ID
-bool  ResourceManager::GetAlphaXY(int ID, int x, int y)
-{
+//Comprova si el píxel no té molta transparència en la posisió X-Y de la surface ID
+bool  ResourceManager::GetAlphaXY(int ID, int x, int y){
 	SDL_Surface* surface = mGraphicsVector[ID];
 
 	if (x >= 0 && y >= 0 && x < surface->w && y < surface->h){
-		if (SDL_MUSTLOCK(surface))
-		{
+		if (SDL_MUSTLOCK(surface)){
 			//Lock the surface
 			SDL_LockSurface(surface);
 		}
@@ -256,8 +176,7 @@ bool  ResourceManager::GetAlphaXY(int ID, int x, int y)
 		Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 		Uint32 pixelColor = 0;
 
-		switch (bpp)
-		{
+		switch (bpp){
 		case 1:
 			pixelColor = *p;
 			break;
@@ -278,86 +197,68 @@ bool  ResourceManager::GetAlphaXY(int ID, int x, int y)
 		Uint8 red, green, blue, alpha;
 		SDL_GetRGBA(pixelColor, surface->format, &red, &green, &blue, &alpha);
 		if (SDL_MUSTLOCK(surface))
-		{
 			SDL_UnlockSurface(surface);
-		}
 		return alpha > 220;
 	}
 	return false;
 }
 
-//Modifica el alpha de algunos pixels para crear un efecto de explosion
-void ResourceManager::EditSurfaceMuroBullet(int ID, int x, int y)
-{
+
+//Modifica l'alpha d'alguns píxels per a crear un efecte d'explosió
+void ResourceManager::EditSurfaceMuroBullet(int ID, int x, int y){
 	SDL_Surface* surface = mGraphicsVector[ID];
 	//If the surface must be locked
-	if (SDL_MUSTLOCK(surface))
-	{
+	if (SDL_MUSTLOCK(surface)){
 		//Lock the surface
 		SDL_LockSurface(surface);
 	}
 
-	//Modificar el alpha de los pixels
+	//Modificar l'alpha dels píxels
 	Uint32 pixel = SDL_MapRGBA(surface->format, 0, 0, 0, 0);
 
-	//Crea una especie de rombo curvado, que se va desvaneciendo en funcion de los random
+	//Crea una espècie de rombe corbat, que es va esvaint en funció dels randoms
 	for (int i = -10; i < 10; i++){
 		for (int j = -20; j < 20; j++){
 
 			if (x + i >= 0 && y + j >= 0 && x + i < surface->w && y + j < surface->h){
-				if (abs(i * j) < 25 || (rand() % 2 == 0 && abs(i * j) < 100) || (abs(i * j) < 150 && rand() % 8 == 0)){
-
+				if (abs(i * j) < 25 || (rand() % 2 == 0 && abs(i * j) < 100) || (abs(i * j) < 150 && rand() % 8 == 0))
 					put_pixel32(surface, x + i, y + j, pixel);
-				}
 			}
 		}
 	}
 
-
 	//Unlock surface
 	if (SDL_MUSTLOCK(surface))
-	{
 		SDL_UnlockSurface(surface);
-	}
 }
 
 
-
-//Modifica el alpha de algunos pixels para crear un efecto de explosion
-void ResourceManager::EditSurfaceMuroEnemy(int ID, int x, int y, int w, int h)
-{
+//Modifica l'alpha d'alguns píxels per a crear un efecte d'explosió
+void ResourceManager::EditSurfaceMuroEnemy(int ID, int x, int y, int w, int h){
 	SDL_Surface* surface = mGraphicsVector[ID];
 	//If the surface must be locked
-	if (SDL_MUSTLOCK(surface))
-	{
+	if (SDL_MUSTLOCK(surface)){
 		//Lock the surface
 		SDL_LockSurface(surface);
 	}
 
-
-	//Modificar el alpha de los pixels
+	//Modifica l'alpha dels píxels
 	Uint32 pixel = SDL_MapRGBA(surface->format, 0, 0, 0, 0);
-	for (int i = 0; i < w ; i++){
+	for (int i = 0; i < w; i++){
 		for (int j = 0; j < h; j++){
 			if (x + i >= 0 && y + j >= 0 && x + i < surface->w && y + j < surface->h)
 				put_pixel32(surface, x + i, y + j, pixel);
-			
+
 		}
 	}
 
-	
-
 	//Unlock surface
 	if (SDL_MUSTLOCK(surface))
-	{
 		SDL_UnlockSurface(surface);
-	}
 }
 
 
-
-void ResourceManager::put_pixel32(SDL_Surface *surface, int x, int y, Uint32 pixel)
-{
+void ResourceManager::put_pixel32(SDL_Surface *surface, int x, int y, Uint32 pixel){
 	//Convert the pixels to 32 bit
 	Uint32 *pixels = (Uint32 *)surface->pixels;
 
@@ -366,9 +267,212 @@ void ResourceManager::put_pixel32(SDL_Surface *surface, int x, int y, Uint32 pix
 }
 
 
+void ResourceManager::setColorGraphic(Sint32 ID, Uint8 R, Uint8 G, Uint8 B){
+	SDL_SetSurfaceColorMod(mGraphicsVector[ID], R, G, B);
+}
+
+
+void ResourceManager::printLoadedGraphics(){
+	for (map<string, Sint32>::iterator it = mIDMapGraphics.begin(); it != mIDMapGraphics.end(); it++){
+		cout << it->first << endl;
+	}
+}
+
+
+Uint32 ResourceManager::updateFirstFreeSlotGraphic(){
+	mFirstFreeSlotGraphics = -1;
+	for (unsigned int i = 0; i < mGraphicsVector.size(); i++){
+		if (mGraphicsVector[i] == NULL){
+			mFirstFreeSlotGraphics = i;
+			break;
+		}
+	}
+	return mFirstFreeSlotGraphics;
+
+}
+/*--- END SURFACE ---*/
+
+
+/*--- TEXTURE ---*/
+Sint32 ResourceManager::createTexture(const char* name, SDL_Texture* newTexture){
+	return addTexture(name, newTexture);
+}
+
+
+Sint32 ResourceManager::addTexture(const char* file, SDL_Texture* newTexture){
+	Sint32 pos = -1;
+	if (mFirstFreeSlotTextures != -1){
+		mTexturesVector[mFirstFreeSlotTextures] = newTexture;
+		mIDMapTextures.emplace(file, mFirstFreeSlotTextures);
+		pos = mFirstFreeSlotTextures;
+		updateFirstFreeSlotTexture();
+	}
+	else{
+		mTexturesVector.push_back(newTexture);
+		pos = mTexturesVector.size() - 1;
+		mIDMapTextures.emplace(file, pos);
+	}
+	return pos;
+
+}
+
+
+void ResourceManager::removeTexture(const char* file){
+	Sint32 pos = -1;
+	for (map<string, Sint32>::iterator it = mIDMapTextures.begin(); it != mIDMapTextures.end(); it++){
+		if (it->first == file){
+			pos = it->second;
+			mIDMapTextures.erase(it);
+			break;
+		}
+	}
+	if (pos != -1){
+		SDL_DestroyTexture(mTexturesVector[pos]);
+		mTexturesVector[pos] = NULL;
+		if (pos < mFirstFreeSlotTextures)
+			mFirstFreeSlotTextures = pos;
+	}
+
+}
+
+
+void ResourceManager::removeTexture(Sint32 ID){
+	Sint32 pos = -1;
+	for (map<string, Sint32>::iterator it = mIDMapTextures.begin(); it != mIDMapTextures.end(); it++){
+		if (it->second == ID){
+			pos = it->second;
+			mIDMapTextures.erase(it);
+			break;
+		}
+	}
+	if (pos != -1){
+		SDL_DestroyTexture(mTexturesVector[pos]);
+		mTexturesVector[pos] = NULL;
+		if (pos < mFirstFreeSlotTextures)
+			mFirstFreeSlotTextures = pos;
+	}
+
+}
+
+
+SDL_Texture* ResourceManager::getTexture(const char* file, SDL_Texture* newTexture){
+	map<string, Sint32>::iterator it = mIDMapTextures.find(file);
+
+	if (it != mIDMapTextures.end()){
+		Sint32 pos = it->second;
+		return mTexturesVector[pos];
+	}
+	return mTexturesVector[addTexture(file, newTexture)];
+
+}
+
+
+void ResourceManager::getColorTexture(Sint32 ID, Uint8* R, Uint8* G, Uint8* B){
+	SDL_GetTextureColorMod(mTexturesVector[ID], R, G, B);
+}
+
+
+SDL_Texture* ResourceManager::getTextureByID(Sint32 ID){
+	return mTexturesVector[ID];
+}
+
+
+void ResourceManager::setAlphaTexture(Sint32 ID, Uint8 alpha_value){
+	SDL_SetTextureAlphaMod(mTexturesVector[ID], alpha_value);
+}
+
+
+Sint32 ResourceManager::getTextureID(const char* file, SDL_Texture* newTexture){
+	for (map<string, Sint32>::iterator it = mIDMapTextures.begin(); it != mIDMapTextures.end(); it++){
+		if (it->first == file)
+			return it->second;
+	}
+	return addTexture(file, newTexture);
+
+}
+
+
+string ResourceManager::getTexturePathByID(Sint32 ID){
+	for (map<string, Sint32>::iterator it = mIDMapTextures.begin(); it != mIDMapTextures.end(); it++){
+		if (it->second == ID)
+			return (string)it->first;
+	}
+	return "Error";
+
+}
+
+
+Sint32 ResourceManager::searchTexture(SDL_Texture* img){
+	for (unsigned int i = 0; i < mTexturesVector.size(); i++){
+		if (mTexturesVector[i] == img){
+			return i;
+		}
+	}
+	return -1;
+
+}
+
+
+void ResourceManager::setColorTexture(Sint32 ID, Uint8 R, Uint8 G, Uint8 B){
+	SDL_SetTextureColorMod(mTexturesVector[ID], R, G, B);
+}
+
+
+void ResourceManager::printLoadedTextures(){
+	for (map<string, Sint32>::iterator it = mIDMapTextures.begin(); it != mIDMapTextures.end(); it++){
+		cout << it->first << endl;
+	}
+}
+
+
+Uint32 ResourceManager::updateFirstFreeSlotTexture(){
+	mFirstFreeSlotTextures = -1;
+	for (unsigned int i = 0; i < mTexturesVector.size(); i++){
+		if (mTexturesVector[i] == NULL){
+			mFirstFreeSlotTextures = i;
+			break;
+		}
+	}
+	return mFirstFreeSlotTextures;
+
+}
+/*--- END TEXTURE ---*/
+
+
+/*--- AUDIO ---*/
+Sint32 ResourceManager::addAudio(const char* file){
+	Mix_Chunk* sound = Mix_LoadWAV(file);
+	if (sound == NULL){
+		cout << "Failed to load sound effect! SDL_mixer Error:" << Mix_GetError() << endl;
+		return -1;
+	}
+	Sint32 pos = -1;
+	if (mFirstFreeSlotAudios != -1){
+		mAudiosVector[mFirstFreeSlotAudios] = sound ;
+		mIDMapAudios.emplace(file, mFirstFreeSlotAudios);
+		pos = mFirstFreeSlotAudios;
+		updateFirstFreeSlotAudio();
+	}
+	else{
+		mAudiosVector.push_back(sound);
+		pos = mAudiosVector.size() - 1;
+		mIDMapAudios.emplace(file, pos);
+	}
+	return pos;
+}
+
+
+void ResourceManager::removeAudio(Sint32 ID){
+	Mix_FreeChunk(mAudiosVector[ID]);
+	mAudiosVector[ID] = NULL;
+	if (ID < mFirstFreeSlotAudios)
+		mFirstFreeSlotAudios = ID;
+	
+}
+
 
 Sint32 ResourceManager::getAudioID(const char* file){
-	for (map<string, Sint32>::iterator it = mIDMap.begin(); it != mIDMap.end(); it++){
+	for (map<string, Sint32>::iterator it = mIDMapAudios.begin(); it != mIDMapAudios.end(); it++){
 		if (it->first == file)
 			return it->second;
 	}
@@ -376,48 +480,26 @@ Sint32 ResourceManager::getAudioID(const char* file){
 }
 
 
-Sint32 ResourceManager::addAudio(const char* file){
-	Mix_Chunk* sound = Mix_LoadWAV(file);
-	if (sound == NULL)
-	{
-		printf("Failed to load sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-		return -1;
-	}
-	Sint32 pos = -1;
-	if (mFirstFreeSlotAudio != -1){
-		mAudioVector[mFirstFreeSlotAudio] = sound ;
-		mIDMap.emplace(file, mFirstFreeSlotAudio);
-		pos = mFirstFreeSlot;
-		updateFirstFreeSlotAudio();
-	}
-	else{
-		mAudioVector.push_back(sound);
-		pos = mAudioVector.size() - 1;
-		mIDMap.emplace(file, pos);
-	}
-	return pos;
+Mix_Chunk* ResourceManager::getAudioByID(Sint32 ID){
+	return mAudiosVector[ID];
 }
+
+
+void ResourceManager::printLoadedAudios(){
+	for (map<string, Sint32>::iterator it = mIDMapAudios.begin(); it != mIDMapAudios.end(); it++){
+		cout << it->first << endl;
+	}
+}
+
+
 Uint32 ResourceManager::updateFirstFreeSlotAudio(){
-	mFirstFreeSlotAudio = -1;
-	for (unsigned int i = 0; i < mAudioVector.size(); i++){
-		if (mAudioVector[i] == NULL){
-			mFirstFreeSlotAudio = i;
+	mFirstFreeSlotAudios = -1;
+	for (unsigned int i = 0; i < mAudiosVector.size(); i++){
+		if (mAudiosVector[i] == NULL){
+			mFirstFreeSlotAudios = i;
 			break;
 		}
 	}
-	return mFirstFreeSlotAudio;
+	return mFirstFreeSlotAudios;
 }
-
-
-void ResourceManager::removeAudio(Sint32 ID){
-	Mix_FreeChunk(mAudioVector[ID]);
-	mAudioVector[ID] = NULL;
-	if (ID < mFirstFreeSlotAudio)
-		mFirstFreeSlotAudio = ID;
-	
-}
-
-
-Mix_Chunk* ResourceManager::getAudioByID(Sint32 ID){
-	return mAudioVector[ID];
-}
+/*--- END AUDIO ---*/
