@@ -198,8 +198,8 @@ void VideoManager::updateTime(){
 
 		//Per evitar que l'input del ratolí es ralentitzi, s'elimina la restricció de FPS.
 		if (deltaTime < msFrame){
-			//waitTime((msFrame - deltaTime) * 1000);
-			//deltaTime = msFrame;
+			waitTime((msFrame - deltaTime) * 1000);
+			deltaTime = msFrame;
 		}
 		lastTime = currentTime;
 	}

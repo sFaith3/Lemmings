@@ -5,7 +5,7 @@ class Lemming :
 {
 private:
 	enum estats{
-		IDLE, MOVE
+		IDLE, MOVE, FALL
 	};
 	int estat;
 	int dir; //Direcció del Lemming a l'hora de moure's.

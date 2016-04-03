@@ -13,7 +13,7 @@ Lemming::~Lemming()
 
 void Lemming::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
 	ElementGame::Init(x, y, sp, srcX, srcY, w, h);
-	estat = IDLE;
+	estat = FALL;
 }
 
 void Lemming::Update(){
@@ -29,6 +29,9 @@ void Lemming::Update(){
 			posX--;
 			break;
 		}
+		break;
+	case FALL:
+		posY++;
 		break;
 	}
 }

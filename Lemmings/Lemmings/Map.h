@@ -4,6 +4,7 @@ class Map :
 	public ElementGame
 {
 public:
+
 	Map();
 	~Map();
 };

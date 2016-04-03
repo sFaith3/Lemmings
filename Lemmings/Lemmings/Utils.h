@@ -10,7 +10,7 @@
 #include <vector>
 using namespace std;
 
-#define SCREEN_WIDTH  854
+#define SCREEN_WIDTH  640
 #define SCREEN_HEIGHT  480
 #define FPS 60
 
