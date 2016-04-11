@@ -18,8 +18,6 @@ void Lemming::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int 
 
 void Lemming::Update(){
 	switch (estat){
-	case IDLE:
-		break;
 	case MOVE:
 		switch (dir){
 		case 0:
@@ -31,7 +29,23 @@ void Lemming::Update(){
 		}
 		break;
 	case FALL:
-		posY++;
+		posY+=2;
 		break;
 	}
 }
+
+void Lemming::Moure(bool dreta){
+
+}
+void Lemming::TrencarMur(){}
+void Lemming::Levitar(){}
+void Lemming::Escalar(){}
+void Lemming::Cavar(){}
+void Lemming::Picar(){}
+void Lemming::Caure(){}
+void Lemming::Inmovilitzar(){}
+void Lemming::Construir(){}
+void Lemming::Explotar(){}
+
+void Lemming::SetParaigues(){}
+void Lemming::SetEscalar(){}
