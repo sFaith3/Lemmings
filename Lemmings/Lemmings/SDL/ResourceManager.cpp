@@ -1,9 +1,5 @@
 #include "ResourceManager.h"
 
-#include "SDL_image.h"
-#include "SDL_mixer.h"
-#include <iostream>
-
 
 ResourceManager* ResourceManager::pInstance = NULL;
 
@@ -102,12 +98,12 @@ void ResourceManager::removeGraphic(Sint32 ID){
 }
 
 
-Sint32 ResourceManager::getGraphicID(const char* file, SDL_Surface* newSurface){
+Sint32 ResourceManager::getGraphicID(const char* file){
 	for (map<string, Sint32>::iterator it = mIDMapGraphics.begin(); it != mIDMapGraphics.end(); it++){
 		if (it->first == file)
 			return it->second;
 	}
-	return addGraphic(file, newSurface);
+	return -1;
 
 }
 
@@ -382,12 +378,12 @@ void ResourceManager::setAlphaTexture(Sint32 ID, Uint8 alpha_value){
 }
 
 
-Sint32 ResourceManager::getTextureID(const char* file, SDL_Texture* newTexture){
+Sint32 ResourceManager::getTextureID(const char* file){
 	for (map<string, Sint32>::iterator it = mIDMapTextures.begin(); it != mIDMapTextures.end(); it++){
 		if (it->first == file)
 			return it->second;
 	}
-	return addTexture(file, newTexture);
+	return -1;
 
 }
 

@@ -2,7 +2,9 @@
 #define RESOURCEMANAGER_H
 
 #include "SDL.h"
-#include "SDL_Mixer.h"
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include <iostream>
 #include <string>
 #include <vector>
 #include <map>
@@ -64,7 +66,7 @@ public:
 	\param file Filepath to the graphic
 	\return ID of the graphic
 	*/
-	Sint32 getGraphicID(const char* file, SDL_Surface* newSurface);
+	Sint32 getGraphicID(const char* file);
 
 
 	//! Gets the graphic path given an ID graphic
@@ -175,7 +177,7 @@ public:
 	\param file Filepath to the texture
 	\return ID of the texture
 	*/
-	Sint32 getTextureID(const char* file, SDL_Texture* newTexture);
+	Sint32 getTextureID(const char* file);
 
 
 	//! Gets the texture path given an ID texture

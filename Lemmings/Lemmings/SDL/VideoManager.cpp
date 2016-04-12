@@ -1,8 +1,6 @@
 #include "VideoManager.h"
 #include "ResourceManager.h"
-#include "SDL_image.h"
-#include "Utils.h"
-#include <iostream>
+#include "..\Utils.h"
 
 VideoManager* VideoManager::vInstance = NULL;
 
@@ -40,8 +38,9 @@ VideoManager::VideoManager(){
 		}
 	}
 
-	deltaTime = lastTime = 0;
-	msFrame = (float)FPS / 1000.0f;
+	deltaTime = 0.0f;
+	lastTime = 0;
+	msFrame = 60.0f / 1000.0f;
 }
 
 VideoManager::~VideoManager(){
@@ -57,7 +56,7 @@ VideoManager* VideoManager::getInstanceVideo(){
 }
 
 
-Sint32 VideoManager::getGraphicID(const char* file){
+Sint32 VideoManager::addGraphic(const char* file){
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
 	SDL_Surface* surfaceFormatInfo = gScreenSurface;
@@ -92,10 +91,18 @@ Sint32 VideoManager::getGraphicID(const char* file){
 	//Get rid of old loaded surface
 	SDL_FreeSurface(loadedSurface);
 
-	return ResourceManager::getInstanceResourceManager()->getGraphicID(file, optimizedSurface);
+	return ResourceManager::getInstanceResourceManager()->createGraphic(file, optimizedSurface);
 }
 
-Sint32 VideoManager::getTextureID(const char* file){
+Sint32 VideoManager::getGraphicID(const char* file){
+	Sint32 id = ResourceManager::getInstanceResourceManager()->getGraphicID(file);
+	if (id != -1)
+		return id;
+
+	return addGraphic(file);
+}
+
+Sint32 VideoManager::addTexture(const char* file){
 	//The final texture
 	SDL_Texture* newTexture = NULL;
 
@@ -113,7 +120,15 @@ Sint32 VideoManager::getTextureID(const char* file){
 		SDL_FreeSurface(loadedSurface);
 	}
 
-	return ResourceManager::getInstanceResourceManager()->getTextureID(file, newTexture);
+	return ResourceManager::getInstanceResourceManager()->createTexture(file, newTexture);
+}
+
+Sint32 VideoManager::getTextureID(const char* file){
+	int id = ResourceManager::getInstanceResourceManager()->getTextureID(file);
+	if (id != -1)
+		return id;
+
+	return addTexture(file);
 }
 
 
@@ -196,9 +211,9 @@ void VideoManager::updateTime(){
 		int currentTime = getTime();
 		deltaTime = (float)(currentTime - lastTime) / 1000;
 
-		//Per evitar que l'input del ratolí es ralentitzi, s'elimina la restricció de FPS.
+		//Per a evitar que l'input del ratolí es ralentitzi, s'ha d'eliminar la restricció de FPS.
 		if (deltaTime < msFrame){
-			waitTime((msFrame - deltaTime) * 1000);
+			waitTime((msFrame - deltaTime) * 1000.0f);
 			deltaTime = msFrame;
 		}
 		lastTime = currentTime;

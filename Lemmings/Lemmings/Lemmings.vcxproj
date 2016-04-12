@@ -76,7 +76,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ABCsAlphaNum.cpp" />
-    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="DoorExit.cpp" />
     <ClCompile Include="Element.cpp" />
@@ -84,26 +83,31 @@
     <ClCompile Include="ElementHUD.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Lemming.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="DoorEnter.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneCodeLevel.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneLogo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="SDL\AudioManager.cpp" />
+    <ClCompile Include="SDL\InputManager.cpp" />
+    <ClCompile Include="SDL\ResourceManager.cpp" />
+    <ClCompile Include="SDL\VideoManager.cpp" />
     <ClCompile Include="SingletonManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="tinyManager.cpp" />
+    <ClCompile Include="TinyXML\tinystr.cpp" />
+    <ClCompile Include="TinyXML\tinyxml.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Trap.cpp" />
-    <ClCompile Include="VideoManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABCsAlphaNum.h" />
-    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="DoorExit.h" />
     <ClInclude Include="Element.h" />
@@ -111,27 +115,28 @@
     <ClInclude Include="ElementHUD.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Lemming.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Minimap.h" />
     <ClInclude Include="DoorEnter.h" />
-    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneCodeLevel.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneLogo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneMenu.h" />
+    <ClInclude Include="SDL\AudioManager.h" />
+    <ClInclude Include="SDL\InputManager.h" />
+    <ClInclude Include="SDL\ResourceManager.h" />
+    <ClInclude Include="SDL\VideoManager.h" />
     <ClInclude Include="SingletonManager.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="tinyManager.h" />
+    <ClInclude Include="TinyXML\tinystr.h" />
+    <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Trap.h" />
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="VideoManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

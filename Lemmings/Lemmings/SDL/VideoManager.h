@@ -21,7 +21,9 @@ public:
 
 	static VideoManager* getInstanceVideo();
 
+	Sint32 addGraphic(const char* file);
 	Sint32 getGraphicID(const char* file);
+	Sint32 addTexture(const char* file);
 	Sint32 getTextureID(const char* file);
 	
 	int getTime();

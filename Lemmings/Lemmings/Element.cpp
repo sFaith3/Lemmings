@@ -10,10 +10,10 @@ Element::~Element()
 {
 }
 
-void Element::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
+void Element::Init(int x, int y, const char* img, int srcX, int srcY, int w, int h){
 	posX = x;
 	posY = y;
-	sprite = sp;
+	imatge = img;
 	srcPosX = srcX;
 	srcPosY = srcY;
 	width = w;
@@ -21,7 +21,6 @@ void Element::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int 
 }
 
 void Element::Render(){
-	//sManager->videoManager->renderTexture(sManager->videoManager->getTextureID(sprite), srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
-	// SE TIENE QUE CAMBIAR LA MANERA DE CARGAR EL GRAFICO YA QUE LO CARGAMOS CADA VEZ
-	//	sManager->videoManager->renderGraphic(sManager->videoManager->getGraphicByID(sprite), srcPosX, srcPosY, width, height, posX, posY);
+	//sManager->videoManager->renderTexture(sManager->videoManager->getTextureID(imatge), srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
+	sManager->videoManager->renderGraphic(sManager->videoManager->getGraphicID(imatge), srcPosX, srcPosY, width, height, posX, posY);
 }

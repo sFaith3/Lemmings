@@ -13,21 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\SDL">
+      <UniqueIdentifier>{582c7502-fb26-47e0-ab62-8e937e953640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\TinyXML">
+      <UniqueIdentifier>{1c85003f-0a62-4c65-9845-0409db1cd5a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\SDL">
+      <UniqueIdentifier>{d1df8bcc-3af3-4285-a571-89ab6e7a7ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\TinyXML">
+      <UniqueIdentifier>{3cca28c2-c511-40ef-ad13-76ad7802bd6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Source.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="VideoManager.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="SceneMenu.cpp">
@@ -63,9 +66,6 @@
     <ClCompile Include="Time.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Trap.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="File.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -87,24 +87,42 @@
     <ClCompile Include="Background.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
+    <ClCompile Include="SDL\AudioManager.cpp">
+      <Filter>Archivos de código fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL\InputManager.cpp">
+      <Filter>Archivos de código fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL\VideoManager.cpp">
+      <Filter>Archivos de código fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL\ResourceManager.cpp">
+      <Filter>Archivos de código fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinystr.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxml.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlerror.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyXML\tinyxmlparser.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.cpp">
       <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyManager.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InputManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="VideoManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="SceneMenu.h">
@@ -164,14 +182,29 @@
     <ClInclude Include="Background.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="AudioManager.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="SDL\AudioManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL\InputManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL\ResourceManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL\VideoManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinyxml.h">
+      <Filter>Archivos de encabezado\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyXML\tinystr.h">
+      <Filter>Archivos de encabezado\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyManager.h">
+      <Filter>Archivos de encabezado\TinyXML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>
