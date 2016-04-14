@@ -1,5 +1,7 @@
 #pragma once
 #include "ElementGame.h"
+#include "SceneManager.h"
+
 class Lemming :
 	public ElementGame
 {
@@ -7,13 +9,15 @@ private:
 
 	/* 
 	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Planejar, DIG: Cavar,
-	STOP: Inmovilitzat, STAIR: Posar Escales,PICK: Cavar amb el Pic EXPLOSION: Explota als 5s
+	STOP: Inmovilitzat, STAIR: Posar Escales,PICK: Cavar amb el Pic EXPLOSION: Explota als 5s.
 	*/
 	enum estats{
 		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION
 	};
 	int estat;
-	int dir; //Direcció del Lemming a l'hora de moure's.
+	int dir; // Direcció del Lemming a l'hora de moure's.
+
+	SceneManager* sManager;
 
 public:
 	Lemming();
@@ -24,6 +28,8 @@ public:
 
 	int GetDir();
 	
+	bool CheckCollisionMap();
+
 	// Estats temporals 
 	void Moure(bool dreta);
 	void TrencarMur();
@@ -35,7 +41,7 @@ public:
 	void Inmovilitzar();
 	void Construir();
 	void Explotar();
-	// Equipables com Paraigües i Escalar
+	// Equipables, com Paraigües i Escalar
 	void SetParaigues();
 	void SetEscalar();
 };

@@ -1,18 +1,15 @@
 #include "tinyManager.h"
-#include <iostream>
-using namespace std;
 
 tinyManager* tinyManager::tInstance = NULL;
 
 tinyManager::tinyManager(){
-	vManager = VideoManager::getInstanceVideo();
+	x = y = 0;
 }
 
 
 tinyManager::~tinyManager(){
 
 }
-
 
 tinyManager* tinyManager::getInstanceTinyManager(){
 	if (tInstance == NULL)
@@ -22,13 +19,13 @@ tinyManager* tinyManager::getInstanceTinyManager(){
 }
 
 
-Sint32 tinyManager::loadTMX(const char* fileTMX, const char* tiles){
+array2D* tinyManager::LoadTmx(const char* fileTMX){
 	TiXmlDocument doc(fileTMX);
 	if (!doc.LoadFile()) //parse file
 	{
 		cout << "Could not load test file 'level.xml.' Error=" << doc.ErrorDesc() << ".\n" <<
 			"Exiting." << endl;
-		return -1;
+		//return -1;
 	}
 
 	TiXmlElement* map = doc.FirstChildElement();
@@ -36,8 +33,7 @@ Sint32 tinyManager::loadTMX(const char* fileTMX, const char* tiles){
 	TiXmlElement* data = layer->FirstChildElement("data");
 
 	string text = data->GetText(); // Mapa de tmx.
-	int mapa[64][64]; // Mapa d'ints.
-	int x = 0, y = 0; // Posicions de l'array anterior.
+	array2D mapa; // Mapa d'ints.
 	string num = ""; // Contingut a insertar a l'array.
 	int layerWidth = atoi(layer->Attribute("width")) - 1;
 
@@ -60,7 +56,19 @@ Sint32 tinyManager::loadTMX(const char* fileTMX, const char* tiles){
 	}
 	mapa[x][y] = atoi(num.c_str());
 
+	return &mapa;
+}
 
+tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int mapa[64][64]){
+	TiXmlDocument doc(fileTMX);
+	if (!doc.LoadFile()) //parse file
+	{
+		cout << "Could not load test file 'level.xml.' Error=" << doc.ErrorDesc() << ".\n" <<
+			"Exiting." << endl;
+		//return -1;
+	}
+
+	TiXmlElement* map = doc.FirstChildElement();
 	TiXmlElement* tileset = map->FirstChildElement("tileset");
 	int tileWidth = atoi(tileset->Attribute("tilewidth"));
 	int tileHeight = atoi(tileset->Attribute("tileheight"));
@@ -72,6 +80,7 @@ Sint32 tinyManager::loadTMX(const char* fileTMX, const char* tiles){
 	int numMaxTilesWidth = tilesetWidth / (tileWidth + spacing);
 	int numMaxTilesHeight = tilesetHeigth / (tileHeight + spacing);
 
+	Tileset _tileset;
 	// Es recórre el tileset per sàpiguer quina tile es pinta. Els 2 primers for's indiquen la posició de la pantalla, a la qual se li multiplica per la mesura corresponent (X/Y) de la tile.
 	for (int i = 0; i <= x; i++){
 		for (int j = 0; j <= y; j++){
@@ -89,7 +98,11 @@ Sint32 tinyManager::loadTMX(const char* fileTMX, const char* tiles){
 			}
 			int dstPosX = i * tileWidth;
 			int dstPosY = j * tileHeight;
-			vManager->renderGraphic(vManager->getGraphicID(tiles), srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
+
+			_tileset.addTile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
 		}
 	}
+	x = y = 0;
+
+	return _tileset;
 }

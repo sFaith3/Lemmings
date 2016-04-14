@@ -9,7 +9,7 @@ SceneManager::SceneManager(){
 }
 
 SceneManager::~SceneManager(){
-	sManager->videoManager->close();
+	sManager->getVideoManager()->close();
 }
 
 SceneManager* SceneManager::getInstanceSM(){
@@ -51,4 +51,9 @@ void SceneManager::Render(){
 	default:
 		break;
 	}
+}
+
+
+int SceneManager::getMapCollisionSceneGame(){
+	return game.getMapCollision();
 }

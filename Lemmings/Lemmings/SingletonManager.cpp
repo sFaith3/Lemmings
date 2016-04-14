@@ -21,3 +21,20 @@ SingletonManager* SingletonManager::getInstanceSingleton(){
 	}
 	return sInstance;
 }
+
+
+InputManager* SingletonManager::getInputManager(){
+	return inputManager;
+}
+
+VideoManager* SingletonManager::getVideoManager(){
+	return videoManager;
+}
+
+AudioManager* SingletonManager::getAudioManager(){
+	return audioManager;
+}
+
+ResourceManager* SingletonManager::getResourceManager(){
+	return resourceManager;
+}

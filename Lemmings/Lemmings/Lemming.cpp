@@ -1,13 +1,13 @@
 #include "Lemming.h"
 
 
-Lemming::Lemming()
-{
+Lemming::Lemming(){
+	sManager = SceneManager::getInstanceSM();
 }
 
 
-Lemming::~Lemming()
-{
+Lemming::~Lemming(){
+
 }
 
 
@@ -29,9 +29,23 @@ void Lemming::Update(){
 		}
 		break;
 	case FALL:
+		if (CheckCollisionMap()){
+			estat = MOVE;
+			break;
+		}
 		posY+=2;
 		break;
 	}
+}
+
+bool Lemming::CheckCollisionMap(){
+	int mapa[64][64] = { sManager->getMapCollisionSceneGame() };
+	int x = posX / 4;
+	int y = posY / 4;
+
+	if (mapa[x][y] == 1)
+		return true;
+
 }
 
 void Lemming::Moure(bool dreta){

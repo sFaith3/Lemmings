@@ -26,6 +26,9 @@ public:
 	void Init(int scene);
 	void Update();
 	void Render();
+
+	//SceneGame getSceneGame();
+	int getMapCollisionSceneGame();
 };
 
 #endif

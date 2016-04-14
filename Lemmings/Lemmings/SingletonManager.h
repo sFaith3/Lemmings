@@ -13,15 +13,20 @@ private:
 	
 	static SingletonManager* sInstance;
 
+	InputManager* inputManager;
+	VideoManager* videoManager;
+	AudioManager* audioManager;
+	ResourceManager* resourceManager;
+
 public:
 	~SingletonManager();
 
 	static SingletonManager* getInstanceSingleton();
 
-	InputManager* inputManager;
-	VideoManager* videoManager;
-	AudioManager* audioManager;
-	ResourceManager* resourceManager;
+	InputManager* getInputManager();
+	VideoManager* getVideoManager();
+	AudioManager* getAudioManager();
+	ResourceManager* getResourceManager();
 };
 
 #endif

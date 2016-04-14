@@ -6,7 +6,11 @@ class Map :
 	public ElementGame
 {
 private:
-	const char* tileset;
+	const char* fileTileset;
+	bool tmx;
+
+	array2D *mapa;
+	tinyManager::Tileset tileset;
 
 	tinyManager* tManager;
 
@@ -14,7 +18,9 @@ public:
 	Map();
 	~Map();
 
-	void Init(int x, int y, const char* img, const char* tiles, int srcX, int srcY, int w, int h);
+	void Init(int x, int y, bool tmx, const char* level, const char* tileset, int srcX, int srcY, int w, int h);
 	void Render();
+
+	int getMapa();
 };
 

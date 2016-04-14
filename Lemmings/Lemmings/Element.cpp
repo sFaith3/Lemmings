@@ -22,5 +22,5 @@ void Element::Init(int x, int y, const char* img, int srcX, int srcY, int w, int
 
 void Element::Render(){
 	//sManager->videoManager->renderTexture(sManager->videoManager->getTextureID(imatge), srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
-	sManager->videoManager->renderGraphic(sManager->videoManager->getGraphicID(imatge), srcPosX, srcPosY, width, height, posX, posY);
+	sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(imatge), srcPosX, srcPosY, width, height, posX, posY);
 }

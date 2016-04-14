@@ -9,27 +9,33 @@ SceneGame::~SceneGame(){
 }
 
 
-void SceneGame::Init(){
+void SceneGame::Init(){ // Paràmetres d'inicialització
 	Lemming lemming;
 	lemming.Init(90, 20, "Assets/Images/lem_ani2.png", 0, 0, 32, 32);
 	lemmings.push_back(lemming);
 
-	fondo.Init(0, 0, "Assets/Levels/level.tmx", "Assets/Levels/tileset.png", 0, 0, 640, 480);
+	fons.Init(0, 0, false, "Assets/Images/map.png", NULL , 0, 0, 640, 480);
+	mapCollision.Init(0, 0, true, "Assets/Levels/mapaColprova2.xml", NULL, 0, 0, NULL, NULL);
 }
 
 void SceneGame::Update(){
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		itLem->Update();
-	sManager->videoManager->updateTime();
+	sManager->getVideoManager()->updateTime();
 }
 
 void SceneGame::Render(){
-	sManager->videoManager->clearScreen(0xFFFFFF);
+	sManager->getVideoManager()->clearScreen(0xFFFFFF);
 
-	fondo.Render();
+	fons.Render();
 
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		itLem->Render();
 	
-	sManager->videoManager->updateScreen();
+	sManager->getVideoManager()->updateScreen();
+}
+
+
+int SceneGame::getMapCollision(){
+	return mapCollision.getMapa();
 }

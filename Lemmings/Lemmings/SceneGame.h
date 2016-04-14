@@ -10,7 +10,8 @@ private:
 
 	SingletonManager* sManager;
 
-	Map fondo;
+	Map fons;
+	Map mapCollision;
 
 public:
 	SceneGame();
@@ -19,5 +20,8 @@ public:
 	void Init();
 	void Update();
 	void Render();
+
+	//Map getMapCollision();
+	int getMapCollision();
 };
 
