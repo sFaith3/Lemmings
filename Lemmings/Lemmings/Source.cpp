@@ -1,5 +1,5 @@
 #include "Utils.h"
-#include "Lemming.h"
+#include "SceneManager.h"
 
 
 int main(int argc, char* args[]){
@@ -25,7 +25,8 @@ int main(int argc, char* args[]){
 		sceneManager->Render();
 	}
 
-
 	sceneManager->~SceneManager();
+
+
 	return 0;
 }

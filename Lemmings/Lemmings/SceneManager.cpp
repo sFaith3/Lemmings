@@ -52,8 +52,3 @@ void SceneManager::Render(){
 		break;
 	}
 }
-
-
-int SceneManager::getMapCollisionSceneGame(){
-	return game.getMapCollision();
-}

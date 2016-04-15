@@ -1,23 +1,13 @@
 #pragma once
 #include "ElementGame.h"
-#include "SceneManager.h"
 
 class Lemming :
 	public ElementGame
 {
 private:
 
-	/* 
-	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Planejar, DIG: Cavar,
-	STOP: Inmovilitzat, STAIR: Posar Escales,PICK: Cavar amb el Pic EXPLOSION: Explota als 5s.
-	*/
-	enum estats{
-		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION
-	};
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's.
-
-	SceneManager* sManager;
 
 public:
 	Lemming();
@@ -26,9 +16,24 @@ public:
 	void Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h);
 	void Update();
 
+	int GetPosX();
+	int GetPosY();
+	int GetWidth();
+	int GetHeight();
 	int GetDir();
-	
-	bool CheckCollisionMap();
+
+	/*
+	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Planejar, DIG: Cavar,
+	STOP: Inmovilitzat, STAIR: Posar Escales,PICK: Cavar amb el Pic EXPLOSION: Explota als 5s.
+	*/
+	enum estats{
+		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION
+	};
+
+	int GetEstat();
+
+	void SetMove();
+	void SetFall();
 
 	// Estats temporals 
 	void Moure(bool dreta);

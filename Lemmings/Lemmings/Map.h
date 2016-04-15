@@ -7,10 +7,11 @@ class Map :
 {
 private:
 	const char* fileTileset;
-	bool tmx;
+	const char* fileMapCollision;
 
-	array2D *mapa;
 	tinyManager::Tileset tileset;
+
+	array2D *mapCollision;
 
 	tinyManager* tManager;
 
@@ -18,9 +19,9 @@ public:
 	Map();
 	~Map();
 
-	void Init(int x, int y, bool tmx, const char* level, const char* tileset, int srcX, int srcY, int w, int h);
+	void Init(int x, int y, const char* fileMap, const char* tiles, const char* fileMapColli, int srcX, int srcY, int w, int h);
 	void Render();
 
-	int getMapa();
+	int getMapa(int x, int y);
 };
 

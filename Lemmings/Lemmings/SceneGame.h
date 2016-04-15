@@ -11,7 +11,6 @@ private:
 	SingletonManager* sManager;
 
 	Map fons;
-	Map mapCollision;
 
 public:
 	SceneGame();
@@ -20,8 +19,5 @@ public:
 	void Init();
 	void Update();
 	void Render();
-
-	//Map getMapCollision();
-	int getMapCollision();
 };
 

@@ -2,7 +2,7 @@
 
 
 Lemming::Lemming(){
-	sManager = SceneManager::getInstanceSM();
+
 }
 
 
@@ -29,37 +29,90 @@ void Lemming::Update(){
 		}
 		break;
 	case FALL:
-		if (CheckCollisionMap()){
-			estat = MOVE;
-			break;
-		}
 		posY+=2;
 		break;
 	}
 }
 
-bool Lemming::CheckCollisionMap(){
-	int mapa[64][64] = { sManager->getMapCollisionSceneGame() };
-	int x = posX / 4;
-	int y = posY / 4;
-
-	if (mapa[x][y] == 1)
-		return true;
-
+int Lemming::GetPosX(){
+	return posX;
 }
+
+int Lemming::GetPosY(){
+	return posY;
+}
+
+int Lemming::GetWidth(){
+	return width;
+}
+
+int Lemming::GetHeight(){
+	return height;
+}
+
+int Lemming::GetDir(){
+	return dir;
+}
+
+
+int Lemming::GetEstat(){
+	return estat;
+}
+
+void Lemming::SetMove(){
+	estat = MOVE;
+}
+
+void Lemming::SetFall(){
+	estat = FALL;
+}
+
 
 void Lemming::Moure(bool dreta){
 
 }
-void Lemming::TrencarMur(){}
-void Lemming::Levitar(){}
-void Lemming::Escalar(){}
-void Lemming::Cavar(){}
-void Lemming::Picar(){}
-void Lemming::Caure(){}
-void Lemming::Inmovilitzar(){}
-void Lemming::Construir(){}
-void Lemming::Explotar(){}
 
-void Lemming::SetParaigues(){}
-void Lemming::SetEscalar(){}
+void Lemming::TrencarMur(){
+
+}
+
+void Lemming::Levitar(){
+
+}
+
+void Lemming::Escalar(){
+
+}
+
+void Lemming::Cavar(){
+
+}
+
+void Lemming::Picar(){
+
+}
+
+void Lemming::Caure(){
+
+}
+
+void Lemming::Inmovilitzar(){
+
+}
+
+void Lemming::Construir(){
+
+}
+
+void Lemming::Explotar(){
+
+}
+
+
+void Lemming::SetParaigues(){
+
+}
+
+void Lemming::SetEscalar(){
+
+}

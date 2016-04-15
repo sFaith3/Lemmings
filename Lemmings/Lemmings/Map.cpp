@@ -10,18 +10,18 @@ Map::~Map(){
 }
 
 
-void Map::Init(int x, int y, bool tmx, const char* fileMap, const char* tiles, int srcX, int srcY, int w, int h){
+void Map::Init(int x, int y, const char* fileMap, const char* tiles, const char* fileMapColli, int srcX, int srcY, int w, int h){
 	Element::Init(x, y, fileMap, srcX, srcY, w, h);
 
-	this->tmx = tmx;
-	if (this->tmx){
-		mapa = tManager->LoadTmx(fileMap);
-		if (tiles != NULL){
-			fileTileset = tiles;
-			tileset = tManager->LoadTileset(fileMap, *mapa);
-
-		}
+	fileTileset = tiles;
+	if (fileTileset != NULL){
+		array2D *mapa = tManager->LoadTmx(fileMap);
+		tileset = tManager->LoadTileset(fileMap, *mapa);
 	}
+
+	fileMapCollision = fileMapColli;
+	if (fileMapCollision != NULL)
+		mapCollision = tManager->LoadTmx(fileMapCollision);
 
 }
 
@@ -37,6 +37,6 @@ void Map::Render(){
 }
 
 
-int Map::getMapa(){
-	return (int)mapa;
+int Map::getMapa(int x, int y){
+	return (int)mapCollision[x][y];
 }
