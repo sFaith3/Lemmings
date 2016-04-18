@@ -14,22 +14,21 @@ Lemming::~Lemming(){
 void Lemming::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
 	ElementGame::Init(x, y, sp, srcX, srcY, w, h);
 	estat = FALL;
+	paraigues = false;
+	escalar = false;
+	temps = 5;
 }
 
 void Lemming::Update(){
 	switch (estat){
 	case MOVE:
-		switch (dir){
-		case 0:
-			posX++;
-			break;
-		case 2:
-			posX--;
-			break;
-		}
+		Moure(dir);
 		break;
 	case FALL:
-		posY+=2;
+		Caure();
+		break;
+	case BREAK:
+
 		break;
 	}
 }
@@ -59,17 +58,24 @@ int Lemming::GetEstat(){
 	return estat;
 }
 
-void Lemming::SetMove(){
+void Lemming::SetMoure(){
 	estat = MOVE;
 }
 
-void Lemming::SetFall(){
+void Lemming::SetCaure(){
 	estat = FALL;
 }
 
 
-void Lemming::Moure(bool dreta){
-
+void Lemming::Moure(int dir){
+	switch (dir){
+	case 0:
+		posX++;
+		break;
+	case 2:
+		posX--;
+		break;
+	}
 }
 
 void Lemming::TrencarMur(){
@@ -93,26 +99,26 @@ void Lemming::Picar(){
 }
 
 void Lemming::Caure(){
-
+	posY += 2;
 }
 
 void Lemming::Inmovilitzar(){
 
 }
 
-void Lemming::Construir(){
+void Lemming::ConstruirEscala(){
 
 }
 
 void Lemming::Explotar(){
-
+	
 }
 
 
 void Lemming::SetParaigues(){
-
+	paraigues = true;
 }
 
 void Lemming::SetEscalar(){
-
+	escalar = true;
 }

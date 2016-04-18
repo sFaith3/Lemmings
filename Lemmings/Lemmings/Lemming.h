@@ -7,7 +7,11 @@ class Lemming :
 private:
 
 	int estat;
-	int dir; // Direcció del Lemming a l'hora de moure's.
+	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
+	int temps;
+	bool paraigues;
+	bool escalar;
+
 
 public:
 	Lemming();
@@ -32,11 +36,11 @@ public:
 
 	int GetEstat();
 
-	void SetMove();
-	void SetFall();
+	void SetMoure();
+	void SetCaure();
 
 	// Estats temporals 
-	void Moure(bool dreta);
+	void Moure(int dir);
 	void TrencarMur();
 	void Levitar();
 	void Escalar();
@@ -44,7 +48,7 @@ public:
 	void Picar();
 	void Caure();
 	void Inmovilitzar();
-	void Construir();
+	void ConstruirEscala();
 	void Explotar();
 	// Equipables, com Paraigües i Escalar
 	void SetParaigues();
