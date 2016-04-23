@@ -8,7 +8,7 @@
 #include <map>
 using namespace std;
 
-typedef int array2D[64][64];
+//typedef int array2D[200][200];
 
 class tinyManager
 {
@@ -17,8 +17,9 @@ private:
 
 	static tinyManager* tInstance;
 
-	int x, y; // Posicions de l'array 'mapa[64][64]'.
-	//array2D mapa;
+	int x, y; // Posicions de l'array 'mapa[][]'.
+	int widthMap;
+	int tileSize;
 
 public:
 	~tinyManager();
@@ -92,14 +93,16 @@ public:
 
 	};	
 
-	array2D* LoadTmx(const char* fileTMX);
+	//array2D* LoadTmx(const char* fileTMX, int numLayers);
+	vector <vector<int> > LoadTmx(const char* fileTMX, int numLayers);
 
-	Tileset LoadTileset(const char* fileTMX, int mapa[64][64]);
+	Tileset LoadTileset(const char* fileTMX, int numTilesets, vector <vector<int> > mapa);
+
+	int GetWidthMap();
+	int GetTileSize();
 
 	//int* GetMap(const char* fileTMX);
 	//int GetTileset(const char* fileTileset);
-
-	//void RenderTmx(const char* fileTMX);
 
 	//Sint32 getMapID(const char* fileTMX);
 	//Sint32 getTilesetID(const char* fileTileset);

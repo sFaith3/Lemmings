@@ -19,28 +19,36 @@ tinyManager* tinyManager::getInstanceTinyManager(){
 }
 
 
-array2D* tinyManager::LoadTmx(const char* fileTMX){
+vector <vector<int> > tinyManager::LoadTmx(const char* fileTMX, int numLayers){
 	TiXmlDocument doc(fileTMX);
 	if (!doc.LoadFile()) //parse file
 	{
-		cout << "Could not load test file 'level.xml.' Error=" << doc.ErrorDesc() << ".\n" <<
+		cout << "Could not load test file '" << fileTMX << "' Error=" << doc.ErrorDesc() << ".\n" <<
 			"Exiting." << endl;
 		//return -1;
 	}
 
 	TiXmlElement* map = doc.FirstChildElement();
+	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
+	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
+	for (int i = 0; i < numLayers; i++){
+		layer = layer->NextSiblingElement("layer");
+	}
 	TiXmlElement* data = layer->FirstChildElement("data");
 
 	string text = data->GetText(); // Mapa de tmx.
-	array2D mapa; // Mapa d'ints.
+	vector <vector<int> > mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
 	string num = ""; // Contingut a insertar a l'array.
 	int layerWidth = atoi(layer->Attribute("width")) - 1;
 
-	// Es desa l'informació de 'data' en una matriu de 2 dimensions, per tal de saber les tiles a pintar, gràcies a la seva ID. I amb la posició de la matriu se sap on ubicar-la.
+	// Es desa l'informació de 'data' en una matriu de 2 dimensions o en un vector de vectors, per tal de saber les tiles a pintar, gràcies a la seva ID. I amb la posició de la matriu se sap on ubicar-la.
+	vector<int> row;
+	mapa.push_back(row);
 	for (int i = 0; i < text.length(); i++){
 		if (text[i] == ','){
-			mapa[x][y] = atoi(num.c_str());
+			//mapa[x][y] = atoi(num.c_str());
+			mapa[y].push_back(atoi(num.c_str()));
 
 			num = "";
 
@@ -49,17 +57,20 @@ array2D* tinyManager::LoadTmx(const char* fileTMX){
 			else{
 				y++;
 				x = 0;
+				vector<int> row;
+				mapa.push_back(row);
 			}
 		}
 		else if (text[i] != ' ')
 			num += text[i];
 	}
-	mapa[x][y] = atoi(num.c_str());
+	//mapa[x][y] = atoi(num.c_str());
+	mapa[y].push_back(atoi(num.c_str()));
 
-	return &mapa;
+	return mapa;
 }
 
-tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int mapa[64][64]){
+tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int numTilesets, vector <vector<int> > mapa){
 	TiXmlDocument doc(fileTMX);
 	if (!doc.LoadFile()) //parse file
 	{
@@ -70,6 +81,9 @@ tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int mapa[64][
 
 	TiXmlElement* map = doc.FirstChildElement();
 	TiXmlElement* tileset = map->FirstChildElement("tileset");
+	for (int i = 0; i < numTilesets; i++){
+		tileset = tileset->NextSiblingElement("tileset");
+	}
 	int tileWidth = atoi(tileset->Attribute("tilewidth"));
 	int tileHeight = atoi(tileset->Attribute("tileheight"));
 	int spacing = atoi(tileset->Attribute("spacing"));
@@ -88,10 +102,10 @@ tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int mapa[64][
 			int srcPosY = 0;
 			// Es fa un requadre de retall al tileset, i s'indica on se situa.
 			for (int h = 1; h <= numMaxTilesHeight; h++){ // Segons la fila on es trobi.
-				if (mapa[i][j] < numMaxTilesWidth * h){
+				if (mapa[j][i] < numMaxTilesWidth * h){
 					// S'obté la ID de la tile i se li resta el número total de tiles que hi ha en una fila, multiplicat per la fila on sigui menys 1 més l'espai que es deixa entre tile.
 					// Perquè si es troba a la primera fila, no es resta cap, de manera que la x del requadre que s'obté ja és de la primera fila.
-					srcPosX = (((mapa[i][j] - 1) - (numMaxTilesWidth * (h - 1))) * tileWidth) + (spacing * ((mapa[i][j] - 1) - (numMaxTilesWidth * (h - 1))));
+					srcPosX = (((mapa[j][i] - 1) - (numMaxTilesWidth * (h - 1))) * tileWidth) + (spacing * ((mapa[j][i] - 1) - (numMaxTilesWidth * (h - 1))));
 					srcPosY = ((h - 1) * tileHeight) + (spacing * (h - 1));
 					break;
 				}
@@ -105,4 +119,20 @@ tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int mapa[64][
 	x = y = 0;
 
 	return _tileset;
+}
+
+int tinyManager::GetWidthMap(){
+	int _widthMap = widthMap;
+	if (widthMap != 0)
+		widthMap = 0;
+
+	return _widthMap;
+}
+
+int  tinyManager::GetTileSize(){
+	int _tileSize = tileSize;
+	if (tileSize != 0)
+		tileSize = 0;
+
+	return _tileSize;
 }
