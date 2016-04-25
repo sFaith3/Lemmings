@@ -44,7 +44,7 @@ public:
 	void SetCaure();
 
 	void SetTrencar();
-	void SetParaigues();
+	void SetPrincipiLevitar();
 	void SetLevitar();
 	void SetCavar();
 	void SetPicar();

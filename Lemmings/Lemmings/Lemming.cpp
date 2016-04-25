@@ -82,7 +82,7 @@ void Lemming::SetTrencar(){
 	numImatges = 32;
 }
 
-void Lemming::SetParaigues(){
+void Lemming::SetPrincipiLevitar(){
 	estat = UMBRELLA;
 	numImatges = 4;
 }

@@ -83,7 +83,6 @@ vector <vector<int> > tinyManager::LoadMapCollision(){
 		while (!trobat){
 			layer = layer->NextSiblingElement("layer");
 			if ((string)layer->Attribute("name") == "Collider"){
-				cout << layer->Attribute("name") << endl;
 				trobat = true;
 			}
 		}

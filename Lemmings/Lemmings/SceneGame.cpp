@@ -24,9 +24,9 @@ void SceneGame::Update(){
 		int x2 = (itLem->GetPosX() + itLem->GetWidth()) / fons.GetSizeTile();
 		int y2 = (itLem->GetPosY() + itLem->GetHeight()) / fons.GetSizeTile();
 
-		if (itLem->GetEstat() != itLem->FALL && (fons.GetMapa(x1, y1) == 1 && fons.GetMapa(x2, y2) == 1))
+		if (itLem->GetEstat() != itLem->FALL && (fons.GetMapa(x1, y1) == 0 && fons.GetMapa(x2, y2) == 0))
 			itLem->SetCaure();
-		else if (itLem->GetEstat() == itLem->FALL && (fons.GetMapa(x1, y1) != 1 || fons.GetMapa(x2, y2) != 1)){
+		else if (itLem->GetEstat() == itLem->FALL && (fons.GetMapa(x1, y1) != 0 || fons.GetMapa(x2, y2) != 0)){
 			itLem->SetMoure();
 		}
 

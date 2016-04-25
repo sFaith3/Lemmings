@@ -51,9 +51,6 @@ void Map::Render(){
 }
 
 
-/*int Map::GetMapa(int x, int y){
-	return (int)mapCollision[x][y];
-}*/
 int Map::GetMapa(int x, int y){
 	return mapCollision[y][x];
 }
