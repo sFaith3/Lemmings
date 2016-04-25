@@ -9,6 +9,7 @@ private:
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
 	int temps;
+	int velocitat;
 	bool paraigues;
 	bool escalar;
 
@@ -27,17 +28,30 @@ public:
 	int GetDir();
 
 	/*
-	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Planejar, DIG: Cavar,
-	STOP: Inmovilitzat, STAIR: Posar Escales,PICK: Cavar amb el Pic EXPLOSION: Explota als 5s.
+	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
+	STOP: Inmovilitzat, STAIR: Posar Escales,PICK: Cavar amb el Pic 
+	EXPLOSION: Explota als 5s, DEAD: Cuan un Lemming es destruit 
 	*/
 	enum estats{
-		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION
+		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION, 
+		DEAD, DEADFALL, UMBRELLA, NOSTAIR
 	};
 
 	int GetEstat();
 
+	// Sets per canviar l'Estat 
 	void SetMoure();
 	void SetCaure();
+
+	void SetTrencar();
+	void SetParaigues();
+	void SetLevitar();
+	void SetCavar();
+	void SetPicar();
+	void SetInmovilitzar();
+	void SetConstruirEscala();
+	void SetNoEscales();
+	void SetExplotar();
 
 	// Estats temporals 
 	void Moure(int dir);
@@ -53,5 +67,6 @@ public:
 	// Equipables, com Paraigües i Escalar
 	void SetParaigues();
 	void SetEscalar();
+
 };
 

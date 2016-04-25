@@ -11,7 +11,7 @@ SceneGame::~SceneGame(){
 
 void SceneGame::Init(){
 	Lemming lemming;
-	lemming.Init(90, 20, "Assets/Images/lem_ani2.png", 0, 0, 32, 32);
+	lemming.Init(90, 20, "Assets/Images/lem_ani.png", 4, 0, 10, 10);
 	lemmings.push_back(lemming);
 
 	fons.Init(0, 0, "Assets/Levels/level.tmx", 1, "Assets/Levels/tileset.png", 1, 0, 0, 640, 480);
@@ -24,9 +24,9 @@ void SceneGame::Update(){
 		int x2 = (itLem->GetPosX() + itLem->GetWidth()) / fons.GetSizeTile();
 		int y2 = (itLem->GetPosY() + itLem->GetHeight()) / fons.GetSizeTile();
 
-		if (itLem->GetEstat() != itLem->FALL && (fons.GetMapa(x1, y1) == 91 && fons.GetMapa(x2, y2) == 91))
+		if (itLem->GetEstat() != itLem->FALL && (fons.GetMapa(x1, y1) == 1 && fons.GetMapa(x2, y2) == 1))
 			itLem->SetCaure();
-		else if (itLem->GetEstat() == itLem->FALL && (fons.GetMapa(x1, y1) != 91 || fons.GetMapa(x2, y2) != 91)){
+		else if (itLem->GetEstat() == itLem->FALL && (fons.GetMapa(x1, y1) != 1 || fons.GetMapa(x2, y2) != 1)){
 			itLem->SetMoure();
 		}
 
