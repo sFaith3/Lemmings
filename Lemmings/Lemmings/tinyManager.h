@@ -8,24 +8,13 @@
 #include <map>
 using namespace std;
 
-//typedef int array2D[200][200];
-
 class tinyManager
 {
-private:
-	tinyManager();
-
-	static tinyManager* tInstance;
-
-	int x, y; // Posicions de l'array 'mapa[][]'.
-	int widthMap;
-	int tileSize;
-
 public:
 	~tinyManager();
 
 	static tinyManager* getInstanceTinyManager();
-	
+
 	class Tileset{
 	public:
 		struct Tile{
@@ -89,23 +78,27 @@ public:
 	private:
 		vector<Tile> tiles;
 
-		//Tiles getTile(int pos);
+	};
 
-	};	
-
-	//array2D* LoadTmx(const char* fileTMX, int numLayers);
-	vector <vector<int> > LoadTmx(const char* fileTMX, int numLayers);
-
-	Tileset LoadTileset(const char* fileTMX, int numTilesets, vector <vector<int> > mapa);
+	void LoadTmx(const char* fileTMX);
+	vector <vector<int> > LoadMap(int numLayers);
+	vector <vector<int> > LoadMapCollision();
+	Tileset LoadTileset(int numTilesets, vector <vector<int> > mapa);
 
 	int GetWidthMap();
 	int GetTileSize();
 
-	//int* GetMap(const char* fileTMX);
-	//int GetTileset(const char* fileTileset);
+	int DestroyTMX();
 
-	//Sint32 getMapID(const char* fileTMX);
-	//Sint32 getTilesetID(const char* fileTileset);
+private:
+	tinyManager();
+
+	static tinyManager* tInstance;
+
+	TiXmlDocument *doc;
+	int x, y; // Posicions del vector de vectors 'mapa'.
+	int widthMap;
+	int tileSize;
 
 };
 

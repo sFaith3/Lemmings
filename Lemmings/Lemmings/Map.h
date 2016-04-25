@@ -6,8 +6,8 @@ class Map :
 	public ElementGame
 {
 private:
+	const char* fileMap;
 	const char* fileTileset;
-	const char* fileMapCollision;
 
 	vector<tinyManager::Tileset> tilesets;
 	vector<tinyManager::Tileset>::iterator itTilesets;
@@ -24,7 +24,7 @@ public:
 	Map();
 	~Map();
 
-	void Init(int x, int y, const char* fileMap, int numLayers, const char* tiles, int numTilesets, const char* fileMapColli, int srcX, int srcY, int w, int h);
+	void Init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h);
 	void Render();
 
 	int GetMapa(int x, int y);

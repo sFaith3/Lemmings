@@ -14,7 +14,7 @@ void SceneGame::Init(){
 	lemming.Init(90, 20, "Assets/Images/lem_ani2.png", 0, 0, 32, 32);
 	lemmings.push_back(lemming);
 
-	fons.Init(0, 0, "Assets/Levels/level.tmx", 1, "Assets/Levels/tileset.png", 1, "Assets/Levels/mapaColprova2.tmx", 0, 0, 640, 480);
+	fons.Init(0, 0, "Assets/Levels/level.tmx", 1, "Assets/Levels/tileset.png", 1, 0, 0, 640, 480);
 }
 
 void SceneGame::Update(){

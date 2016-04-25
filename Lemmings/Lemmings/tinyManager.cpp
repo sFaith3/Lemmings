@@ -4,6 +4,7 @@ tinyManager* tinyManager::tInstance = NULL;
 
 tinyManager::tinyManager(){
 	x = y = 0;
+	doc = NULL;
 }
 
 
@@ -19,24 +20,26 @@ tinyManager* tinyManager::getInstanceTinyManager(){
 }
 
 
-vector <vector<int> > tinyManager::LoadTmx(const char* fileTMX, int numLayers){
-	TiXmlDocument doc(fileTMX);
-	if (!doc.LoadFile()) //parse file
+void tinyManager::LoadTmx(const char* fileTMX){
+	doc = new TiXmlDocument(fileTMX);
+	if (!doc->LoadFile()) // parse file
 	{
-		cout << "Could not load test file '" << fileTMX << "' Error=" << doc.ErrorDesc() << ".\n" <<
+		cout << "Could not load test file '" << fileTMX << "' Error=" << doc->ErrorDesc() << ".\n" <<
 			"Exiting." << endl;
 		//return -1;
 	}
+}
 
-	TiXmlElement* map = doc.FirstChildElement();
+vector <vector<int> > tinyManager::LoadMap(int numLayers){
+	TiXmlElement *map = doc->FirstChildElement();
 	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
 	for (int i = 0; i < numLayers; i++){
 		layer = layer->NextSiblingElement("layer");
 	}
-	TiXmlElement* data = layer->FirstChildElement("data");
 
+	TiXmlElement* data = layer->FirstChildElement("data");
 	string text = data->GetText(); // Mapa de tmx.
 	vector <vector<int> > mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
 	string num = ""; // Contingut a insertar a l'array.
@@ -70,16 +73,56 @@ vector <vector<int> > tinyManager::LoadTmx(const char* fileTMX, int numLayers){
 	return mapa;
 }
 
-tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int numTilesets, vector <vector<int> > mapa){
-	TiXmlDocument doc(fileTMX);
-	if (!doc.LoadFile()) //parse file
-	{
-		cout << "Could not load test file 'level.xml.' Error=" << doc.ErrorDesc() << ".\n" <<
-			"Exiting." << endl;
-		//return -1;
+vector <vector<int> > tinyManager::LoadMapCollision(){
+	TiXmlElement *map = doc->FirstChildElement();
+	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
+	tileSize = atoi(map->Attribute("tilewidth"));
+	TiXmlElement* layer = map->FirstChildElement("layer");
+	if ((string)layer->Attribute("name") != "Collider"){
+		bool trobat = false;
+		while (!trobat){
+			layer = layer->NextSiblingElement("layer");
+			if ((string)layer->Attribute("name") == "Collider"){
+				cout << layer->Attribute("name") << endl;
+				trobat = true;
+			}
+		}
 	}
 
-	TiXmlElement* map = doc.FirstChildElement();
+	TiXmlElement* data = layer->FirstChildElement("data");
+	string text = data->GetText(); // Mapa de tmx.
+	vector <vector<int> > mapaCollisio; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
+	string num = ""; // Contingut a insertar a l'array.
+	int layerWidth = atoi(layer->Attribute("width")) - 1;
+
+	// Es desa l'informació de 'data' en una matriu de 2 dimensions o en un vector de vectors, per tal de saber les tiles a pintar, gràcies a la seva ID. I amb la posició de la matriu se sap on ubicar-la.
+	vector<int> row;
+	mapaCollisio.push_back(row);
+	for (int i = 0; i < text.length(); i++){
+		if (text[i] == ','){
+			mapaCollisio[y].push_back(atoi(num.c_str()));
+
+			num = "";
+
+			if (x < layerWidth)
+				x++;
+			else{
+				y++;
+				x = 0;
+				vector<int> row;
+				mapaCollisio.push_back(row);
+			}
+		}
+		else if (text[i] != ' ')
+			num += text[i];
+	}
+	mapaCollisio[y].push_back(atoi(num.c_str()));
+
+	return mapaCollisio;
+}
+
+tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, vector <vector<int> > mapa){
+	TiXmlElement *map = doc->FirstChildElement();
 	TiXmlElement* tileset = map->FirstChildElement("tileset");
 	for (int i = 0; i < numTilesets; i++){
 		tileset = tileset->NextSiblingElement("tileset");
@@ -121,6 +164,7 @@ tinyManager::Tileset tinyManager::LoadTileset(const char* fileTMX, int numTilese
 	return _tileset;
 }
 
+
 int tinyManager::GetWidthMap(){
 	int _widthMap = widthMap;
 	if (widthMap != 0)
@@ -129,10 +173,16 @@ int tinyManager::GetWidthMap(){
 	return _widthMap;
 }
 
-int  tinyManager::GetTileSize(){
+int tinyManager::GetTileSize(){
 	int _tileSize = tileSize;
 	if (tileSize != 0)
 		tileSize = 0;
 
 	return _tileSize;
+}
+
+
+int tinyManager::DestroyTMX(){
+	delete doc;
+	return 1;
 }

@@ -2,6 +2,10 @@
 
 
 Map::Map(){
+	fileMap = "";
+	fileTileset = "";
+	widthMap = 0;
+	sizeTiles = 0;
 	tManager = tinyManager::getInstanceTinyManager();
 }
 
@@ -10,23 +14,26 @@ Map::~Map(){
 }
 
 
-void Map::Init(int x, int y, const char* fileMap, int numLayers, const char* tiles, int numTilesets, const char* fileMapColli, int srcX, int srcY, int w, int h){
+void Map::Init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h){
 	Element::Init(x, y, fileMap, srcX, srcY, w, h);
 
-	fileTileset = tiles;
+	tManager->LoadTmx(fileMap);
+	this->fileTileset = fileTileset;
 	if (fileTileset != NULL){
 		for (int i = 0; i < numLayers; i++){
-			vector <vector<int> > mapa = tManager->LoadTmx(fileMap, i);
+			vector <vector<int> > mapa = tManager->LoadMap(i);
 			for (int i = 0; i < numTilesets; i++)
-				tilesets.push_back(tManager->LoadTileset(fileMap, i, mapa));
+				tilesets.push_back(tManager->LoadTileset(i, mapa));
 		}
+		mapCollision = tManager->LoadMapCollision();
 		widthMap = tManager->GetWidthMap();
 		sizeTiles = tManager->GetTileSize();
 	}
+	else{
+		this->fileMap = fileMap;
+	}
 
-	fileMapCollision = fileMapColli;
-	if (fileMapCollision != NULL)
-		mapCollision = tManager->LoadTmx(fileMapCollision, 0);
+	tManager->DestroyTMX();
 
 }
 
@@ -40,7 +47,7 @@ void Map::Render(){
 		}
 	}
 	else
-		sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(imatge), 0, 0, width, height, posX, posY);
+		sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(fileMap), 0, 0, width, height, posX, posY);
 }
 
 
