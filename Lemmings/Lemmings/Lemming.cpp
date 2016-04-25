@@ -74,9 +74,43 @@ void Lemming::SetMoure(){
 
 void Lemming::SetCaure(){
 	estat = FALL;
-	numImatges = 10;
+	numImatges = 4;
 }
 
+void Lemming::SetTrencar(){
+	estat = BREAK;
+	numImatges = 32;
+}
+
+void Lemming::SetParaigues(){
+	estat = UMBRELLA;
+	numImatges = 4;
+}
+
+void Lemming::SetLevitar(){
+	estat = GLIDE;
+	numImatges = 4;
+}
+
+void Lemming::SetCavar(){
+	estat = DIG;
+	numImatges = 8;
+}
+
+void Lemming::SetPicar(){
+	estat = PICK;
+	numImatges = 24;
+}
+
+void Lemming::SetInmovilitzar(){
+	estat = STOP;
+	numImatges = 16;
+}
+
+void Lemming::SetConstruirEscala(){
+	estat = STAIR;
+	numImatges = 16;
+}
 
 void Lemming::Moure(int dir){
 	switch (dir){
