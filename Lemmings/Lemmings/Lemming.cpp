@@ -90,7 +90,7 @@ void Lemming::SetTrencar(){
 }
 
 void Lemming::SetPrincipiLevitar(){
-	estat = UMBRELLA;
+	estat = OPENUMBRELLA;
 	numImatges = 4;
 }
 
