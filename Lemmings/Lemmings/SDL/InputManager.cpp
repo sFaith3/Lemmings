@@ -5,7 +5,6 @@
 InputManager* InputManager::iInstance = NULL;
 
 InputManager::InputManager(){
-
 	quit = false;
 	back = false;
 	pause = false;

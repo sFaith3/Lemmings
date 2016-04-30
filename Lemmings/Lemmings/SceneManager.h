@@ -1,31 +1,44 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
-#include "SceneGame.h"
+#include <vector>
+#include "Scene.h"
+#include "SingletonManager.h"
+
+using namespace std;
+
+//! Enum Scenes.
+/*! All the Scenes in the game. */
+enum SceneEnum{
+	LOGO, MENU, CODE_LEVEL, PRE_GAME, GAME
+};
+
+#define NUM_SCENES 5
+#define _LASTSCENE
 
 class SceneManager
 {
 private:
-	static SceneManager* smInstance;
+	SceneManager();
 
-	enum escenes{
-		JOC, MENU
-	};
-	int currentScene;
-
-	SceneGame game;
+	static SceneManager* smInstance; /*!<	Singleton instance*/
+	
+	vector<Scene*> mVectorScenes;
+	SceneEnum mCurrScene;
 
 	SingletonManager* sManager;
 
 public:
-	SceneManager();
 	~SceneManager();
 
+	//! Gets Singleton instance.
 	static SceneManager* getInstanceSM();
 
-	void Init(int scene);
-	void Update();
-	void Render();
+	void init();
+	void update();
+	void render();
+
+	void changeScene(SceneEnum next_scene);
 };
 
 #endif

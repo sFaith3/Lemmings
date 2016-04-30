@@ -2,11 +2,14 @@
 #include "Utils.h"
 #include "Lemming.h"
 #include "Map.h"
-class SceneGame
+#include "Scene.h"
+
+class SceneGame :
+	public Scene
 {
 private:
-	vector<Lemming> lemmings;
-	vector<Lemming>::iterator itLem;
+	vector<Lemming*> lemmings;
+	vector<Lemming*>::iterator itLem;
 
 	SingletonManager* sManager;
 
@@ -16,8 +19,8 @@ public:
 	SceneGame();
 	~SceneGame();
 
-	void Init();
-	void Update();
-	void Render();
+	void init();
+	void update();
+	void render();
 };
 

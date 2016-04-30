@@ -5,14 +5,12 @@ class Lemming :
 	public ElementGame
 {
 private:
-
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
 	int temps;
 	int velocitat;
 	bool paraigues;
 	bool escalar;
-
 
 public:
 	Lemming();

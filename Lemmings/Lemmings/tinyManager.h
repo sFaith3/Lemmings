@@ -63,11 +63,11 @@ public:
 		};
 
 		void addTile(int _srcPosX, int _srcPosY, int _tileWidth, int _tileHeight, int _dstPosX, int _dstPosY){
-			Tile tile = Tile(_srcPosX, _srcPosY, _tileWidth, _tileHeight, _dstPosX, _dstPosY);
+			Tile *tile = new Tile(_srcPosX, _srcPosY, _tileWidth, _tileHeight, _dstPosX, _dstPosY);
 			tiles.push_back(tile);
 		}
 
-		vector<Tile> getTiles(){
+		vector<Tile*> getTiles(){
 			return tiles;
 		}
 
@@ -76,7 +76,7 @@ public:
 		}
 
 	private:
-		vector<Tile> tiles;
+		vector<Tile*> tiles;
 
 	};
 

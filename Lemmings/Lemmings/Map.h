@@ -15,7 +15,6 @@ private:
 	int widthMap;
 	int sizeTiles;
 
-	//array2D *mapCollision;
 	vector <vector<int> > mapCollision;
 
 	tinyManager* tManager;
@@ -24,12 +23,10 @@ public:
 	Map();
 	~Map();
 
-	void Init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h);
-	void Render();
+	void init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h);
+	void render();
 
 	int GetMapa(int x, int y);
 	int GetSizeTile();
-
-	void move(bool dreta);
 };
 

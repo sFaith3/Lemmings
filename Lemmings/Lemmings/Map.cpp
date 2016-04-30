@@ -14,8 +14,8 @@ Map::~Map(){
 }
 
 
-void Map::Init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h){
-	Element::Init(x, y, fileMap, srcX, srcY, w, h);
+void Map::init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h){
+	Element::init(x, y, fileMap, srcX, srcY, w, h);
 
 	tManager->LoadTmx(fileMap);
 	this->fileTileset = fileTileset;
@@ -38,12 +38,12 @@ void Map::Init(int x, int y, const char* fileMap, int numLayers, const char* fil
 }
 
 
-void Map::Render(){
+void Map::render(){
 	if (fileTileset != NULL){
 		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++){
-			vector<tinyManager::Tileset::Tile> tiles = itTilesets->getTiles();
+			vector<tinyManager::Tileset::Tile*> tiles = itTilesets->getTiles();
 			for (int pos = 0; pos < itTilesets->getSizeTiles(); pos++)
-				sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(fileTileset), tiles[pos].getSrcPosX(), tiles[pos].getSrcPosY(), tiles[pos].getTileWidth(), tiles[pos].getTileHeight(), tiles[pos].getDstPosX() - posX, tiles[pos].getDstPosY() - posY);
+				sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(fileTileset), tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY);
 		}
 	}
 	else
@@ -57,21 +57,4 @@ int Map::GetMapa(int x, int y){
 
 int Map::GetSizeTile(){
 	return sizeTiles;
-}
-
-void Map::move(bool dreta){
-	if (dreta){
-		if (posX + width < widthMap)
-			posX += 4;
-		else if (posX + width > widthMap){
-			posX = widthMap - width;
-		}
-	}
-	else{
-		if (posX > 0)
-			posX -= 4;
-		else if (posX < 0){
-			posX = 0;
-		}
-	}
 }

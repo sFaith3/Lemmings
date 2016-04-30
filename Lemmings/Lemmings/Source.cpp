@@ -1,30 +1,24 @@
 #include "Utils.h"
 #include "SceneManager.h"
 
+SceneManager* sceneManager = NULL;
+InputManager* inputManager = NULL;
 
 int main(int argc, char* args[]){
 
-	int scene = 0;
-
-	cin >> scene;
-
-	SceneManager* sceneManager;
 	sceneManager = SceneManager::getInstanceSM();
+	inputManager = InputManager::getInstanceInput();
 
-	/* --- INIT MANAGER D'ESCENES --- */
-	sceneManager->Init(scene);
+	while (!inputManager->CheckQuit()){	
+		/* --- LOAD SCENE --- */
+		sceneManager->update();
 
-	bool fi = false;
-	while (!fi){		
-		//input->Update();
-		
-		/* --- UPDATE GAME --- */
-		sceneManager->Update();
-		
+		/* --- CHECK INPUT --- */
+		inputManager->Update();
+
 		/* --- RENDER --- */
-		sceneManager->Render();
+		sceneManager->render();
 	}
-
 	sceneManager->~SceneManager();
 
 

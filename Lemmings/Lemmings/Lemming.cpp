@@ -12,14 +12,21 @@ Lemming::~Lemming(){
 
 
 void Lemming::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
-	ElementGame::Init(x, y, sp, srcX, srcY, w, h);
-	estat = FALL;
+	ElementGame::init(x, y, sp, srcX, srcY, w, h);
+
+	widthSpriteSheet = 318;
+	heightSpriteSheet = 0; // Falta definir-ho.
+	toNextSpriteX = toNextSpriteY = 20;
 	numImatges = 4;
+	contImatges = 1;
+	saltaImatges = false;
+	fpsAnimacio = 0;
+
+	estat = FALL;
 	paraigues = false;
 	escalar = false;
 	temps = 5;
 	velocitat = 1;
-	
 }
 
 void Lemming::Update(){
