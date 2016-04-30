@@ -14,16 +14,18 @@ Map::~Map(){
 }
 
 
-void Map::init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h){
+void Map::init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
 	Element::init(x, y, fileMap, srcX, srcY, w, h);
 
-	tManager->LoadTmx(fileMap);
+	tManager->LoadTmx(fileMap, layerCollision);
 	this->fileTileset = fileTileset;
 	if (fileTileset != NULL){
 		for (int i = 0; i < numLayers; i++){
 			vector <vector<int> > mapa = tManager->LoadMap(i);
-			for (int i = 0; i < numTilesets; i++)
-				tilesets.push_back(tManager->LoadTileset(i, mapa));
+			if (mapa.size() > 0){
+				for (int i = 0; i < numTilesets; i++)
+					tilesets.push_back(tManager->LoadTileset(i, haveSpacingTileset, mapa));
+			}
 		}
 		mapCollision = tManager->LoadMapCollision();
 		widthMap = tManager->GetWidthMap();

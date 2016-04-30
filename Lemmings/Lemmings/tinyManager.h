@@ -80,10 +80,10 @@ public:
 
 	};
 
-	void LoadTmx(const char* fileTMX);
+	void LoadTmx(const char* fileTMX, string layerCollision);
 	vector <vector<int> > LoadMap(int numLayers);
 	vector <vector<int> > LoadMapCollision();
-	Tileset LoadTileset(int numTilesets, vector <vector<int> > mapa);
+	Tileset LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa);
 
 	int GetWidthMap();
 	int GetTileSize();
@@ -96,6 +96,7 @@ private:
 	static tinyManager* tInstance;
 
 	TiXmlDocument *doc;
+	string layerCollision;
 	int x, y; // Posicions del vector de vectors 'mapa'.
 	int widthMap;
 	int tileSize;

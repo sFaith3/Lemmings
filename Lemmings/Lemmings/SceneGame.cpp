@@ -11,10 +11,10 @@ SceneGame::~SceneGame(){
 
 void SceneGame::init(){
 	Lemming *lemming = new Lemming();
-	lemming->Init(90, 20, "Assets/Images/lem_ani.png", 4, 0, 10, 10);
+	lemming->Init(90, 60, "Assets/Images/lem_ani.png", 4, 0, 10, 10);
 	lemmings.push_back(lemming);
 	
-	fons.init(0, 0, "Assets/Levels/level.tmx", 1, "Assets/Levels/tileset.png", 1, 0, 0, 640, 480);
+	fons.init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480);
 }
 
 void SceneGame::update(){

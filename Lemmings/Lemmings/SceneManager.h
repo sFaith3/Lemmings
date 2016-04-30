@@ -1,11 +1,9 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
-#include <vector>
 #include "Scene.h"
+#include "Utils.h"
 #include "SingletonManager.h"
-
-using namespace std;
 
 //! Enum Scenes.
 /*! All the Scenes in the game. */

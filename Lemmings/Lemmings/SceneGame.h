@@ -1,8 +1,8 @@
 #pragma once
+#include "Scene.h"
 #include "Utils.h"
 #include "Lemming.h"
 #include "Map.h"
-#include "Scene.h"
 
 class SceneGame :
 	public Scene

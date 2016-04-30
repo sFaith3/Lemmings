@@ -23,7 +23,7 @@ public:
 	Map();
 	~Map();
 
-	void init(int x, int y, const char* fileMap, int numLayers, const char* fileTileset, int numTilesets, int srcX, int srcY, int w, int h);
+	void init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
 	void render();
 
 	int GetMapa(int x, int y);

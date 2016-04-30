@@ -44,6 +44,7 @@ void SceneManager::init(){
 	mVectorScenes[GAME] = game;
 
 	//mCurrScene = LOGO;
+	//mCurrScene = MENU;
 	mCurrScene = GAME;
 }
 

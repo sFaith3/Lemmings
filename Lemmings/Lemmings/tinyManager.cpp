@@ -20,8 +20,9 @@ tinyManager* tinyManager::getInstanceTinyManager(){
 }
 
 
-void tinyManager::LoadTmx(const char* fileTMX){
+void tinyManager::LoadTmx(const char* fileTMX, string layerCollision){
 	doc = new TiXmlDocument(fileTMX);
+	this->layerCollision = layerCollision;
 	if (!doc->LoadFile()) // parse file
 	{
 		cout << "Could not load test file '" << fileTMX << "' Error=" << doc->ErrorDesc() << ".\n" <<
@@ -31,17 +32,23 @@ void tinyManager::LoadTmx(const char* fileTMX){
 }
 
 vector <vector<int> > tinyManager::LoadMap(int numLayers){
+	vector <vector<int> > mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
+
 	TiXmlElement *map = doc->FirstChildElement();
 	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
 	for (int i = 0; i < numLayers; i++){
 		layer = layer->NextSiblingElement("layer");
+		if ((string)layer->Attribute("name") == layerCollision){
+			mapa.clear();
+			mapa.resize(0);
+			return mapa;
+		}
 	}
 
 	TiXmlElement* data = layer->FirstChildElement("data");
 	string text = data->GetText(); // Mapa de tmx.
-	vector <vector<int> > mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
 	string num = ""; // Contingut a insertar a l'array.
 	int layerWidth = atoi(layer->Attribute("width")) - 1;
 
@@ -78,11 +85,11 @@ vector <vector<int> > tinyManager::LoadMapCollision(){
 	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
-	if ((string)layer->Attribute("name") != "Collider"){
+	if ((string)layer->Attribute("name") != layerCollision){
 		bool trobat = false;
 		while (!trobat){
 			layer = layer->NextSiblingElement("layer");
-			if ((string)layer->Attribute("name") == "Collider"){
+			if ((string)layer->Attribute("name") == layerCollision){
 				trobat = true;
 			}
 		}
@@ -117,10 +124,12 @@ vector <vector<int> > tinyManager::LoadMapCollision(){
 	}
 	mapaCollisio[y].push_back(atoi(num.c_str()));
 
+	layerCollision = "";
+
 	return mapaCollisio;
 }
 
-tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, vector <vector<int> > mapa){
+tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa){
 	TiXmlElement *map = doc->FirstChildElement();
 	TiXmlElement* tileset = map->FirstChildElement("tileset");
 	for (int i = 0; i < numTilesets; i++){
@@ -128,7 +137,9 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, vector <vector<in
 	}
 	int tileWidth = atoi(tileset->Attribute("tilewidth"));
 	int tileHeight = atoi(tileset->Attribute("tileheight"));
-	int spacing = atoi(tileset->Attribute("spacing"));
+	int spacing = 0;
+	if(haveSpacing)
+		atoi(tileset->Attribute("spacing"));
 
 	TiXmlElement* image = tileset->FirstChildElement("image");
 	int tilesetWidth = atoi(image->Attribute("width"));
