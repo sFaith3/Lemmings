@@ -87,6 +87,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="DoorEnter.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneCodeLevel.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneLogo.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Minimap.h" />
     <ClInclude Include="DoorEnter.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneCodeLevel.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneLogo.h" />

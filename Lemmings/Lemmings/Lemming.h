@@ -16,14 +16,16 @@ public:
 	Lemming();
 	~Lemming();
 
-	void Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h);
-	void Update();
+	void init(int x, int y, const char* sp, int srcX, int srcY, int w, int h);
+	void update();
 
 	int GetPosX();
 	int GetPosY();
 	int GetWidth();
 	int GetHeight();
 	int GetDir();
+
+	void SetDir(int dir);
 
 	/*
 	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
@@ -35,7 +37,6 @@ public:
 		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION, 
 		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR
 	};
-
 	int GetEstat();
 
 	// Sets per canviar l'Estat 
@@ -53,7 +54,7 @@ public:
 	void SetExplotar();
 
 	// Estats temporals 
-	void Moure(int dir);
+	void Moure();
 	void TrencarMur();
 	void Levitar();
 	void Escalar();

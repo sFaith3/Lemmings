@@ -1,15 +1,18 @@
 #include "Utils.h"
+#include "SingletonManager.h"
 #include "SceneManager.h"
 
-SceneManager* sceneManager = NULL;
 InputManager* inputManager = NULL;
+SceneManager* sceneManager = NULL;
 
 int main(int argc, char* args[]){
 
+	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 	sceneManager = SceneManager::getInstanceSM();
-	inputManager = InputManager::getInstanceInput();
 
-	while (!inputManager->CheckQuit()){	
+	sceneManager->init();
+
+	while (!inputManager->CheckQuit()){
 		/* --- LOAD SCENE --- */
 		sceneManager->update();
 
@@ -20,7 +23,6 @@ int main(int argc, char* args[]){
 		sceneManager->render();
 	}
 	sceneManager->~SceneManager();
-
 
 	return 0;
 }

@@ -2,16 +2,21 @@
 #include "Scene.h"
 #include "Background.h"
 #include "Button.h"
+#include "SceneManager.h"
 
 class SceneMenu :
 	public Scene
 {
 private:
-	SingletonManager* sManager;
+	Background *fons;
 
-	Background fons;
+	enum ButtonsEnum{
+		PLAYER, NEW_LEVEL //...
+	};
+	vector<Button> buttons;
+	vector<Button>::iterator itBut;
 
-	vector<Button*> buttons;
+	SceneManager* smManager;
 
 public:
 	SceneMenu();

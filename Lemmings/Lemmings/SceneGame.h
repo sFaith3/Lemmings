@@ -11,9 +11,7 @@ private:
 	vector<Lemming*> lemmings;
 	vector<Lemming*>::iterator itLem;
 
-	SingletonManager* sManager;
-
-	Map fons;
+	Map *fons;
 
 public:
 	SceneGame();

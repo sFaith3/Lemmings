@@ -139,7 +139,7 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing,
 	int tileHeight = atoi(tileset->Attribute("tileheight"));
 	int spacing = 0;
 	if(haveSpacing)
-		atoi(tileset->Attribute("spacing"));
+		spacing = atoi(tileset->Attribute("spacing"));
 
 	TiXmlElement* image = tileset->FirstChildElement("image");
 	int tilesetWidth = atoi(image->Attribute("width"));
@@ -154,11 +154,12 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing,
 			int srcPosX = 0;
 			int srcPosY = 0;
 			// Es fa un requadre de retall al tileset, i s'indica on se situa.
+			int tile = mapa[j][i] - 1; // Id de la tile a pintar.
 			for (int h = 1; h <= numMaxTilesHeight; h++){ // Segons la fila on es trobi.
-				if (mapa[j][i] < numMaxTilesWidth * h){
+				if (tile < numMaxTilesWidth * h){
 					// S'obté la ID de la tile i se li resta el número total de tiles que hi ha en una fila, multiplicat per la fila on sigui menys 1 més l'espai que es deixa entre tile.
 					// Perquè si es troba a la primera fila, no es resta cap, de manera que la x del requadre que s'obté ja és de la primera fila.
-					srcPosX = (((mapa[j][i] - 1) - (numMaxTilesWidth * (h - 1))) * tileWidth) + (spacing * ((mapa[j][i] - 1) - (numMaxTilesWidth * (h - 1))));
+					srcPosX = ((tile - (numMaxTilesWidth * (h - 1))) * tileWidth) + (spacing * (tile - (numMaxTilesWidth * (h - 1))));
 					srcPosY = ((h - 1) * tileHeight) + (spacing * (h - 1));
 					break;
 				}

@@ -117,6 +117,9 @@
     <ClCompile Include="tinyManager.cpp">
       <Filter>Archivos de código fuente\TinyXML</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="tinyManager.h">
       <Filter>Archivos de encabezado\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

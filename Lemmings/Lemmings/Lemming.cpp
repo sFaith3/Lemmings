@@ -11,7 +11,7 @@ Lemming::~Lemming(){
 }
 
 
-void Lemming::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
+void Lemming::init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
 	ElementGame::init(x, y, sp, srcX, srcY, w, h);
 
 	widthSpriteSheet = 318;
@@ -29,11 +29,10 @@ void Lemming::Init(int x, int y, const char* sp, int srcX, int srcY, int w, int 
 	velocitat = 1;
 }
 
-void Lemming::Update(){
+void Lemming::update(){
 	switch (estat){
 	case MOVE:
-	
-		Moure(dir);
+		Moure();
 		break;
 	case FALL:
 		Caure();
@@ -69,6 +68,9 @@ int Lemming::GetDir(){
 	return dir;
 }
 
+void Lemming::SetDir(int dir){
+	this->dir = dir;
+}
 
 int Lemming::GetEstat(){
 	return estat;
@@ -119,7 +121,7 @@ void Lemming::SetConstruirEscala(){
 	numImatges = 16;
 }
 
-void Lemming::Moure(int dir){
+void Lemming::Moure(){
 	switch (dir){
 	case 0:
 		posX += velocitat;

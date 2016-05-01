@@ -1,25 +1,19 @@
 #include "Button.h"
 
-Button::Button()
-{
+Button::Button(){
 }
 
 
-Button::~Button()
-{
+Button::~Button(){
 }
 
 
-string Button::GetId(){
+int Button::GetId(){
 	return id;
 }
 
-bool Button::GetClick(){
-	return click;
-}
 
-
-void Button::init(string _id, int _posX, int _posY, int _width, int _height, int _posXini, int _posYini, const char* _path){
+void Button::init(int _id, int _posX, int _posY, int _width, int _height, int _posXini, int _posYini, const char* _path){
 	id = _id;
 	posX = _posX;
 	posY = _posY;
@@ -28,25 +22,25 @@ void Button::init(string _id, int _posX, int _posY, int _width, int _height, int
 	posXini = _posXini;
 	posYini = _posYini;
 	path = _path;
-	click = false;
+
+	inputManager = sManager->getInputManager();
 }
 
 
-void Button::update(bool mouse, int posXmouse, int posYmouse){
-	if (mouse){
-
-		if ((posXmouse >= posX) && (posXmouse <= posX + width) && (posYmouse >= posY) && (posYmouse <= posY + height)){
-
-			click = true;
-		}
+bool Button::update(){
+	if (inputManager->CheckClick()){
+		int mouseX, mouseY;
+		inputManager->GetMouseXY(mouseX, mouseY);
+		if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height))
+			return true;
 	}
-	else if (!mouse && click)
-		click = false;
+	return false;
 }
 
 
 void Button::render(){
-
-	int imgB = sManager->getVideoManager()->getGraphicID(path);
-	sManager->getVideoManager()->renderGraphic(imgB, posX, posY, width, height, posXini, posYini);
+	if (path != NULL){
+		int imgB = sManager->getVideoManager()->getGraphicID(path);
+		sManager->getVideoManager()->renderGraphic(imgB, posX, posY, width, height, posXini, posYini);
+	}
 }
