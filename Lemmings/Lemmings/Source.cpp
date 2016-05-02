@@ -2,6 +2,8 @@
 #include "SingletonManager.h"
 #include "SceneManager.h"
 
+bool fi = false;
+
 InputManager* inputManager = NULL;
 SceneManager* sceneManager = NULL;
 
@@ -12,12 +14,14 @@ int main(int argc, char* args[]){
 
 	sceneManager->init();
 
-	while (!inputManager->CheckQuit()){
+	while (!fi){
 		/* --- LOAD SCENE --- */
 		sceneManager->update();
 
 		/* --- CHECK INPUT --- */
 		inputManager->Update();
+		if ((inputManager->CheckESC() && sceneManager->getCurrScene() == sceneManager->MENU) || inputManager->CheckQuit())
+			fi = true;
 
 		/* --- RENDER --- */
 		sceneManager->render();

@@ -15,10 +15,20 @@ void SceneMenu::init(){
 	fons->init(0, 0, "Assets/Images/menu.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	Button button;
-	button.init(PLAYER, 30, SCREEN_HEIGHT / 2, 50, 50, 0, 0, NULL);
+	int wButton = 132;
+	int hButton = 48;
+	button.init(PLAYER, 98, 188, wButton, hButton, 0, 0, NULL);
 	buttons.push_back(button);
-	button.init(NEW_LEVEL, 70, SCREEN_HEIGHT / 2, 0, 0, 0, 0, NULL);
+	button.init(NEW_LEVEL, 260, 188, wButton, hButton, 0, 0, NULL);
 	buttons.push_back(button);
+	button.init(AUDIO, 422, 188, wButton, hButton, 0, 0, NULL);
+	buttons.push_back(button);
+	button.init(FUN, 584, 188, wButton, hButton, 0, 0, NULL);
+	buttons.push_back(button);
+	button.init(EXIT, 260, 285, wButton, hButton - 1, 0, 0, NULL);
+	buttons.push_back(button);
+	//button.init(CONTROLLERS, 422, 285, wButton, hButton - 1, 0, 0, NULL);
+	//buttons.push_back(button);
 }
 
 
@@ -32,8 +42,32 @@ void SceneMenu::update(){
 			case NEW_LEVEL:
 
 				break;
+			case AUDIO:
+
+				break;
+			case FUN:
+
+				break;
+			//case CONTROLLERS:
+
+				//break;
 			}
 		}
+	}
+
+	switch (inputManager->CheckNumber()){
+	case 1:
+		smManager->changeScene(smManager->GAME);
+		break;
+	case 2:
+		
+		break;
+	case 3:
+		
+		break;
+	case 4:
+		
+		break;
 	}
 }
 

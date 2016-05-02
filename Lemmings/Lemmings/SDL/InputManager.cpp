@@ -5,7 +5,9 @@
 InputManager* InputManager::iInstance = NULL;
 
 InputManager::InputManager(){
+	number = NULL;
 	quit = false;
+	esc = false;
 	back = false;
 	pause = false;
 	click = false;
@@ -28,14 +30,25 @@ void InputManager::Update(){
 	SDL_Scancode tecla;
 	back = false;
 	pause = false;
-	click = false;
 	while (SDL_PollEvent(&test_event)) {
 		switch (test_event.type) {
 		case SDL_KEYDOWN:
 			tecla = test_event.key.keysym.scancode;
 			switch (tecla){
 			case SDL_SCANCODE_ESCAPE:
-				quit = true;
+				esc = true;
+				break;
+			case SDL_SCANCODE_1:
+				number = ONE;
+				break;
+			case SDL_SCANCODE_2:
+				number = TWO;
+				break;
+			case SDL_SCANCODE_3:
+				number = THREE;
+				break;
+			case SDL_SCANCODE_4:
+				number = FOUR;
 				break;
 			default:
 				break;
@@ -51,8 +64,19 @@ void InputManager::Update(){
 	}
 }
 
+
+int InputManager::CheckNumber(){
+	int _number = number;
+	number = NULL;
+	return _number;
+}
+
 bool InputManager::CheckQuit(){
 	return quit;
+}
+
+bool InputManager::CheckESC(){
+	return esc;
 }
 
 bool InputManager::CheckBack(){

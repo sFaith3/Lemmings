@@ -40,7 +40,7 @@ VideoManager::VideoManager(){
 
 	deltaTime = 0.0f;
 	lastTime = 0;
-	msFrame = 60.0f / 1000.0f;
+	msFrame = FPS / 1000.0f;
 }
 
 VideoManager::~VideoManager(){

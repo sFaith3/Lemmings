@@ -27,6 +27,8 @@ public:
 
 	void changeScene(SceneEnum next_scene);
 
+	int getCurrScene();
+
 private:
 	SceneManager();
 

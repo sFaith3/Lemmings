@@ -59,3 +59,8 @@ void SceneManager::render(){
 void SceneManager::changeScene(SceneEnum next_scene){
 	mCurrScene = next_scene;
 }
+
+
+int SceneManager::getCurrScene(){
+	return mCurrScene;
+}
