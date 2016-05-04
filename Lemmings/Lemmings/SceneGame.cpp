@@ -27,24 +27,10 @@ void SceneGame::update(){
 		int y1 = (*itLem)->GetPosY() / fons->GetSizeTile();
 		int x2 = ((*itLem)->GetPosX() + (*itLem)->GetWidth()) / fons->GetSizeTile();
 		int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / fons->GetSizeTile();
-
-		if ((*itLem)->GetEstat() != (*itLem)->FALL && (fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0))
-			(*itLem)->SetCaure();
-		else if ((*itLem)->GetEstat() == (*itLem)->FALL && (fons->GetMapa(x1, y1) != 0 || fons->GetMapa(x2, y2) != 0)){
-			(*itLem)->SetMoure();
-		}
-
-		/*if ((*itLem)->GetEstat() == (*itLem)->MOVE){
-			if ((*itLem)->GetDir() == 0 && fons->GetMapa(x2 + 1, y2 - 1) != 0)
-				(*itLem)->SetDir(2);
-			else if ((*itLem)->GetDir() == 2 && fons->GetMapa(x1 - 1, y2 - 1) != 0)
-				(*itLem)->SetDir(0);
-		}*/
-
-		(*itLem)->update();
-
-		actions->update();
+		(*itLem)->update(fons, x1, y1, x2, y2);
 	}
+
+	actions->update();
 }
 
 void SceneGame::render(){

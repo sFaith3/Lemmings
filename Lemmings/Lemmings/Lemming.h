@@ -1,6 +1,11 @@
 #pragma once
 #include "ElementGame.h"
+#include "Map.h"
 
+// NOTA: Si els getters no s'utilitzen, s'hauràn d'esborrar. Els setters es poden deixar.
+
+/*---BUGS---*/
+// - Arreglar el desplaçament diagonal.
 class Lemming :
 	public ElementGame
 {
@@ -17,7 +22,7 @@ public:
 	~Lemming();
 
 	void init(int x, int y, const char* sp, int srcX, int srcY, int w, int h);
-	void update();
+	void update(Map *fons, int x1, int y1, int x2, int y2);
 
 	int GetPosX();
 	int GetPosY();
@@ -55,6 +60,7 @@ public:
 
 	// Estats temporals 
 	void Moure();
+	void Moure(bool diagAmunt);
 	void TrencarMur();
 	void Levitar();
 	void Escalar();
