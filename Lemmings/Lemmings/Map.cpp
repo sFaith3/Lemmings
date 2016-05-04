@@ -45,11 +45,11 @@ void Map::render(){
 		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++){
 			vector<tinyManager::Tileset::Tile*> tiles = itTilesets->getTiles();
 			for (int pos = 0; pos < itTilesets->getSizeTiles(); pos++)
-				sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(fileTileset), tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY);
+				sManager->getVideoManager()->renderTexture(sManager->getVideoManager()->getTextureID(fileTileset), tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY, 0, 0, 0);
 		}
 	}
 	else
-		sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(fileMap), 0, 0, width, height, posX, posY);
+		sManager->getVideoManager()->renderTexture(sManager->getVideoManager()->getTextureID(fileMap), 0, 0, width, height, posX, posY, 0, 0, 0);
 }
 
 

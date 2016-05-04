@@ -10,7 +10,7 @@ private:
 
 	static VideoManager* vInstance;
 
-	bool texture = false;
+	bool texture = true;
 
 	float deltaTime;
 	int lastTime;

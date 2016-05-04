@@ -57,7 +57,7 @@ void Actions::init(int x, int y, const char* img, int srcX, int srcY, int w, int
 
 
 void Actions::update(){
-
+	//
 }
 
 

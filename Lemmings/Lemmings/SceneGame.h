@@ -14,7 +14,7 @@ private:
 
 	Map *fons;
 
-	Actions *action;
+	Actions *actions;
 
 public:
 	SceneGame();

@@ -16,9 +16,9 @@ void SceneGame::init(){
 	fons = new Map();
 	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480);
 
-	action = new Actions();
+	actions = new Actions();
 	int hAction = 61;
-	action->init(0, SCREEN_HEIGHT - hAction, "Assets/Images/hud.png", 0, 0, 480, hAction);
+	actions->init(0, SCREEN_HEIGHT - hAction, "Assets/Images/hud.png", 0, 0, 480, hAction);
 }
 
 void SceneGame::update(){
@@ -42,6 +42,8 @@ void SceneGame::update(){
 		}*/
 
 		(*itLem)->update();
+
+		actions->update();
 	}
 }
 
@@ -50,4 +52,6 @@ void SceneGame::render(){
 
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++)
 		(*itLem)->render();
+
+	actions->render();
 }

@@ -40,7 +40,6 @@ bool Button::update(){
 
 void Button::render(){
 	if (path != NULL){
-		int imgB = sManager->getVideoManager()->getGraphicID(path);
-		sManager->getVideoManager()->renderGraphic(imgB, posX, posY, width, height, posXini, posYini);
+		ElementHUD::render();
 	}
 }
