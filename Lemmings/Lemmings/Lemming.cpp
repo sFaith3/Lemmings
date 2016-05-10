@@ -64,7 +64,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		break;
 	}
 
-	SetAnimacio();
+	UpdateAnimacio();
 }
 
 void Lemming::render(){

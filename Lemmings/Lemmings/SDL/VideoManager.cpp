@@ -23,7 +23,7 @@ VideoManager::VideoManager(){
 		}
 		else{
 			//Create gScreenRenderer for window
-			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC);
+			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 			if (gScreenRenderer == NULL)
 				cout << "gScreenRenderer could not be created! SDL Error: " << SDL_GetError() << endl;
 			else{
@@ -234,7 +234,7 @@ void VideoManager::updateTime(){
 		}
 		lastTime = currentTime;
 	}
-	cout << deltaTime << endl; //
+	//cout << deltaTime << endl;
 }
 
 void VideoManager::waitTime(int ms){
