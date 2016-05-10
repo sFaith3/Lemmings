@@ -10,7 +10,7 @@ SceneGame::~SceneGame(){
 
 void SceneGame::init(){
 	Lemming *lemming = new Lemming();
-	lemming->init(90, 60, "Assets/Images/lem_ani.png", 4, 0, 10, 10);
+	lemming->init(90, 60);
 	lemmings.push_back(lemming);
 	
 	fons = new Map();

@@ -23,7 +23,7 @@ VideoManager::VideoManager(){
 		}
 		else{
 			//Create gScreenRenderer for window
-			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED || SDL_RENDERER_PRESENTVSYNC);
 			if (gScreenRenderer == NULL)
 				cout << "gScreenRenderer could not be created! SDL Error: " << SDL_GetError() << endl;
 			else{
@@ -136,10 +136,6 @@ int VideoManager::getTime(){
 	return SDL_GetTicks();
 }
 
-float VideoManager::getDeltaTime(){
-	return deltaTime;
-}
-
 
 void VideoManager::setCursorRelative(bool active){
 	if (active)
@@ -185,6 +181,25 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
 }
 
+void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip){
+	SDL_Rect rectAux, r;
+	rectAux.x = srcPosX;
+	rectAux.y = srcPosY;
+	rectAux.w = width;
+	rectAux.h = height;
+	r.x = dstPosX;
+	r.y = dstPosY;
+	r.w = width;
+	r.h = height;
+
+	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
+
+	SDL_Point center;
+	center.x = centerX;
+	center.y = centerY;
+
+	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, flip);
+}
 
 void VideoManager::clearScreen(unsigned int color_key){
 	if (!texture)
@@ -209,15 +224,17 @@ void VideoManager::updateScreen(){
 void VideoManager::updateTime(){
 	if (lastTime != -1){
 		int currentTime = getTime();
-		deltaTime = (float)(currentTime - lastTime) / 1000;
-
-		//Per a evitar que l'input del ratolí es ralentitzi, s'ha d'eliminar la restricció de FPS.
-		if (deltaTime < msFrame){
-			waitTime((msFrame - deltaTime) * 1000.0f);
-			deltaTime = msFrame;
+		deltaTime = (float)(currentTime - lastTime);
+		if (!texture){
+			//Per a evitar que l'input del ratolí es ralentitzi, s'ha d'eliminar la restricció de FPS.
+			if (deltaTime < msFrame){
+				waitTime((msFrame - deltaTime) * 1000.0f);
+				deltaTime = msFrame;
+			}
 		}
 		lastTime = currentTime;
 	}
+	cout << deltaTime << endl; //
 }
 
 void VideoManager::waitTime(int ms){

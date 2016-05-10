@@ -12,6 +12,7 @@ class Lemming :
 private:
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
+	SDL_RendererFlip flipType;
 	int temps;
 	int velocitat;
 	bool paraigues;
@@ -21,8 +22,9 @@ public:
 	Lemming();
 	~Lemming();
 
-	void init(int x, int y, const char* sp, int srcX, int srcY, int w, int h);
+	void init(int x, int y);
 	void update(Map *fons, int x1, int y1, int x2, int y2);
+	void render();
 
 	int GetPosX();
 	int GetPosY();
@@ -31,14 +33,14 @@ public:
 	int GetDir();
 
 	void SetDir(int dir);
-
+	void SetAnimacio();
 	/*
 	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
 	STOP: Inmovilitzat, STAIR: Posar rajoles,PICK: Cavar amb el Pic 
 	EXPLOSION: Explota als 5s, DEAD: El Lemming es destruit, DEADFALL: El Lemming cau d'una gran altura
 	OPENUMBRELLA: El Lemming obra el paraigües, NOSTAIR: El Lemming es queda sense rajoles
 	*/
-	enum estats{
+	enum EstatsEnum{
 		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION, 
 		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR
 	};

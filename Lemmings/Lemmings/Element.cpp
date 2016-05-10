@@ -14,6 +14,7 @@ void Element::init(int x, int y, const char* img, int srcX, int srcY, int w, int
 	posX = x;
 	posY = y;
 	imatge = img;
+	idImg = sManager->getVideoManager()->getTextureID(imatge);
 	srcPosX = _srcPosX = srcX;
 	srcPosY = srcY;
 	width = w;
@@ -21,6 +22,5 @@ void Element::init(int x, int y, const char* img, int srcX, int srcY, int w, int
 }
 
 void Element::render(){
-	sManager->getVideoManager()->renderTexture(sManager->getVideoManager()->getTextureID(imatge), srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
-	//sManager->getVideoManager()->renderGraphic(sManager->getVideoManager()->getGraphicID(imatge), srcPosX, srcPosY, width, height, posX, posY);
+	sManager->getVideoManager()->renderTexture(idImg, srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
 }

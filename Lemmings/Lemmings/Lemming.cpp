@@ -11,18 +11,11 @@ Lemming::~Lemming(){
 }
 
 
-void Lemming::init(int x, int y, const char* sp, int srcX, int srcY, int w, int h){
-	ElementGame::init(x, y, sp, srcX, srcY, w, h);
-
-	widthSpriteSheet = 318;
-	heightSpriteSheet = 0; // Falta definir-ho.
-	toNextSpriteX = toNextSpriteY = 20;
-	numImatges = 4;
-	contImatges = 1;
-	saltaImatges = false;
-	fpsAnimacio = 0;
-
+void Lemming::init(int x, int y){
+	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 4, 0, 10, 10, 318, 0, 20, 4, 1, false, 0);
 	estat = FALL;
+	dir = 0;
+	flipType = SDL_FLIP_NONE;
 	paraigues = false;
 	escalar = false;
 	temps = 5;
@@ -74,6 +67,10 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 	SetAnimacio();
 }
 
+void Lemming::render(){
+	sManager->getVideoManager()->renderTexture(idImg, srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0, flipType);
+}
+
 int Lemming::GetPosX(){
 	return posX;
 }
@@ -96,6 +93,10 @@ int Lemming::GetDir(){
 
 void Lemming::SetDir(int dir){
 	this->dir = dir;
+	if (flipType == SDL_FLIP_NONE)
+		flipType = SDL_FLIP_HORIZONTAL;
+	else
+		flipType = SDL_FLIP_NONE;
 }
 
 int Lemming::GetEstat(){
@@ -105,46 +106,64 @@ int Lemming::GetEstat(){
 void Lemming::SetMoure(){
 	estat = MOVE;
 	numImatges = 10;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetCaure(){
 	estat = FALL;
 	numImatges = 4;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetTrencar(){
 	estat = BREAK;
 	numImatges = 32;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetPrincipiLevitar(){
 	estat = OPENUMBRELLA;
 	numImatges = 4;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetLevitar(){
 	estat = GLIDE;
 	numImatges = 4;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetCavar(){
 	estat = DIG;
 	numImatges = 8;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetPicar(){
 	estat = PICK;
 	numImatges = 24;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetInmovilitzar(){
 	estat = STOP;
 	numImatges = 16;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::SetConstruirEscala(){
 	estat = STAIR;
 	numImatges = 16;
+	/*srcPosX = _srcPosX = srcX;
+	srcPosY = srcY;*/
 }
 
 void Lemming::Moure(){
