@@ -22,27 +22,27 @@ void Lemming::init(int x, int y){
 	velocitat = 1;
 }
 
-void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimitzar codi. Com l'if per el SetCaure().
+void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimitzar codi. Com l'if pel SetCaure().
 	switch (estat){
 	case MOVE:
-		if(fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0)
+		if (fons->GetMapa(x1 + 1, y2) == 0 && fons->GetMapa(x2 - 1, y2) == 0)
 			SetCaure();
 		else if (dir == 0){ // Cap a la dreta.
-			if (fons->GetMapa(x2 + 1, y2) != 0 && fons->GetMapa(x2 + 1, y2 - 1) == 0)
+			if (fons->GetMapa(x2, y2 - 1) != 0 && fons->GetMapa(x2, y2 - 2) == 0)
 				Moure(true); // Diagonal cap amunt.
-			else if (fons->GetMapa(x2 + 1, y2) != 0 && fons->GetMapa(x2 + 1, y2 + 1) == 0)
-				Moure(false); // Diagonal cap avall.
-			else if (fons->GetMapa(x2, y1) != 0)
+			else if (fons->GetMapa(x2, y2) == 0 && fons->GetMapa(x2, y2 + 1) != 0)
+				Moure(false); // Cap avall.
+			else if (fons->GetMapa(x2 - 1, y1 + 1) != 0)
 				SetDir(2);
 			else
 				Moure();
 		}
 		else{
-			if (fons->GetMapa(x1 - 1, y2) != 0 && fons->GetMapa(x1 - 1, y2 - 1) == 0)
+			if (fons->GetMapa(x1, y2 - 1) != 0 && fons->GetMapa(x1, y2 - 2) == 0)
 				Moure(true); // Diagonal cap amunt.
-			else if (fons->GetMapa(x1 - 1, y2) != 0 && fons->GetMapa(x1 - 1, y2 + 1) == 0)
-				Moure(false); // Diagonal cap avall.
-			else if (fons->GetMapa(x1, y1) != 0)
+			else if (fons->GetMapa(x1, y2) == 0 && fons->GetMapa(x1, y2 + 1) != 0)
+				Moure(false); // Cap avall.
+			else if (fons->GetMapa(x1, y1 + 1) != 0)
 				SetDir(0);
 			else
 				Moure();
@@ -50,7 +50,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		break;
 	case FALL:
 		Caure();
-		if (fons->GetMapa(x1, y2 + 1) != 0 || fons->GetMapa(x2, y2 + 1) != 0)
+		if (fons->GetMapa(x1 + velocitat, y2 + velocitat) != 0 || fons->GetMapa(x2 - velocitat, y2 + velocitat) != 0)
 			SetMoure();
 		break;
 	case BREAK:
@@ -178,9 +178,10 @@ void Lemming::Moure(){
 }
 
 void Lemming::Moure(bool diagAmunt){
-	Moure();
-	if (diagAmunt)
+	if (diagAmunt){
+		Moure();
 		posY -= velocitat;
+	}
 	else
 		posY += velocitat;
 }
