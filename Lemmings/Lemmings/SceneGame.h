@@ -15,6 +15,7 @@ private:
 	Map *fons;
 
 	Actions *actions;
+	int currAction;
 
 public:
 	SceneGame();
@@ -24,4 +25,3 @@ public:
 	void update();
 	void render();
 };
-

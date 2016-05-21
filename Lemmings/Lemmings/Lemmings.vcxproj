@@ -99,6 +99,7 @@
     <ClCompile Include="SDL\ResourceManager.cpp" />
     <ClCompile Include="SDL\VideoManager.cpp" />
     <ClCompile Include="SingletonManager.cpp" />
+    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="tinyManager.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="SDL\ResourceManager.h" />
     <ClInclude Include="SDL\VideoManager.h" />
     <ClInclude Include="SingletonManager.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="tinyManager.h" />
     <ClInclude Include="TinyXML\tinystr.h" />

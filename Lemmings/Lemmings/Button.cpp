@@ -1,6 +1,10 @@
 #include "Button.h"
 
+
 Button::Button(){
+	SingletonManager* sManager = SingletonManager::getInstanceSingleton();
+	inputManager = sManager->getInputManager();
+	videoManager = sManager->getVideoManager();
 }
 
 
@@ -13,7 +17,7 @@ int Button::GetId(){
 }
 
 
-void Button::init(int _id, int _posX, int _posY, int _width, int _height, int _posXini, int _posYini, const char* _path){
+void Button::init(int _id, int _posX, int _posY, int _width, int _height, int _posXini, int _posYini, const char* imgNormal, const char* imgButPressed){
 	id = _id;
 	posX = _posX;
 	posY = _posY;
@@ -21,9 +25,9 @@ void Button::init(int _id, int _posX, int _posY, int _width, int _height, int _p
 	height = _height;
 	posXini = _posXini;
 	posYini = _posYini;
-	path = _path;
-
-	inputManager = sManager->getInputManager();
+	idImgNormal = videoManager->getTextureID(imgNormal);
+	idImgButPressed = videoManager->getTextureID(imgButPressed);
+	pressed = false;
 }
 
 
@@ -31,15 +35,31 @@ bool Button::update(){
 	if (inputManager->CheckClick()){
 		int mouseX, mouseY;
 		inputManager->GetMouseXY(mouseX, mouseY);
-		if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height))
+		if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height)){
+			//pressed = true;
 			return true;
+		}
 	}
 	return false;
 }
 
 
 void Button::render(){
-	if (path != NULL){
-		ElementHUD::render();
+	if (idImgNormal != -1)
+		videoManager->renderTexture(idImgNormal, posXini, posYini, width, height, posX, posY, 0, 0, 0);
+	
+	if (pressed){
+		if (idImgButPressed != -1)
+			videoManager->renderTexture(idImgButPressed, posXini, posYini, width, height, posX, posY, 0, 0, 0);
+		
+		// A l'inputManager hi hauria d'haver un MOUSEBUTTONUP i s'hauria de fer
+		// més comprovacions per tal de no repetir-se si el deixes pressionat.
+		/*if (!inputManager->CheckClick())
+			pressed = false;*/
 	}
+}
+
+
+void Button::SetPressed(bool _pressed){
+	pressed = _pressed;
 }

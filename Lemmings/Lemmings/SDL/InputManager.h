@@ -7,7 +7,7 @@ private:
 	static InputManager* iInstance;
 
 	enum numbers{
-		ZERO, ONE, TWO, THREE, FOUR
+		ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE
 	};
 	int number;
 	bool quit;
@@ -30,6 +30,7 @@ public:
 	bool CheckBack();
 	bool CheckPause();
 	bool CheckClick();
+	void ResetClick();
 
 	void GetMouseXY(int& x, int& y);
 };

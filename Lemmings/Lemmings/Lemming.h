@@ -3,9 +3,6 @@
 #include "Map.h"
 
 // NOTA: Si els getters no s'utilitzen, s'hauràn d'esborrar. Els setters es poden deixar.
-
-/*---BUGS---*/
-// - Arreglar el desplaçament diagonal.
 class Lemming :
 	public ElementGame
 {
@@ -17,6 +14,8 @@ private:
 	int velocitat;
 	bool paraigues;
 	bool escalar;
+
+	InputManager* inputManager;
 
 public:
 	Lemming();
@@ -31,6 +30,8 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetDir();
+
+	bool SetSkill(int numUsos, int skill);
 
 	void SetDir(int dir);
 	void SetAnimacio();
@@ -55,7 +56,7 @@ public:
 	void SetLevitar();
 	void SetCavar();
 	void SetPicar();
-	void SetInmovilitzar();
+	void SetImmobilitzar();
 	void SetConstruirEscala();
 	void SetNoEscales();
 	void SetExplotar();
@@ -69,7 +70,7 @@ public:
 	void Cavar();
 	void Picar();
 	void Caure();
-	void Inmovilitzar();
+	void Immobilitzar();
 	void ConstruirEscala();
 	void Explotar();
 

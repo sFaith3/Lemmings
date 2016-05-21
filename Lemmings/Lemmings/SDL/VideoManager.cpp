@@ -124,6 +124,9 @@ Sint32 VideoManager::addTexture(const char* file){
 }
 
 Sint32 VideoManager::getTextureID(const char* file){
+	if (file == NULL)
+		return -1;
+
 	int id = ResourceManager::getInstanceResourceManager()->getTextureID(file);
 	if (id != -1)
 		return id;

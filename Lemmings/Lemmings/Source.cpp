@@ -19,6 +19,7 @@ int main(int argc, char* args[]){
 		sceneManager->update();
 
 		/* --- CHECK INPUT --- */
+		inputManager->ResetClick();
 		inputManager->Update();
 		if ((inputManager->CheckESC() && sceneManager->getCurrScene() == sceneManager->MENU) || inputManager->CheckQuit())
 			fi = true;

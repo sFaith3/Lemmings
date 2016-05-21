@@ -2,7 +2,7 @@
 
 
 Lemming::Lemming(){
-
+	inputManager = sManager->getInputManager();
 }
 
 
@@ -13,13 +13,14 @@ Lemming::~Lemming(){
 
 void Lemming::init(int x, int y){
 	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 4, 0, 10, 10, 318, 0, 20, 4, 1, false, 0);
+
 	estat = FALL;
 	dir = 0;
 	flipType = SDL_FLIP_NONE;
-	paraigues = false;
-	escalar = false;
 	temps = 5;
 	velocitat = 1;
+	paraigues = false;
+	escalar = false;
 }
 
 void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimitzar codi. Com l'if pel SetCaure().
@@ -91,6 +92,67 @@ int Lemming::GetDir(){
 	return dir;
 }
 
+bool Lemming::SetSkill(int numUsos, int skill){
+	int mouseX, mouseY;
+	inputManager->GetMouseXY(mouseX, mouseY);
+	if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height)){
+		if (numUsos > 0){
+			switch (skill){ // Si no tenen l'habilitat posada, se'ls hi posa.
+			case 2: // TREPAR
+				if (!escalar){
+					escalar = true;
+					return true;
+				}
+				break;
+			case 3: // PARAIGUES
+				if (!paraigues){
+					paraigues = true;
+					return true;
+				}
+				break;
+			case 4: // EXPLOSIO
+				if (estat == MOVE){
+					//Suposant que pot passar a aquest estat solament quan s'estigui movent.
+					SetExplotar();
+					return true;
+				}
+				break;
+			case 5: // PARAT
+				if (estat == MOVE){
+					SetImmobilitzar();
+					return true;
+				}
+				break;
+			case 6: // ESGRAONS
+				if (estat == MOVE){
+					SetConstruirEscala();
+					return true;
+				}
+				break;
+			case 7: // CAVAR_LATERAL
+				if (estat == MOVE){
+					SetTrencar();
+					return true;
+				}
+				break;
+			case 8: // PICAR
+				if (estat == MOVE){
+					SetPicar();
+					return true;
+				}
+				break;
+			case 9: // CAVAR
+				if (estat == MOVE){
+					SetCavar();
+					return true;
+				}
+				break;
+			}
+		}
+	}
+	return false;
+}
+
 void Lemming::SetDir(int dir){
 	this->dir = dir;
 	if (flipType == SDL_FLIP_NONE)
@@ -152,7 +214,7 @@ void Lemming::SetPicar(){
 	srcPosY = srcY;*/
 }
 
-void Lemming::SetInmovilitzar(){
+void Lemming::SetImmobilitzar(){
 	estat = STOP;
 	numImatges = 16;
 	/*srcPosX = _srcPosX = srcX;
@@ -164,6 +226,14 @@ void Lemming::SetConstruirEscala(){
 	numImatges = 16;
 	/*srcPosX = _srcPosX = srcX;
 	srcPosY = srcY;*/
+}
+
+void Lemming::SetNoEscales(){
+
+}
+
+void Lemming::SetExplotar(){
+
 }
 
 void Lemming::Moure(){
@@ -210,7 +280,7 @@ void Lemming::Caure(){
 	posY += velocitat*2;
 }
 
-void Lemming::Inmovilitzar(){
+void Lemming::Immobilitzar(){
 
 }
 
@@ -235,5 +305,4 @@ void Lemming::SetParaigues(){
 void Lemming::SetEscalar(){
 	escalar = true;
 }
-
 

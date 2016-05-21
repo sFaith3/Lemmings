@@ -17,17 +17,17 @@ void SceneMenu::init(){
 	Button button;
 	int wButton = 132;
 	int hButton = 48;
-	button.init(PLAYER, 98, 188, wButton, hButton, 0, 0, NULL);
+	button.init(PLAYER, 98, 188, wButton, hButton, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	button.init(NEW_LEVEL, 260, 188, wButton, hButton, 0, 0, NULL);
+	button.init(NEW_LEVEL, 260, 188, wButton, hButton, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	button.init(AUDIO, 422, 188, wButton, hButton, 0, 0, NULL);
+	button.init(AUDIO, 422, 188, wButton, hButton, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	button.init(FUN, 584, 188, wButton, hButton, 0, 0, NULL);
+	button.init(FUN, 584, 188, wButton, hButton, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	button.init(EXIT, 260, 285, wButton, hButton - 1, 0, 0, NULL);
+	button.init(EXIT, 260, 285, wButton, hButton - 1, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	//button.init(CONTROLLERS, 422, 285, wButton, hButton - 1, 0, 0, NULL);
+	//button.init(CONTROLLERS, 422, 285, wButton, hButton - 1, 0, 0, NULL, NULL);
 	//buttons.push_back(button);
 }
 
@@ -56,18 +56,21 @@ void SceneMenu::update(){
 	}
 
 	switch (inputManager->CheckNumber()){
-	case 1:
+	case PLAYER:
 		smManager->changeScene(smManager->GAME);
 		break;
-	case 2:
+	case NEW_LEVEL:
 		
 		break;
-	case 3:
+	case AUDIO:
 		
 		break;
-	case 4:
+	case FUN:
 		
 		break;
+	//case CONTROLLERS:
+
+		//break
 	}
 }
 

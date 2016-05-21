@@ -5,7 +5,7 @@
 InputManager* InputManager::iInstance = NULL;
 
 InputManager::InputManager(){
-	number = NULL;
+	number = -1;
 	quit = false;
 	esc = false;
 	back = false;
@@ -38,6 +38,9 @@ void InputManager::Update(){
 			case SDL_SCANCODE_ESCAPE:
 				esc = true;
 				break;
+			case SDL_SCANCODE_0:
+				number = ZERO;
+				break;
 			case SDL_SCANCODE_1:
 				number = ONE;
 				break;
@@ -49,6 +52,21 @@ void InputManager::Update(){
 				break;
 			case SDL_SCANCODE_4:
 				number = FOUR;
+				break;
+			case SDL_SCANCODE_5:
+				number = FIVE;
+				break;
+			case SDL_SCANCODE_6:
+				number = SIX;
+				break;
+			case SDL_SCANCODE_7:
+				number = SEVEN;
+				break;
+			case SDL_SCANCODE_8:
+				number = EIGHT;
+				break;
+			case SDL_SCANCODE_9:
+				number = NINE;
 				break;
 			default:
 				break;
@@ -67,7 +85,7 @@ void InputManager::Update(){
 
 int InputManager::CheckNumber(){
 	int _number = number;
-	number = NULL;
+	number = -1;
 	return _number;
 }
 
@@ -89,10 +107,14 @@ bool InputManager::CheckPause(){
 
 bool InputManager::CheckClick(){
 	if (click){
-		click = false;
 		return true;
 	}
 	return false;
+}
+
+void InputManager::ResetClick(){
+	if (click)
+		click = false;
 }
 
 void InputManager::GetMouseXY(int& x, int& y){

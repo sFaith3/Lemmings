@@ -11,7 +11,7 @@ private:
 	Background *fons;
 
 	enum ButtonsEnum{
-		PLAYER, NEW_LEVEL, AUDIO, FUN, EXIT//, CONTROLLERS
+		PLAYER = 1, NEW_LEVEL, AUDIO, FUN, EXIT//, CONTROLLERS
 	};
 	vector<Button> buttons;
 	vector<Button>::iterator itBut;
