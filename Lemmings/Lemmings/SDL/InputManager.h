@@ -6,7 +6,12 @@ class InputManager
 private:
 	static InputManager* iInstance;
 
+	enum numbers{
+		ZERO, ONE, TWO, THREE, FOUR
+	};
+	int number;
 	bool quit;
+	bool esc;
 	bool back;
 	bool pause;
 	bool click;
@@ -19,7 +24,9 @@ public:
 
 	void Update();
 
+	int CheckNumber();
 	bool CheckQuit();
+	bool CheckESC();
 	bool CheckBack();
 	bool CheckPause();
 	bool CheckClick();

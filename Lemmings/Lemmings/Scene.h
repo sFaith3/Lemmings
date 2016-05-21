@@ -1,7 +1,11 @@
 #pragma once
+#include "SingletonManager.h"
 
 class Scene
 {
+protected:
+	InputManager* inputManager;
+
 public:
 	Scene();
 	~Scene();

@@ -2,6 +2,7 @@
 
 
 Scene::Scene(){
+	inputManager = InputManager::getInstanceInput();
 }
 
 

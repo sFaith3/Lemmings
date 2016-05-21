@@ -7,7 +7,9 @@ class Map :
 {
 private:
 	const char* fileMap;
+	Sint32 idFileMap;
 	const char* fileTileset;
+	Sint32 idFileTileset;
 
 	vector<tinyManager::Tileset> tilesets;
 	vector<tinyManager::Tileset>::iterator itTilesets;
