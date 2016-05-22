@@ -4,6 +4,8 @@
 #include "Lemming.h"
 #include "Map.h"
 #include "Actions.h"
+#include "SceneManager.h"
+#include "Cursor.h"
 
 class SceneGame :
 	public Scene
@@ -16,6 +18,10 @@ private:
 
 	Actions *actions;
 	int currAction;
+
+	SceneManager* smManager;
+
+	Cursor* cursor;
 
 public:
 	SceneGame();

@@ -3,6 +3,7 @@
 
 Scene::Scene(){
 	inputManager = InputManager::getInstanceInput();
+	audioManager = SingletonManager::getInstanceSingleton()->getAudioManager();
 }
 
 

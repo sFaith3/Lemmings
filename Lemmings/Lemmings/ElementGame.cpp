@@ -9,8 +9,8 @@ ElementGame::~ElementGame(){
 }
 
 
-void ElementGame::init(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int contImgs, bool saltaImgs, int fpsAnim){
-	Element::init(x, y, img, srcX, srcY, w, h);
+void ElementGame::init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int contImgs, bool saltaImgs, int fpsAnim){
+	Element::init(x, y, img, srcX, srcY, w, h, scaleX, scaleY);
 	widthSpriteSheet = wSpriteSheet;
 	heightSpriteSheet = hSpriteSheet;
 	this->toNextSpriteX = toNextSpriteY = toNextSpriteX;

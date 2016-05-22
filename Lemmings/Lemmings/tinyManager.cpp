@@ -167,7 +167,7 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing,
 			int dstPosX = i * tileWidth;
 			int dstPosY = j * tileHeight;
 
-			_tileset.addTile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
+			_tileset.addTile(srcPosX, srcPosY, tileWidth, tileHeight, 1, 1, dstPosX, dstPosY);
 		}
 	}
 	x = y = 0;

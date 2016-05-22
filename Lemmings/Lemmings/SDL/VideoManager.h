@@ -31,8 +31,8 @@ public:
 	void setCursorRelative(bool active);
 
 	void renderGraphic(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY);
-	void renderTexture(int img, int srcPosX, int srcPosY, int srcWidth, int srcHeight, int dstPosX, int dstPosY, double angle, int centerX, int centerY);
-	void renderTexture(int img, int srcPosX, int srcPosY, int srcWidth, int srcHeight, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip);
+	void renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY, int dstPosX, int dstPosY, double angle, int centerX, int centerY);
+	void renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip);
 	
 	void clearScreen(unsigned int color_key);
 	void updateScreen();

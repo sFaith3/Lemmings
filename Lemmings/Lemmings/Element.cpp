@@ -2,7 +2,7 @@
 
 
 Element::Element(){
-	sManager = SingletonManager::getInstanceSingleton();
+	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
 }
 
 
@@ -10,17 +10,19 @@ Element::~Element()
 {
 }
 
-void Element::init(int x, int y, const char* img, int srcX, int srcY, int w, int h){
+void Element::init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY){
 	posX = x;
 	posY = y;
 	imatge = img;
-	idImg = sManager->getVideoManager()->getTextureID(imatge);
+	idImg = videoManager->getTextureID(imatge);
 	srcPosX = _srcPosX = srcX;
 	srcPosY = srcY;
 	width = w;
 	height = h;
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
 }
 
 void Element::render(){
-	sManager->getVideoManager()->renderTexture(idImg, srcPosX, srcPosY, width, height, posX, posY, 0, 0, 0);
+	videoManager->renderTexture(idImg, srcPosX, srcPosY, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
 }

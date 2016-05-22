@@ -436,12 +436,7 @@ Uint32 ResourceManager::updateFirstFreeSlotTexture(){
 
 
 /*--- AUDIO ---*/
-Sint32 ResourceManager::addAudio(const char* file){
-	Mix_Chunk* sound = Mix_LoadWAV(file);
-	if (sound == NULL){
-		cout << "Failed to load sound effect! SDL_mixer Error:" << Mix_GetError() << endl;
-		return -1;
-	}
+Sint32 ResourceManager::addAudio(const char* file, Mix_Chunk* sound){
 	Sint32 pos = -1;
 	if (mFirstFreeSlotAudios != -1){
 		mAudiosVector[mFirstFreeSlotAudios] = sound ;
@@ -455,6 +450,7 @@ Sint32 ResourceManager::addAudio(const char* file){
 		mIDMapAudios.emplace(file, pos);
 	}
 	return pos;
+
 }
 
 
@@ -472,7 +468,7 @@ Sint32 ResourceManager::getAudioID(const char* file){
 		if (it->first == file)
 			return it->second;
 	}
-	return addAudio(file);
+	return -1;
 }
 
 

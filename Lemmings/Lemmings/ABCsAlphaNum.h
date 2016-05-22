@@ -11,6 +11,7 @@ private:
 
 	int xIni, yIni; // Posició on comença la primera lletra/número de l'spritesheet.
 	int width, height;
+	float scaleX, scaleY;
 	int spacingX, spacingY; // Espai entre dígit.
 	int srcX, srcY; // Tros a agafar de l'spritesheet.
 	int digitsMaxRow; // Valor més gran de dígits en una fila en tot l'spritesheet.
@@ -23,7 +24,7 @@ private:
 	};
 
 public:
-	ABCsAlphaNum(int alphaNumEnum);
+	ABCsAlphaNum(float scaleX, float scaleY, int alphaNumEnum);
 	~ABCsAlphaNum();
 
 	void Update(int num);

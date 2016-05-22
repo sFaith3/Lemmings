@@ -17,6 +17,7 @@ InputManager::~InputManager(){
 
 }
 
+
 InputManager* InputManager::getInstanceInput(){
 	if (iInstance == NULL){
 
@@ -24,6 +25,7 @@ InputManager* InputManager::getInstanceInput(){
 	}
 	return iInstance;
 }
+
 
 void InputManager::Update(){
 	SDL_Event test_event;
@@ -83,6 +85,14 @@ void InputManager::Update(){
 }
 
 
+void InputManager::SetCursorRelative(bool active){
+	if (active)
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	else
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+}
+
+
 int InputManager::CheckNumber(){
 	int _number = number;
 	number = -1;
@@ -112,10 +122,16 @@ bool InputManager::CheckClick(){
 	return false;
 }
 
+
+void InputManager::ResetESC(){
+	esc = false;
+}
+
 void InputManager::ResetClick(){
 	if (click)
 		click = false;
 }
+
 
 void InputManager::GetMouseXY(int& x, int& y){
 	SDL_GetMouseState(&x, &y);

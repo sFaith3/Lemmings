@@ -2,6 +2,29 @@
 
 
 SceneGame::SceneGame(){
+	int _idMusic = audioManager->getAudioID("Assets/Audios/Music/track_01.wav");
+	if (_idMusic != -1)
+		idMusic = _idMusic;
+	else
+		idMusic = NULL;
+
+	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
+		Lemming *lemming = new Lemming();
+		lemming->init(90 + i, 60);
+		lemmings.push_back(lemming);
+	}
+
+	fons = new Map();
+	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480, 1, 1);
+
+	actions = new Actions();
+	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
+	actions->init(1, 1, "0", "0", "1", "1", "0", "0", "1", "1");
+	currAction = -1;
+
+	smManager = SceneManager::getInstanceSM();
+
+	cursor = Cursor::getInstanceCursor();
 }
 
 
@@ -10,22 +33,17 @@ SceneGame::~SceneGame(){
 
 
 void SceneGame::init(){
-	for (int i = 0; i < 1; i++){
-		Lemming *lemming = new Lemming();
-		lemming->init(90 + i, 60);
-		lemmings.push_back(lemming);
-	}
-	
-	fons = new Map();
-	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480);
-
-	actions = new Actions();
-	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
-	actions->init("0", "0", "1", "1", "0", "0", "1", "1");
-	currAction = -1;
+	audioManager->playSound(idMusic, -1); //Afegir Mix_Music al Resource. De moment s'agafa com a un so.
+	inputManager->SetCursorRelative(true);
 }
 
 void SceneGame::update(){
+	if (inputManager->CheckESC()){
+		inputManager->ResetESC();
+		smManager->changeScene(smManager->MENU);
+		inputManager->SetCursorRelative(false);
+	}
+
 	int action = actions->update();
 	switch (action){
 	case -1:
@@ -51,12 +69,19 @@ void SceneGame::update(){
 		int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / fons->GetSizeTile();
 		(*itLem)->update(fons, x1, y1, x2, y2);
 
+		if ((*itLem)->CursorOnLemming() && !cursor->GetChangedCursor())
+			cursor->ChangeCursor();
+		else if(!(*itLem)->CursorOnLemming() && cursor->GetChangedCursor())
+			cursor->ChangeCursor();
+
 		if (inputManager->CheckClick()){
 			int numUsos = actions->GetNumberUsesSkill(currAction);
 			if ((*itLem)->SetSkill(numUsos, currAction))
 				actions->DetractUseSkill(currAction);
 		}
 	}
+
+	cursor->Update();
 }
 
 void SceneGame::render(){
@@ -66,4 +91,6 @@ void SceneGame::render(){
 		(*itLem)->render();
 
 	actions->render();
+
+	cursor->render();
 }

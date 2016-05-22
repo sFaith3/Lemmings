@@ -15,10 +15,18 @@ public:
 
 	static AudioManager* getInstanceAudio();
 
-	void playAudio(int audio);
-	void PauseAudio();
-	void ResumeAudio();
-	bool isAudioPaused();
+	Sint32 addAudio(const char* file);
+	Sint32 getAudioID(const char* file);
+	void playMusic(int audio);
+	void playMusic(int audio, int loop);
+	void playSound(int audio);
+	void playSound(int audio, int loop);
+	void pauseMusic();
+	void pauseSound();
+	bool isMusicPaused();
+	bool isSoundPaused();
+	void resumeMusic();
+	void resumeSound();
 };
 
 #endif

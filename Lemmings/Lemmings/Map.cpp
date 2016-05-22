@@ -16,12 +16,12 @@ Map::~Map(){
 }
 
 
-void Map::init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
-	Element::init(x, y, fileMap, srcX, srcY, w, h);
+void Map::init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h, float scaleX, float scaleY){
+	Element::init(x, y, fileMap, srcX, srcY, w, h, scaleX, scaleY);
 
 	tManager->LoadTmx(fileMap, layerCollision);
 	this->fileTileset = fileTileset;
-	idFileTileset = sManager->getVideoManager()->getTextureID(fileTileset);
+	idFileTileset = videoManager->getTextureID(fileTileset);
 	if (fileTileset != NULL){
 		for (int i = 0; i < numLayers; i++){
 			vector <vector<int> > mapa = tManager->LoadMap(i);
@@ -36,7 +36,7 @@ void Map::init(int x, int y, const char* fileMap, const char* layerCollision, in
 	}
 	else{
 		this->fileMap = fileMap;
-		idFileMap = sManager->getVideoManager()->getTextureID(fileMap);
+		idFileMap = videoManager->getTextureID(fileMap);
 	}
 
 	tManager->DestroyTMX();
@@ -46,15 +46,14 @@ void Map::init(int x, int y, const char* fileMap, const char* layerCollision, in
 
 void Map::render(){
 	if (fileTileset != NULL){
-		VideoManager* video = sManager->getVideoManager();
 		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++){
 			vector<tinyManager::Tileset::Tile*> tiles = itTilesets->getTiles();
 			for (int pos = 0; pos < itTilesets->getSizeTiles(); pos++)
-				video->renderTexture(idFileTileset, tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY, 0, 0, 0);
+				videoManager->renderTexture(idFileTileset, tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), tiles[pos]->getScaleX(), tiles[pos]->getScaleY(), tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY, 0, 0, 0);
 		}
 	}
 	else
-		sManager->getVideoManager()->renderTexture(idFileMap, 0, 0, width, height, posX, posY, 0, 0, 0);
+		videoManager->renderTexture(idFileMap, 0, 0, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
 }
 
 

@@ -23,7 +23,7 @@ VideoManager::VideoManager(){
 		}
 		else{
 			//Create gScreenRenderer for window
-			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			gScreenRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			if (gScreenRenderer == NULL)
 				cout << "gScreenRenderer could not be created! SDL Error: " << SDL_GetError() << endl;
 			else{
@@ -119,8 +119,8 @@ Sint32 VideoManager::addTexture(const char* file){
 		//Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
 	}
-
 	return ResourceManager::getInstanceResourceManager()->createTexture(file, newTexture);
+
 }
 
 Sint32 VideoManager::getTextureID(const char* file){
@@ -164,7 +164,7 @@ void VideoManager::renderGraphic(int img, int srcPosX, int srcPosY, int width, i
 	SDL_BlitSurface(origin, &rectAux, gScreenSurface, &r);
 }
 
-void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY, double angle, int centerX, int centerY){
+void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY,int dstPosX, int dstPosY, double angle, int centerX, int centerY){
 	SDL_Rect rectAux, r;
 	rectAux.x = srcPosX;
 	rectAux.y = srcPosY;
@@ -172,8 +172,8 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	rectAux.h = height;
 	r.x = dstPosX;
 	r.y = dstPosY;
-	r.w = width;
-	r.h = height;
+	r.w = (int)(width * scaleX);
+	r.h = (int)(height * scaleY);
 
 	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
 
@@ -184,7 +184,7 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
 }
 
-void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip){
+void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip){
 	SDL_Rect rectAux, r;
 	rectAux.x = srcPosX;
 	rectAux.y = srcPosY;
@@ -192,8 +192,8 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	rectAux.h = height;
 	r.x = dstPosX;
 	r.y = dstPosY;
-	r.w = width;
-	r.h = height;
+	r.w = (int)(width * scaleX);
+	r.h = (int)(height * scaleY);
 
 	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
 

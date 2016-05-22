@@ -35,11 +35,10 @@ void SceneManager::init(){
 	mVectorScenes.push_back(new SceneCodeLevel);
 	mVectorScenes.push_back(new SceneGame);
 
-	for (int i = 0; i < mVectorScenes.size(); i++)
-		mVectorScenes[i]->init();
-
 	//mCurrScene = LOGO;
 	mCurrScene = MENU;
+
+	mVectorScenes[mCurrScene]->init();
 }
 
 
@@ -58,6 +57,7 @@ void SceneManager::render(){
 
 void SceneManager::changeScene(SceneEnum next_scene){
 	mCurrScene = next_scene;
+	mVectorScenes[mCurrScene]->init();
 }
 
 

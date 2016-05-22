@@ -227,6 +227,13 @@ public:
 
 	/*--- AUDIO ---*/
 
+	//! Adds a audio to the ResourceManager 
+	/*!
+	\param file Filepath to the audio
+	\return -1 if there's an error when loading
+	*/
+	Sint32 addAudio(const char* file, Mix_Chunk* sound);
+
 	//! Deletes a mixer from the ResourceManager mapAudios
 	/*!
 	\param ID to the audio
@@ -310,17 +317,6 @@ private:
 	*/
 	Sint32 searchTexture(SDL_Texture* img);
 	/*--- END TEXTURE ---*/
-
-
-	/*--- AUDIO ---*/
-
-	//! Adds a audio to the ResourceManager 
-	/*!
-	\param file Filepath to the audio
-	\return -1 if there's an error when loading
-	*/
-	Sint32 addAudio(const char* file);
-	/*--- END AUDIO ---*/
 
 
 	//! Searches the first NULL in mGraphicsVector and updates mFirstFreeSlotGraphics to store its position

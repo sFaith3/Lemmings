@@ -1,12 +1,14 @@
 #include "ABCsAlphaNum.h"
 
 
-ABCsAlphaNum::ABCsAlphaNum(int alphaNum){
+ABCsAlphaNum::ABCsAlphaNum(float scaleX, float scaleY, int alphaNum){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
 	idImg = videoManager->getTextureID("Assets/Images/alphabet.png");
 	xIni = yIni = 3;
 	width = 16;
 	height = 15;
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
 	spacingX = 1;
 	spacingY = 1;
 	digitsMaxRow = 13;
@@ -120,5 +122,5 @@ void ABCsAlphaNum::Update(string alpha){
 
 
 void ABCsAlphaNum::Render(int x, int y){
-	videoManager->renderTexture(idImg, srcX, srcY, width, height, x, y, 0, 0, 0);
+	videoManager->renderTexture(idImg, srcX, srcY, width, height, scaleX, scaleY, x, y, 0, 0, 0);
 }

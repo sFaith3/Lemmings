@@ -32,6 +32,7 @@ public:
 	int GetHeight();
 	int GetDir();
 
+	bool CursorOnLemming();
 	bool SetSkill(int numUsos, int skill);
 
 	void SetDir(int dir);

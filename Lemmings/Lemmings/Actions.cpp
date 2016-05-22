@@ -2,7 +2,7 @@
 
 
 Actions::Actions(){
-	inputManager = sManager->getInputManager();
+	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
 
 
@@ -11,11 +11,11 @@ Actions::~Actions()
 }
 
 
-void Actions::init(string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
+void Actions::init(float scaleX, float scaleY, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
-	ElementHUD::init(x, y, "Assets/Images/hud.png", 0, 0, 480, hAction);
+	ElementHUD::init(x, y, "Assets/Images/hud.png", 0, 0, 480, hAction, scaleX, scaleY);
 	
 	currButton = -1;
 
@@ -24,10 +24,10 @@ void Actions::init(string trepar, string paraigues, string explosio, string para
 	int hSkill = 61;
 	const char* imgSkillPressed = "Assets/Images/skillsPressed.png";
 	skills.push_back(new Skill);
-	skills.back()->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
+	skills.back()->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "50");
 	xSkill += wSkill;
 	skills.push_back(new Skill);
-	skills.back()->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
+	skills.back()->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "50");
 	xSkill += wSkill;
 	skills.push_back(new Skill);
 	skills.back()->init(TREPAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, trepar);
@@ -54,10 +54,10 @@ void Actions::init(string trepar, string paraigues, string explosio, string para
 	skills.back()->init(CAVAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavar);
 	xSkill += wSkill;
 	skills.push_back(new Skill);
-	skills.back()->init(DD, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
+	skills.back()->init(DD, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
 	xSkill += wSkill;
 	skills.push_back(new Skill);
-	skills.back()->init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
+	skills.back()->init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
 }
 
 

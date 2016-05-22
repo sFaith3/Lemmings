@@ -2,7 +2,7 @@
 
 
 Lemming::Lemming(){
-	inputManager = sManager->getInputManager();
+	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
 
 
@@ -12,7 +12,7 @@ Lemming::~Lemming(){
 
 
 void Lemming::init(int x, int y){
-	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 318, 0, 20, 4, 1, false, 0);
+	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 1, false, 0);
 
 	estat = FALL;
 	pintW = 20;
@@ -72,7 +72,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 }
 
 void Lemming::render(){
-	sManager->getVideoManager()->renderTexture(idImg, srcPosX, srcPosY, pintW, pintH, posX, posY, 0, 0, 0, flipType);
+	videoManager->renderTexture(idImg, srcPosX, srcPosY, pintW, pintH, scaleX, scaleY, posX, posY, 0, 0, 0, flipType);
 }
 
 int Lemming::GetPosX(){
@@ -93,6 +93,15 @@ int Lemming::GetHeight(){
 
 int Lemming::GetDir(){
 	return dir;
+}
+
+bool Lemming::CursorOnLemming(){
+	int mouseX, mouseY;
+	inputManager->GetMouseXY(mouseX, mouseY);
+	if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height))
+		return true;
+
+	return false;
 }
 
 bool Lemming::SetSkill(int numUsos, int skill){
@@ -153,6 +162,7 @@ bool Lemming::SetSkill(int numUsos, int skill){
 			}
 		}
 	}
+
 	return false;
 }
 
