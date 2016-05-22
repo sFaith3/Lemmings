@@ -3,7 +3,7 @@
 
 class Button
 {
-private:
+protected:
 	int id; //Nom, del lloc on porta, si es clica a sobre d'ell. Depenent de varlo d'aquest string, el codi realitzarà X gestió.
 	int posX, posY; //Variables, que defineixen la posició en els eixos de coordenades. I s'utilitzen per a renderitzar i condicionen els inputs.
 	int width, height; //Defineixen el rectangle d'aquest. Per tal de poder pintar-lo i detectar l'input.

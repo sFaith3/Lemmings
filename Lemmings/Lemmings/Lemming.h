@@ -80,8 +80,8 @@ public:
 	void Explotar();
 
 	// Equipables, com Paraigües i Escalar
-	void SetParaigues();
-	void SetEscalar();
+	void PutParaigues();
+	void PutEscalar();
 
 };
 

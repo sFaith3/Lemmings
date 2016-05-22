@@ -21,7 +21,7 @@ void SceneGame::init(){
 
 	actions = new Actions();
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
-	actions->init(0, 0, 1, 1, 0, 0, 1, 1);
+	actions->init("0", "0", "1", "1", "0", "0", "1", "1");
 	currAction = -1;
 }
 

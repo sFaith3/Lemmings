@@ -1,8 +1,7 @@
 #include "Skill.h"
 
 
-Skill::Skill()
-{
+Skill::Skill(){
 }
 
 
@@ -11,10 +10,23 @@ Skill::~Skill()
 }
 
 
-void Skill::init(int id, int posX, int posY, int width, int height, int posXini, int posYini, const char* pathNormal, const char* pathPressed, int usos){
+void Skill::init(int id, int posX, int posY, int width, int height, int posXini, int posYini, const char* pathNormal, const char* pathPressed, string usos){
 	Button::init(id, posX, posY, width, height, posXini, posYini, pathNormal, pathPressed);
 
-	usosRestants = usos;
+	if (usos.length() > 1){
+		usosRestants = (int)(((usos[0] - 48) * 10) + (usos[1] - 48));
+		numPrimerDigit = (int)usos[0] - 48;
+		numSegonDigit = (int)usos[1] - 48;
+	}
+	else{
+		usosRestants = (int)usos[0] - 48;
+		numPrimerDigit = 0;
+		numSegonDigit = (int)usos[0] - 48;
+	}
+	
+
+	digits.push_back(new ABCsAlphaNum(numPrimerDigit));
+	digits.push_back(new ABCsAlphaNum(numSegonDigit));
 }
 
 bool Skill::update(){
@@ -23,6 +35,13 @@ bool Skill::update(){
 
 void Skill::render(){
 	Button::render();
+
+	int spacingX = 0;
+	int spacingY = 8;
+	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
+		spacingX += 10;
+		(*itDigits)->Render(posX + spacingX, posY + spacingY);
+	}
 }
 
 int Skill::GetNumberUses(){
@@ -30,6 +49,17 @@ int Skill::GetNumberUses(){
 }
 
 void Skill::OneUseLess(){
-	if (usosRestants > 0)
+	if (usosRestants > 0){
 		usosRestants--;
+		if (numSegonDigit > 0){
+			numSegonDigit--;
+			digits.back()->Update(numSegonDigit);
+		}
+		else{
+			numPrimerDigit--;
+			numSegonDigit = 9;
+			digits[0]->Update(numPrimerDigit);
+			digits[1]->Update(numSegonDigit);
+		}
+	}
 }

@@ -11,7 +11,7 @@ Actions::~Actions()
 }
 
 
-void Actions::init(int trepar, int paraigues, int explosio, int parat, int esgraons, int cavarLateral, int picar, int cavar){
+void Actions::init(string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
@@ -19,67 +19,66 @@ void Actions::init(int trepar, int paraigues, int explosio, int parat, int esgra
 	
 	currButton = -1;
 
-	Skill skill;
 	int xSkill = x + 1;
 	int wSkill = 40;
 	int hSkill = 61;
 	const char* imgSkillPressed = "Assets/Images/skillsPressed.png";
-	skill.init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, 0);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
 	xSkill += wSkill;
-	skill.init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, 0);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
 	xSkill += wSkill;
-	skill.init(TREPAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, trepar);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(TREPAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, trepar);
 	xSkill += wSkill;
-	skill.init(PARAIGUES, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, paraigues);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(PARAIGUES, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, paraigues);
 	xSkill += wSkill;
-	skill.init(EXPLOSIO, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, explosio);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(EXPLOSIO, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, explosio);
 	xSkill += wSkill;
-	skill.init(PARAT, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, parat);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(PARAT, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, parat);
 	xSkill += wSkill;
-	skill.init(ESGRAONS, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, esgraons);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(ESGRAONS, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, esgraons);
 	xSkill += wSkill;
-	skill.init(CAVAR_LATERAL, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavarLateral);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(CAVAR_LATERAL, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavarLateral);
 	xSkill += wSkill;
-	skill.init(PICAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, picar);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(PICAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, picar);
 	xSkill += wSkill;
-	skill.init(CAVAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavar);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(CAVAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavar);
 	xSkill += wSkill;
-	skill.init(DD, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, -1);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(DD, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
 	xSkill += wSkill;
-	skill.init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, 0);
-	skills.push_back(skill);
+	skills.push_back(new Skill);
+	skills.back()->init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "0");
 }
 
 
 int Actions::update(){
 	for (itSkills = skills.begin(); itSkills != skills.end(); itSkills++){
-		if (itSkills->update()){
+		if ((*itSkills)->update()){
 			if (currButton != -1)
-				skills[currButton].SetPressed(false);
+				skills[currButton]->SetPressed(false);
 
-			itSkills->SetPressed(true);
-			return currButton = itSkills->GetId();
+			(*itSkills)->SetPressed(true);
+			return currButton = (*itSkills)->GetId();
 		}
 	}
 
 	int number = inputManager->CheckNumber();
 	if (number != -1){
 		if (currButton != -1)
-			skills[currButton].SetPressed(false);
+			skills[currButton]->SetPressed(false);
 
-		skills[number].SetPressed(true);
-		return currButton = skills[number].GetId();
+		skills[number]->SetPressed(true);
+		return currButton = skills[number]->GetId();
 	}
 
 	return -1;
@@ -90,17 +89,17 @@ void Actions::render(){
 	ElementHUD::render();
 
 	for (itSkills = skills.begin(); itSkills != skills.end(); itSkills++){
-		itSkills->render();
+		(*itSkills)->render();
 	}
 }
 
 int Actions::GetNumberUsesSkill(int skill){
 	if (skill >= 0)
-		return skills[skill].GetNumberUses();
+		return skills[skill]->GetNumberUses();
 
 	return 0;
 }
 
 void Actions::DetractUseSkill(int skill){
-	skills[skill].OneUseLess();
+	skills[skill]->OneUseLess();
 }

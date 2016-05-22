@@ -275,14 +275,6 @@ void Lemming::SetExplosio(){
 	srcPosY = 260;
 }
 
-void Lemming::SetNoEscales(){
-
-}
-
-void Lemming::SetExplotar(){
-
-}
-
 void Lemming::Moure(){
 	switch (dir){
 	case 0:
@@ -345,11 +337,11 @@ void Lemming::Explotar(){
 }
 
 
-void Lemming::SetParaigues(){
+void Lemming::PutParaigues(){
 	paraigues = true;
 }
 
-void Lemming::SetEscalar(){
+void Lemming::PutEscalar(){
 	escalar = true;
 }
 
