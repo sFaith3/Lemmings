@@ -21,17 +21,14 @@ public:
 		private:
 			int srcPosX, srcPosY;
 			int tileWidth, tileHeight;
-			float scaleX, scaleY;
 			int dstPosX, dstPosY;
 
 		public:
-			Tile(int _srcPosX, int _srcPosY, int _tileWidth, int _tileHeight, float _scaleX, float _scaleY, int _dstPosX, int _dstPosY){
+			Tile(int _srcPosX, int _srcPosY, int _tileWidth, int _tileHeight, int _dstPosX, int _dstPosY){
 				srcPosX = _srcPosX;
 				srcPosY = _srcPosY;
 				tileWidth = _tileWidth;
 				tileHeight = _tileHeight;
-				scaleX = _scaleX;
-				scaleY = _scaleY;
 				dstPosX = _dstPosX;
 				dstPosY = _dstPosY;
 			}
@@ -52,14 +49,6 @@ public:
 				return tileHeight;
 			}
 
-			float getScaleX(){
-				return scaleX;
-			}
-
-			float getScaleY(){
-				return scaleY;
-			}
-
 			int getDstPosX(){
 				return dstPosX;
 			}
@@ -70,8 +59,8 @@ public:
 
 		};
 
-		void addTile(int srcPosX, int srcPosY, int tileWidth, int tileHeight, float scaleX, float scaleY, int dstPosX, int dstPosY){
-			Tile *tile = new Tile(srcPosX, srcPosY, tileWidth, tileHeight, scaleX, scaleY, dstPosX, dstPosY);
+		void addTile(int srcPosX, int srcPosY, int tileWidth, int tileHeight, int dstPosX, int dstPosY){
+			Tile *tile = new Tile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
 			tiles.push_back(tile);
 		}
 
@@ -88,6 +77,7 @@ public:
 
 	};
 
+	void Init();
 	void LoadTmx(const char* fileTMX, string layerCollision);
 	vector <vector<int> > LoadMap(int numLayers);
 	vector <vector<int> > LoadMapCollision();

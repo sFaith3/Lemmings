@@ -29,6 +29,8 @@ public:
 	void render();
 
 	int GetMapa(int x, int y);
+	void DestroyPosMapa(int x, int y);
+
 	int GetSizeTile();
 };
 

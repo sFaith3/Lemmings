@@ -19,6 +19,7 @@ Map::~Map(){
 void Map::init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
 	Element::init(x, y, fileMap, srcX, srcY, w, h, 2, 2);
 
+	tManager->Init();
 	tManager->LoadTmx(fileMap, layerCollision);
 	this->fileTileset = fileTileset;
 	idFileTileset = videoManager->getTextureID(fileTileset);
@@ -60,6 +61,12 @@ void Map::render(){
 int Map::GetMapa(int x, int y){
 	return mapCollision[y][x];
 }
+
+
+void Map::DestroyPosMapa(int x, int y){
+	mapCollision[y][x] = 0;
+}
+
 
 int Map::GetSizeTile(){
 	return sizeTiles;

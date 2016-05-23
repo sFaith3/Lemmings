@@ -30,10 +30,10 @@ void SceneManager::init(){
 
 	mVectorScenes.clear();
 
-	mVectorScenes.push_back(new SceneLogo);
-	mVectorScenes.push_back(new SceneMenu);
-	mVectorScenes.push_back(new SceneCodeLevel);
-	mVectorScenes.push_back(new SceneGame);
+	mVectorScenes.push_back(new SceneLogo());
+	mVectorScenes.push_back(new SceneMenu());
+	mVectorScenes.push_back(new SceneCodeLevel());
+	mVectorScenes.push_back(new SceneGame());
 
 	//mCurrScene = LOGO;
 	mCurrScene = MENU;
@@ -58,6 +58,19 @@ void SceneManager::render(){
 void SceneManager::changeScene(SceneEnum next_scene){
 	mCurrScene = next_scene;
 	mVectorScenes[mCurrScene]->init();
+}
+
+
+void SceneManager::reinitScene(SceneEnum scene){
+	delete mVectorScenes[scene];
+	switch (scene){
+	case GAME:
+		mVectorScenes[scene] = new SceneGame();
+		break;
+	default:
+		cout << "Error with 'reinitScene()' in the SceneManager!\n";
+		break;
+	}
 }
 
 

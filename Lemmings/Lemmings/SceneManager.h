@@ -26,6 +26,7 @@ public:
 	void render();
 
 	void changeScene(SceneEnum next_scene);
+	void reinitScene(SceneEnum scene);
 
 	int getCurrScene();
 

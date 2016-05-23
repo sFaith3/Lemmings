@@ -8,12 +8,6 @@ SceneGame::SceneGame(){
 	else
 		idMusic = NULL;
 
-	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
-		Lemming *lemming = new Lemming();
-		lemming->init(70 + i, 60);
-		lemmings.push_back(lemming);
-	}
-
 	fons = new Map();
 	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480);
 
@@ -21,6 +15,12 @@ SceneGame::SceneGame(){
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
 	actions->init(1, 1, "0", "0", "1", "1", "0", "0", "1", "1");
 	currAction = -1;
+
+	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
+		Lemming *lemming = new Lemming();
+		lemming->init(70 + i, 60);
+		lemmings.push_back(lemming);
+	}
 
 	smManager = SceneManager::getInstanceSM();
 
@@ -40,6 +40,7 @@ void SceneGame::init(){
 void SceneGame::update(){
 	if (inputManager->CheckESC()){
 		inputManager->ResetESC();
+		smManager->reinitScene(smManager->GAME);
 		smManager->changeScene(smManager->MENU);
 		inputManager->SetCursorRelative(false);
 	}

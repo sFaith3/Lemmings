@@ -3,8 +3,6 @@
 tinyManager* tinyManager::tInstance = NULL;
 
 tinyManager::tinyManager(){
-	x = y = 0;
-	doc = NULL;
 }
 
 
@@ -17,6 +15,12 @@ tinyManager* tinyManager::getInstanceTinyManager(){
 		tInstance = new tinyManager();
 
 	return tInstance;
+}
+
+
+void tinyManager::Init(){
+	x = y = 0;
+	doc = NULL;
 }
 
 
@@ -167,7 +171,7 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing,
 			int dstPosX = i * tileWidth;
 			int dstPosY = j * tileHeight;
 
-			_tileset.addTile(srcPosX, srcPosY, tileWidth, tileHeight, 1, 1, dstPosX, dstPosY);
+			_tileset.addTile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
 		}
 	}
 	x = y = 0;
