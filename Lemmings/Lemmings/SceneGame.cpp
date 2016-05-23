@@ -10,12 +10,12 @@ SceneGame::SceneGame(){
 
 	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
 		Lemming *lemming = new Lemming();
-		lemming->init(90 + i, 60);
+		lemming->init(70 + i, 60);
 		lemmings.push_back(lemming);
 	}
 
 	fons = new Map();
-	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480, 1, 1);
+	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480);
 
 	actions = new Actions();
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******

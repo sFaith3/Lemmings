@@ -12,7 +12,7 @@ Lemming::~Lemming(){
 
 
 void Lemming::init(int x, int y){
-	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 1, false, 0);
+	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 2, 2, 318, 0, 20, 4, 1, false, 0);
 
 	estat = FALL;
 	pintW = 20;
@@ -20,8 +20,7 @@ void Lemming::init(int x, int y){
 	dir = 0;
 	flipType = SDL_FLIP_NONE;
 	temps = 5;
-	velocitat = 1;
-
+	desplasament = 1;
 	paraigues = false;
 	escalar = false;
 }
@@ -54,12 +53,13 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		break;
 	case FALL:
 		Caure();
-		if (fons->GetMapa(x1 + velocitat, y2 + velocitat) != 0 || fons->GetMapa(x2 - velocitat, y2 + velocitat) != 0)
+		if (fons->GetMapa(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMapa(x2 - desplasament, y2 + desplasament) != 0)
 			SetMoure();
 		break;
 	case BREAK:
-		if (fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0)
+		if (fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0){
 			SetCaure();
+		}
 		break;
 	case EXPLOSION:
 		Explotar();
@@ -121,11 +121,8 @@ bool Lemming::SetSkill(int numUsos, int skill){
 				}
 				break;
 			case 4: // EXPLOSIO
-				if (estat == MOVE){
-					//Suposant que pot passar a aquest estat solament quan s'estigui movent.
 					SetExplotar();
 					return true;
-				}
 				break;
 			case 5: // PARAT
 				if (estat == MOVE){
@@ -139,7 +136,7 @@ bool Lemming::SetSkill(int numUsos, int skill){
 					return true;
 				}
 				break;
-			case 7: // CAVAR_LATERAL
+			case 7: // TRENCAR MUR
 				if (estat == MOVE){
 					SetForadarParet();
 					return true;
@@ -286,10 +283,10 @@ void Lemming::SetExplosio(){
 void Lemming::Moure(){
 	switch (dir){
 	case 0:
-		posX += velocitat;
+		posX += desplasament;
 		break;
 	case 2:
-		posX -= velocitat;
+		posX -= desplasament;
 		break;
 	}
 }
@@ -297,10 +294,10 @@ void Lemming::Moure(){
 void Lemming::Moure(bool diagAmunt){
 	if (diagAmunt){
 		Moure();
-		posY -= velocitat;
+		posY -= desplasament;
 	}
 	else
-		posY += velocitat;
+		posY += desplasament;
 }
 
 void Lemming::TrencarMur(){
@@ -324,7 +321,7 @@ void Lemming::Picar(){
 }
 
 void Lemming::Caure(){
-	posY += velocitat*2;
+	posY += desplasament;
 }
 
 void Lemming::Immobilitzar(){

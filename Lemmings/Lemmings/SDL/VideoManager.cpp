@@ -170,8 +170,8 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	rectAux.y = srcPosY;
 	rectAux.w = width;
 	rectAux.h = height;
-	r.x = dstPosX;
-	r.y = dstPosY;
+	r.x = (int)(dstPosX* scaleX);
+	r.y = (int)(dstPosY* scaleY);
 	r.w = (int)(width * scaleX);
 	r.h = (int)(height * scaleY);
 
@@ -190,8 +190,8 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	rectAux.y = srcPosY;
 	rectAux.w = width;
 	rectAux.h = height;
-	r.x = dstPosX;
-	r.y = dstPosY;
+	r.x = (int)(dstPosX* scaleX);
+	r.y = (int)(dstPosY* scaleY);
 	r.w = (int)(width * scaleX);
 	r.h = (int)(height * scaleY);
 

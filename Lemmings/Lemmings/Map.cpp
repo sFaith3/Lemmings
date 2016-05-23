@@ -16,8 +16,8 @@ Map::~Map(){
 }
 
 
-void Map::init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h, float scaleX, float scaleY){
-	Element::init(x, y, fileMap, srcX, srcY, w, h, scaleX, scaleY);
+void Map::init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
+	Element::init(x, y, fileMap, srcX, srcY, w, h, 2, 2);
 
 	tManager->LoadTmx(fileMap, layerCollision);
 	this->fileTileset = fileTileset;
@@ -49,7 +49,7 @@ void Map::render(){
 		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++){
 			vector<tinyManager::Tileset::Tile*> tiles = itTilesets->getTiles();
 			for (int pos = 0; pos < itTilesets->getSizeTiles(); pos++)
-				videoManager->renderTexture(idFileTileset, tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), tiles[pos]->getScaleX(), tiles[pos]->getScaleY(), tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY, 0, 0, 0);
+				videoManager->renderTexture(idFileTileset, tiles[pos]->getSrcPosX(), tiles[pos]->getSrcPosY(), tiles[pos]->getTileWidth(), tiles[pos]->getTileHeight(), 1, 1, tiles[pos]->getDstPosX() - posX, tiles[pos]->getDstPosY() - posY, 0, 0, 0);
 		}
 	}
 	else

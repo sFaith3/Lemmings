@@ -11,7 +11,7 @@ private:
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
 	SDL_RendererFlip flipType;
 	int temps;
-	int velocitat;
+	int desplasament;
 	bool paraigues;
 	bool escalar;
 	int pintW, pintH;
