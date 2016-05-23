@@ -98,16 +98,14 @@ int Lemming::GetDir(){
 bool Lemming::CursorOnLemming(){
 	int mouseX, mouseY;
 	inputManager->GetMouseXY(mouseX, mouseY);
-	if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height))
+	if ((mouseX > posX && mouseX < posX + pintW) && (mouseY > posY && mouseY < posY + height))
 		return true;
 
 	return false;
 }
 
 bool Lemming::SetSkill(int numUsos, int skill){
-	int mouseX, mouseY;
-	inputManager->GetMouseXY(mouseX, mouseY);
-	if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height)){
+	if (CursorOnLemming()){
 		if (numUsos > 0){
 			switch (skill){ // Si no tenen l'habilitat posada, se'ls hi posa.
 			case 2: // TREPAR
