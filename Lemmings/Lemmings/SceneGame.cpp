@@ -12,10 +12,12 @@ SceneGame::SceneGame(){
 	actions->init(1, 1, "10", "10", "10", "10", "10", "10", "10", "10");
 	currAction = -1;
 
-	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
+	int ll = 0;
+	for (int i = 0; i < 2; i++){ //Feina per la porta d'on surten Lemmings.
 		Lemming *lemming = new Lemming();
-		lemming->init(130 + i, 80, fons->GetPosX(), fons->GetPosY());
+		lemming->init(130 + ll, 80, fons->GetPosX(), fons->GetPosY());
 		lemmings.push_back(lemming);
+		ll += 150;
 	}
 
 	smManager = SceneManager::getInstanceSM();
@@ -82,6 +84,7 @@ void SceneGame::update(){
 			lemmings.erase(itLem);
 			if (lemmings.size() == 0)
 				break;
+			itLem = lemmings.begin();
 		}
 	}
 

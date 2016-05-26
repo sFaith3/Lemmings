@@ -39,8 +39,8 @@ vector <vector<int> > tinyManager::LoadMap(int numLayers){
 	vector <vector<int> > mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
 
 	TiXmlElement *map = doc->FirstChildElement();
-	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
-	heightMap = atoi(map->Attribute("height")) * atoi(map->Attribute("tileheight"));
+	widthMap = atoi(map->Attribute("width"));
+	heightMap = atoi(map->Attribute("height"));
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement *layer = map->FirstChildElement("layer");
 	for (int i = 0; i < numLayers; i++){

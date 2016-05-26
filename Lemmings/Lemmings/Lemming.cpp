@@ -38,17 +38,17 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 				Moure(true); // Diagonal cap amunt.
 			else if (fons->GetMapa(x2, y2) == 0 && fons->GetMapa(x2, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x2 + 1, y1 + 1) != 0) //Quan tot s'hagui escalat, s'ha de mirar la x.******
+			else if (fons->GetMapa(x2 + 1, y1 + 1) != 0)
 				SetDir(2);
 			else
 				Moure();
 		}
 		else{
-			if (fons->GetMapa(x1, y2 - 1) != 0 && fons->GetMapa(x1, y2 - 2) == 0) //S'ha de mirar quan s'hagui escalat tot.
+			if (fons->GetMapa(x1, y2 - 1) != 0 && fons->GetMapa(x1, y2 - 2) == 0)
 				Moure(true); // Diagonal cap amunt.
 			else if (fons->GetMapa(x1, y2) == 0 && fons->GetMapa(x1, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x1, y1 + 1) != 0) //Quan tot s'hagui escalat, s'ha de mirar la x.******
+			else if (fons->GetMapa(x1, y1 + 1) != 0)
 				SetDir(0);
 			else
 				Moure();
@@ -60,7 +60,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 			SetMoure();
 		break;
 	case BREAK:
-		if ((fons->GetMapa(x1, y2 + 1) == 0 && fons->GetMapa(x1, y1 + 1) == 0) || (fons->GetMapa(x2, y2 + 1) == 0 && fons->GetMapa(x2, y1 + 1) == 0)){
+		if ((fons->GetMapa(x1 + 1, y2 + 1) == 0 && fons->GetMapa(x1, y1 + 1) == 0) || (fons->GetMapa(x2 + 1, y2 + 1) == 0 && fons->GetMapa(x2, y1 + 1) == 0)){
 			SetMoure();
 		}
 		else{
@@ -74,7 +74,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 
 		break;
 	case DIG:
-		if (fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y2 + 1) == 0){
+		if ((fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y1 + 1) == 0) && fons->GetMapa(x2, y2 + 1) == 0){
 			SetCaure();
 		}
 		else{
@@ -83,8 +83,6 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		break;
 	case PICK:
 	//	Caure();
-		// Destrucció del terreny.
-	//	fons->DestroyPosMapa(x2, y2);
 		break;
 	case STOP:
 
