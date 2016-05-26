@@ -225,39 +225,74 @@ public:
 	/*--- END TEXTURE ---*/
 
 
-	/*--- AUDIO ---*/
+	/*--- MUSIC ---*/
 
-	//! Adds a audio to the ResourceManager 
+	//! Adds a music to the ResourceManager 
 	/*!
-	\param file Filepath to the audio
+	\param file Filepath to the music
 	\return -1 if there's an error when loading
 	*/
-	Sint32 addAudio(const char* file, Mix_Chunk* sound);
+	Sint32 addMusic(const char* file, Mix_Music* music);
 
-	//! Deletes a mixer from the ResourceManager mapAudios
+	//! Deletes a mixer from the ResourceManager mapMusics
 	/*!
-	\param ID to the audio
+	\param ID to the music
 	*/
-	void removeAudio(Sint32 ID);
+	void removeMusic(Sint32 ID);
 
 	//! Gets the mixer ID
 	/*!
 	\param file Filepath to the mixer
 	\return ID of the mixer
 	*/
-	Sint32 getAudioID(const char* file);
+	Sint32 getMusicID(const char* file);
+
+	//! Returns the Mix_Music of the mixer
+	/*!
+	\param ID of the mixer
+	\return Mix_Music
+	*/
+	Mix_Music* getMusicByID(Sint32 ID);
+
+
+	//! Prints the path to loaded musics
+	void printLoadedMusics();
+	/*--- END MUSIC ---*/
+
+
+	/*--- SOUND ---*/
+
+	//! Adds a sound to the ResourceManager 
+	/*!
+	\param file Filepath to the sound
+	\return -1 if there's an error when loading
+	*/
+	Sint32 addSound(const char* file, Mix_Chunk* sound);
+
+	//! Deletes a mixer from the ResourceManager mapSounds
+	/*!
+	\param ID to the sound
+	*/
+	void removeSound(Sint32 ID);
+
+	//! Gets the mixer ID
+	/*!
+	\param file Filepath to the mixer
+	\return ID of the mixer
+	*/
+	Sint32 getSoundID(const char* file);
 
 	//! Returns the Mix_Chunk of the mixer
 	/*!
-	\param ID ID of the mixer
+	\param ID of the mixer
 	\return Mix_Chunk
 	*/
-	Mix_Chunk* getAudioByID(Sint32 ID);
+	Mix_Chunk* getSoundByID(Sint32 ID);
 
 
-	//! Prints the path to loaded graphics
-	void printLoadedAudios();
-	/*--- END AUDIO ---*/
+	//! Prints the path to loaded sounds
+	void printLoadedSounds();
+	/*--- END SOUND ---*/
 
 protected:
 	//! Constructor of an empty ResourceManager.
@@ -331,24 +366,33 @@ private:
 	*/
 	Uint32 updateFirstFreeSlotTexture();
 
-	//! Searches the first NULL in mAudiosVector and updates mFirstFreeSlotAudio to store its position
+	//! Searches the first NULL in mMusicsVector and updates mFirstFreeSlotMusic to store its position
 	/*!
-	\return Index of the first NULL in mAudiosVector
+	\return Index of the first NULL in mMusicsVector
 	*/
-	Uint32 updateFirstFreeSlotAudio();
+	Uint32 updateFirstFreeSlotMusic();
+
+	//! Searches the first NULL in mSoundsVector and updates mFirstFreeSlotSound to store its position
+	/*!
+	\return Index of the first NULL in mSoundsVector
+	*/
+	Uint32 updateFirstFreeSlotSound();
 
 
 	vector<SDL_Surface*>		mGraphicsVector;		/*!<  Vector that stores Surfaces. Useful for sequential access*/
 	vector<SDL_Texture*>		mTexturesVector;		/*!<  Vector that stores Textures. Useful for sequential access*/
-	vector<Mix_Chunk*>			mAudiosVector;			/*!<  Vector that stores Mix_Chunks. Useful for sequential access*/
+	vector<Mix_Music*>			mMusicsVector;			/*!<  Vector that stores Mix_Musics. Useful for sequential access*/
+	vector<Mix_Chunk*>			mSoundsVector;			/*!<  Vector that stores Mix_Chunks. Useful for sequential access*/
 
 
 	map<string, Sint32>			mIDMapGraphics;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
 	map<string, Sint32>			mIDMapTextures;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
-	map<string, Sint32>			mIDMapAudios;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
+	map<string, Sint32>			mIDMapMusics;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
+	map<string, Sint32>			mIDMapSounds;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
 	Sint32						mFirstFreeSlotGraphics;			/*!<  First free slot in the mGraphicsVector*/
 	Sint32						mFirstFreeSlotTextures;			/*!<  First free slot in the mTexturesVector*/
-	Sint32						mFirstFreeSlotAudios;			/*!<  First free slot int the mAudiosVector*/
+	Sint32						mFirstFreeSlotMusics;			/*!<  First free slot int the mMusicsVector*/
+	Sint32						mFirstFreeSlotSounds;			/*!<  First free slot int the mSoundsVector*/
 
 
 	static ResourceManager*		pInstance;				/*!<  Singleton instance*/

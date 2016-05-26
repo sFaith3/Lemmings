@@ -6,16 +6,16 @@ class Map :
 	public ElementGame
 {
 private:
+	bool mapTmx;
+
 	const char* fileMap;
 	Sint32 idFileMap;
-	const char* fileTileset;
-	Sint32 idFileTileset;
 
-	vector<tinyManager::Tileset> tilesets;
-	vector<tinyManager::Tileset>::iterator itTilesets;
+	string rutaTilesets; // Directori on es troben els tilesets a utilitzar per a X arxiu TMX.
+	vector<tinyManager::Tileset*> tilesets;
+	vector<tinyManager::Tileset*>::iterator itTilesets;
 
-	int widthMap;
-	int sizeTiles;
+	int sizeTile;
 
 	vector <vector<int> > mapCollision;
 
@@ -25,12 +25,17 @@ public:
 	Map();
 	~Map();
 
-	void init(int x, int y, const char* fileMap, const char* layerCollision, int numLayers, const char* fileTileset, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
+	void init(int x, int y, bool mapTmx, const char* fileMap, const char* layerCollision, int numLayers, const char* rutaTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
 	void render();
+
+	int GetPosX();
+	int GetPosY();
 
 	int GetMapa(int x, int y);
 	void DestroyPosMapa(int x, int y);
 
+	int GetWidthMap();
+	int GetHeightMap();
 	int GetSizeTile();
 };
 

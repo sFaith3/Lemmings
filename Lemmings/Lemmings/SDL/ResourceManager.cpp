@@ -6,7 +6,8 @@ ResourceManager* ResourceManager::pInstance = NULL;
 ResourceManager::ResourceManager(){
 	mFirstFreeSlotGraphics = -1;
 	mFirstFreeSlotTextures = -1;
-	mFirstFreeSlotAudios = -1;
+	mFirstFreeSlotMusics = -1;
+	mFirstFreeSlotSounds = -1;
 }
 
 ResourceManager::~ResourceManager(){
@@ -369,6 +370,10 @@ void ResourceManager::getColorTexture(Sint32 ID, Uint8* R, Uint8* G, Uint8* B){
 
 
 SDL_Texture* ResourceManager::getTextureByID(Sint32 ID){
+	if (ID == -1){
+		cout << "This element haven't a image!\n";
+		return NULL;
+	}
 	return mTexturesVector[ID];
 }
 
@@ -435,36 +440,36 @@ Uint32 ResourceManager::updateFirstFreeSlotTexture(){
 /*--- END TEXTURE ---*/
 
 
-/*--- AUDIO ---*/
-Sint32 ResourceManager::addAudio(const char* file, Mix_Chunk* sound){
+/*--- MUSIC ---*/
+Sint32 ResourceManager::addMusic(const char* file, Mix_Music* sound){
 	Sint32 pos = -1;
-	if (mFirstFreeSlotAudios != -1){
-		mAudiosVector[mFirstFreeSlotAudios] = sound ;
-		mIDMapAudios.emplace(file, mFirstFreeSlotAudios);
-		pos = mFirstFreeSlotAudios;
-		updateFirstFreeSlotAudio();
+	if (mFirstFreeSlotMusics != -1){
+		mMusicsVector[mFirstFreeSlotMusics] = sound;
+		mIDMapMusics.emplace(file, mFirstFreeSlotMusics);
+		pos = mFirstFreeSlotMusics;
+		updateFirstFreeSlotMusic();
 	}
 	else{
-		mAudiosVector.push_back(sound);
-		pos = mAudiosVector.size() - 1;
-		mIDMapAudios.emplace(file, pos);
+		mMusicsVector.push_back(sound);
+		pos = mMusicsVector.size() - 1;
+		mIDMapMusics.emplace(file, pos);
 	}
 	return pos;
 
 }
 
 
-void ResourceManager::removeAudio(Sint32 ID){
-	Mix_FreeChunk(mAudiosVector[ID]);
-	mAudiosVector[ID] = NULL;
-	if (ID < mFirstFreeSlotAudios)
-		mFirstFreeSlotAudios = ID;
-	
+void ResourceManager::removeMusic(Sint32 ID){
+	Mix_FreeMusic(mMusicsVector[ID]);
+	mMusicsVector[ID] = NULL;
+	if (ID < mFirstFreeSlotMusics)
+		mFirstFreeSlotMusics = ID;
+
 }
 
 
-Sint32 ResourceManager::getAudioID(const char* file){
-	for (map<string, Sint32>::iterator it = mIDMapAudios.begin(); it != mIDMapAudios.end(); it++){
+Sint32 ResourceManager::getMusicID(const char* file){
+	for (map<string, Sint32>::iterator it = mIDMapMusics.begin(); it != mIDMapMusics.end(); it++){
 		if (it->first == file)
 			return it->second;
 	}
@@ -472,26 +477,88 @@ Sint32 ResourceManager::getAudioID(const char* file){
 }
 
 
-Mix_Chunk* ResourceManager::getAudioByID(Sint32 ID){
-	return mAudiosVector[ID];
+Mix_Music* ResourceManager::getMusicByID(Sint32 ID){
+	return mMusicsVector[ID];
 }
 
 
-void ResourceManager::printLoadedAudios(){
-	for (map<string, Sint32>::iterator it = mIDMapAudios.begin(); it != mIDMapAudios.end(); it++){
+void ResourceManager::printLoadedMusics(){
+	for (map<string, Sint32>::iterator it = mIDMapMusics.begin(); it != mIDMapMusics.end(); it++){
 		cout << it->first << endl;
 	}
 }
 
 
-Uint32 ResourceManager::updateFirstFreeSlotAudio(){
-	mFirstFreeSlotAudios = -1;
-	for (unsigned int i = 0; i < mAudiosVector.size(); i++){
-		if (mAudiosVector[i] == NULL){
-			mFirstFreeSlotAudios = i;
+Uint32 ResourceManager::updateFirstFreeSlotMusic(){
+	mFirstFreeSlotMusics = -1;
+	for (unsigned int i = 0; i < mMusicsVector.size(); i++){
+		if (mMusicsVector[i] == NULL){
+			mFirstFreeSlotMusics = i;
 			break;
 		}
 	}
-	return mFirstFreeSlotAudios;
+	return mFirstFreeSlotMusics;
 }
-/*--- END AUDIO ---*/
+/*--- END MUSIC ---*/
+
+
+/*--- SOUND ---*/
+Sint32 ResourceManager::addSound(const char* file, Mix_Chunk* sound){
+	Sint32 pos = -1;
+	if (mFirstFreeSlotSounds != -1){
+		mSoundsVector[mFirstFreeSlotSounds] = sound ;
+		mIDMapSounds.emplace(file, mFirstFreeSlotSounds);
+		pos = mFirstFreeSlotSounds;
+		updateFirstFreeSlotSound();
+	}
+	else{
+		mSoundsVector.push_back(sound);
+		pos = mSoundsVector.size() - 1;
+		mIDMapSounds.emplace(file, pos);
+	}
+	return pos;
+
+}
+
+
+void ResourceManager::removeSound(Sint32 ID){
+	Mix_FreeChunk(mSoundsVector[ID]);
+	mSoundsVector[ID] = NULL;
+	if (ID < mFirstFreeSlotSounds)
+		mFirstFreeSlotSounds = ID;
+	
+}
+
+
+Sint32 ResourceManager::getSoundID(const char* file){
+	for (map<string, Sint32>::iterator it = mIDMapSounds.begin(); it != mIDMapSounds.end(); it++){
+		if (it->first == file)
+			return it->second;
+	}
+	return -1;
+}
+
+
+Mix_Chunk* ResourceManager::getSoundByID(Sint32 ID){
+	return mSoundsVector[ID];
+}
+
+
+void ResourceManager::printLoadedSounds(){
+	for (map<string, Sint32>::iterator it = mIDMapSounds.begin(); it != mIDMapSounds.end(); it++){
+		cout << it->first << endl;
+	}
+}
+
+
+Uint32 ResourceManager::updateFirstFreeSlotSound(){
+	mFirstFreeSlotSounds = -1;
+	for (unsigned int i = 0; i < mSoundsVector.size(); i++){
+		if (mSoundsVector[i] == NULL){
+			mFirstFreeSlotSounds = i;
+			break;
+		}
+	}
+	return mFirstFreeSlotSounds;
+}
+/*--- END SOUND ---*/

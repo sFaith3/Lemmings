@@ -40,8 +40,9 @@ vector <vector<int> > tinyManager::LoadMap(int numLayers){
 
 	TiXmlElement *map = doc->FirstChildElement();
 	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
+	heightMap = atoi(map->Attribute("height")) * atoi(map->Attribute("tileheight"));
 	tileSize = atoi(map->Attribute("tilewidth"));
-	TiXmlElement* layer = map->FirstChildElement("layer");
+	TiXmlElement *layer = map->FirstChildElement("layer");
 	for (int i = 0; i < numLayers; i++){
 		layer = layer->NextSiblingElement("layer");
 		if ((string)layer->Attribute("name") == layerCollision){
@@ -51,7 +52,7 @@ vector <vector<int> > tinyManager::LoadMap(int numLayers){
 		}
 	}
 
-	TiXmlElement* data = layer->FirstChildElement("data");
+	TiXmlElement *data = layer->FirstChildElement("data");
 	string text = data->GetText(); // Mapa de tmx.
 	string num = ""; // Contingut a insertar a l'array.
 	int layerWidth = atoi(layer->Attribute("width")) - 1;
@@ -86,7 +87,6 @@ vector <vector<int> > tinyManager::LoadMap(int numLayers){
 
 vector <vector<int> > tinyManager::LoadMapCollision(){
 	TiXmlElement *map = doc->FirstChildElement();
-	widthMap = atoi(map->Attribute("width")) * atoi(map->Attribute("tilewidth"));
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
 	if ((string)layer->Attribute("name") != layerCollision){
@@ -133,7 +133,7 @@ vector <vector<int> > tinyManager::LoadMapCollision(){
 	return mapaCollisio;
 }
 
-tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa){
+tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa, int posX, int posY){
 	TiXmlElement *map = doc->FirstChildElement();
 	TiXmlElement* tileset = map->FirstChildElement("tileset");
 	for (int i = 0; i < numTilesets; i++){
@@ -151,7 +151,9 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing,
 	int numMaxTilesWidth = tilesetWidth / (tileWidth + spacing);
 	int numMaxTilesHeight = tilesetHeigth / (tileHeight + spacing);
 
-	Tileset _tileset;
+	Tileset *_tileset = new Tileset();
+	string rutaTileset = image->Attribute("source");
+	_tileset->init(rutaTileset, x, y);
 	// Es recórre el tileset per sàpiguer quina tile es pinta. Els 2 primers for's indiquen la posició de la pantalla, a la qual se li multiplica per la mesura corresponent (X/Y) de la tile.
 	for (int i = 0; i <= x; i++){
 		for (int j = 0; j <= y; j++){
@@ -168,10 +170,10 @@ tinyManager::Tileset tinyManager::LoadTileset(int numTilesets, bool haveSpacing,
 					break;
 				}
 			}
-			int dstPosX = i * tileWidth;
-			int dstPosY = j * tileHeight;
+			int dstPosX = (i * tileWidth) + posX;
+			int dstPosY = (j * tileHeight) + posY;
 
-			_tileset.addTile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
+			_tileset->addTile(i, j, srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
 		}
 	}
 	x = y = 0;
@@ -186,6 +188,14 @@ int tinyManager::GetWidthMap(){
 		widthMap = 0;
 
 	return _widthMap;
+}
+
+int tinyManager::GetHeightMap(){
+	int _heightMap = heightMap;
+	if (heightMap != 0)
+		heightMap = 0;
+
+	return _heightMap;
 }
 
 int tinyManager::GetTileSize(){

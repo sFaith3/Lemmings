@@ -18,7 +18,7 @@ public:
 	//! Enum Scenes.
 	/*! All the Scenes in the game. */
 	enum SceneEnum{
-		LOGO, MENU, CODE_LEVEL, /*PRE_GAME,*/ GAME
+		MENU, CODE_LEVEL, /*PRE_GAME,*/ GAME
 	};
 
 	void init();

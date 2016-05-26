@@ -31,7 +31,13 @@ public:
 	void setCursorRelative(bool active);
 
 	void renderGraphic(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY);
+	/*!
+	\params scale s'ha de tenir en compte que aquest es multiplica per un integer, i que el resultat d'aquella operació no pot ser float.
+	*/
 	void renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY, int dstPosX, int dstPosY, double angle, int centerX, int centerY);
+	/*!
+	\params scale s'ha de tenir en compte que aquest es multiplica per un integer, i que el resultat d'aquella operació no pot ser float.
+	*/
 	void renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip);
 	
 	void clearScreen(unsigned int color_key);

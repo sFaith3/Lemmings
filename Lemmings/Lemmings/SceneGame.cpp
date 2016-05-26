@@ -2,14 +2,10 @@
 
 
 SceneGame::SceneGame(){
-	int _idMusic = audioManager->getAudioID("Assets/Audios/Music/track_01.wav");
-	if (_idMusic != -1)
-		idMusic = _idMusic;
-	else
-		idMusic = NULL;
+	idMusic = audioManager->getMusicID("Assets/Audios/Music/track_01.wav");
 
 	fons = new Map();
-	fons->init(0, 0, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/TexturePixel.png", false, 1, 0, 0, 640, 480);
+	fons->init(40, 5, true, "Assets/Levels/lvl01/lvl01.tmx", "colisiones", 3, "Assets/Levels/lvl01/", false, 1, 0, 0, NULL, NULL);
 
 	actions = new Actions();
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
@@ -18,7 +14,7 @@ SceneGame::SceneGame(){
 
 	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
 		Lemming *lemming = new Lemming();
-		lemming->init(70 + i, 60);
+		lemming->init(160 + i, 60, fons->GetPosX(), fons->GetPosY());
 		lemmings.push_back(lemming);
 	}
 
@@ -33,7 +29,7 @@ SceneGame::~SceneGame(){
 
 
 void SceneGame::init(){
-	audioManager->playSound(idMusic, -1); //Afegir Mix_Music al Resource. De moment s'agafa com a un so.
+	audioManager->playMusic(idMusic, -1); //Afegir Mix_Music al Resource. De moment s'agafa com a un so.
 	inputManager->SetCursorRelative(true);
 }
 
@@ -80,6 +76,10 @@ void SceneGame::update(){
 			if ((*itLem)->SetSkill(numUsos, currAction))
 				actions->DetractUseSkill(currAction);
 		}
+
+		//Esborrar lemming si surt del mapa. Debuggar per comprovar posicions.
+		/*if ((*itLem)->GetPosX() + fons->GetPosX() < fons->GetPosX() || (*itLem)->GetPosX() + fons->GetPosX() > fons->GetPosX() + fons->GetWidthMap() || (*itLem)->GetPosY() + fons->GetPosY() < fons->GetPosY() || (*itLem)->GetPosY() + fons->GetPosY() > fons->GetPosY() + fons->GetHeightMap())
+			lemmings.erase(itLem);*/
 	}
 
 	cursor->Update();

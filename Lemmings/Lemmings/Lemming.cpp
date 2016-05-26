@@ -11,8 +11,8 @@ Lemming::~Lemming(){
 }
 
 
-void Lemming::init(int x, int y){
-	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 2, 2, 318, 0, 20, 4, 1, 0);
+void Lemming::init(int x, int y, int xMapa, int yMapa){
+	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 1, 0);
 
 	estat = FALL;
 	pintW = 20;
@@ -23,6 +23,9 @@ void Lemming::init(int x, int y){
 	desplasament = 1;
 	paraigues = false;
 	escalar = false;
+
+	posXmapa = xMapa;
+	posYmapa = yMapa;
 }
 
 void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimitzar codi. Com l'if pel SetCaure().
@@ -50,9 +53,6 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 			else
 				Moure();
 		}
-		// Calcular la zona de destrucció. Després fer-ho amb les tiles.
-		/*fons->DestroyPosMapa(x1 + pintW, y2);
-		fons->DestroyPosMapa(x2 - pintW, y2);*/
 		break;
 	case FALL:
 		Caure();
@@ -64,10 +64,48 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 			SetCaure();
 		}
 		break;
+	case GLIDE:
+
+		break;
+	case CLIMB:
+
+		break;
+	case DIG:
+
+		break;
+	case PICK: //Ficar timer.
+		Caure();
+		// Destrucció del terreny.
+		fons->DestroyPosMapa(x2, y2);
+		break;
+	case STOP:
+
+		break;
+	case STAIR:
+
+		break;
 	case EXPLOSION:
 		Explotar();
 		if (fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0)
 			SetCaure();
+		break;
+	case DEAD:
+
+		break;
+	case DEADFALL:
+
+		break;
+	case OPENUMBRELLA:
+
+		break;
+	case NOSTAIR:
+
+		break;
+	case ENDCLIMB:
+
+		break;
+	case EXPLODING:
+
 		break;
 	}
 
@@ -75,7 +113,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 }
 
 void Lemming::render(){
-	videoManager->renderTexture(idImg, srcPosX, srcPosY, pintW, pintH, scaleX, scaleY, posX, posY, 0, 0, 0, flipType);
+	videoManager->renderTexture(idImg, srcPosX, srcPosY, pintW, pintH, scaleX, scaleY, posX + posXmapa, posY + posYmapa, 0, 0, 0, flipType);
 }
 
 int Lemming::GetPosX(){
@@ -101,7 +139,7 @@ int Lemming::GetDir(){
 bool Lemming::CursorOnLemming(){
 	int mouseX, mouseY;
 	inputManager->GetMouseXY(mouseX, mouseY);
-	if ((mouseX > posX && mouseX < posX + pintW) && (mouseY > posY && mouseY < posY + height))
+	if ((mouseX > posX + posXmapa && mouseX < posX + posXmapa + pintW) && (mouseY > posY + posYmapa && mouseY < posY + posYmapa + height))
 		return true;
 
 	return false;

@@ -25,8 +25,8 @@ void Skill::init(int id, int posX, int posY, int width, int height, int posXini,
 			numSegonDigit = (int)usos[0] - 48;
 		}
 
-		float digScaleX = 0.48f;
-		float digScaleY = 0.8f;
+		float digScaleX = 1;
+		float digScaleY = 1;
 		digits.push_back(new ABCsAlphaNum(digScaleX, digScaleY, numPrimerDigit));
 		digits.push_back(new ABCsAlphaNum(digScaleX, digScaleY, numSegonDigit));
 	}

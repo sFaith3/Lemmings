@@ -59,31 +59,65 @@ public:
 
 		};
 
-		void addTile(int srcPosX, int srcPosY, int tileWidth, int tileHeight, int dstPosX, int dstPosY){
-			Tile *tile = new Tile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
-			tiles.push_back(tile);
+		void init(string rutaTileset, int sizeXtiles, int sizeYtiles){
+			this->rutaTileset = rutaTileset;
+			this->sizeXtiles = sizeXtiles;
+			this->sizeYtiles = sizeYtiles;
+			tiles.clear();
+			tiles.resize(sizeYtiles + 1);
+			for (int i = 0; i <= sizeYtiles; i++)
+				tiles[i].resize(sizeXtiles + 1);
 		}
 
-		vector<Tile*> getTiles(){
+		void addTile(int posX, int posY, int srcPosX, int srcPosY, int tileWidth, int tileHeight, int dstPosX, int dstPosY){
+			Tile *tile = new Tile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
+			tiles[posY][posX] = tile;
+		}
+
+		string getRutaTileset(){
+			return rutaTileset;
+		}
+
+		int getSizeXTiles(){
+			return sizeXtiles;
+		}
+
+		int getSizeYTiles(){
+			return sizeYtiles;
+		}
+
+		vector <vector<Tile*> > getTiles(){
 			return tiles;
 		}
 
-		int getSizeTiles(){
-			return tiles.size();
+		void setIdImg(int id){
+			idImg = id;
+		}
+
+		int getIdImg(){
+			return idImg;
+		}
+
+		void removeTile(int x, int y){
+			tiles[y][x] = NULL;
 		}
 
 	private:
-		vector<Tile*> tiles;
-
+		string rutaTileset;
+		int sizeXtiles;
+		int sizeYtiles;
+		int idImg;
+		vector <vector<Tile*> > tiles;
 	};
 
 	void Init();
 	void LoadTmx(const char* fileTMX, string layerCollision);
 	vector <vector<int> > LoadMap(int numLayers);
 	vector <vector<int> > LoadMapCollision();
-	Tileset LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa);
+	Tileset* LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa, int posX, int posY);
 
 	int GetWidthMap();
+	int GetHeightMap();
 	int GetTileSize();
 
 	int DestroyTMX();
@@ -96,7 +130,7 @@ private:
 	TiXmlDocument *doc;
 	string layerCollision;
 	int x, y; // Posicions del vector de vectors 'mapa'.
-	int widthMap;
+	int widthMap, heightMap;
 	int tileSize;
 
 };

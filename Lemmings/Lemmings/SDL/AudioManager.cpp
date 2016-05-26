@@ -25,45 +25,67 @@ AudioManager* AudioManager::getInstanceAudio(){
 }
 
 
-Sint32 AudioManager::addAudio(const char* file){
+Sint32 AudioManager::addMusic(const char* file){
+	Mix_Music* music = Mix_LoadMUS(file);
+	if (music == NULL){
+		cout << "Failed to load music! SDL_music Error:" << Mix_GetError() << endl;
+		return -1;
+	}
+	return ResourceManager::getInstanceResourceManager()->addMusic(file, music);
+
+}
+
+Sint32 AudioManager::getMusicID(const char* file){
+	if (file == NULL)
+		return -1;
+
+	int id = ResourceManager::getInstanceResourceManager()->getMusicID(file);
+	if (id != -1)
+		return id;
+
+	return addMusic(file);
+}
+
+
+Sint32 AudioManager::addSound(const char* file){
 	Mix_Chunk* sound = Mix_LoadWAV(file);
 	if (sound == NULL){
 		cout << "Failed to load sound effect! SDL_mixer Error:" << Mix_GetError() << endl;
 		return -1;
 	}
-	return ResourceManager::getInstanceResourceManager()->addAudio(file, sound);
+	return ResourceManager::getInstanceResourceManager()->addSound(file, sound);
 
 }
 
-Sint32 AudioManager::getAudioID(const char* file){
+Sint32 AudioManager::getSoundID(const char* file){
 	if (file == NULL)
 		return -1;
 
-	int id = ResourceManager::getInstanceResourceManager()->getAudioID(file);
+	int id = ResourceManager::getInstanceResourceManager()->getSoundID(file);
 	if (id != -1)
 		return id;
 
-	return addAudio(file);
+	return addSound(file);
 }
 
 
-/*void AudioManager::playMusic(int audio){
-	Mix_Music *music = ResourceManager::getInstanceResourceManager()->getAudioByID(audio);
+void AudioManager::playMusic(int audio){
+	Mix_Music *music = ResourceManager::getInstanceResourceManager()->getMusicByID(audio);
 	Mix_PlayMusic(music, 0);
-}*/
+}
 
-/*void AudioManager::playMusic(int audio, int loop){
-Mix_Music *music = ResourceManager::getInstanceResourceManager()->getAudioByID(audio);
+void AudioManager::playMusic(int audio, int loop){
+Mix_Music *music = ResourceManager::getInstanceResourceManager()->getMusicByID(audio);
 Mix_PlayMusic(music, loop);
-}*/
+}
 
 void AudioManager::playSound(int audio){
-	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getAudioByID(audio);
+	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getSoundByID(audio);
 	Mix_PlayChannel(1, sound, 0);
 }
 
 void AudioManager::playSound(int audio, int loop){
-	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getAudioByID(audio);
+	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getSoundByID(audio);
 	Mix_PlayChannel(1, sound, loop);
 }
 

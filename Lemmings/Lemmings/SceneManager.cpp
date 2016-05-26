@@ -1,6 +1,5 @@
 #include "SceneManager.h"
 
-#include "SceneLogo.h"
 #include "SceneMenu.h"
 #include "SceneGame.h"
 #include "SceneCodeLevel.h"
@@ -30,14 +29,11 @@ void SceneManager::init(){
 
 	mVectorScenes.clear();
 
-	mVectorScenes.push_back(new SceneLogo());
 	mVectorScenes.push_back(new SceneMenu());
 	mVectorScenes.push_back(new SceneCodeLevel());
 	mVectorScenes.push_back(new SceneGame());
 
-	//mCurrScene = LOGO;
 	mCurrScene = MENU;
-
 	mVectorScenes[mCurrScene]->init();
 }
 

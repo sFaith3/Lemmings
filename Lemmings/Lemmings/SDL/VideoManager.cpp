@@ -170,8 +170,8 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	rectAux.y = srcPosY;
 	rectAux.w = width;
 	rectAux.h = height;
-	r.x = (int)(dstPosX* scaleX);
-	r.y = (int)(dstPosY* scaleY);
+	r.x = (int)(dstPosX * scaleX);
+	r.y = (int)(dstPosY * scaleY);
 	r.w = (int)(width * scaleX);
 	r.h = (int)(height * scaleY);
 
@@ -190,8 +190,8 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 	rectAux.y = srcPosY;
 	rectAux.w = width;
 	rectAux.h = height;
-	r.x = (int)(dstPosX* scaleX);
-	r.y = (int)(dstPosY* scaleY);
+	r.x = (int)(dstPosX * scaleX);
+	r.y = (int)(dstPosY * scaleY);
 	r.w = (int)(width * scaleX);
 	r.h = (int)(height * scaleY);
 
@@ -203,6 +203,7 @@ void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, i
 
 	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, flip);
 }
+
 
 void VideoManager::clearScreen(unsigned int color_key){
 	if (!texture)

@@ -16,13 +16,15 @@ private:
 	bool escalar;
 	int pintW, pintH;
 
+	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
+
 	InputManager* inputManager;
 
 public:
 	Lemming();
 	~Lemming();
 
-	void init(int x, int y);
+	void init(int x, int y, int xMapa, int yMapa);
 	void update(Map *fons, int x1, int y1, int x2, int y2);
 	void render();
 
