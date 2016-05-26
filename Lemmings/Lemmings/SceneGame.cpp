@@ -14,7 +14,7 @@ SceneGame::SceneGame(){
 
 	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
 		Lemming *lemming = new Lemming();
-		lemming->init(130 + i, 60, fons->GetPosX(), fons->GetPosY());
+		lemming->init(130 + i, 80, fons->GetPosX(), fons->GetPosY());
 		lemmings.push_back(lemming);
 	}
 
@@ -60,7 +60,7 @@ void SceneGame::update(){
 	}
 
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
-		int x1 = (*itLem)->GetPosX() / fons->GetSizeTile();
+		int x1 = ((*itLem)->GetPosX() + (*itLem)->GetLimitX()) / fons->GetSizeTile();
 		int y1 = (*itLem)->GetPosY() / fons->GetSizeTile();
 		int x2 = ((*itLem)->GetPosX() + (*itLem)->GetWidth()) / fons->GetSizeTile();
 		int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / fons->GetSizeTile();
@@ -68,7 +68,7 @@ void SceneGame::update(){
 
 		if ((*itLem)->CursorOnLemming() && !cursor->GetChangedCursor())
 			cursor->ChangeCursor();
-		else if(!(*itLem)->CursorOnLemming() && cursor->GetChangedCursor())
+		else if (!(*itLem)->CursorOnLemming() && cursor->GetChangedCursor())
 			cursor->ChangeCursor();
 
 		if (inputManager->CheckClick()){
@@ -77,9 +77,12 @@ void SceneGame::update(){
 				actions->DetractUseSkill(currAction);
 		}
 
-		//Esborrar lemming si surt del mapa. Debuggar per comprovar posicions.
-		/*if ((*itLem)->GetPosX() + fons->GetPosX() < fons->GetPosX() || (*itLem)->GetPosX() + fons->GetPosX() > fons->GetPosX() + fons->GetWidthMap() || (*itLem)->GetPosY() + fons->GetPosY() < fons->GetPosY() || (*itLem)->GetPosY() + fons->GetPosY() > fons->GetPosY() + fons->GetHeightMap())
-			lemmings.erase(itLem);*/
+		//Esborrar lemming si surt del mapa.
+		if (fons->GetPosX() + x1 < fons->GetPosX() || fons->GetPosX() + x2 > fons->GetPosX() + fons->GetWidthMap() || fons->GetPosY() + y2 > fons->GetPosY() + fons->GetHeightMap()){
+			lemmings.erase(itLem);
+			if (lemmings.size() == 0)
+				break;
+		}
 	}
 
 	cursor->Update();

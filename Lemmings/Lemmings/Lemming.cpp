@@ -13,7 +13,7 @@ Lemming::~Lemming(){
 
 void Lemming::init(int x, int y, int xMapa, int yMapa){
 	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 1, 0);
-
+	this->limitX = 8;
 	estat = FALL;
 	pintW = 20;
 	pintH = 20;
@@ -38,7 +38,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 				Moure(true); // Diagonal cap amunt.
 			else if (fons->GetMapa(x2, y2) == 0 && fons->GetMapa(x2, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x2, y1 + 1) != 0) //Quan tot s'hagui escalat, s'ha de mirar la x.******
+			else if (fons->GetMapa(x2 + 1, y1 + 1) != 0) //Quan tot s'hagui escalat, s'ha de mirar la x.******
 				SetDir(2);
 			else
 				Moure();
@@ -60,7 +60,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 			SetMoure();
 		break;
 	case BREAK:
-		if (fons->GetMapa(x1, y1 + 1) == 0 && fons->GetMapa(x2, y2 + 1) == 0){
+		if ((fons->GetMapa(x1, y2 + 1) == 0 && fons->GetMapa(x1, y1 + 1) == 0) || (fons->GetMapa(x2, y2 + 1) == 0 && fons->GetMapa(x2, y1 + 1) == 0)){
 			SetMoure();
 		}
 		else{
@@ -74,7 +74,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 
 		break;
 	case DIG:
-		if (fons->GetMapa(x1, y1 + 1) == 0 && fons->GetMapa(x2, y2 + 1) == 0){
+		if (fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y2 + 1) == 0){
 			SetCaure();
 		}
 		else{
@@ -94,7 +94,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		break;
 	case EXPLOSION:
 		Explotar();
-		if (fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0)
+		if (fons->GetMapa(x1, y1 + 1) == 0 && fons->GetMapa(x2, y2 + 1) == 0)
 			SetCaure();
 		break;
 	case DEAD:
@@ -130,6 +130,10 @@ int Lemming::GetPosX(){
 
 int Lemming::GetPosY(){
 	return posY;
+}
+
+int Lemming::GetLimitX(){
+	return limitX;
 }
 
 int Lemming::GetWidth(){
@@ -352,7 +356,6 @@ void Lemming::Moure(bool diagAmunt){
 void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
 	if (contImatges == 6 || contImatges == 18){
 		for (int i = 0; i < 3; i++){
-			fons->DestroyPosMapa(x2 + i, y2);
 			for (int j = 0; j < 4; j++){
 				fons->DestroyPosMapa(x2 + i, y2 - j);
 			}
@@ -373,7 +376,7 @@ void Lemming::Escalar(){
 void Lemming::Cavar(Map *fons, int x2, int y2){
 	// Destrucció del terreny.
 	if (contImatges == 6){
-		for (int i = 0; i < 3; i++){
+		for (int i = -1; i < 2; i++){
 			fons->DestroyPosMapa(x2 + i, y2);
 		}
 		Caure();

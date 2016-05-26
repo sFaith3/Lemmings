@@ -87,13 +87,21 @@ int Map::GetPosY(){
 
 
 int Map::GetMapa(int x, int y){
-	return mapCollision[y][x];
+	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size()))
+		return mapCollision[y][x];
+
+	return 0;
 }
 
 void Map::DestroyPosMapa(int x, int y){
-	mapCollision[y][x] = 0;
-	for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
-		(*itTilesets)->removeTile(x - 1, y - 1);
+	if ((x >= 0 && y >= 0) && (x <= mapCollision[0].size() && y <= mapCollision.size())) {
+		mapCollision[y][x] = 0;
+		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
+			//(*itTilesets)->removeTile(x - 1, y - 1);
+			(*itTilesets)->removeTile(x, y);
+	}
+	else
+		cout << "xD\n";
 }
 
 

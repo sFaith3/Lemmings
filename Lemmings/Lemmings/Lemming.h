@@ -7,6 +7,7 @@ class Lemming :
 	public ElementGame
 {
 private:
+	int limitX;
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
 	SDL_RendererFlip flipType;
@@ -15,7 +16,6 @@ private:
 	bool paraigues;
 	bool escalar;
 	int pintW, pintH;
-
 	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
 
 	InputManager* inputManager;
@@ -30,6 +30,7 @@ public:
 
 	int GetPosX();
 	int GetPosY();
+	int GetLimitX();
 	int GetWidth();
 	int GetHeight();
 	int GetDir();
