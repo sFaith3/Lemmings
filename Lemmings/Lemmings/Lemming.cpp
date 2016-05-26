@@ -31,7 +31,7 @@ void Lemming::init(int x, int y, int xMapa, int yMapa){
 void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimitzar codi. Com l'if pel SetCaure().
 	switch (estat){
 	case MOVE:
-		if (fons->GetMapa(x1 + 1, y2) == 0 && fons->GetMapa(x2 - 1, y2) == 0)
+		if (fons->GetMapa(x1 + 1, y2 + 1) == 0 && fons->GetMapa(x2 - 1, y2 + 1) == 0)
 			SetCaure();
 		else if (dir == 0){ // Cap a la dreta.
 			if (fons->GetMapa(x2, y2 - 1) != 0 && fons->GetMapa(x2, y2 - 2) == 0)
@@ -60,8 +60,11 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 			SetMoure();
 		break;
 	case BREAK:
-		if (fons->GetMapa(x1, y1) == 0 && fons->GetMapa(x2, y2) == 0){
-			SetCaure();
+		if (fons->GetMapa(x1, y1 + 1) == 0 && fons->GetMapa(x2, y2 + 1) == 0){
+			SetMoure();
+		}
+		else{
+			TrencarMur(fons, x1, x2, y1, y2);
 		}
 		break;
 	case GLIDE:
@@ -71,12 +74,17 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 
 		break;
 	case DIG:
-
+		if (fons->GetMapa(x1, y1 + 1) == 0 && fons->GetMapa(x2, y2 + 1) == 0){
+			SetCaure();
+		}
+		else{
+			Cavar(fons, x2, y2);
+		}
 		break;
-	case PICK: //Ficar timer.
-		Caure();
+	case PICK:
+	//	Caure();
 		// Destrucció del terreny.
-		fons->DestroyPosMapa(x2, y2);
+	//	fons->DestroyPosMapa(x2, y2);
 		break;
 	case STOP:
 
@@ -341,8 +349,17 @@ void Lemming::Moure(bool diagAmunt){
 		posY += desplasament;
 }
 
-void Lemming::TrencarMur(){
-
+void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
+	if (contImatges == 6 || contImatges == 18){
+		for (int i = 0; i < 3; i++){
+			fons->DestroyPosMapa(x2 + i, y2);
+			for (int j = 0; j < 4; j++){
+				fons->DestroyPosMapa(x2 + i, y2 - j);
+			}
+		}
+		
+		Moure();
+	}
 }
 
 void Lemming::Levitar(){
@@ -353,8 +370,14 @@ void Lemming::Escalar(){
 
 }
 
-void Lemming::Cavar(){
-
+void Lemming::Cavar(Map *fons, int x2, int y2){
+	// Destrucció del terreny.
+	if (contImatges == 6){
+		for (int i = 0; i < 3; i++){
+			fons->DestroyPosMapa(x2 + i, y2);
+		}
+		Caure();
+	}
 }
 
 void Lemming::Picar(){

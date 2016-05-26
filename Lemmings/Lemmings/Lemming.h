@@ -72,10 +72,10 @@ public:
 	// Estats temporals 
 	void Moure();
 	void Moure(bool diagAmunt);
-	void TrencarMur();
+	void TrencarMur(Map *fons, int x1, int x2, int y1, int y2);
 	void Levitar();
 	void Escalar();
-	void Cavar();
+	void Cavar(Map *fons, int x2, int y2);
 	void Picar();
 	void Caure();
 	void Immobilitzar();

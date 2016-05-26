@@ -9,12 +9,12 @@ SceneGame::SceneGame(){
 
 	actions = new Actions();
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
-	actions->init(1, 1, "0", "0", "1", "1", "0", "0", "1", "1");
+	actions->init(1, 1, "10", "10", "10", "10", "10", "10", "10", "10");
 	currAction = -1;
 
 	for (int i = 0; i < 1; i++){ //Feina per la porta d'on surten Lemmings.
 		Lemming *lemming = new Lemming();
-		lemming->init(160 + i, 60, fons->GetPosX(), fons->GetPosY());
+		lemming->init(130 + i, 60, fons->GetPosX(), fons->GetPosY());
 		lemmings.push_back(lemming);
 	}
 

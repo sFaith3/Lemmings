@@ -24,7 +24,7 @@ SceneManager* SceneManager::getInstanceSM(){
 
 
 void SceneManager::init(){
-	videoManager->clearScreen(0xFFFFFF);
+	videoManager->clearScreen(0x000000);
 	videoManager->updateScreen();
 
 	mVectorScenes.clear();
@@ -45,7 +45,7 @@ void SceneManager::update(){
 
 
 void SceneManager::render(){
-	videoManager->clearScreen(0xFFFFFF);
+	videoManager->clearScreen(0x000000);
 	mVectorScenes[mCurrScene]->render();
 	videoManager->updateScreen();
 }
