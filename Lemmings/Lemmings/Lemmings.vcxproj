@@ -79,7 +79,6 @@
     <ClCompile Include="Actions.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Cursor.cpp" />
-    <ClCompile Include="DoorExit.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="ElementGame.cpp" />
     <ClCompile Include="ElementHUD.cpp" />
@@ -101,7 +100,7 @@
     <ClCompile Include="SingletonManager.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="tinyManager.cpp" />
     <ClCompile Include="TinyXML\tinystr.cpp" />
     <ClCompile Include="TinyXML\tinyxml.cpp" />
@@ -114,7 +113,6 @@
     <ClInclude Include="Actions.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Cursor.h" />
-    <ClInclude Include="DoorExit.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="ElementGame.h" />
     <ClInclude Include="ElementHUD.h" />
@@ -135,7 +133,7 @@
     <ClInclude Include="SDL\VideoManager.h" />
     <ClInclude Include="SingletonManager.h" />
     <ClInclude Include="Skill.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="tinyManager.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />

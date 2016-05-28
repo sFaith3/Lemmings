@@ -28,11 +28,7 @@ public:
 	void update(Map *fons, int x1, int y1, int x2, int y2);
 	void render();
 
-	int GetPosX();
-	int GetPosY();
 	int GetLimitX();
-	int GetWidth();
-	int GetHeight();
 	int GetDir();
 
 	bool CursorOnLemming();

@@ -370,10 +370,6 @@ void ResourceManager::getColorTexture(Sint32 ID, Uint8* R, Uint8* G, Uint8* B){
 
 
 SDL_Texture* ResourceManager::getTextureByID(Sint32 ID){
-	if (ID == -1){
-		cout << "This element haven't a image!\n";
-		return NULL;
-	}
 	return mTexturesVector[ID];
 }
 

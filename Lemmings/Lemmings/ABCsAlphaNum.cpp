@@ -1,9 +1,13 @@
 #include "ABCsAlphaNum.h"
 
 
-ABCsAlphaNum::ABCsAlphaNum(float scaleX, float scaleY, int alphaNum){
+ABCsAlphaNum::ABCsAlphaNum(int x, int y, float scaleX, float scaleY, int alphaNum){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
+
 	idImg = videoManager->getTextureID("Assets/Images/alphabet.png");
+	posX = x;
+	posY = y;
+
 	xIni = yIni = 3;
 	width = 16;
 	height = 15;
@@ -69,7 +73,7 @@ void ABCsAlphaNum::Update(int num){
 }
 
 
-void ABCsAlphaNum::Update(string alpha){
+void ABCsAlphaNum::Update(string lletres){
 	/*int pos = NULL;
 	switch (alpha){ // AMB LA RESTA DE L'SPRITESHEET QUE NO SIGUIN NÚMEROS.
 	case 0:
@@ -121,6 +125,6 @@ void ABCsAlphaNum::Update(string alpha){
 }
 
 
-void ABCsAlphaNum::Render(int x, int y){
-	videoManager->renderTexture(idImg, srcX, srcY, width, height, scaleX, scaleY, x, y, 0, 0, 0);
+void ABCsAlphaNum::Render(){
+	videoManager->renderTexture(idImg, srcX, srcY, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
 }

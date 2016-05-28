@@ -7,6 +7,7 @@ class ABCsAlphaNum
 private:
 	VideoManager* videoManager;
 
+	int posX, posY; // On es pinta.
 	Sint32 idImg;
 
 	int xIni, yIni; // Posició on comença la primera lletra/número de l'spritesheet.
@@ -24,11 +25,11 @@ private:
 	};
 
 public:
-	ABCsAlphaNum(float scaleX, float scaleY, int alphaNumEnum);
+	ABCsAlphaNum(int x, int y, float scaleX, float scaleY, int alphaNumEnum);
 	~ABCsAlphaNum();
 
 	void Update(int num);
-	void Update(string alpha);
-	void Render(int x, int y);
+	void Update(string lletres);
+	void Render();
 };
 

@@ -25,10 +25,15 @@ void Skill::init(int id, int posX, int posY, int width, int height, int posXini,
 			numSegonDigit = (int)usos[0] - 48;
 		}
 
+		int spacingX = 10;
+		int xDigit = posX + spacingX;
+		int spacingY = 8;
+		int yDigit = posY + spacingY;
 		float digScaleX = 1;
 		float digScaleY = 1;
-		digits.push_back(new ABCsAlphaNum(digScaleX, digScaleY, numPrimerDigit));
-		digits.push_back(new ABCsAlphaNum(digScaleX, digScaleY, numSegonDigit));
+		digits.push_back(new ABCsAlphaNum(xDigit, yDigit, digScaleX, digScaleY, numPrimerDigit));
+		xDigit += 10;
+		digits.push_back(new ABCsAlphaNum(xDigit, yDigit, digScaleX, digScaleY, numSegonDigit));
 	}
 }
 
@@ -39,12 +44,8 @@ bool Skill::update(){
 void Skill::render(){
 	Button::render();
 
-	int spacingX = 1;
-	int spacingY = 8;
-	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
-		spacingX += 9;
-		(*itDigits)->Render(posX + spacingX, posY + spacingY);
-	}
+	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++)
+		(*itDigits)->Render();
 }
 
 int Skill::GetNumberUses(){

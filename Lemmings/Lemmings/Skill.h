@@ -7,7 +7,7 @@ class Skill :
 {
 private:
 	int usosRestants;
-	int numPrimerDigit, numSegonDigit; // Igual que 'usosRestants'. Però, cada xifra per separada, per tal de mostrar els números a la HUD.
+	int numPrimerDigit, numSegonDigit; // Igual que 'usosRestants'. Però, cada xifra per separat, per tal de mostrar els números a la HUD.
 
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;

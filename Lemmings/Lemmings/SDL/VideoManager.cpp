@@ -149,59 +149,65 @@ void VideoManager::setCursorRelative(bool active){
 
 
 void VideoManager::renderGraphic(int img, int srcPosX, int srcPosY, int width, int height, int dstPosX, int dstPosY){
-	SDL_Rect rectAux, r;
-	rectAux.x = srcPosX;
-	rectAux.y = srcPosY;
-	rectAux.w = width;
-	rectAux.h = height;
-	r.x = dstPosX;
-	r.y = dstPosY;
-	r.w = width;
-	r.h = height;
-	
-	SDL_Surface *origin = ResourceManager::getInstanceResourceManager()->getGraphicByID(img);
+	if (img != -1){
+		SDL_Rect rectAux, r;
+		rectAux.x = srcPosX;
+		rectAux.y = srcPosY;
+		rectAux.w = width;
+		rectAux.h = height;
+		r.x = dstPosX;
+		r.y = dstPosY;
+		r.w = width;
+		r.h = height;
 
-	SDL_BlitSurface(origin, &rectAux, gScreenSurface, &r);
+		SDL_Surface *origin = ResourceManager::getInstanceResourceManager()->getGraphicByID(img);
+
+		SDL_BlitSurface(origin, &rectAux, gScreenSurface, &r);
+	}
 }
 
 void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY,int dstPosX, int dstPosY, double angle, int centerX, int centerY){
-	SDL_Rect rectAux, r;
-	rectAux.x = srcPosX;
-	rectAux.y = srcPosY;
-	rectAux.w = width;
-	rectAux.h = height;
-	r.x = (int)(dstPosX * scaleX);
-	r.y = (int)(dstPosY * scaleY);
-	r.w = (int)(width * scaleX);
-	r.h = (int)(height * scaleY);
+	if (img != -1){
+		SDL_Rect rectAux, r;
+		rectAux.x = srcPosX;
+		rectAux.y = srcPosY;
+		rectAux.w = width;
+		rectAux.h = height;
+		r.x = (int)(dstPosX * scaleX);
+		r.y = (int)(dstPosY * scaleY);
+		r.w = (int)(width * scaleX);
+		r.h = (int)(height * scaleY);
 
-	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
+		SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
 
-	SDL_Point center;
-	center.x = centerX;
-	center.y = centerY;
+		SDL_Point center;
+		center.x = centerX;
+		center.y = centerY;
 
-	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, SDL_FLIP_NONE);
+	}
 }
 
 void VideoManager::renderTexture(int img, int srcPosX, int srcPosY, int width, int height, float scaleX, float scaleY, int dstPosX, int dstPosY, double angle, int centerX, int centerY, SDL_RendererFlip flip){
-	SDL_Rect rectAux, r;
-	rectAux.x = srcPosX;
-	rectAux.y = srcPosY;
-	rectAux.w = width;
-	rectAux.h = height;
-	r.x = (int)(dstPosX * scaleX);
-	r.y = (int)(dstPosY * scaleY);
-	r.w = (int)(width * scaleX);
-	r.h = (int)(height * scaleY);
+	if (img != -1){
+		SDL_Rect rectAux, r;
+		rectAux.x = srcPosX;
+		rectAux.y = srcPosY;
+		rectAux.w = width;
+		rectAux.h = height;
+		r.x = (int)(dstPosX * scaleX);
+		r.y = (int)(dstPosY * scaleY);
+		r.w = (int)(width * scaleX);
+		r.h = (int)(height * scaleY);
 
-	SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
+		SDL_Texture *origin = ResourceManager::getInstanceResourceManager()->getTextureByID(img);
 
-	SDL_Point center;
-	center.x = centerX;
-	center.y = centerY;
+		SDL_Point center;
+		center.x = centerX;
+		center.y = centerY;
 
-	SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, flip);
+		SDL_RenderCopyEx(gScreenRenderer, origin, &rectAux, &r, angle, &center, flip);
+	}
 }
 
 

@@ -6,22 +6,33 @@
 #include "Actions.h"
 #include "SceneManager.h"
 #include "Cursor.h"
+#include "DoorEnter.h"
+#include "Timer.h"
 
 class SceneGame :
 	public Scene
 {
 private:
-	vector<Lemming*> lemmings;
-	vector<Lemming*>::iterator itLem;
+	Map* fons;
 
-	Map *fons;
+	Timer* temps;
 
-	Actions *actions;
+	Actions* actions;
 	int currAction;
 
-	SceneManager* smManager;
+	int lemmingsToSave;
+	int lemmingsSaved;
 
+	DoorEnter* enterDoor;
+	ElementGame* exitDoor;
+
+	vector<Lemming*> lemmings;
+	vector<Lemming*>::iterator itLem;
+	
+	bool cursorChanged;
 	Cursor* cursor;
+
+	SceneManager* smManager;
 
 public:
 	SceneGame();

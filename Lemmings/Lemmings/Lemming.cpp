@@ -12,7 +12,7 @@ Lemming::~Lemming(){
 
 
 void Lemming::init(int x, int y, int xMapa, int yMapa){
-	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 1, 0);
+	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 0);
 	this->limitX = 8;
 	estat = FALL;
 	pintW = 20;
@@ -122,24 +122,8 @@ void Lemming::render(){
 	videoManager->renderTexture(idImg, srcPosX, srcPosY, pintW, pintH, scaleX, scaleY, posX + posXmapa, posY + posYmapa, 0, 0, 0, flipType);
 }
 
-int Lemming::GetPosX(){
-	return posX;
-}
-
-int Lemming::GetPosY(){
-	return posY;
-}
-
 int Lemming::GetLimitX(){
 	return limitX;
-}
-
-int Lemming::GetWidth(){
-	return width;
-}
-
-int Lemming::GetHeight(){
-	return height;
 }
 
 int Lemming::GetDir(){
