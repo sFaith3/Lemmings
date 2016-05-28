@@ -118,7 +118,28 @@ void SceneGame::update(){
 				break;
 			itLem = lemmings.begin();
 		}
+
+		if ((*itLem)->GetEstat() == (*itLem)->STOP && fons->GetMapa(x1, y2 - 1) == 0 && fons->GetMapa(x2 + 1, y2 - 1) == 0){
+
+			for (int i = -10; i < 3; i++){
+
+				fons->CrearPosMapa(x1, y2 + i);
+
+				fons->CrearPosMapa(x1 + 1, y2 + i);
+
+				fons->CrearPosMapa(x1 + 2, y2 + i);
+
+				fons->CrearPosMapa(x1 + 3, y2 + i);
+
+				fons->CrearPosMapa(x2 + 1, y2 + i);
+
+				fons->CrearPosMapa(x2, y2 + i);
+
+				fons->CrearPosMapa(x2 - 1, y2 + i);
+			}
+		}
 	}
+
 	if (cursorChanged && !cursor->GetChangedCursor())
 		cursor->ChangeCursor();
 	else if (!cursorChanged && cursor->GetChangedCursor())

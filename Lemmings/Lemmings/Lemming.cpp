@@ -38,7 +38,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 				Moure(true); // Diagonal cap amunt.
 			else if (fons->GetMapa(x2, y2) == 0 && fons->GetMapa(x2, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x2 + 1, y1 + 1) != 0)
+			else if (fons->GetMapa(x2 + 1, y2 - 2) != 0)
 				SetDir(2);
 			else
 				Moure();
@@ -48,7 +48,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 				Moure(true); // Diagonal cap amunt.
 			else if (fons->GetMapa(x1, y2) == 0 && fons->GetMapa(x1, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x1, y1 + 1) != 0)
+			else if (fons->GetMapa(x1, y2 - 2) != 0)
 				SetDir(0);
 			else
 				Moure();
@@ -75,7 +75,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		break;
 	case DIG:
 		if ((fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y1 + 1) == 0) && fons->GetMapa(x2, y2 + 1) == 0){
-			SetCaure();
+			SetMoure();
 		}
 		else{
 			Cavar(fons, x2, y2);
@@ -160,31 +160,31 @@ bool Lemming::SetSkill(int numUsos, int skill){
 					return true;
 				break;
 			case 5: // PARAT
-				if (estat == MOVE){
+				if (estat != FALL || estat != CLIMB){
 					SetImmobilitzar();
 					return true;
 				}
 				break;
 			case 6: // ESGRAONS
-				if (estat == MOVE){
+				if (estat != STOP || estat != FALL || estat != CLIMB){
 					SetConstruirEscala();
 					return true;
 				}
 				break;
 			case 7: // TRENCAR MUR
-				if (estat == MOVE){
+				if (estat != STOP || estat !=FALL || estat != CLIMB){
 					SetForadarParet();
 					return true;
 				}
 				break;
 			case 8: // PICAR
-				if (estat == MOVE){
+				if (estat != STOP || estat != FALL || estat != CLIMB){
 					SetPicar();
 					return true;
 				}
 				break;
 			case 9: // CAVAR
-				if (estat == MOVE){
+				if (estat != STOP || estat != FALL || estat != CLIMB){
 					SetCavar();
 					return true;
 				}
