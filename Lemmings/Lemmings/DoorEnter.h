@@ -21,6 +21,7 @@ public:
 	~DoorEnter();
 
 	void update(int temps);
+	void setTimeToSpawn(int temps);
 
 	bool getSpawnning();
 

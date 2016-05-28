@@ -101,6 +101,11 @@ void Map::DestroyPosMapa(int x, int y){
 	}
 }
 
+void Map::CrearPosMapa(int x, int y){
+	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size())) {
+		mapCollision[y][x] = 1;
+	}
+}
 
 int Map::GetWidthMap(){
 	return width;
