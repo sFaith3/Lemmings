@@ -336,7 +336,7 @@ void Lemming::Moure(bool diagAmunt){
 }
 
 void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
-	if (contImatges == 6 || contImatges == 18){
+	if (contImatges == 8 || contImatges == 16 || contImatges == 24 || contImatges == 32){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
 				fons->DestroyPosMapa(x2 + i, y2 - j);
