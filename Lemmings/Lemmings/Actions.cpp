@@ -11,13 +11,13 @@ Actions::~Actions()
 }
 
 
-void Actions::init(float scaleX, float scaleY, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
+int Actions::init(float scaleX, float scaleY, int velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
 	ElementHUD::init(x, y, "Assets/Images/hud.png", 0, 0, 480, hAction, scaleX, scaleY);
 	
-	currButton = -1;
+	currButton = TREPAR;
 
 	int xSkill = x + 1;
 	int wSkill = 40;
@@ -28,6 +28,7 @@ void Actions::init(float scaleX, float scaleY, string trepar, string paraigues, 
 	xSkill += wSkill;
 	skills.push_back(new Skill);
 	skills.back()->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "50");
+	skills.back()->SetMinVelocity(velMinimaSpawn);
 	xSkill += wSkill;
 	skills.push_back(new Skill);
 	skills.back()->init(TREPAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, trepar);
@@ -54,31 +55,50 @@ void Actions::init(float scaleX, float scaleY, string trepar, string paraigues, 
 	skills.back()->init(CAVAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavar);
 	xSkill += wSkill;
 	skills.push_back(new Skill);
-	skills.back()->init(DD, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
+	skills.back()->init(PAUSA, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
 	xSkill += wSkill;
 	skills.push_back(new Skill);
 	skills.back()->init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
+
+	skills[currButton]->SetPressed(true);
+
+	return currButton;
 }
 
 
 int Actions::update(){
 	for (itSkills = skills.begin(); itSkills != skills.end(); itSkills++){
 		if ((*itSkills)->update()){
-			if (currButton != -1)
-				skills[currButton]->SetPressed(false);
+			if (currButton != -1){
+				int pressedBut = (*itSkills)->GetId();
+				if (pressedBut != REST_VEL_SPAWN && pressedBut != PLUS_VEL_SPAWN && pressedBut != PAUSA && pressedBut != MOAB){
+					skills[currButton]->SetPressed(false);
+					(*itSkills)->SetPressed(true);
+					inputManager->ResetClick();
 
-			(*itSkills)->SetPressed(true);
-			return currButton = (*itSkills)->GetId();
+					return currButton = (*itSkills)->GetId();
+				}
+
+				return (*itSkills)->GetId();
+			}
+
+			return -1;
 		}
 	}
 
 	int number = inputManager->CheckNumber();
-	if (number != -1){
-		if (currButton != -1)
-			skills[currButton]->SetPressed(false);
+	//if (number != -1 && currButton != REST_VEL_SPAWN && currButton != PLUS_VEL_SPAWN && currButton != PAUSA && currButton != MOAB)
 
-		skills[number]->SetPressed(true);
-		return currButton = skills[number]->GetId();
+	if (number != -1){
+		if (number != REST_VEL_SPAWN && number != PLUS_VEL_SPAWN && number != PAUSA && number != MOAB){
+			skills[currButton]->SetPressed(false);
+			skills[number]->SetPressed(true);
+			inputManager->ResetNumber();
+
+			return currButton = skills[number]->GetId();
+		}
+
+		return skills[number]->GetId();
 	}
 
 	return -1;
@@ -93,6 +113,7 @@ void Actions::render(){
 	}
 }
 
+
 int Actions::GetNumberUsesSkill(int skill){
 	if (skill >= 0)
 		return skills[skill]->GetNumberUses();
@@ -102,4 +123,13 @@ int Actions::GetNumberUsesSkill(int skill){
 
 void Actions::DetractUseSkill(int skill){
 	skills[skill]->OneUseLess();
+}
+
+
+void Actions::DecrementVelocitySkill(){
+	skills[PLUS_VEL_SPAWN]->LessVelocity();
+}
+
+void Actions::IncrementVelocitySkill(){
+	skills[PLUS_VEL_SPAWN]->MoreVelocity();
 }

@@ -12,7 +12,7 @@ private:
 	vector<Skill*>::iterator itSkills;
 
 	enum ActionEnum{
-		REST_VEL_SPAWN, PLUS_VEL_SPAWN, TREPAR, PARAIGUES, EXPLOSIO, PARAT, ESGRAONS, CAVAR_LATERAL, PICAR, CAVAR, DD, MOAB
+		REST_VEL_SPAWN, PLUS_VEL_SPAWN, TREPAR, PARAIGUES, EXPLOSIO, PARAT, ESGRAONS, CAVAR_LATERAL, PICAR, CAVAR, PAUSA, MOAB
 	};
 
 	int currButton;
@@ -23,10 +23,13 @@ public:
 	Actions();
 	~Actions();
 
-	void init(float scaleX, float scaleY, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar);
+	int init(float scaleX, float scaleY, int velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar);
 	int update();
 	void render();
 
 	int GetNumberUsesSkill(int skill);
 	void DetractUseSkill(int skill);
+
+	void DecrementVelocitySkill();
+	void IncrementVelocitySkill();
 };

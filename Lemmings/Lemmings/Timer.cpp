@@ -121,6 +121,16 @@ Uint32 Timer::getTime(){
 	return time;
 }
 
+Uint32 Timer::getTimeMs(){
+	Uint32 time = 0;
+	if (mStarted){
+		if (!mPaused)
+			time = videoManager->getTime() - mStarTicks;
+	}
+
+	return time;
+}
+
 
 bool Timer::isStarted(){
 	return mStarted;

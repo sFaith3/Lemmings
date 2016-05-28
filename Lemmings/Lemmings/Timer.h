@@ -33,6 +33,7 @@ public:
 	void stop();
 
 	Uint32 getTime();
+	Uint32 getTimeMs();
 
 	bool isStarted();
 	bool isPaused();

@@ -26,7 +26,7 @@ public:
 	Sint32 addTexture(const char* file);
 	Sint32 getTextureID(const char* file);
 	
-	int getTime();
+	Uint32 getTime();
 
 	void setCursorRelative(bool active);
 

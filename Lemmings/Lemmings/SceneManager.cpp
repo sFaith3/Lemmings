@@ -51,13 +51,13 @@ void SceneManager::render(){
 }
 
 
-void SceneManager::changeScene(SceneEnum next_scene){
+void SceneManager::changeScene(int next_scene){
 	mCurrScene = next_scene;
 	mVectorScenes[mCurrScene]->init();
 }
 
 
-void SceneManager::reinitScene(SceneEnum scene){
+void SceneManager::reinitScene(int scene){
 	delete mVectorScenes[scene];
 	switch (scene){
 	case GAME:

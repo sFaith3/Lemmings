@@ -74,11 +74,33 @@ void InputManager::Update(){
 				break;
 			}
 			break;
+		case SDL_KEYUP:
+			tecla = test_event.key.keysym.scancode;
+			switch (tecla){
+			case SDL_SCANCODE_0:
+			case SDL_SCANCODE_1:
+			case SDL_SCANCODE_2:
+			case SDL_SCANCODE_3:
+			case SDL_SCANCODE_4:
+			case SDL_SCANCODE_5:
+			case SDL_SCANCODE_6:
+			case SDL_SCANCODE_7:
+			case SDL_SCANCODE_8:
+			case SDL_SCANCODE_9:
+				number = -1;
+				break;
+			default:
+				break;
+			}
+			break;
 		case SDL_QUIT:
 			quit = true;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			click = true;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			click = false;
 			break;
 		}
 	}
@@ -94,9 +116,7 @@ void InputManager::SetCursorRelative(bool active){
 
 
 int InputManager::CheckNumber(){
-	int _number = number;
-	number = -1;
-	return _number;
+	return number;
 }
 
 bool InputManager::CheckQuit(){
@@ -122,6 +142,10 @@ bool InputManager::CheckClick(){
 	return false;
 }
 
+
+void InputManager::ResetNumber(){
+	number = -1;
+}
 
 void InputManager::ResetESC(){
 	esc = false;

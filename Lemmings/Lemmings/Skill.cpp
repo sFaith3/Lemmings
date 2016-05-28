@@ -25,6 +25,8 @@ void Skill::init(int id, int posX, int posY, int width, int height, int posXini,
 			numSegonDigit = (int)usos[0] - 48;
 		}
 
+		velMinimaSpawn = NULL;
+
 		int spacingX = 10;
 		int xDigit = posX + spacingX;
 		int spacingY = 8;
@@ -47,6 +49,44 @@ void Skill::render(){
 	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++)
 		(*itDigits)->Render();
 }
+
+
+void Skill::SetMinVelocity(int vel){
+	velMinimaSpawn = vel;
+}
+
+void Skill::LessVelocity(){
+	if (usosRestants > velMinimaSpawn){
+		usosRestants--;
+		if (numSegonDigit > 0){
+			numSegonDigit--;
+			digits.back()->Update(numSegonDigit);
+		}
+		else{
+			numPrimerDigit--;
+			numSegonDigit = 9;
+			digits[0]->Update(numPrimerDigit);
+			digits[1]->Update(numSegonDigit);
+		}
+	}
+}
+
+void Skill::MoreVelocity(){
+	if (usosRestants < 99){
+		usosRestants++;
+		if (numSegonDigit < 9){
+			numSegonDigit++;
+			digits.back()->Update(numSegonDigit);
+		}
+		else{
+			numPrimerDigit++;
+			numSegonDigit = 0;
+			digits[0]->Update(numPrimerDigit);
+			digits[1]->Update(numSegonDigit);
+		}
+	}
+}
+
 
 int Skill::GetNumberUses(){
 	return usosRestants;

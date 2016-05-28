@@ -135,7 +135,7 @@ Sint32 VideoManager::getTextureID(const char* file){
 }
 
 
-int VideoManager::getTime(){
+Uint32 VideoManager::getTime(){
 	return SDL_GetTicks();
 }
 

@@ -1,11 +1,11 @@
 #include "DoorEnter.h"
 
 
-DoorEnter::DoorEnter(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim, int timeToSpawn, int numInstancies){
+DoorEnter::DoorEnter(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim, float timeToSpawn, int numInstancies){
 	ElementGame::init(x,y, img, srcX, srcY, w, h, 1, 1, wSpriteSheet, hSpriteSheet, toNextSpriteX, numImgs, fpsAnim);
 	
-	timeToBeReady = 2;
-	this->timeToSpawn = timeToSpawn;
+	timeToBeReady = 0.5 * 100;
+	this->timeToSpawn = _timeToSpawn = timeToSpawn * 100;
 	lastTime = 0;
 
 	spawnning = false;
@@ -39,7 +39,7 @@ void DoorEnter::update(int temps){
 			lastTime += timeToSpawn;
 			spawnning = true;
 			leftToSpawn--;
-			if (leftToSpawn <= 0)
+			if (leftToSpawn == 0)
 				currEstat = EMPTY;
 		}
 		break;
@@ -60,5 +60,6 @@ bool DoorEnter::getSpawnning(){
 
 
 void DoorEnter::setTimeToSpawn(int temps){
-	//timeToSpawn 
+	temps = 50 - temps;
+	timeToSpawn = ((temps * _timeToSpawn) / 50) + _timeToSpawn;
 }

@@ -5,7 +5,7 @@ class DoorEnter :
 {
 private:
 	int timeToBeReady;
-	int timeToSpawn;
+	int timeToSpawn, _timeToSpawn;
 	int lastTime;
 
 	bool spawnning;
@@ -17,11 +17,13 @@ private:
 	int currEstat;
 
 public:
-	DoorEnter(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim, int timeToSpawn, int numInstancies);
+	DoorEnter(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim, float timeToSpawn, int numInstancies);
 	~DoorEnter();
 
 	void update(int temps);
 
 	bool getSpawnning();
+
+	void setTimeToSpawn(int temps);
 };
 

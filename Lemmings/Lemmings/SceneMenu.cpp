@@ -41,6 +41,7 @@ void SceneMenu::update(){
 		if ((itBut)->update()){
 			switch ((itBut)->GetId()){
 			case PLAYER:
+				inputManager->ResetClick();
 				audioManager->pauseSound();
 				smManager->changeScene(smManager->GAME);
 				break;
@@ -59,6 +60,7 @@ void SceneMenu::update(){
 
 	switch (inputManager->CheckNumber()){
 	case PLAYER:
+		inputManager->ResetNumber();
 		audioManager->pauseSound();
 		smManager->changeScene(smManager->GAME);
 		break;

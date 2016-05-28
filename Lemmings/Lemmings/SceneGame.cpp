@@ -11,21 +11,19 @@ SceneGame::SceneGame(){
 
 	actions = new Actions();
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
-	actions->init(1, 1, "10", "10", "10", "10", "10", "10", "10", "10");
-	currAction = -1;
-
+	currAction = actions->init(1, 1, 50, "10", "10", "10", "10", "10", "10", "10", "10");
+	
 	lemmingsSaved = 0;
 
 	// Inicialització de les portes del joc.Punt de respawn i de sortida dels lemmings.
-	enterDoor = new DoorEnter(130, 80, "Assets/Images/Doors/EnterDoor.png", 0, 0, 80, 80, 0, 0, 0, 2, 2, 2, 10); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
+	enterDoor = new DoorEnter(130, 80, "Assets/Images/Doors/EnterDoor.png", 0, 0, 80, 80, 0, 0, 0, 2, 2, 20, 10); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
 	exitDoor = new ElementGame();
 	exitDoor->init(90, 80, "Assets/Images/Doors/ExitDoor.png", 0, 0, 50, 50, 1, 1, 0, 0, 9, 9, 3);
 
-	for (int i = 0; i < 2; i++){ //Feina per a la porta d'on surten Lemmings.
-		Lemming *lemming = new Lemming();
-		lemming->init(240, 80, fons->GetPosX(), fons->GetPosY());
-		lemmings.push_back(lemming);
-	}
+	//Per a testejar a l'altre cantó. S'ha d'eliminar la creació d'aquest Lemming**
+	Lemming *lemming = new Lemming();
+	lemming->init(230, 80, fons->GetPosX(), fons->GetPosY());
+	lemmings.push_back(lemming);
 
 	cursorChanged = false;
 	cursor = Cursor::getInstanceCursor();
@@ -39,7 +37,7 @@ SceneGame::~SceneGame(){
 
 
 void SceneGame::init(){
-	audioManager->playMusic(idMusic, -1); //Afegir Mix_Music al Resource. De moment s'agafa com a un so.
+	audioManager->playMusic(idMusic, -1);
 	inputManager->SetCursorRelative(true);
 	temps->start();
 }
@@ -60,10 +58,12 @@ void SceneGame::update(){
 	case -1:
 		break;
 	case 0: // REST_VEL_SPAWN
-		//Resta velocitat al respawn de lemmings.
+		actions->DecrementVelocitySkill();
+		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
 		break;
 	case 1: // PLUS_VEL_SPAWN
-		//Incrementa la velocitat al respawn de lemmings.
+		actions->IncrementVelocitySkill();
+		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
 		break;
 	case 12: // MOAB
 		//Explotar tots els lemmings.
@@ -74,7 +74,7 @@ void SceneGame::update(){
 	}
 
 	// ENTER DOOR.
-	enterDoor->update(temps->getTime());
+	enterDoor->update(temps->getTimeMs());
 	if (enterDoor->getSpawnning()){
 		Lemming *lemming = new Lemming();
 		lemming->init(enterDoor->GetPosX(), enterDoor->GetPosY(), fons->GetPosX(), fons->GetPosY());
@@ -97,8 +97,10 @@ void SceneGame::update(){
 
 		if (inputManager->CheckClick()){
 			int numUsos = actions->GetNumberUsesSkill(currAction);
-			if ((*itLem)->SetSkill(numUsos, currAction))
+			if ((*itLem)->SetSkill(numUsos, currAction)){
 				actions->DetractUseSkill(currAction);
+				inputManager->ResetClick();
+			}
 		}
 
 		//***
