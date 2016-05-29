@@ -11,7 +11,7 @@ protected:
 	int toNextSpriteY;
 	int numImatges;
 	int contImatges;
-	int fpsAnimacio;
+	int fpsAnimacio, currFpsAnim;
 	int numSaltsImatges;
 
 public:

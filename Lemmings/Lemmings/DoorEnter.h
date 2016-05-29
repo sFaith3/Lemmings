@@ -17,11 +17,10 @@ private:
 	int currEstat;
 
 public:
-	DoorEnter(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim, float timeToSpawn, int numInstancies);
+	DoorEnter(int x, int y, int timeToSpawn, int numInstancies);
 	~DoorEnter();
 
 	void update(int temps);
-	void setTimeToSpawn(int temps);
 
 	bool getSpawnning();
 

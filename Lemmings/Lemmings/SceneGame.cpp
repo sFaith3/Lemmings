@@ -16,9 +16,9 @@ SceneGame::SceneGame(){
 	lemmingsSaved = 0;
 
 	// Inicialització de les portes del joc.Punt de respawn i de sortida dels lemmings.
-	enterDoor = new DoorEnter(130, 80, "Assets/Images/Doors/EnterDoor.png", 0, 0, 80, 80, 0, 0, 0, 2, 2, 20, 10); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
+	enterDoor = new DoorEnter(110, 80, 20, 10); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
 	exitDoor = new ElementGame();
-	exitDoor->init(90, 80, "Assets/Images/Doors/ExitDoor.png", 0, 0, 50, 50, 1, 1, 0, 0, 9, 9, 3);
+	exitDoor->init(338, 200, "Assets/Images/Doors/_sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
 
 	//Per a testejar a l'altre cantó. S'ha d'eliminar la creació d'aquest Lemming**
 	Lemming *lemming = new Lemming();
@@ -77,13 +77,16 @@ void SceneGame::update(){
 	enterDoor->update(temps->getTimeMs());
 	if (enterDoor->getSpawnning()){
 		Lemming *lemming = new Lemming();
-		lemming->init(enterDoor->GetPosX(), enterDoor->GetPosY(), fons->GetPosX(), fons->GetPosY());
+		int posX = fons->GetPosX() + ((enterDoor->GetPosX() / 2) - 3);
+		int posY = fons->GetPosY() + enterDoor->GetPosY();
+		lemming->init(posX, posY, fons->GetPosX(), fons->GetPosY());
 		lemmings.push_back(lemming);
 	}
-
-	// LEMMINGS AND EXIT DOOR.
+	
+	// EXIT DOOR.
 	exitDoor->UpdateAnimacio();
 
+	// LEMMINGS.
 	cursorChanged = false;
 	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
 		int x1 = ((*itLem)->GetPosX() + (*itLem)->GetLimitX()) / fons->GetSizeTile();
@@ -105,9 +108,13 @@ void SceneGame::update(){
 
 		//***
 		// Esborrar lemming si surt per la porta i sumar-lo a la variable de lemmings rescatats.
-		/*if (x1 > exitDoor->GetPosX() && x2 < exitDoor->GetPosX() + exitDoor->GetWidth()
-			&& y1 > exitDoor->GetPosY() && y2 < exitDoor->GetPosY() + exitDoor->GetHeight())*/
-			//El lemming passa a l'estat de sortida per la porta.
+		if ((*itLem)->GetEstat() != (*itLem)->EXIT){
+			if (fons->GetPosX() + x1 > (exitDoor->GetPosX() / fons->GetSizeTile()) + 31 && fons->GetPosX() + x2 < ((exitDoor->GetPosX() + exitDoor->GetWidth()) / fons->GetSizeTile()) + 22 &&
+				fons->GetPosY() + y1 >(exitDoor->GetPosY() / fons->GetSizeTile()) + 5 && fons->GetPosY() + y2 < exitDoor->GetPosY() + exitDoor->GetHeight()){
+				//El lemming passa a l'estat de sortida per la porta.
+				cout << "Lemming sortint\n";
+			}
+		}
 		// If el lemming ha completat l'animació de caminar cap a la porta. Get del bool que indica això.
 			//Lemming s'esborra.
 			//lemmingsSaved++;

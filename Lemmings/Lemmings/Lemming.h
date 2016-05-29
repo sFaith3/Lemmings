@@ -38,13 +38,14 @@ public:
 	void SetAnimacio();
 	/*
 	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
-	STOP: Inmovilitzat, STAIR: Posar rajoles,PICK: Cavar amb el Pic 
-	EXPLOSION: Foc de l'Explosio s, DEAD: El Lemming es destruit, DEADFALL: El Lemming cau d'una gran altura
-	OPENUMBRELLA: El Lemming obra el paraigües, NOSTAIR: El Lemming es queda sense rajoles, ENDCLIMB El Lemming acaba d'escalar i torna a terra pla
-	EXPLODING: El Lemming fa l'animacio de que va a explotar*/
+	STOP: Inmovilitzat, STAIR: Posar rajoles, PICK: Cavar amb el Pic,
+	EXPLOSION: Foc de l'Explosio, DEAD: El Lemming es destruït, DEADFALL: El Lemming cau d'una gran altura,
+	OPENUMBRELLA: El Lemming obra el paraigües, NOSTAIR: El Lemming es queda sense rajoles, ENDCLIMB El Lemming acaba d'escalar i torna a terra pla,
+	EXPLODING: El Lemming fa l'animacio de que va a explotar.
+	*/
 	enum EstatsEnum{
 		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION, 
-		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, EXPLODING
+		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, EXPLODING, EXIT
 	};
 	int GetEstat();
 

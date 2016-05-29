@@ -1,8 +1,8 @@
 #include "DoorEnter.h"
 
 
-DoorEnter::DoorEnter(int x, int y, const char* img, int srcX, int srcY, int w, int h, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim, float timeToSpawn, int numInstancies){
-	ElementGame::init(x,y, img, srcX, srcY, w, h, 1, 1, wSpriteSheet, hSpriteSheet, toNextSpriteX, numImgs, fpsAnim);
+DoorEnter::DoorEnter(int x, int y, int timeToSpawn, int numInstancies){
+	ElementGame::init(x, y, "Assets/Images/Doors/_entrada.png", 0, 0, 57, 31, 1, 1, 126, 31, 69, 2, 25);
 	
 	timeToBeReady = 0.5 * 100;
 	this->timeToSpawn = _timeToSpawn = timeToSpawn * 100;

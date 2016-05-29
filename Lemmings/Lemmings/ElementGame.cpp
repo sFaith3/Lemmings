@@ -17,11 +17,12 @@ void ElementGame::init(int x, int y, const char* img, int srcX, int srcY, int w,
 	numImatges = numImgs;
 	contImatges = 1;
 	fpsAnimacio = fpsAnim;
+	currFpsAnim = 0;
 	numSaltsImatges = 0;
 }
 
 void ElementGame::UpdateAnimacio(){
-	if (fpsAnimacio == 2){
+	if (currFpsAnim == fpsAnimacio){
 		if (contImatges < numImatges){
 			if (srcPosX + toNextSpriteX > widthSpriteSheet){
 				srcPosY += toNextSpriteY;
@@ -40,10 +41,10 @@ void ElementGame::UpdateAnimacio(){
 				numSaltsImatges = 0;
 			}
 		}
-		fpsAnimacio = 0;
+		currFpsAnim = 0;
 	}
 	else{
-		fpsAnimacio++;
+		currFpsAnim++;
 	}
 }
 

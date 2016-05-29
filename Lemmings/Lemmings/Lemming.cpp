@@ -12,7 +12,7 @@ Lemming::~Lemming(){
 
 
 void Lemming::init(int x, int y, int xMapa, int yMapa){
-	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 0);
+	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
 	this->limitX = 8;
 	estat = FALL;
 	pintW = 20;
