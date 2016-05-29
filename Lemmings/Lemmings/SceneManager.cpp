@@ -1,8 +1,9 @@
 #include "SceneManager.h"
 
 #include "SceneMenu.h"
-#include "SceneGame.h"
 #include "SceneCodeLevel.h"
+#include "ScenePreGame.h"
+#include "SceneGame.h"
 
 SceneManager* SceneManager::smInstance = NULL;
 
@@ -31,6 +32,7 @@ void SceneManager::init(){
 
 	mVectorScenes.push_back(new SceneMenu());
 	mVectorScenes.push_back(new SceneCodeLevel());
+	mVectorScenes.push_back(new ScenePreGame());
 	mVectorScenes.push_back(new SceneGame());
 
 	mCurrScene = MENU;

@@ -12,7 +12,7 @@ VideoManager::VideoManager(){
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	gWindow = SDL_CreateWindow("Lemmings", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		SCREEN_WIDTH, SCREEN_HEIGHT, /*SDL_WINDOW_FULLSCREEN*/ SDL_WINDOW_SHOWN);
 	if (gWindow == NULL)
 		cout << "Window could not be created! SDL Error: " << SDL_GetError() << endl;
 	else{
