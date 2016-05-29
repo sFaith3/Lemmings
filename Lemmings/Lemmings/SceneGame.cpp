@@ -65,7 +65,10 @@ void SceneGame::update(){
 		actions->IncrementVelocitySkill();
 		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
 		break;
-	case 12: // MOAB
+	case 11: // MOAB
+		for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+			(*itLem)->SetContadorTemps(temps->getTime());
+		}
 		//Explotar tots els lemmings.
 		break;
 	default:
@@ -93,14 +96,14 @@ void SceneGame::update(){
 		int y1 = (*itLem)->GetPosY() / fons->GetSizeTile();
 		int x2 = ((*itLem)->GetPosX() + (*itLem)->GetWidth()) / fons->GetSizeTile();
 		int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / fons->GetSizeTile();
-		(*itLem)->update(fons, x1, y1, x2, y2);
+		(*itLem)->update(fons, x1, y1, x2, y2, temps->getTime());
 
 		if (!cursorChanged && (*itLem)->CursorOnLemming())
 			cursorChanged = true;
 
 		if (inputManager->CheckClick()){
 			int numUsos = actions->GetNumberUsesSkill(currAction);
-			if ((*itLem)->SetSkill(numUsos, currAction)){
+			if ((*itLem)->SetSkill(numUsos, currAction, temps->getTime())){
 				actions->DetractUseSkill(currAction);
 				inputManager->ResetClick();
 			}

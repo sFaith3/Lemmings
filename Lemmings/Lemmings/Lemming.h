@@ -12,15 +12,17 @@ private:
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
 	int maxCaure;
 	SDL_RendererFlip flipType;
-	int temps;
+	int tempsMax; // conta enrere de 5s
+	int tempsLvl; // temps restant de la partida
 	int desplasament;
 	bool paraigues;
 	bool escalar;
 	bool mortInicial;
 	bool mortFinal;
+	bool explotaContador;
 	int pintW, pintH;
 	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
-
+	
 	InputManager* inputManager;
 
 public:
@@ -28,14 +30,14 @@ public:
 	~Lemming();
 
 	void init(int x, int y, int xMapa, int yMapa);
-	void update(Map *fons, int x1, int y1, int x2, int y2);
+	void update(Map *fons, int x1, int y1, int x2, int y2, int temps);
 	void render();
 
 	int GetLimitX();
 	int GetDir();
 
 	bool CursorOnLemming();
-	bool SetSkill(int numUsos, int skill);
+	bool SetSkill(int numUsos, int skill, int temps);
 
 	void SetDir(int dir);
 	void SetAnimacio();
@@ -69,6 +71,7 @@ public:
 	void SetEscalar(); 
 	void SetFinalEscalar(); 
 	void SetMortCaure(); 
+	void SetContadorTemps(int temps);
 
 	// Estats temporals 
 	void Moure();
@@ -79,7 +82,7 @@ public:
 	void Cavar(Map *fons, int x2, int y2);
 	void Picar(Map *fons, int x2, int y2);
 	void Caure();
-	void Immobilitzar();
+	void TempsFinal(int temps);
 	void ConstruirEscala();
 	void Explotar(Map *fons, int x2, int y2);
 
