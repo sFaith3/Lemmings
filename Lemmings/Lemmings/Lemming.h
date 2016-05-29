@@ -74,11 +74,11 @@ public:
 	void Levitar();
 	void Escalar();
 	void Cavar(Map *fons, int x2, int y2);
-	void Picar();
+	void Picar(Map *fons, int x2, int y2);
 	void Caure();
 	void Immobilitzar();
 	void ConstruirEscala();
-	void Explotar();
+	void Explotar(Map *fons, int x2, int y2);
 
 	// Equipables, com Paraigües i Escalar
 	void PutParaigues();

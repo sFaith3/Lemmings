@@ -55,9 +55,14 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		}
 		break;
 	case FALL:
-		Caure();
-		if (fons->GetMapa(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMapa(x2 - desplasament, y2 + desplasament) != 0)
-			SetMoure();
+		if (paraigues){
+			OPENUMBRELLA;
+		}
+		else{
+			Caure();
+			if (fons->GetMapa(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMapa(x2 - desplasament, y2 + desplasament) != 0)
+				SetMoure();
+		}
 		break;
 	case BREAK:
 		if ((fons->GetMapa(x1 + 1, y2 + 1) == 0 && fons->GetMapa(x1, y1 + 1) == 0) || (fons->GetMapa(x2 + 1, y2 + 1) == 0 && fons->GetMapa(x2, y1 + 1) == 0)){
@@ -82,7 +87,12 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 		}
 		break;
 	case PICK:
-	//	Caure();
+		if ((fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y1 + 1) == 0) && fons->GetMapa(x2, y2 + 1) == 0){
+			SetMoure();
+		}
+		else{
+			Picar(fons, x2, y2);
+		}
 		break;
 	case STOP:
 
@@ -91,7 +101,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2){ //Es pot optimi
 
 		break;
 	case EXPLOSION:
-		Explotar();
+		Explotar(fons, x2, y2);
 		if (fons->GetMapa(x1, y1 + 1) == 0 && fons->GetMapa(x2, y2 + 1) == 0)
 			SetCaure();
 		break;
@@ -348,11 +358,15 @@ void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
 }
 
 void Lemming::Levitar(){
-
+	if (contImatges == 5){
+		posY += desplasament;
+	}
 }
 
 void Lemming::Escalar(){
-
+	if (contImatges == 3 || contImatges == 6 || contImatges == 9){
+		posY -= desplasament;
+	}
 }
 
 void Lemming::Cavar(Map *fons, int x2, int y2){
@@ -365,8 +379,19 @@ void Lemming::Cavar(Map *fons, int x2, int y2){
 	}
 }
 
-void Lemming::Picar(){
+void Lemming::Picar(Map *fons, int x2, int y2){
+	// Destrucció del terreny.
+	if (contImatges == 8 || contImatges == 16 || contImatges == 24){
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 4; j++){
+				fons->DestroyPosMapa(x2 + i, y2 - j);
+			}
+			fons->DestroyPosMapa(x2 + i, y2);
+		}
 
+		Moure();
+		Caure();
+	}
 }
 
 void Lemming::Caure(){
@@ -381,7 +406,8 @@ void Lemming::ConstruirEscala(){
 
 }
 
-void Lemming::Explotar(){
+void Lemming::Explotar(Map *fons, int x2, int y2){
+	// Destrucció del terreny.
 	if (temps > 0){
 		temps -= 1;
 	}
