@@ -10,11 +10,14 @@ private:
 	int limitX;
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
+	int maxCaure;
 	SDL_RendererFlip flipType;
 	int temps;
 	int desplasament;
 	bool paraigues;
 	bool escalar;
+	bool mortInicial;
+	bool mortFinal;
 	int pintW, pintH;
 	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
 
@@ -48,7 +51,7 @@ public:
 		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, EXPLODING, EXIT
 	};
 	int GetEstat();
-
+	bool GetMort();
 	// Sets per canviar l'Estat 
 	void SetMoure();   
 	void SetCaure();   

@@ -33,7 +33,7 @@ public:
 
 	int GetMapa(int x, int y);
 	void DestroyPosMapa(int x, int y);
-	void CrearPosMapa(int x, int y);
+	void CrearPosMapa(int x, int y, int tipo);
 
 	int GetWidthMap();
 	int GetHeightMap();

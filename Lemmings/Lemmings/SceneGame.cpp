@@ -16,7 +16,7 @@ SceneGame::SceneGame(){
 	lemmingsSaved = 0;
 
 	// Inicialització de les portes del joc.Punt de respawn i de sortida dels lemmings.
-	enterDoor = new DoorEnter(110, 80, 20, 10); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
+	enterDoor = new DoorEnter(110, 80, 20, 12); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
 	exitDoor = new ElementGame();
 	exitDoor->init(338, 200, "Assets/Images/Doors/_sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
 
@@ -121,7 +121,8 @@ void SceneGame::update(){
 		//***
 
 		//Esborrar lemming si surt del mapa.
-		if (fons->GetPosX() + x1 < fons->GetPosX() || fons->GetPosX() + x2 > fons->GetPosX() + fons->GetWidthMap() || fons->GetPosY() + y2 > fons->GetPosY() + fons->GetHeightMap()){
+		if ((fons->GetPosX() + x1 < fons->GetPosX() || fons->GetPosX() + x2 > fons->GetPosX() + fons->GetWidthMap() || fons->GetPosY() + y2 > fons->GetPosY() + fons->GetHeightMap())
+			|| (*itLem)->GetMort()){
 			lemmings.erase(itLem);
 			if (lemmings.size() == 0)
 				break;
@@ -132,21 +133,22 @@ void SceneGame::update(){
 
 			for (int i = -10; i < 3; i++){
 
-				fons->CrearPosMapa(x1, y2 + i);
+				fons->CrearPosMapa(x1, y2 + i, 3);
 
-				fons->CrearPosMapa(x1 + 1, y2 + i);
+				fons->CrearPosMapa(x1 + 1, y2 + i, 3);
 
-				fons->CrearPosMapa(x1 + 2, y2 + i);
+				fons->CrearPosMapa(x1 + 2, y2 + i, 3);
 
-				fons->CrearPosMapa(x1 + 3, y2 + i);
+				fons->CrearPosMapa(x1 + 3, y2 + i, 3);
 
-				fons->CrearPosMapa(x2 + 1, y2 + i);
+				fons->CrearPosMapa(x2 + 1, y2 + i, 3);
 
-				fons->CrearPosMapa(x2, y2 + i);
+				fons->CrearPosMapa(x2, y2 + i, 3);
 
-				fons->CrearPosMapa(x2 - 1, y2 + i);
+				fons->CrearPosMapa(x2 - 1, y2 + i, 3);
 			}
 		}
+
 	}
 
 	if (cursorChanged && !cursor->GetChangedCursor())
