@@ -16,7 +16,7 @@ SceneGame::SceneGame(){
 	lemmingsSaved = 0;
 
 	// Inicialització de les portes del joc.Punt de respawn i de sortida dels lemmings.
-	enterDoor = new DoorEnter(110, 80, 20, 10); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
+	enterDoor = new DoorEnter(110, 80, 20, 12); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game. 40 el número de lemmings.
 	exitDoor = new ElementGame();
 	exitDoor->init(338, 200, "Assets/Images/Doors/_sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
 
@@ -64,7 +64,10 @@ void SceneGame::update(){
 		actions->IncrementVelocitySkill();
 		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
 		break;
-	case 12: // MOAB
+	case 11: // MOAB
+		for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+			(*itLem)->SetContadorTemps(temps->getTime());
+		}
 		//Explotar tots els lemmings.
 		break;
 	default:
@@ -92,14 +95,14 @@ void SceneGame::update(){
 		int y1 = (*itLem)->GetPosY() / fons->GetSizeTile();
 		int x2 = ((*itLem)->GetPosX() + (*itLem)->GetWidth()) / fons->GetSizeTile();
 		int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / fons->GetSizeTile();
-		(*itLem)->update(fons, x1, y1, x2, y2);
+		(*itLem)->update(fons, x1, y1, x2, y2, temps->getTime());
 
 		if (!cursorChanged && (*itLem)->CursorOnLemming())
 			cursorChanged = true;
 
 		if (inputManager->CheckClick()){
 			int numUsos = actions->GetNumberUsesSkill(currAction);
-			if ((*itLem)->SetSkill(numUsos, currAction)){
+			if ((*itLem)->SetSkill(numUsos, currAction, temps->getTime())){
 				actions->DetractUseSkill(currAction);
 				inputManager->ResetClick();
 			}
@@ -120,7 +123,8 @@ void SceneGame::update(){
 		//***
 
 		//Esborrar lemming si surt del mapa.
-		if (fons->GetPosX() + x1 < fons->GetPosX() || fons->GetPosX() + x2 > fons->GetPosX() + fons->GetWidthMap() || fons->GetPosY() + y2 > fons->GetPosY() + fons->GetHeightMap()){
+		if ((fons->GetPosX() + x1 < fons->GetPosX() || fons->GetPosX() + x2 > fons->GetPosX() + fons->GetWidthMap() || fons->GetPosY() + y2 > fons->GetPosY() + fons->GetHeightMap())
+			|| (*itLem)->GetMort()){
 			lemmings.erase(itLem);
 			if (lemmings.size() == 0)
 				break;
@@ -131,21 +135,22 @@ void SceneGame::update(){
 
 			for (int i = -10; i < 3; i++){
 
-				fons->CrearPosMapa(x1, y2 + i);
+				fons->CrearPosMapa(x1, y2 + i, 3);
 
-				fons->CrearPosMapa(x1 + 1, y2 + i);
+				fons->CrearPosMapa(x1 + 1, y2 + i, 3);
 
-				fons->CrearPosMapa(x1 + 2, y2 + i);
+				fons->CrearPosMapa(x1 + 2, y2 + i, 3);
 
-				fons->CrearPosMapa(x1 + 3, y2 + i);
+				fons->CrearPosMapa(x1 + 3, y2 + i, 3);
 
-				fons->CrearPosMapa(x2 + 1, y2 + i);
+				fons->CrearPosMapa(x2 + 1, y2 + i, 3);
 
-				fons->CrearPosMapa(x2, y2 + i);
+				fons->CrearPosMapa(x2, y2 + i, 3);
 
-				fons->CrearPosMapa(x2 - 1, y2 + i);
+				fons->CrearPosMapa(x2 - 1, y2 + i, 3);
 			}
 		}
+
 	}
 
 	if (cursorChanged && !cursor->GetChangedCursor())
