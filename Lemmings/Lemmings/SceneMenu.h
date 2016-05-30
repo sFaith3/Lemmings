@@ -11,10 +11,10 @@ private:
 	Background *fons;
 
 	enum ButtonsEnum{
-		PLAYER = 1, NEW_LEVEL, AUDIO, FUN, EXIT
+		PLAYER = 1, NEW_LEVEL, AUDIO, FUN
 	};
-	vector<Button> buttons;
-	vector<Button>::iterator itBut;
+	//vector<Button> buttons;
+	//vector<Button>::iterator itBut;
 
 	SceneManager* smManager;
 

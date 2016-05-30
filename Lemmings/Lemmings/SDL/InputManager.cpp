@@ -1,5 +1,4 @@
 #include "InputManager.h"
-
 #include "SDL.h"
 
 InputManager* InputManager::iInstance = NULL;
@@ -11,6 +10,7 @@ InputManager::InputManager(){
 	back = false;
 	pause = false;
 	click = false;
+	enter = false;
 }
 
 InputManager::~InputManager(){
@@ -40,6 +40,9 @@ void InputManager::Update(){
 			case SDL_SCANCODE_ESCAPE:
 				esc = true;
 				break;
+			/*case SDL_SCANCODE_:
+				enter = true;
+				break;*/
 			case SDL_SCANCODE_0:
 				number = ZERO;
 				break;
@@ -77,6 +80,9 @@ void InputManager::Update(){
 		case SDL_KEYUP:
 			tecla = test_event.key.keysym.scancode;
 			switch (tecla){
+			/*case SDL_SCANCODE_:
+				enter = false;
+				break;*/
 			case SDL_SCANCODE_0:
 			case SDL_SCANCODE_1:
 			case SDL_SCANCODE_2:
@@ -140,6 +146,10 @@ bool InputManager::CheckClick(){
 		return true;
 	}
 	return false;
+}
+
+bool InputManager::CheckEnter(){
+	return enter;
 }
 
 

@@ -1,0 +1,1 @@
+<level name="Just_Dig!" numberLemmings="10" lemmingsToSave="1" releaseRate="50" time="5">

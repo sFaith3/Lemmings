@@ -62,6 +62,9 @@ void SceneManager::changeScene(int next_scene){
 void SceneManager::reinitScene(int scene){
 	delete mVectorScenes[scene];
 	switch (scene){
+	case PRE_GAME:
+		mVectorScenes[scene] = new ScenePreGame();
+		break;
 	case GAME:
 		mVectorScenes[scene] = new SceneGame();
 		break;

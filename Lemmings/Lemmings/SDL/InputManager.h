@@ -16,6 +16,7 @@ private:
 	bool back;
 	bool pause;
 	bool click;
+	bool enter;
 
 public:
 	InputManager();
@@ -34,7 +35,8 @@ public:
 	bool CheckBack();
 	bool CheckPause();
 	bool CheckClick();
-	
+	bool CheckEnter();
+
 	void ResetNumber();
 	void ResetESC();
 	void ResetClick();

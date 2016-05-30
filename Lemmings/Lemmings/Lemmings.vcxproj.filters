@@ -60,9 +60,6 @@
     <ClCompile Include="Minimap.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="File.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="ABCsAlphaNum.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -126,6 +123,9 @@
     <ClCompile Include="ScenePreGame.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>Archivos de código fuente\SDL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -162,9 +162,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Trap.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="File.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ABCsAlphaNum.h">
@@ -220,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="ScenePreGame.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

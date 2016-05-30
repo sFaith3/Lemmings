@@ -8,11 +8,12 @@ class AudioManager
 private:
 	AudioManager();
 
-	static AudioManager* aInstance;
+	static AudioManager* aInstance; /*!<	Singleton instance*/
 
 public:
 	~AudioManager();
 
+	//! Gets Singleton instance.
 	static AudioManager* getInstanceAudio();
 
 	Sint32 addMusic(const char* file);

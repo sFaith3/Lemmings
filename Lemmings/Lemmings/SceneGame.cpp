@@ -38,7 +38,6 @@ SceneGame::~SceneGame(){
 
 void SceneGame::init(){
 	audioManager->playMusic(idMusic, -1);
-	inputManager->SetCursorRelative(true);
 	temps->start();
 }
 

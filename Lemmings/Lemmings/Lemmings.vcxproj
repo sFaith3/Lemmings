@@ -82,7 +82,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="ElementGame.cpp" />
     <ClCompile Include="ElementHUD.cpp" />
-    <ClCompile Include="File.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Lemming.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -117,7 +117,7 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="ElementGame.h" />
     <ClInclude Include="ElementHUD.h" />
-    <ClInclude Include="File.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Lemming.h" />
     <ClInclude Include="Map.h" />

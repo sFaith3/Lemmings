@@ -8,7 +8,7 @@ class VideoManager
 private:
 	VideoManager();
 
-	static VideoManager* vInstance;
+	static VideoManager* vInstance; /*!<	Singleton instance*/
 
 	bool texture = true;
 
@@ -19,6 +19,7 @@ private:
 public:
 	~VideoManager();
 
+	//! Gets Singleton instance.
 	static VideoManager* getInstanceVideo();
 
 	Sint32 addGraphic(const char* file);
