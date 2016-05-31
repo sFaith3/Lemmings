@@ -2,27 +2,31 @@
 #include "Scene.h"
 #include "FileManager.h"
 #include "ABCsAlphaNum.h"
-#include "Element.h"
 #include "SceneManager.h"
+#include "SceneGame.h"
 
 class ScenePreGame :
 	public Scene
 {
 private:
-	FileManager* fileManager;
-
 	int level;
 	string nameLvl;
-	string numLemming;
+	string numLemmings;
 	string lemmingsToSave;
 	string releaseRate;
 	string timeLvl;
 	string rating;
 
-	Element* fons;
+	Background* fons;
+
+	Map* mapa;
 
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;
+
+	FileManager* fileManager;
+
+	SceneGame* sGame;
 
 	SceneManager* smManager;
 

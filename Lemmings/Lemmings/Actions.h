@@ -23,7 +23,7 @@ public:
 	Actions();
 	~Actions();
 
-	int init(float scaleX, float scaleY, int velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar);
+	int init(float scaleX, float scaleY, string velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar);
 	int update();
 	void render();
 

@@ -21,11 +21,14 @@ Timer::Timer(int x, int y, string tempsRestant){
 	int xNum, yNum;
 	xNum = x + 150;
 	yNum = y;
-	nums.push_back(new ABCsAlphaNum(xNum, yNum, 1, 1, minuts));
+	nums.push_back(new ABCsAlphaNum());
+	nums.back()->init(xNum, yNum, 1, 1, minuts);
 	xNum += 24;
-	nums.push_back(new ABCsAlphaNum(xNum, yNum, 1, 1, primerNumSegons));
+	nums.push_back(new ABCsAlphaNum());
+	nums.back()->init(xNum, yNum, 1, 1, primerNumSegons);
 	xNum += 17;
-	nums.push_back(new ABCsAlphaNum(xNum, yNum, 1, 1, segonNumSegons));
+	nums.push_back(new ABCsAlphaNum());
+	nums.back()->init(xNum, yNum, 1, 1, segonNumSegons);
 }
 
 

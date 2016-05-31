@@ -47,19 +47,3 @@ void ElementGame::UpdateAnimacio(){
 		currFpsAnim++;
 	}
 }
-
-int ElementGame::GetPosX(){
-	return posX;
-}
-
-int ElementGame::GetPosY(){
-	return posY;
-}
-
-int ElementGame::GetWidth(){
-	return width;
-}
-
-int ElementGame::GetHeight(){
-	return height;
-}

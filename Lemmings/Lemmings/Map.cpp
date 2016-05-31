@@ -2,11 +2,6 @@
 
 
 Map::Map(){
-	mapTmx = false;
-	fileMap = "";
-	idFileMap = NULL;
-	rutaTilesets = "";
-	sizeTile = 0;
 	tManager = tinyManager::getInstanceTinyManager();
 }
 
@@ -16,6 +11,9 @@ Map::~Map(){
 
 
 void Map::init(int x, int y, bool mapTmx, const char* fileMap, const char* layerCollision, int numLayers, const char* rutaTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
+	idFileMap = NULL;
+	sizeTile = 0;
+	
 	this->mapTmx = mapTmx;
 
 	tManager->Init();
@@ -74,15 +72,6 @@ void Map::render(){
 	}
 	else
 		videoManager->renderTexture(idFileMap, 0, 0, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
-}
-
-
-int Map::GetPosX(){
-	return posX;
-}
-
-int Map::GetPosY(){
-	return posY;
 }
 
 

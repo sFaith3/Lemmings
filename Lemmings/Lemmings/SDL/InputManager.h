@@ -41,6 +41,8 @@ public:
 	void ResetESC();
 	void ResetClick();
 
+	void SetNumber(int num);
+
 	void GetMouseXY(int& x, int& y);
 };
 

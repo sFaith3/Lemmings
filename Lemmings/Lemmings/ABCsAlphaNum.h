@@ -25,9 +25,10 @@ private:
 	};
 
 public:
-	ABCsAlphaNum(int x, int y, float scaleX, float scaleY, int alphaNumEnum);
+	ABCsAlphaNum();
 	~ABCsAlphaNum();
 
+	void init(int x, int y, float scaleX, float scaleY, int alphaNum);
 	void Update(int num);
 	void Update(string lletres);
 	void Render();

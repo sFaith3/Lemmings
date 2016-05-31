@@ -2,6 +2,9 @@
 
 
 Actions::Actions(){
+	for (int i = 0; i < 12; i++)
+		skills.push_back(new Skill());
+
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
 
@@ -11,7 +14,7 @@ Actions::~Actions()
 }
 
 
-int Actions::init(float scaleX, float scaleY, int velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
+int Actions::init(float scaleX, float scaleY, string velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar){
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
@@ -23,42 +26,37 @@ int Actions::init(float scaleX, float scaleY, int velMinimaSpawn, string trepar,
 	int wSkill = 40;
 	int hSkill = 61;
 	const char* imgSkillPressed = "Assets/Images/skillsPressed.png";
-	skills.push_back(new Skill);
-	skills.back()->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "50");
+	skills[0]->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, velMinimaSpawn);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "50");
-	skills.back()->SetMinVelocity(velMinimaSpawn);
+	skills[1]->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, velMinimaSpawn);
+	int velMinSpawn = 0;;
+	for (int i = 0; i < velMinimaSpawn.length(); i++){
+		if (i == 0)
+			velMinSpawn += ((int)velMinimaSpawn[i] - 48) * 10;
+		else
+			velMinSpawn += (int)velMinimaSpawn[i] - 48;
+	}
+	skills[1]->SetMinVelocity(velMinSpawn);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(TREPAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, trepar);
+	skills[2]->init(TREPAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, trepar);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(PARAIGUES, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, paraigues);
+	skills[3]->init(PARAIGUES, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, paraigues);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(EXPLOSIO, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, explosio);
+	skills[4]->init(EXPLOSIO, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, explosio);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(PARAT, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, parat);
+	skills[5]->init(PARAT, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, parat);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(ESGRAONS, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, esgraons);
+	skills[6]->init(ESGRAONS, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, esgraons);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(CAVAR_LATERAL, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavarLateral);
+	skills[7]->init(CAVAR_LATERAL, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavarLateral);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(PICAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, picar);
+	skills[8]->init(PICAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, picar);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(CAVAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavar);
+	skills[9]->init(CAVAR, xSkill, y, wSkill, hSkill, 0, 0, NULL, imgSkillPressed, cavar);
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(PAUSA, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
+	skills[10]->init(PAUSA, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
 	xSkill += wSkill;
-	skills.push_back(new Skill);
-	skills.back()->init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
+	skills[11]->init(MOAB, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, "NULL");
 
 	skills[currButton]->SetPressed(true);
 

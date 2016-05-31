@@ -1,10 +1,18 @@
 #include "ABCsAlphaNum.h"
 
 
-ABCsAlphaNum::ABCsAlphaNum(int x, int y, float scaleX, float scaleY, int alphaNum){
+ABCsAlphaNum::ABCsAlphaNum(){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
-
 	idImg = videoManager->getTextureID("Assets/Images/alphabet.png");
+}
+
+
+ABCsAlphaNum::~ABCsAlphaNum()
+{
+}
+
+
+void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	posX = x;
 	posY = y;
 
@@ -19,12 +27,6 @@ ABCsAlphaNum::ABCsAlphaNum(int x, int y, float scaleX, float scaleY, int alphaNu
 
 	Update(alphaNum);
 }
-
-
-ABCsAlphaNum::~ABCsAlphaNum()
-{
-}
-
 
 void ABCsAlphaNum::Update(int num){
 	int pos = NULL;

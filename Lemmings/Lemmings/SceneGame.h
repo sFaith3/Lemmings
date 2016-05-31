@@ -13,15 +13,22 @@ class SceneGame :
 	public Scene
 {
 private:
-	Map* fons;
+	SceneGame();
+
+	static SceneGame* gInstance; /*!<	Singleton instance*/
+
+	Map* mapa;
 
 	Timer* temps;
 
 	Actions* actions;
 	int currAction;
 
+	// Paràmetres de l'escena on s'informa sobre la missió.
+	int numLemmings;
 	int lemmingsToSave;
 	int lemmingsSaved;
+	string tempsRestant, releaseRate;
 
 	DoorEnter* enterDoor;
 	ElementGame* exitDoor;
@@ -35,8 +42,12 @@ private:
 	SceneManager* smManager;
 
 public:
-	SceneGame();
 	~SceneGame();
+
+	//! Gets Singleton instance.
+	static SceneGame* getInstanceSceneGame();
+
+	void initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string temps, string rateSpeed);
 
 	void init();
 	void update();

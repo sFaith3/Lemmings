@@ -54,6 +54,7 @@ public:
 	};
 	int GetEstat();
 	bool GetMort();
+	bool GetContExplotar();
 	// Sets per canviar l'Estat 
 	void SetMoure();   
 	void SetCaure();   

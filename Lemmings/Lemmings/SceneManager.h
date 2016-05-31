@@ -18,7 +18,7 @@ public:
 	//! Enum Scenes.
 	/*! All the Scenes in the game. */
 	enum SceneEnum{
-		MENU, CODE_LEVEL, PRE_GAME, GAME
+		MENU, CODE_LEVEL, PRE_GAME, GAME, POST_GAME
 	};
 
 	void init();
@@ -28,7 +28,7 @@ public:
 	void changeScene(int next_scene);
 	void reinitScene(int scene);
 
-	int getCurrScene();
+	int getNumCurrScene();
 
 private:
 	SceneManager();

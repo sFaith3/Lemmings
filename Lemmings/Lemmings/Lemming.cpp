@@ -184,6 +184,10 @@ bool Lemming::GetMort(){
 	return mortFinal;
 }
 
+bool Lemming::GetContExplotar(){
+	return explotaContador;
+}
+
 bool Lemming::CursorOnLemming(){
 	int mouseX, mouseY;
 	inputManager->GetMouseXY(mouseX, mouseY);

@@ -22,10 +22,5 @@ public:
 
 	//Animacio de SpriteSheet
 	void UpdateAnimacio();
-
-	int GetPosX();
-	int GetPosY();
-	int GetWidth();
-	int GetHeight();
 };
 

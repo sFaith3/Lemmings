@@ -126,6 +126,9 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>Archivos de código fuente\SDL</Filter>
     </ClCompile>
+    <ClCompile Include="ScenePostGame.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneManager.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="FileManager.h">
       <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePostGame.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

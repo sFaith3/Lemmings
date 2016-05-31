@@ -26,3 +26,30 @@ void Element::init(int x, int y, const char* img, int srcX, int srcY, int w, int
 void Element::render(){
 	videoManager->renderTexture(idImg, srcPosX, srcPosY, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
 }
+
+
+int Element::GetPosX(){
+	return posX;
+}
+
+int Element::GetPosY(){
+	return posY;
+}
+
+int Element::GetWidth(){
+	return width;
+}
+
+int Element::GetHeight(){
+	return height;
+}
+
+void Element::SetPoisition(int x, int y){
+	posX = x;
+	posY = y;
+}
+
+void Element::SetScale(float x, float y){
+	scaleX = x;
+	scaleY = y;
+}

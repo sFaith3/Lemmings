@@ -93,6 +93,7 @@
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="ScenePostGame.cpp" />
     <ClCompile Include="ScenePreGame.cpp" />
     <ClCompile Include="SDL\AudioManager.cpp" />
     <ClCompile Include="SDL\InputManager.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneMenu.h" />
+    <ClInclude Include="ScenePostGame.h" />
     <ClInclude Include="ScenePreGame.h" />
     <ClInclude Include="SDL\AudioManager.h" />
     <ClInclude Include="SDL\InputManager.h" />

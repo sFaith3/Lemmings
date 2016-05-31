@@ -4,6 +4,7 @@
 #include "SceneCodeLevel.h"
 #include "ScenePreGame.h"
 #include "SceneGame.h"
+#include "ScenePostGame.h"
 
 SceneManager* SceneManager::smInstance = NULL;
 
@@ -33,7 +34,8 @@ void SceneManager::init(){
 	mVectorScenes.push_back(new SceneMenu());
 	mVectorScenes.push_back(new SceneCodeLevel());
 	mVectorScenes.push_back(new ScenePreGame());
-	mVectorScenes.push_back(new SceneGame());
+	mVectorScenes.push_back(SceneGame::getInstanceSceneGame());
+	mVectorScenes.push_back(new ScenePostGame());
 
 	mCurrScene = MENU;
 	mVectorScenes[mCurrScene]->init();
@@ -54,6 +56,7 @@ void SceneManager::render(){
 
 
 void SceneManager::changeScene(int next_scene){
+	reinitScene(mCurrScene);
 	mCurrScene = next_scene;
 	mVectorScenes[mCurrScene]->init();
 }
@@ -62,19 +65,25 @@ void SceneManager::changeScene(int next_scene){
 void SceneManager::reinitScene(int scene){
 	delete mVectorScenes[scene];
 	switch (scene){
+	case MENU:
+		mVectorScenes[scene] = new SceneMenu();
+		break;
 	case PRE_GAME:
 		mVectorScenes[scene] = new ScenePreGame();
 		break;
 	case GAME:
-		mVectorScenes[scene] = new SceneGame();
+		delete mVectorScenes[PRE_GAME];
+		mVectorScenes[scene] = SceneGame::getInstanceSceneGame();
+		break;
+	case POST_GAME:
+		mVectorScenes[scene] = new ScenePostGame();
 		break;
 	default:
-		cout << "Error with 'reinitScene()' in the SceneManager!\n";
 		break;
 	}
 }
 
 
-int SceneManager::getCurrScene(){
+int SceneManager::getNumCurrScene(){
 	return mCurrScene;
 }

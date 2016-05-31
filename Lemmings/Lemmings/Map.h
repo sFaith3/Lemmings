@@ -28,9 +28,6 @@ public:
 	void init(int x, int y, bool mapTmx, const char* fileMap, const char* layerCollision, int numLayers, const char* rutaTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
 	void render();
 
-	int GetPosX();
-	int GetPosY();
-
 	int GetMapa(int x, int y);
 	void DestroyPosMapa(int x, int y);
 	void CrearPosMapa(int x, int y, int tipo);

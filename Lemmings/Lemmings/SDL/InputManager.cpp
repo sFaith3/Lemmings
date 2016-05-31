@@ -167,6 +167,11 @@ void InputManager::ResetClick(){
 }
 
 
+void InputManager::SetNumber(int num){
+	number = num;
+}
+
+
 void InputManager::GetMouseXY(int& x, int& y){
 	SDL_GetMouseState(&x, &y);
 }

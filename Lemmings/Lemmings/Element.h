@@ -20,5 +20,12 @@ public:
 
 	void init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY);
 	void render();
-};
 
+	int GetPosX();
+	int GetPosY();
+	int GetWidth();
+	int GetHeight();
+
+	void SetPoisition(int x, int y);
+	void SetScale(float x, float y);
+};
