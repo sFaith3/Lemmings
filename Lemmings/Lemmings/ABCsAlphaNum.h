@@ -29,8 +29,8 @@ public:
 	~ABCsAlphaNum();
 
 	void init(int x, int y, float scaleX, float scaleY, int alphaNum);
-	void Update(int num);
-	void Update(string lletres);
+	void ChangeValue(int num);
+	void ChangeValue(string lletres);
 	void Render();
 };
 

@@ -26,6 +26,6 @@ public:
 	int GetWidth();
 	int GetHeight();
 
-	void SetPoisition(int x, int y);
+	void SetPosition(int x, int y);
 	void SetScale(float x, float y);
 };

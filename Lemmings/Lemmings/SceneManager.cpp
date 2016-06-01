@@ -26,9 +26,6 @@ SceneManager* SceneManager::getInstanceSM(){
 
 
 void SceneManager::init(){
-	videoManager->clearScreen(0x000000);
-	videoManager->updateScreen();
-
 	mVectorScenes.clear();
 
 	mVectorScenes.push_back(new SceneMenu());
@@ -55,32 +52,10 @@ void SceneManager::render(){
 }
 
 
-void SceneManager::changeScene(int next_scene){
-	reinitScene(mCurrScene);
+void SceneManager::changeScene(SceneEnum next_scene){
+	mVectorScenes[mCurrScene]->clear();
 	mCurrScene = next_scene;
 	mVectorScenes[mCurrScene]->init();
-}
-
-
-void SceneManager::reinitScene(int scene){
-	delete mVectorScenes[scene];
-	switch (scene){
-	case MENU:
-		mVectorScenes[scene] = new SceneMenu();
-		break;
-	case PRE_GAME:
-		mVectorScenes[scene] = new ScenePreGame();
-		break;
-	case GAME:
-		delete mVectorScenes[PRE_GAME];
-		mVectorScenes[scene] = SceneGame::getInstanceSceneGame();
-		break;
-	case POST_GAME:
-		mVectorScenes[scene] = new ScenePostGame();
-		break;
-	default:
-		break;
-	}
 }
 
 

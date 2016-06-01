@@ -6,12 +6,12 @@ SceneGame* SceneGame::gInstance = NULL;
 SceneGame::SceneGame(){
 	idMusic = audioManager->getMusicID("Assets/Audios/Music/track_01.wav");
 
-	mapa = new Map();
-
 	actions = new Actions();
 
-	numLemmings = lemmingsToSave = lemmingsSaved = 0;
+	numLemmings = lemmingsToSave = 0;
 	tempsRestant = releaseRate = "";
+
+	lemmingsEnJoc = lemmingsSaved = 0;
 
 	exitDoor = new ElementGame();
 
@@ -36,8 +36,6 @@ SceneGame* SceneGame::getInstanceSceneGame(){
 
 void SceneGame::initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string temps, string rateSpeed){
 	this->mapa = mapa;
-	mapa->SetPoisition(40, 5);
-	mapa->SetScale(1, 1);
 	this->numLemmings = numLemmings;
 	this->lemmingsToSave = lemmingsToSave;
 	tempsRestant = temps + ":00";
@@ -45,6 +43,9 @@ void SceneGame::initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, 
 }
 
 void SceneGame::init(){
+	mapa->SetPositionTiles(-245, 0);
+	mapa->SetScaleTiles(1, 1);
+
 	// Inicialització de les portes del joc. Punt de respawn i de sortida dels lemmings.
 	enterDoor = new DoorEnter(110, 80, 20, numLemmings); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game.
 	exitDoor->init(338, 200, "Assets/Images/Doors/_sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
@@ -56,6 +57,19 @@ void SceneGame::init(){
 	temps->start();
 
 	audioManager->playMusic(idMusic, -1);
+}
+
+void SceneGame::clear(){
+	delete mapa;
+
+	delete enterDoor;
+
+	currAction = -1;
+
+	delete temps;
+
+	lemmings.clear();
+	lemmings.resize(0);
 }
 
 void SceneGame::update(){
@@ -128,16 +142,23 @@ void SceneGame::update(){
 			}
 		}
 		// If el lemming ha completat l'animació de caminar cap a la porta. Get del bool que indica això.
-			//Lemming s'esborra.
-			//lemmingsSaved++;
+		//Lemming s'esborra.
+		//lemmingsSaved++;
+		//updateNumeroLemSaved();
+		//if(lemmingsSaved >= lemmingsToSaved) Es va a ScenePostGame on t'informa de la partida.
 		//***
 
-		//Esborrar lemming si surt del mapa.
+		//Esborrar lemming si surt del mapa o si mor.
 		if ((mapa->GetPosX() + x1 < mapa->GetPosX() || mapa->GetPosX() + x2 > mapa->GetPosX() + mapa->GetWidthMap() || mapa->GetPosY() + y2 > mapa->GetPosY() + mapa->GetHeightMap())
 			|| (*itLem)->GetMort()){
 			lemmings.erase(itLem);
-			if (lemmings.size() == 0)
+			//updateNumeroLemEnJoc();
+			if (lemmings.size() == 0){
+				//if ((lemmingsEnJoc + lemmingsSaved) >= numLemmings){
+					// Passar dades a ScenePostGame i carregar-la.
+				//}
 				break;
+			}
 			itLem = lemmings.begin();
 		}
 

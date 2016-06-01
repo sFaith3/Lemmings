@@ -25,10 +25,10 @@ void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	spacingY = 1;
 	digitsMaxRow = 13;
 
-	Update(alphaNum);
+	ChangeValue(alphaNum);
 }
 
-void ABCsAlphaNum::Update(int num){
+void ABCsAlphaNum::ChangeValue(int num){
 	int pos = NULL;
 	switch (num){
 	case 0:
@@ -75,7 +75,7 @@ void ABCsAlphaNum::Update(int num){
 }
 
 
-void ABCsAlphaNum::Update(string lletres){
+void ABCsAlphaNum::ChangeValue(string lletres){
 	/*int pos = NULL;
 	switch (alpha){ // AMB LA RESTA DE L'SPRITESHEET QUE NO SIGUIN NÚMEROS.
 	case 0:

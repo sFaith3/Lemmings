@@ -62,13 +62,13 @@ void Skill::LessVelocity(){
 		usosRestants--;
 		if (numSegonDigit > 0){
 			numSegonDigit--;
-			digits.back()->Update(numSegonDigit);
+			digits.back()->ChangeValue(numSegonDigit);
 		}
 		else{
 			numPrimerDigit--;
 			numSegonDigit = 9;
-			digits[0]->Update(numPrimerDigit);
-			digits[1]->Update(numSegonDigit);
+			digits[0]->ChangeValue(numPrimerDigit);
+			digits[1]->ChangeValue(numSegonDigit);
 		}
 	}
 }
@@ -78,13 +78,13 @@ void Skill::MoreVelocity(){
 		usosRestants++;
 		if (numSegonDigit < 9){
 			numSegonDigit++;
-			digits.back()->Update(numSegonDigit);
+			digits.back()->ChangeValue(numSegonDigit);
 		}
 		else{
 			numPrimerDigit++;
 			numSegonDigit = 0;
-			digits[0]->Update(numPrimerDigit);
-			digits[1]->Update(numSegonDigit);
+			digits[0]->ChangeValue(numPrimerDigit);
+			digits[1]->ChangeValue(numSegonDigit);
 		}
 	}
 }
@@ -99,13 +99,13 @@ void Skill::OneUseLess(){
 		usosRestants--;
 		if (numSegonDigit > 0){
 			numSegonDigit--;
-			digits.back()->Update(numSegonDigit);
+			digits.back()->ChangeValue(numSegonDigit);
 		}
 		else{
 			numPrimerDigit--;
 			numSegonDigit = 9;
-			digits[0]->Update(numPrimerDigit);
-			digits[1]->Update(numSegonDigit);
+			digits[0]->ChangeValue(numPrimerDigit);
+			digits[1]->ChangeValue(numSegonDigit);
 		}
 	}
 }

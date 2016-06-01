@@ -40,7 +40,7 @@ VideoManager::VideoManager(){
 
 	deltaTime = 0.0f;
 	lastTime = 0;
-	msFrame = FPS / 1000.0f;
+	msFrame = FPS;
 }
 
 VideoManager::~VideoManager(){
@@ -238,13 +238,12 @@ void VideoManager::updateTime(){
 		if (!texture){
 			//Per a evitar que l'input del ratolí es ralentitzi, s'ha d'eliminar la restricció de FPS.
 			if (deltaTime < msFrame){
-				waitTime((msFrame - deltaTime) * 1000.0f);
+				waitTime(msFrame - deltaTime);
 				deltaTime = msFrame;
 			}
 		}
 		lastTime = currentTime;
 	}
-	//cout << deltaTime << endl;
 }
 
 void VideoManager::waitTime(int ms){

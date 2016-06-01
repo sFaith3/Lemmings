@@ -14,6 +14,7 @@ public:
 	~Scene();
 
 	virtual void init();
+	virtual void clear();
 	virtual void update();
 	virtual void render();
 };

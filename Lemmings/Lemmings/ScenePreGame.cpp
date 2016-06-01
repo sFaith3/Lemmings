@@ -4,14 +4,28 @@
 ScenePreGame::ScenePreGame(){
 	fileManager = FileManager::getInstanceFile();
 
-	level = 1;
 	nameLvl = numLemmings = lemmingsToSave = releaseRate = timeLvl = rating = "";
 
 	fons = new Background();
 	fons->init(0, 0, "Assets/Images/PreGame/_mision.png", 0, 0, 809, 446, 1, 1);
 	fons->SetScale(0.75, 0.75); //
 
-	digits.clear();
+	sGame = SceneGame::getInstanceSceneGame();
+
+	smManager = SceneManager::getInstanceSM();
+}
+
+
+ScenePreGame::~ScenePreGame(){
+
+}
+
+
+void ScenePreGame::init(){
+	inputManager->SetCursorRelative(true);
+
+	level = 1;
+
 	string nomFile = "Assets/Levels/PreGame/level";
 	string rutaMapa = "Assets/Levels/";
 	string rutaTilesets = "Assets/Levels/";
@@ -33,15 +47,6 @@ ScenePreGame::ScenePreGame(){
 	lemmingsToSave = fileManager->GetValueFromData("lemmingsToSave");
 	timeLvl = fileManager->GetValueFromData("time");
 	releaseRate = fileManager->GetValueFromData("releaseRate");
-
-	int x = (fons->GetPosX() + fons->GetWidth()) / 2;
-	int y = 20;
-	int scaleX = 0.5;
-	int scaleY = 0.5;
-	mapa = new Map();
-	mapa->init(40, 5, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL);
-	mapa->SetPoisition(x, y);
-	mapa->SetScale(scaleX, scaleY);
 
 	// NAME LVL.
 	int xDigit = 40;
@@ -107,20 +112,20 @@ ScenePreGame::ScenePreGame(){
 		digits.back()->init(xDigit, yDigit, 1, 1, rating[i]);
 		xDigit += 20;
 	}
-	sGame = SceneGame::getInstanceSceneGame();
+	float scaleX = 0.5f;
+	float scaleY = 0.5f;
+	mapa = new Map();
+	mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // Iniciar les posiciones que es volen a SceneGame.
+
 	sGame->initFromPreGame(mapa, numLem, lemToSave, timeLvl, releaseRate);
 
-	smManager = SceneManager::getInstanceSM();
+	mapa->SetPositionTiles(245, 0);
+	mapa->SetScaleTiles(scaleX, scaleY);
 }
 
-
-ScenePreGame::~ScenePreGame(){
-
-}
-
-
-void ScenePreGame::init(){
-	inputManager->SetCursorRelative(true);
+void ScenePreGame::clear(){
+	digits.clear();
+	digits.resize(0);
 }
 
 void ScenePreGame::update(){

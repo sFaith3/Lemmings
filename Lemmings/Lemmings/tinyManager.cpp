@@ -153,7 +153,7 @@ tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing
 
 	Tileset *_tileset = new Tileset();
 	string rutaTileset = image->Attribute("source");
-	_tileset->init(rutaTileset, x, y);
+	_tileset->init(rutaTileset, x, y, tileWidth, tileHeight);
 	// Es recórre el tileset per sàpiguer quina tile es pinta. Els 2 primers for's indiquen la posició de la pantalla, a la qual se li multiplica per la mesura corresponent (X/Y) de la tile.
 	for (int i = 0; i <= x; i++){
 		for (int j = 0; j <= y; j++){
@@ -173,7 +173,7 @@ tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing
 			int dstPosX = (i * tileWidth) + posX;
 			int dstPosY = (j * tileHeight) + posY;
 
-			_tileset->addTile(i, j, srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
+			_tileset->addTile(i, j, srcPosX, srcPosY, dstPosX, dstPosY);
 		}
 	}
 	x = y = 0;

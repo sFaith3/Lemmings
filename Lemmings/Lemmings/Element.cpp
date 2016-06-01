@@ -44,7 +44,7 @@ int Element::GetHeight(){
 	return height;
 }
 
-void Element::SetPoisition(int x, int y){
+void Element::SetPosition(int x, int y){
 	posX = x;
 	posY = y;
 }

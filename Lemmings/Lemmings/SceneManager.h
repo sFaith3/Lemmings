@@ -25,8 +25,7 @@ public:
 	void update();
 	void render();
 
-	void changeScene(int next_scene);
-	void reinitScene(int scene);
+	void changeScene(SceneEnum next_scene);
 
 	int getNumCurrScene();
 
@@ -36,7 +35,7 @@ private:
 	static SceneManager* smInstance; /*!<	Singleton instance*/
 	
 	vector<Scene*> mVectorScenes;
-	int mCurrScene;
+	SceneEnum mCurrScene;
 
 	VideoManager* videoManager;
 };

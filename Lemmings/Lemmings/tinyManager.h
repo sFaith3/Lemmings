@@ -2,6 +2,7 @@
 #define TINYMANAGER_H
 
 #include "TinyXML\tinyxml.h"
+#include "SDL\VideoManager.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -20,15 +21,12 @@ public:
 		struct Tile{
 		private:
 			int srcPosX, srcPosY;
-			int tileWidth, tileHeight;
 			int dstPosX, dstPosY;
 
 		public:
-			Tile(int _srcPosX, int _srcPosY, int _tileWidth, int _tileHeight, int _dstPosX, int _dstPosY){
+			Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY){
 				srcPosX = _srcPosX;
 				srcPosY = _srcPosY;
-				tileWidth = _tileWidth;
-				tileHeight = _tileHeight;
 				dstPosX = _dstPosX;
 				dstPosY = _dstPosY;
 			}
@@ -41,14 +39,6 @@ public:
 				return srcPosY;
 			}
 
-			int getTileWidth(){
-				return tileWidth;
-			}
-
-			int getTileHeight(){
-				return tileHeight;
-			}
-
 			int getDstPosX(){
 				return dstPosX;
 			}
@@ -57,9 +47,14 @@ public:
 				return dstPosY;
 			}
 
+			void IncrementDstPos(int x, int y){
+				dstPosX += x;
+				dstPosY += y;
+			}
+
 		};
 
-		void init(string rutaTileset, int sizeXtiles, int sizeYtiles){
+		void init(string rutaTileset, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight){
 			this->rutaTileset = rutaTileset;
 			this->sizeXtiles = sizeXtiles;
 			this->sizeYtiles = sizeYtiles;
@@ -67,11 +62,29 @@ public:
 			tiles.resize(sizeYtiles + 1);
 			for (int i = 0; i <= sizeYtiles; i++)
 				tiles[i].resize(sizeXtiles + 1);
+
+			this->tileWidth = tileWidth;
+			this->tileHeight = tileHeight;
+			scaleXtile = scaleYtile = 1;
 		}
 
-		void addTile(int posX, int posY, int srcPosX, int srcPosY, int tileWidth, int tileHeight, int dstPosX, int dstPosY){
-			Tile *tile = new Tile(srcPosX, srcPosY, tileWidth, tileHeight, dstPosX, dstPosY);
+		void addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY){
+			Tile *tile = new Tile(srcPosX, srcPosY, dstPosX, dstPosY);
 			tiles[posY][posX] = tile;
+		}
+
+		void render(VideoManager* videoManager){
+			for (int j = 0; j < sizeYtiles; j++) {
+				for (int i = 0; i < sizeXtiles; i++) {
+					if (tiles[j][i] != NULL){
+						int srcPosXtile = tiles[j][i]->getSrcPosX();
+						int srcPosYtile = tiles[j][i]->getSrcPosY();
+						int dstPosXtile = tiles[j][i]->getDstPosX();
+						int dstPosYtile = tiles[j][i]->getDstPosY();
+						videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight, scaleXtile, scaleYtile, dstPosXtile, dstPosYtile, 0, 0, 0);
+					}
+				}
+			}
 		}
 
 		string getRutaTileset(){
@@ -90,6 +103,11 @@ public:
 			return tiles;
 		}
 
+		void setScaleTiles(float x, float y){
+			scaleXtile = x;
+			scaleYtile = y;
+		}
+
 		void setIdImg(int id){
 			idImg = id;
 		}
@@ -103,10 +121,14 @@ public:
 		}
 
 	private:
+		// TILESET.
 		string rutaTileset;
-		int sizeXtiles;
-		int sizeYtiles;
 		int idImg;
+
+		// TILES.
+		int tileWidth, tileHeight;
+		float scaleXtile, scaleYtile;
+		int sizeXtiles, sizeYtiles;
 		vector <vector<Tile*> > tiles;
 	};
 
@@ -132,7 +154,6 @@ private:
 	int x, y; // Posicions del vector de vectors 'mapa'.
 	int widthMap, heightMap;
 	int tileSize;
-
 };
 
 #endif

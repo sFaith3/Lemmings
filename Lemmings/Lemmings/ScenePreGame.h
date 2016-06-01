@@ -35,6 +35,7 @@ public:
 	~ScenePreGame();
 
 	void init();
+	void clear();
 	void update();
 	void render();
 

@@ -27,8 +27,10 @@ private:
 	// Paràmetres de l'escena on s'informa sobre la missió.
 	int numLemmings;
 	int lemmingsToSave;
-	int lemmingsSaved;
 	string tempsRestant, releaseRate;
+
+	int lemmingsEnJoc;
+	int lemmingsSaved;
 
 	DoorEnter* enterDoor;
 	ElementGame* exitDoor;
@@ -50,6 +52,7 @@ public:
 	void initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string temps, string rateSpeed);
 
 	void init();
+	void clear();
 	void update();
 	void render();
 };

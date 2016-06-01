@@ -55,21 +55,21 @@ void Timer::update(){
 			if (diferenciaTemps > 0){
 				if (segonNumSegons > 0){
 					segonNumSegons--;
-					nums.back()->Update(segonNumSegons);
+					nums.back()->ChangeValue(segonNumSegons);
 				}
 				else if (primerNumSegons > 0){
 					primerNumSegons--;
 					segonNumSegons = 9;
-					nums[1]->Update(primerNumSegons);
-					nums.back()->Update(segonNumSegons);
+					nums[1]->ChangeValue(primerNumSegons);
+					nums.back()->ChangeValue(segonNumSegons);
 				}
 				else{
 					minuts--;
 					primerNumSegons = 9;
 					segonNumSegons = 9;
-					nums[0]->Update(minuts);
-					nums[1]->Update(primerNumSegons);
-					nums.back()->Update(segonNumSegons);
+					nums[0]->ChangeValue(minuts);
+					nums[1]->ChangeValue(primerNumSegons);
+					nums.back()->ChangeValue(segonNumSegons);
 				}
 			}
 		}

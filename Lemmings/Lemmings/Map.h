@@ -28,12 +28,15 @@ public:
 	void init(int x, int y, bool mapTmx, const char* fileMap, const char* layerCollision, int numLayers, const char* rutaTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
 	void render();
 
-	int GetMapa(int x, int y);
-	void DestroyPosMapa(int x, int y);
-	void CrearPosMapa(int x, int y, int tipo);
-
 	int GetWidthMap();
 	int GetHeightMap();
 	int GetSizeTile();
+
+	void SetPositionTiles(int x, int y);
+	void SetScaleTiles(float x, float y);
+
+	int GetMapa(int x, int y);
+	void DestroyPosMapa(int x, int y);
+	void CrearPosMapa(int x, int y, int tipo);
 };
 

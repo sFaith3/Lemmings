@@ -21,3 +21,7 @@ void Scene::update(){
 
 void Scene::render(){
 }
+
+
+void Scene::clear(){
+}
