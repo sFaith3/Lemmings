@@ -13,23 +13,30 @@ Lemming::~Lemming(){
 
 void Lemming::init(int x, int y, int xMapa, int yMapa){
 	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
-	this->limitX = 8;
-	estat = FALL;
+	posXmapa = xMapa;
+	posYmapa = yMapa;
 	pintW = 20;
 	pintH = 20;
+
+	this->limitX = 8;
+	
+	estat = FALL;
 	dir = 0;
-	flipType = SDL_FLIP_NONE;
+	
+	maxCaure = 0;
 	tempsMax = 4;
+	
 	desplasament = 1;
 	paraigues = false;
 	escalar = false;
 	mortInicial = false;
 	mortFinal = false;
 	explotaContador = false;
-	maxCaure = 0;
+	tempsLvl = 0;
 
-	posXmapa = xMapa;
-	posYmapa = yMapa;
+	rescatat = false;
+
+	flipType = SDL_FLIP_NONE;	
 }
 
 void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){ //Es pot optimitzar codi. Com l'if pel SetCaure().
@@ -145,13 +152,18 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){ //Es
 		break;
 	case OPENUMBRELLA:
 	
-
 		break;
 	case NOSTAIR:
 
 		break;
 	case ENDCLIMB:
 
+		break;
+	case RESCUED:
+		if (!rescatat){
+			if (contImatges == numImatges)
+				rescatat = true;
+		}
 		break;
 	case EXPLODING:
 		if (contImatges == numImatges){
@@ -186,6 +198,10 @@ bool Lemming::GetMort(){
 
 bool Lemming::GetContExplotar(){
 	return explotaContador;
+}
+
+bool Lemming::GetRescatat(){
+	return rescatat;
 }
 
 bool Lemming::CursorOnLemming(){
@@ -362,6 +378,13 @@ void Lemming::SetFinalEscalar(){
 void Lemming::SetContadorTemps(int temps){
 	explotaContador = true;
 	tempsLvl = temps;
+}
+
+void Lemming::SetRescatar(){
+	estat = RESCUED;
+	numImatges = 2; //
+	srcPosX = _srcPosX = 0; //
+	srcPosY = 0; //
 }
 
 void Lemming::SetExplotar(){

@@ -24,6 +24,7 @@ public:
 	static FileManager* getInstanceFile();
 
 	void Read(const char* file);
+	void Read(const char* file, int line);
 
 	int CheckFile(fstream reader);
 	int ReadContents(vector<string> &words, fstream &in);

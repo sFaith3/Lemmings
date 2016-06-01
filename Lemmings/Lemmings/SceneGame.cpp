@@ -11,7 +11,7 @@ SceneGame::SceneGame(){
 	numLemmings = lemmingsToSave = 0;
 	tempsRestant = releaseRate = "";
 
-	lemmingsEnJoc = lemmingsSaved = 0;
+	lemmingsMorts = lemmingsSaved = 0;
 
 	exitDoor = new ElementGame();
 
@@ -43,7 +43,7 @@ void SceneGame::initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, 
 }
 
 void SceneGame::init(){
-	mapa->SetPositionTiles(-245, 0);
+	mapa->SetPositionTiles(-475, 22);
 	mapa->SetScaleTiles(1, 1);
 
 	// Inicialització de les portes del joc. Punt de respawn i de sortida dels lemmings.
@@ -53,7 +53,7 @@ void SceneGame::init(){
 	//Fer getter del tmx per a obtenir el nombre d'usos que tindrà cada habilitat en aquest mapa.*******
 	currAction = actions->init(1, 1, releaseRate, "10", "10", "10", "10", "10", "10", "10", "10");
 
-	temps = new Timer(250, 260, tempsRestant);
+	temps = new Timer(250, 260, /*tempsRestant*/ "0:10");
 	temps->start();
 
 	audioManager->playMusic(idMusic, -1);
@@ -124,7 +124,7 @@ void SceneGame::update(){
 		if (!cursorChanged && (*itLem)->CursorOnLemming())
 			cursorChanged = true;
 
-		if (inputManager->CheckClick()){
+		if (inputManager->CheckClickLeft()){
 			int numUsos = actions->GetNumberUsesSkill(currAction);
 			if ((*itLem)->SetSkill(numUsos, currAction, temps->getTime())){
 				actions->DetractUseSkill(currAction);
@@ -132,34 +132,39 @@ void SceneGame::update(){
 			}
 		}
 
-		//***
-		// Esborrar lemming si surt per la porta i sumar-lo a la variable de lemmings rescatats.
-		if ((*itLem)->GetEstat() != (*itLem)->EXIT){
+		// Si el Lemming surt per la porta.
+		if ((*itLem)->GetEstat() != (*itLem)->RESCUED){
 			if (mapa->GetPosX() + x1 > (exitDoor->GetPosX() / mapa->GetSizeTile()) + 31 && mapa->GetPosX() + x2 < ((exitDoor->GetPosX() + exitDoor->GetWidth()) / mapa->GetSizeTile()) + 22 &&
 				mapa->GetPosY() + y1 >(exitDoor->GetPosY() / mapa->GetSizeTile()) + 5 && mapa->GetPosY() + y2 < exitDoor->GetPosY() + exitDoor->GetHeight()){
-				//El lemming passa a l'estat de sortida per la porta.
-				cout << "Lemming sortint\n";
+				(*itLem)->SetRescatar();
 			}
 		}
-		// If el lemming ha completat l'animació de caminar cap a la porta. Get del bool que indica això.
-		//Lemming s'esborra.
-		//lemmingsSaved++;
-		//updateNumeroLemSaved();
-		//if(lemmingsSaved >= lemmingsToSaved) Es va a ScenePostGame on t'informa de la partida.
-		//***
 
-		//Esborrar lemming si surt del mapa o si mor.
+		// ESBORRAR LEMMINGS.
+
+		// Si el lemming ha completat l'animació de caminar cap a la porta, s'esborra i incrementa el número de Lemmings salvats.
+		if ((*itLem)->GetRescatat()){
+			lemmings.erase(itLem);
+			itLem = lemmings.begin();
+			lemmingsSaved++;
+			//updateNumeroLemSaved();
+		}
+		
+		// Si surten del mapa o moren.
 		if ((mapa->GetPosX() + x1 < mapa->GetPosX() || mapa->GetPosX() + x2 > mapa->GetPosX() + mapa->GetWidthMap() || mapa->GetPosY() + y2 > mapa->GetPosY() + mapa->GetHeightMap())
 			|| (*itLem)->GetMort()){
 			lemmings.erase(itLem);
-			//updateNumeroLemEnJoc();
-			if (lemmings.size() == 0){
-				//if ((lemmingsEnJoc + lemmingsSaved) >= numLemmings){
-					// Passar dades a ScenePostGame i carregar-la.
-				//}
-				break;
-			}
 			itLem = lemmings.begin();
+			lemmingsMorts++;
+			//updateNumeroLemEnJoc();
+		}
+			
+		if (lemmings.size() == 0){
+			if ((lemmingsSaved + lemmingsMorts) == numLemmings){
+				// Passar info necessària ScenePostGame.*
+				smManager->changeScene(smManager->POST_GAME);
+			}
+			break;
 		}
 
 		if ((*itLem)->GetEstat() == (*itLem)->STOP && mapa->GetMapa(x1, y2 - 1) == 0 && mapa->GetMapa(x2 + 1, y2 - 1) == 0){
@@ -190,6 +195,11 @@ void SceneGame::update(){
 		cursor->ChangeCursor();
 
 	cursor->Update();
+
+	if (temps->getTempsOut()){
+		// Passar info necessària ScenePostGame.*
+		smManager->changeScene(smManager->POST_GAME);
+	}
 
 	// EXIT TO THE MAIN MENU.
 	if (inputManager->CheckESC()){

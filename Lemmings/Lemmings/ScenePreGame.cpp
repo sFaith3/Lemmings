@@ -4,11 +4,11 @@
 ScenePreGame::ScenePreGame(){
 	fileManager = FileManager::getInstanceFile();
 
+	level = 1;
 	nameLvl = numLemmings = lemmingsToSave = releaseRate = timeLvl = rating = "";
 
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/PreGame/_mision.png", 0, 0, 809, 446, 1, 1);
-	fons->SetScale(0.75, 0.75); //
+	fons->init(0, 0, "Assets/Images/InfoScene/PreGame/infoMision.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
 
 	sGame = SceneGame::getInstanceSceneGame();
 
@@ -24,14 +24,15 @@ ScenePreGame::~ScenePreGame(){
 void ScenePreGame::init(){
 	inputManager->SetCursorRelative(true);
 
-	level = 1;
-
-	string nomFile = "Assets/Levels/PreGame/level";
+	string nomFile = "Assets/Levels/levels.txt";
 	string rutaMapa = "Assets/Levels/";
 	string rutaTilesets = "Assets/Levels/";
 	switch (level){
 	case 1:
-		nomFile += "1.txt";
+		rutaMapa += "lvl01/lvl01.tmx";
+		rutaTilesets += "lvl01/";
+		break;
+	case 2:
 		rutaMapa += "lvl01/lvl01.tmx";
 		rutaTilesets += "lvl01/";
 		break;
@@ -40,7 +41,7 @@ void ScenePreGame::init(){
 	const char* _rutaMapa = rutaMapa.c_str();
 	const char* _rutaTilesets = rutaTilesets.c_str();
 
-	fileManager->Read(_nomFile);
+	fileManager->Read(_nomFile, 2);
 
 	nameLvl = fileManager->GetValueFromData("name");
 	numLemmings = fileManager->GetValueFromData("numberLemmings");
@@ -48,12 +49,20 @@ void ScenePreGame::init(){
 	timeLvl = fileManager->GetValueFromData("time");
 	releaseRate = fileManager->GetValueFromData("releaseRate");
 
+	int xDigit = 95;
+	int yDigit = 83;
+	float scaleX, scaleY;
+	scaleX = 0.75;
+	scaleY = 1;
+	digits.push_back(new ABCsAlphaNum());
+	digits.back()->init(xDigit, yDigit, scaleX, scaleY, level);
 	// NAME LVL.
-	int xDigit = 40;
-	int yDigit = 100;
+	xDigit += 55;
+	scaleX = 0.75;
+	scaleY = 1;
 	for (int i = 0; i < nameLvl.length(); i++){
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, nameLvl[i]);
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, nameLvl[i]);
 		if (nameLvl[i] != '_')
 			xDigit += 20;
 		else
@@ -61,8 +70,8 @@ void ScenePreGame::init(){
 	}
 	// NUMBER LEMMINGS.
 	int numLem = 0;
-	xDigit = 60;
-	yDigit = 225;
+	xDigit = 465;
+	yDigit = 127;
 	for (int i = 0; i < numLemmings.length(); i++){
 		if (i == 0)
 			numLem += ((int)numLemmings[i] - 48) * 10;
@@ -71,13 +80,13 @@ void ScenePreGame::init(){
 
 		int num = (int)numLemmings[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, num);
-		xDigit += 20;
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
+		xDigit += 18;
 	}
 	// LEMMINGS TO SAVE.
 	int lemToSave = 0;
-	xDigit = 60;
-	yDigit = 250;
+	xDigit = 158;
+	yDigit += 30;
 	for (int i = 0; i < lemmingsToSave.length(); i++){
 		if (i == 0)
 			lemToSave += ((int)lemmingsToSave[i] - 48) * 10;
@@ -86,40 +95,39 @@ void ScenePreGame::init(){
 
 		int num = (int)lemmingsToSave[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, num);
-		xDigit += 20;
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
+		xDigit += 18;
 	}
 	// TIME.
-	xDigit = 80;
-	yDigit = 275;
-	int num = (int)timeLvl[0] - 48;
-	digits.push_back(new ABCsAlphaNum());
-	digits.back()->init(xDigit, yDigit, 1, 1, num);
-	// RELEASE RATE.
-	xDigit = 80;
-	yDigit = 300;
+	xDigit = 370;
+	yDigit += 30;
 	for (int i = 0; i < releaseRate.length(); i++){
 		int num = (int)releaseRate[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, num);
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 		xDigit += 20;
 	}
+	// RELEASE RATE.
+	xDigit = 240;
+	yDigit += 30;
+	int num = (int)timeLvl[0] - 48;
+	digits.push_back(new ABCsAlphaNum());
+	digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 	// RATING.
 	xDigit = 80;
-	yDigit = 325;
+	yDigit += 30;
 	for (int i = 0; i < rating.length(); i++){
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, rating[i]);
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, rating[i]);
 		xDigit += 20;
 	}
-	float scaleX = 0.5f;
-	float scaleY = 0.5f;
+	scaleX = scaleY = 0.33666;
 	mapa = new Map();
 	mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // Iniciar les posiciones que es volen a SceneGame.
 
 	sGame->initFromPreGame(mapa, numLem, lemToSave, timeLvl, releaseRate);
 
-	mapa->SetPositionTiles(245, 0);
+	mapa->SetPositionTiles(475, -22);
 	mapa->SetScaleTiles(scaleX, scaleY);
 }
 
@@ -129,8 +137,13 @@ void ScenePreGame::clear(){
 }
 
 void ScenePreGame::update(){
-	if (inputManager->CheckClick() || inputManager->CheckEnter())
+	if (inputManager->CheckClickLeft() || inputManager->CheckClickRight()){
+		inputManager->ResetClick();
 		smManager->changeScene(smManager->GAME);
+	}
+	else if (inputManager->CheckEnter()){
+		smManager->changeScene(smManager->GAME);
+	}
 	else if (inputManager->CheckESC()){
 		inputManager->ResetESC();
 		inputManager->SetCursorRelative(false);

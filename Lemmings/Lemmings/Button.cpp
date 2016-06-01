@@ -34,13 +34,15 @@ void Button::init(int _id, int _posX, int _posY, int _width, int _height, float 
 
 
 bool Button::update(){
-	if (inputManager->CheckClick()){
+	if (inputManager->CheckClickLeft()){
 		int mouseX, mouseY;
 		inputManager->GetMouseXY(mouseX, mouseY);
 		if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height)){
 			//pressed = true;
 			return true;
 		}
+		else
+			inputManager->ResetClick();
 	}
 	return false;
 }

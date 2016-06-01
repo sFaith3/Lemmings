@@ -29,7 +29,7 @@ private:
 	int lemmingsToSave;
 	string tempsRestant, releaseRate;
 
-	int lemmingsEnJoc;
+	int lemmingsMorts;
 	int lemmingsSaved;
 
 	DoorEnter* enterDoor;

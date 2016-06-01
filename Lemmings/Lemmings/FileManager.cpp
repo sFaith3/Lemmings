@@ -82,6 +82,71 @@ void FileManager::Read(const char* name){
 		cout << "Unable to open the file '" << name << "'!" << endl;
 }
 
+void FileManager::Read(const char* name, int line){
+	data.clear();
+
+	fstream reader;
+	reader.open(name, ios::in);
+	if (reader.is_open()){
+		cout << "The file '" << name << "' has opened succesfully!" << endl;
+
+		int i = 0;
+		int pos = 0;
+		string linia = "";
+
+		for (int i = 0; i < line; i++){
+			while (getline(reader, linia, '\n')){
+				if (i == line - 1){
+					map<string, string> dataFile;
+					dataFile.clear();
+
+					bool readedFile = false;
+					while (!readedFile){
+						while (linia[i] != ' '){
+							if (i >= linia.length() - 1){
+								readedFile = true;
+								break;
+							}
+							i++;
+						}
+						pos = i + 1;
+
+						while (linia[i] != '='){
+							if (i >= linia.length() - 1){
+								readedFile = true;
+								break;
+							}
+							i++;
+						}
+						string key = linia.substr(pos, i - pos);
+						pos = i + 2;
+
+						while (linia[i] != ' '){
+							if (i >= linia.length() - 1){
+								readedFile = true;
+								break;
+							}
+							i++;
+							if (linia[i] == '>'){
+								readedFile = true;
+								break;
+							}
+						}
+						i--;
+						string value = linia.substr(pos, i - pos);
+
+						dataFile.insert(pair<string, string>(key, value));
+					}
+					data.push_back(dataFile);
+				}
+			}
+		}
+		reader.close();
+	}
+	else
+		cout << "Unable to open the file '" << name << "'!" << endl;
+}
+
 
 int FileManager::CheckFile(fstream reader){
 	reader.seekg(0, reader.end); // De la posició inicial zero, considerant el 0 com la posició on es troba el punter fstream, cap a l'última dada del fitxer.
@@ -113,5 +178,5 @@ string FileManager::GetValueFromData(string key){
 		}
 	}
 
-	return NULL;
+	return "";
 }

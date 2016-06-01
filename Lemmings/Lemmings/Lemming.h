@@ -7,22 +7,29 @@ class Lemming :
 	public ElementGame
 {
 private:
+	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
+	int pintW, pintH;
+
 	int limitX;
+
 	int estat;
 	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
+
 	int maxCaure;
-	SDL_RendererFlip flipType;
-	int tempsMax; // conta enrere de 5s
-	int tempsLvl; // temps restant de la partida
+	int tempsMax; // compte enrere de 5s.
+	
 	int desplasament;
 	bool paraigues;
 	bool escalar;
 	bool mortInicial;
 	bool mortFinal;
 	bool explotaContador;
-	int pintW, pintH;
-	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
+	int tempsLvl; // temps restant de la partida.
+
+	bool rescatat;
 	
+	SDL_RendererFlip flipType;
+
 	InputManager* inputManager;
 
 public:
@@ -50,11 +57,14 @@ public:
 	*/
 	enum EstatsEnum{
 		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION, 
-		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, EXPLODING, EXIT
+		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, RESCUED, EXPLODING
 	};
+
 	int GetEstat();
 	bool GetMort();
 	bool GetContExplotar();
+	bool GetRescatat();
+
 	// Sets per canviar l'Estat 
 	void SetMoure();   
 	void SetCaure();   
@@ -73,6 +83,7 @@ public:
 	void SetFinalEscalar(); 
 	void SetMortCaure(); 
 	void SetContadorTemps(int temps);
+	void SetRescatar();
 
 	// Estats temporals 
 	void Moure();

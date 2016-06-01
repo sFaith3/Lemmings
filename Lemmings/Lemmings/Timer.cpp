@@ -17,7 +17,7 @@ Timer::Timer(int x, int y, string tempsRestant){
 	minuts = tempsRestant[0] - 48;
 	primerNumSegons = tempsRestant[2] - 48;
 	segonNumSegons = tempsRestant[3] - 48;
-	this->tempsRestant = (minuts * 60) + primerNumSegons + segonNumSegons;
+	this->tempsRestant = ((minuts * 60) + primerNumSegons + segonNumSegons);
 	int xNum, yNum;
 	xNum = x + 150;
 	yNum = y;
@@ -56,6 +56,8 @@ void Timer::update(){
 				if (segonNumSegons > 0){
 					segonNumSegons--;
 					nums.back()->ChangeValue(segonNumSegons);
+					if (minuts == 0 && primerNumSegons == 0 && segonNumSegons == 0)
+						tempsOut = true;
 				}
 				else if (primerNumSegons > 0){
 					primerNumSegons--;
@@ -73,8 +75,6 @@ void Timer::update(){
 				}
 			}
 		}
-		else
-			tempsOut = true;
 	}
 }
 

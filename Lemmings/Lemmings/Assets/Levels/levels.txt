@@ -1,0 +1,2 @@
+<level name="Just_Dig!" numberLemmings="20" lemmingsToSave="20" time="3" releaseRate="40" code="AHEFUMOCUR">
+<level name="123" numberLemmings="20" lemmingsToSave="20" time="5" releaseRate="40" code="AHEFUMOCUR">

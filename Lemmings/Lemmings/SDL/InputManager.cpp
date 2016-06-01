@@ -9,7 +9,8 @@ InputManager::InputManager(){
 	esc = false;
 	back = false;
 	pause = false;
-	click = false;
+	clickLeft = false;
+	clickRight = false;
 	enter = false;
 }
 
@@ -40,9 +41,6 @@ void InputManager::Update(){
 			case SDL_SCANCODE_ESCAPE:
 				esc = true;
 				break;
-			/*case SDL_SCANCODE_:
-				enter = true;
-				break;*/
 			case SDL_SCANCODE_0:
 				number = ZERO;
 				break;
@@ -73,6 +71,9 @@ void InputManager::Update(){
 			case SDL_SCANCODE_9:
 				number = NINE;
 				break;
+			/*case SDL_SCANCODE_:
+				enter = true;
+				break;*/
 			default:
 				break;
 			}
@@ -80,9 +81,6 @@ void InputManager::Update(){
 		case SDL_KEYUP:
 			tecla = test_event.key.keysym.scancode;
 			switch (tecla){
-			/*case SDL_SCANCODE_:
-				enter = false;
-				break;*/
 			case SDL_SCANCODE_0:
 			case SDL_SCANCODE_1:
 			case SDL_SCANCODE_2:
@@ -95,6 +93,9 @@ void InputManager::Update(){
 			case SDL_SCANCODE_9:
 				number = -1;
 				break;
+			/*case SDL_SCANCODE_:
+				enter = false;
+				break;*/
 			default:
 				break;
 			}
@@ -103,10 +104,16 @@ void InputManager::Update(){
 			quit = true;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			click = true;
+			if (test_event.button.button == SDL_BUTTON_LEFT)
+				clickLeft = true;
+			else
+				clickRight = true;
 			break;
 		case SDL_MOUSEBUTTONUP:
-			click = false;
+			if (test_event.button.button == SDL_BUTTON_LEFT)
+				clickLeft = false;
+			else
+				clickRight = false;
 			break;
 		}
 	}
@@ -141,11 +148,12 @@ bool InputManager::CheckPause(){
 	return pause;
 }
 
-bool InputManager::CheckClick(){
-	if (click){
-		return true;
-	}
-	return false;
+bool InputManager::CheckClickLeft(){
+	return clickLeft;
+}
+
+bool InputManager::CheckClickRight(){
+	return clickRight;
 }
 
 bool InputManager::CheckEnter(){
@@ -162,8 +170,10 @@ void InputManager::ResetESC(){
 }
 
 void InputManager::ResetClick(){
-	if (click)
-		click = false;
+	if (clickLeft)
+		clickLeft = false;
+	if (clickRight)
+		clickRight = false;
 }
 
 

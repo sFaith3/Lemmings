@@ -15,7 +15,7 @@ private:
 	bool esc;
 	bool back;
 	bool pause;
-	bool click;
+	bool clickLeft, clickRight;
 	bool enter;
 
 public:
@@ -34,7 +34,8 @@ public:
 	bool CheckESC();
 	bool CheckBack();
 	bool CheckPause();
-	bool CheckClick();
+	bool CheckClickLeft();
+	bool CheckClickRight();
 	bool CheckEnter();
 
 	void ResetNumber();
