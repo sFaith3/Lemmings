@@ -1,5 +1,6 @@
-#pragma once
-#include "Scene.h"
+#ifndef SCENEPREGAME_H
+#define SCENEPREGAME_H
+
 #include "FileManager.h"
 #include "ABCsAlphaNum.h"
 #include "SceneManager.h"
@@ -9,6 +10,10 @@ class ScenePreGame :
 	public Scene
 {
 private:
+	ScenePreGame();
+
+	static ScenePreGame* gInstance; /*!<	Singleton instance*/
+
 	int level;
 	string nameLvl;
 	string numLemmings;
@@ -31,8 +36,10 @@ private:
 	SceneManager* smManager;
 
 public:
-	ScenePreGame();
 	~ScenePreGame();
+
+	//! Gets Singleton instance.
+	static ScenePreGame* getInstanceScenePreGame();
 
 	void init();
 	void clear();
@@ -44,3 +51,4 @@ public:
 	void IncrementLevel();
 };
 
+#endif

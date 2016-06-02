@@ -33,49 +33,50 @@ void FileManager::Read(const char* name){
 		int i = 0;
 		int pos = 0;
 		string linia = "";
-		while (getline(reader, linia, '\n')){
-			map<string, string> dataFile;
-			dataFile.clear();
 
-			bool readedFile = false;
-			while (!readedFile){
-				while (linia[i] != ' '){
-					if (i >= linia.length() - 1){
-						readedFile = true;
-						break;
-					}
-					i++;
+		getline(reader, linia, '\n');
+		map<string, string> dataFile;
+		dataFile.clear();
+
+		bool readedFile = false;
+		while (!readedFile){
+			while (linia[i] != ' '){
+				if (i >= linia.length() - 1){
+					readedFile = true;
+					break;
 				}
-				pos = i + 1;
-
-				while (linia[i] != '='){
-					if (i >= linia.length() - 1){
-						readedFile = true;
-						break;
-					}
-					i++;
-				}
-				string key = linia.substr(pos, i - pos);
-				pos = i + 2;
-
-				while (linia[i] != ' '){
-					if (i >= linia.length() - 1){
-						readedFile = true;
-						break;
-					}
-					i++;
-					if (linia[i] == '>'){
-						readedFile = true;
-						break;
-					}
-				}
-				i--;
-				string value = linia.substr(pos, i - pos);
-
-				dataFile.insert(pair<string, string>(key, value));
+				i++;
 			}
-			data.push_back(dataFile);
+			pos = i + 1;
+
+			while (linia[i] != '='){
+				if (i >= linia.length() - 1){
+					readedFile = true;
+					break;
+				}
+				i++;
+			}
+			string key = linia.substr(pos, i - pos);
+			pos = i + 2;
+
+			while (linia[i] != ' '){
+				if (i >= linia.length() - 1){
+					readedFile = true;
+					break;
+				}
+				i++;
+				if (linia[i] == '>'){
+					readedFile = true;
+					break;
+				}
+			}
+			i--;
+
+			string value = linia.substr(pos, i - pos);
+			dataFile.insert(pair<string, string>(key, value));
 		}
+		data.push_back(dataFile);
+
 		reader.close();
 	}
 	else

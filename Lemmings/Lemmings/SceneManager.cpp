@@ -5,6 +5,8 @@
 #include "ScenePreGame.h"
 #include "SceneGame.h"
 #include "ScenePostGame.h"
+#include "SingletonManager.h"
+
 
 SceneManager* SceneManager::smInstance = NULL;
 
@@ -28,11 +30,11 @@ SceneManager* SceneManager::getInstanceSM(){
 void SceneManager::init(){
 	mVectorScenes.clear();
 
-	mVectorScenes.push_back(new SceneMenu());
-	mVectorScenes.push_back(new SceneCodeLevel());
-	mVectorScenes.push_back(new ScenePreGame());
+	mVectorScenes.push_back(SceneMenu::getInstanceSceneMenu());
+	mVectorScenes.push_back(SceneCodeLevel::getInstanceSceneCodeLevel());
+	mVectorScenes.push_back(ScenePreGame::getInstanceScenePreGame());
 	mVectorScenes.push_back(SceneGame::getInstanceSceneGame());
-	mVectorScenes.push_back(new ScenePostGame());
+	mVectorScenes.push_back(ScenePostGame::getInstanceScenePostGame());
 
 	mCurrScene = MENU;
 	mVectorScenes[mCurrScene]->init();

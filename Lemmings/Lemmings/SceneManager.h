@@ -3,7 +3,6 @@
 
 #include "Utils.h"
 #include "Scene.h"
-#include "SingletonManager.h"
 
 //#define _LASTSCENE
 

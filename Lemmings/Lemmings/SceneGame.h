@@ -1,6 +1,7 @@
-#pragma once
-#include "Scene.h"
-#include "Utils.h"
+#ifndef SCENEGAME_H
+#define SCENEGAME_H
+
+//#include "Utils.h"
 #include "Lemming.h"
 #include "Map.h"
 #include "Actions.h"
@@ -8,6 +9,7 @@
 #include "Cursor.h"
 #include "DoorEnter.h"
 #include "Timer.h"
+#include "ScenePostGame.h"
 
 class SceneGame :
 	public Scene
@@ -16,6 +18,10 @@ private:
 	SceneGame();
 
 	static SceneGame* gInstance; /*!<	Singleton instance*/
+
+	bool mutejarSo;
+
+	bool pausa;
 
 	Map* mapa;
 
@@ -32,6 +38,8 @@ private:
 	int lemmingsMorts;
 	int lemmingsSaved;
 
+	bool gameFinish;
+
 	DoorEnter* enterDoor;
 	ElementGame* exitDoor;
 
@@ -40,6 +48,8 @@ private:
 	
 	bool cursorChanged;
 	Cursor* cursor;
+
+	ScenePostGame* sPostGame;
 
 	SceneManager* smManager;
 
@@ -55,4 +65,8 @@ public:
 	void clear();
 	void update();
 	void render();
+
+	void setMuteigSo(bool mute);
 };
+
+#endif

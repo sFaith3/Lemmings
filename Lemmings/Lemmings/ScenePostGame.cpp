@@ -1,16 +1,16 @@
 #include "ScenePostGame.h"
 
 
+ScenePostGame* ScenePostGame::gInstance = NULL;
+
 ScenePostGame::ScenePostGame(){
 	fileManager = FileManager::getInstanceFile();
 
-	lemmingsSaved = lemmingsToSave = codeLvl = "";
+	winGame = false;
+	lemmingsSaved = lemmingsToSave = "";
 
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", 0, 0, 809, 446, 1, 1);
-	fons->SetScale(0.75, 0.75); //
-
-	sGame = SceneGame::getInstanceSceneGame();
+	fons->SetScale(0.75, 0.75);//
 
 	smManager = SceneManager::getInstanceSM();
 }
@@ -21,68 +21,67 @@ ScenePostGame::~ScenePostGame(){
 }
 
 
+ScenePostGame* ScenePostGame::getInstanceScenePostGame(){
+	if (gInstance == NULL)
+		gInstance = new ScenePostGame();
+
+	return gInstance;
+}
+
+
+void ScenePostGame::initFromGame(int lemmingsSaved, int lemmingsToSave){
+	this->lemmingsSaved = to_string(lemmingsSaved);
+	this->lemmingsToSave = to_string(lemmingsToSave);
+}
+
 void ScenePostGame::init(){
 	inputManager->SetCursorRelative(true);
 
-	string nomFile = "Assets/Levels/PreGame/level";
-	switch (level){
-	case 1:
-		nomFile += "1.txt";
-		break;
-	default:
-		nomFile += "1.txt";
-		break;
-	}
-	const char* _nomFile = nomFile.c_str();
-
-	fileManager->Read(_nomFile);
-
-	lemmingsToSave = fileManager->GetValueFromData("lemmingsToSave");
-	codeLvl = fileManager->GetValueFromData("code");
-
-	int xDigit = 60;
-	int yDigit = 225;
+	int xDigit = 0, _xDigit = 0;
+	int yDigit = 0;
+	float scaleX = 0.65;
 	int num = 0;
 
 	// NUMBER LEMMINGS.
-	int lemSaved = 0;
-	for (int i = 0; i < lemmingsSaved.length(); i++){
-		if (i == 0)
-			lemSaved += ((int)lemmingsSaved[i] - 48) * 10;
-		else
-			lemSaved += (int)lemmingsSaved[i] - 48;
-
+	xDigit = _xDigit = 475;
+	yDigit = 50;
+	for (int i = lemmingsSaved.length() - 1; i >= 0; i--){
 		num = (int)lemmingsSaved[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, num);
-		xDigit += 20;
+		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
+		xDigit -= 16;
 	}
 	// LEMMINGS TO SAVE.
-	int lemToSave = 0;
-	xDigit = 60;
-	yDigit = 250;
-	for (int i = 0; i < lemmingsToSave.length(); i++){
-		if (i == 0)
-			lemToSave += ((int)lemmingsToSave[i] - 48) * 10;
-		else
-			lemToSave += (int)lemmingsToSave[i] - 48;
+	xDigit = _xDigit;
+	yDigit += 16;
+	for (int i = lemmingsToSave.length() - 1; i >= 0; i--){
+		num = (int)lemmingsToSave[i] - 48;
+		digits.push_back(new ABCsAlphaNum());
+		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
+		xDigit -= 16;
+	}
+	//if (winGame){
+		// CODE LEVEL
+		fileManager->Read("Assets/Levels/levels.txt");
+		string codeLvl = fileManager->GetValueFromData("code");
+		xDigit = 370;
+		yDigit = 235;
+		scaleX = 0.55;
+		for (int i = 0; i < codeLvl.length(); i++){
+			digits.push_back(new ABCsAlphaNum());
+			digits.back()->init(xDigit, yDigit, scaleX, 1, codeLvl[i]);
+			xDigit += 20;
+		}
 
-		int num = (int)lemmingsToSave[i] - 48;
-		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, num);
-		xDigit += 20;
-	}
-	// RATING.
-	xDigit = 80;
-	yDigit = 325;
-	for (int i = 0; i < codeLvl.length(); i++){
-		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, 1, 1, codeLvl[i]);
-		xDigit += 20;
-	}
+		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", 0, 0, 480, 340, 1, 1);
+	//}
+	//else
+		//fons->init(0, 0, "Assets/Images/InfoScene/PostGame/lose.png", 0, 0, 480, 340, 1, 1);
 }
 
 void ScenePostGame::clear(){
+	winGame = false;
+
 	digits.clear();
 	digits.resize(0);
 }
@@ -111,4 +110,9 @@ void ScenePostGame::render(){
 	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
 		(*itDigits)->Render();
 	}
+}
+
+
+void ScenePostGame::setWinGame(){
+	winGame = true;
 }

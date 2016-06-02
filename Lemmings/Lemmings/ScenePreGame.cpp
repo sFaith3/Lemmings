@@ -1,6 +1,8 @@
 #include "ScenePreGame.h"
 
 
+ScenePreGame* ScenePreGame::gInstance = NULL;
+
 ScenePreGame::ScenePreGame(){
 	fileManager = FileManager::getInstanceFile();
 
@@ -18,6 +20,14 @@ ScenePreGame::ScenePreGame(){
 
 ScenePreGame::~ScenePreGame(){
 
+}
+
+
+ScenePreGame* ScenePreGame::getInstanceScenePreGame(){
+	if (gInstance == NULL)
+		gInstance = new ScenePreGame();
+
+	return gInstance;
 }
 
 
@@ -103,10 +113,6 @@ void ScenePreGame::init(){
 	yDigit += 30;
 	int num = 0;
 	for (int i = 0; i < releaseRate.length(); i++){
-		if (i == 0)
-			lemToSave += ((int)releaseRate[i] - 48) * 10;
-		else
-			lemToSave += (int)releaseRate[i] - 48;
 		int num = (int)releaseRate[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
 		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
