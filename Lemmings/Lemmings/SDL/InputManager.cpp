@@ -71,9 +71,9 @@ void InputManager::Update(){
 			case SDL_SCANCODE_9:
 				number = NINE;
 				break;
-			/*case SDL_SCANCODE_:
-				enter = true;
-				break;*/
+				/*case SDL_SCANCODE_:
+					enter = true;
+					break;*/
 			default:
 				break;
 			}
@@ -93,9 +93,9 @@ void InputManager::Update(){
 			case SDL_SCANCODE_9:
 				number = -1;
 				break;
-			/*case SDL_SCANCODE_:
-				enter = false;
-				break;*/
+				/*case SDL_SCANCODE_:
+					enter = false;
+					break;*/
 			default:
 				break;
 			}

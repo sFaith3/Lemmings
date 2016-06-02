@@ -94,51 +94,50 @@ void FileManager::Read(const char* name, int line){
 		int pos = 0;
 		string linia = "";
 
-		for (int i = 0; i < line; i++){
-			while (getline(reader, linia, '\n')){
-				if (i == line - 1){
-					map<string, string> dataFile;
-					dataFile.clear();
+		for (int currLine = 0; currLine < line; currLine++){
+			if (currLine == line - 1){
+				getline(reader, linia, '\n');
+				map<string, string> dataFile;
+				dataFile.clear();
 
-					bool readedFile = false;
-					while (!readedFile){
-						while (linia[i] != ' '){
-							if (i >= linia.length() - 1){
-								readedFile = true;
-								break;
-							}
-							i++;
+				bool readedFile = false;
+				while (!readedFile){
+					while (linia[i] != ' '){
+						if (i >= linia.length() - 1){
+							readedFile = true;
+							break;
 						}
-						pos = i + 1;
-
-						while (linia[i] != '='){
-							if (i >= linia.length() - 1){
-								readedFile = true;
-								break;
-							}
-							i++;
-						}
-						string key = linia.substr(pos, i - pos);
-						pos = i + 2;
-
-						while (linia[i] != ' '){
-							if (i >= linia.length() - 1){
-								readedFile = true;
-								break;
-							}
-							i++;
-							if (linia[i] == '>'){
-								readedFile = true;
-								break;
-							}
-						}
-						i--;
-						string value = linia.substr(pos, i - pos);
-
-						dataFile.insert(pair<string, string>(key, value));
+						i++;
 					}
-					data.push_back(dataFile);
+					pos = i + 1;
+
+					while (linia[i] != '='){
+						if (i >= linia.length() - 1){
+							readedFile = true;
+							break;
+						}
+						i++;
+					}
+					string key = linia.substr(pos, i - pos);
+					pos = i + 2;
+
+					while (linia[i] != ' '){
+						if (i >= linia.length() - 1){
+							readedFile = true;
+							break;
+						}
+						i++;
+						if (linia[i] == '>'){
+							readedFile = true;
+							break;
+						}
+					}
+					i--;
+
+					string value = linia.substr(pos, i - pos);
+					dataFile.insert(pair<string, string>(key, value));
 				}
+				data.push_back(dataFile);
 			}
 		}
 		reader.close();

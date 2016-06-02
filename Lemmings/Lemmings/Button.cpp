@@ -41,8 +41,6 @@ bool Button::update(){
 			//pressed = true;
 			return true;
 		}
-		else
-			inputManager->ResetClick();
 	}
 	return false;
 }

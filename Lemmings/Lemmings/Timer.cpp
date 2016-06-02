@@ -53,11 +53,11 @@ void Timer::update(){
 			Uint32 diferenciaTemps = lastTime - time;
 			lastTime = time;
 			if (diferenciaTemps > 0){
-				if (segonNumSegons > 0){
+				if (minuts == 0 && primerNumSegons == 0 && segonNumSegons == 0)
+					tempsOut = true;
+				else if (segonNumSegons > 0){
 					segonNumSegons--;
 					nums.back()->ChangeValue(segonNumSegons);
-					if (minuts == 0 && primerNumSegons == 0 && segonNumSegons == 0)
-						tempsOut = true;
 				}
 				else if (primerNumSegons > 0){
 					primerNumSegons--;

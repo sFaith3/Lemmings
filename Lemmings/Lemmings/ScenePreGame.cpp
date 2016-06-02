@@ -46,8 +46,8 @@ void ScenePreGame::init(){
 	nameLvl = fileManager->GetValueFromData("name");
 	numLemmings = fileManager->GetValueFromData("numberLemmings");
 	lemmingsToSave = fileManager->GetValueFromData("lemmingsToSave");
-	timeLvl = fileManager->GetValueFromData("time");
 	releaseRate = fileManager->GetValueFromData("releaseRate");
+	timeLvl = fileManager->GetValueFromData("time");
 
 	int xDigit = 95;
 	int yDigit = 83;
@@ -98,19 +98,24 @@ void ScenePreGame::init(){
 		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 		xDigit += 18;
 	}
-	// TIME.
+	// RELEASE RATE.
 	xDigit = 370;
 	yDigit += 30;
+	int num = 0;
 	for (int i = 0; i < releaseRate.length(); i++){
+		if (i == 0)
+			lemToSave += ((int)releaseRate[i] - 48) * 10;
+		else
+			lemToSave += (int)releaseRate[i] - 48;
 		int num = (int)releaseRate[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
 		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 		xDigit += 20;
 	}
-	// RELEASE RATE.
+	// TIME.
 	xDigit = 240;
 	yDigit += 30;
-	int num = (int)timeLvl[0] - 48;
+	num = (int)timeLvl[0] - 48;
 	digits.push_back(new ABCsAlphaNum());
 	digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 	// RATING.
@@ -121,11 +126,12 @@ void ScenePreGame::init(){
 		digits.back()->init(xDigit, yDigit, scaleX, scaleY, rating[i]);
 		xDigit += 20;
 	}
+
 	scaleX = scaleY = 0.33666;
 	mapa = new Map();
 	mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // Iniciar les posiciones que es volen a SceneGame.
 
-	sGame->initFromPreGame(mapa, numLem, lemToSave, timeLvl, releaseRate);
+	sGame->initFromPreGame(mapa, numLem, lemToSave, releaseRate, timeLvl);
 
 	mapa->SetPositionTiles(475, -22);
 	mapa->SetScaleTiles(scaleX, scaleY);
@@ -141,9 +147,9 @@ void ScenePreGame::update(){
 		inputManager->ResetClick();
 		smManager->changeScene(smManager->GAME);
 	}
-	else if (inputManager->CheckEnter()){
+	/*else if (inputManager->CheckEnter()){
 		smManager->changeScene(smManager->GAME);
-	}
+	}*/
 	else if (inputManager->CheckESC()){
 		inputManager->ResetESC();
 		inputManager->SetCursorRelative(false);

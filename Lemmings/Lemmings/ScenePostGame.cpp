@@ -7,7 +7,7 @@ ScenePostGame::ScenePostGame(){
 	lemmingsSaved = lemmingsToSave = codeLvl = "";
 
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/PreGame/_mision.png", 0, 0, 809, 446, 1, 1);
+	fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", 0, 0, 809, 446, 1, 1);
 	fons->SetScale(0.75, 0.75); //
 
 	sGame = SceneGame::getInstanceSceneGame();

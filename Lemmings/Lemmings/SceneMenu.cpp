@@ -54,6 +54,7 @@ void SceneMenu::update(){
 			}
 		}
 	}
+	inputManager->ResetClick();
 
 	switch (inputManager->CheckNumber()){
 	case PLAYER:

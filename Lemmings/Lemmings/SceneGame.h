@@ -49,7 +49,7 @@ public:
 	//! Gets Singleton instance.
 	static SceneGame* getInstanceSceneGame();
 
-	void initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string temps, string rateSpeed);
+	void initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string rateSpeed, string temps);
 
 	void init();
 	void clear();

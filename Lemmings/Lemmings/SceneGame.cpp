@@ -34,7 +34,7 @@ SceneGame* SceneGame::getInstanceSceneGame(){
 }
 
 
-void SceneGame::initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string temps, string rateSpeed){
+void SceneGame::initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string rateSpeed, string temps){
 	this->mapa = mapa;
 	this->numLemmings = numLemmings;
 	this->lemmingsToSave = lemmingsToSave;
@@ -197,6 +197,7 @@ void SceneGame::update(){
 	cursor->Update();
 
 	if (temps->getTempsOut()){
+		audioManager->pauseMusic();
 		// Passar info necessària ScenePostGame.*
 		smManager->changeScene(smManager->POST_GAME);
 	}
