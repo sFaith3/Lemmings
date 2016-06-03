@@ -156,9 +156,9 @@ bool InputManager::CheckClickRight(){
 	return clickRight;
 }
 
-bool InputManager::CheckEnter(){
+/*bool InputManager::CheckEnter(){
 	return enter;
-}
+}*/
 
 
 void InputManager::ResetNumber(){

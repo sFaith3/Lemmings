@@ -1,6 +1,7 @@
+#pragma once
 #include "Utils.h"
 #include "SingletonManager.h"
-#pragma once
+
 
 class ABCsAlphaNum
 {

@@ -84,6 +84,7 @@
     <ClCompile Include="ElementHUD.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="GameStats.cpp" />
     <ClCompile Include="Lemming.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Minimap.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="ElementHUD.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="GameStats.h" />
     <ClInclude Include="Lemming.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Minimap.h" />

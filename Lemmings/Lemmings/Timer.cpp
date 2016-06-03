@@ -1,5 +1,5 @@
 #include "Timer.h"
-
+#include "SingletonManager.h"
 
 // \param tempsRestant en format "minuts : segons". Els minuts inferiors a 10 han d'anar sense el 0 davant.
 Timer::Timer(int x, int y, string tempsRestant){

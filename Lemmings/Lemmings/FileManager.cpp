@@ -96,8 +96,8 @@ void FileManager::Read(const char* name, int line){
 		string linia = "";
 
 		for (int currLine = 0; currLine < line; currLine++){
+			getline(reader, linia, '\n');
 			if (currLine == line - 1){
-				getline(reader, linia, '\n');
 				map<string, string> dataFile;
 				dataFile.clear();
 

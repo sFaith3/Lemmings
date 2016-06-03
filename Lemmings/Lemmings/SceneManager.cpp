@@ -1,12 +1,9 @@
 #include "SceneManager.h"
-
 #include "SceneMenu.h"
 #include "SceneCodeLevel.h"
 #include "ScenePreGame.h"
 #include "SceneGame.h"
 #include "ScenePostGame.h"
-#include "SingletonManager.h"
-
 
 SceneManager* SceneManager::smInstance = NULL;
 

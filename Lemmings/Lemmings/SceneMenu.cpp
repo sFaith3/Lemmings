@@ -6,14 +6,14 @@ SceneMenu* SceneMenu::gInstance = NULL;
 SceneMenu::SceneMenu(){
 	sGame = SceneGame::getInstanceSceneGame();
 
+	gameStats = GameStats::getInstanceGameStats();
+
 	smManager = SceneManager::getInstanceSM();
 
 	float scaleX = 0.65;
 	float scaleY = 0.8;
 	fons = new Background();
 	fons->init(0, 0, "Assets/Images/menu.png", 0, 0, 809, 446, scaleX, scaleY);
-
-	soJoc = false;
 
 	Button button;
 	int wButton = 132 * scaleX;
@@ -57,14 +57,13 @@ void SceneMenu::update(){
 			case PLAYER:
 				inputManager->ResetClick();
 				audioManager->pauseMusic();
-				sGame->setMuteigSo(soJoc);
 				smManager->changeScene(smManager->PRE_GAME);
 				return;
 			case NEW_LEVEL:
 
 				break;
 			case MUTE_SOUND:
-				soJoc = !soJoc;
+				gameStats->SetSound(!gameStats->GetSound());
 				break;
 			case EXIT:
 				inputManager->SetNumber(EXIT);
@@ -77,15 +76,15 @@ void SceneMenu::update(){
 	switch (inputManager->CheckNumber()){
 	case PLAYER:
 		inputManager->ResetNumber();
-		audioManager->pauseMusic();
-		sGame->setMuteigSo(soJoc);
+		audioManager->pauseMusic();;
 		smManager->changeScene(smManager->PRE_GAME);
 		break;
 	case NEW_LEVEL:
 
 		break;
 	case MUTE_SOUND:
-		soJoc = !soJoc;
+		bool soJoc = gameStats->GetSound();
+		gameStats->SetSound(!soJoc);
 		inputManager->ResetNumber();
 		break;
 	}

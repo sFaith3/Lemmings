@@ -1,15 +1,15 @@
 #ifndef SCENEGAME_H
 #define SCENEGAME_H
 
-//#include "Utils.h"
+#include "Utils.h"
+#include "SceneManager.h"
+#include "ScenePostGame.h"
 #include "Lemming.h"
 #include "Map.h"
 #include "Actions.h"
-#include "SceneManager.h"
 #include "Cursor.h"
 #include "DoorEnter.h"
 #include "Timer.h"
-#include "ScenePostGame.h"
 
 class SceneGame :
 	public Scene
@@ -18,10 +18,6 @@ private:
 	SceneGame();
 
 	static SceneGame* gInstance; /*!<	Singleton instance*/
-
-	bool mutejarSo;
-
-	bool pausa;
 
 	Map* mapa;
 
@@ -51,6 +47,8 @@ private:
 
 	ScenePostGame* sPostGame;
 
+	GameStats* gameStats;
+
 	SceneManager* smManager;
 
 public:
@@ -65,8 +63,6 @@ public:
 	void clear();
 	void update();
 	void render();
-
-	void setMuteigSo(bool mute);
 };
 
 #endif

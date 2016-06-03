@@ -6,13 +6,14 @@ ScenePreGame* ScenePreGame::gInstance = NULL;
 ScenePreGame::ScenePreGame(){
 	fileManager = FileManager::getInstanceFile();
 
-	level = 1;
 	nameLvl = numLemmings = lemmingsToSave = releaseRate = timeLvl = rating = "";
 
 	fons = new Background();
 	fons->init(0, 0, "Assets/Images/InfoScene/PreGame/infoMision.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
 
 	sGame = SceneGame::getInstanceSceneGame();
+
+	gameStats = GameStats::getInstanceGameStats();
 
 	smManager = SceneManager::getInstanceSM();
 }
@@ -37,7 +38,8 @@ void ScenePreGame::init(){
 	string nomFile = "Assets/Levels/levels.txt";
 	string rutaMapa = "Assets/Levels/";
 	string rutaTilesets = "Assets/Levels/";
-	switch (level){
+	int nivell = gameStats->GetLevel();
+	switch (nivell){
 	case 1:
 		rutaMapa += "lvl01/lvl01.tmx";
 		rutaTilesets += "lvl01/";
@@ -51,7 +53,7 @@ void ScenePreGame::init(){
 	const char* _rutaMapa = rutaMapa.c_str();
 	const char* _rutaTilesets = rutaTilesets.c_str();
 
-	fileManager->Read(_nomFile, 2);
+	fileManager->Read(_nomFile, nivell);
 
 	nameLvl = fileManager->GetValueFromData("name");
 	numLemmings = fileManager->GetValueFromData("numberLemmings");
@@ -65,7 +67,7 @@ void ScenePreGame::init(){
 	scaleX = 0.75;
 	scaleY = 1;
 	digits.push_back(new ABCsAlphaNum());
-	digits.back()->init(xDigit, yDigit, scaleX, scaleY, level);
+	digits.back()->init(xDigit, yDigit, scaleX, scaleY, nivell);
 	// NAME LVL.
 	xDigit += 55;
 	scaleX = 0.75;
@@ -153,9 +155,6 @@ void ScenePreGame::update(){
 		inputManager->ResetClick();
 		smManager->changeScene(smManager->GAME);
 	}
-	/*else if (inputManager->CheckEnter()){
-		smManager->changeScene(smManager->GAME);
-	}*/
 	else if (inputManager->CheckESC()){
 		inputManager->ResetESC();
 		inputManager->SetCursorRelative(false);
@@ -171,14 +170,4 @@ void ScenePreGame::render(){
 	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
 		(*itDigits)->Render();
 	}
-}
-
-
-void ScenePreGame::SetRating(string rating){
-	this->rating = rating;
-}
-
-
-void ScenePreGame::IncrementLevel(){
-	level++;
 }

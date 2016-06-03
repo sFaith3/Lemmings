@@ -1,6 +1,7 @@
 #ifndef SCENECODELEVEL_H
 #define SCENECODELEVEL_H
 
+#include "Utils.h"
 #include "SceneManager.h"
 
 class SceneCodeLevel :

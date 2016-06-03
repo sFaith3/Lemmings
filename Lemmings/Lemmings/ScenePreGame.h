@@ -1,10 +1,11 @@
 #ifndef SCENEPREGAME_H
 #define SCENEPREGAME_H
 
-#include "FileManager.h"
-#include "ABCsAlphaNum.h"
+#include "Utils.h"
 #include "SceneManager.h"
 #include "SceneGame.h"
+#include "FileManager.h"
+#include "ABCsAlphaNum.h"
 
 class ScenePreGame :
 	public Scene
@@ -14,7 +15,6 @@ private:
 
 	static ScenePreGame* gInstance; /*!<	Singleton instance*/
 
-	int level;
 	string nameLvl;
 	string numLemmings;
 	string lemmingsToSave;
@@ -33,6 +33,8 @@ private:
 
 	SceneGame* sGame;
 
+	GameStats* gameStats;
+
 	SceneManager* smManager;
 
 public:
@@ -45,10 +47,6 @@ public:
 	void clear();
 	void update();
 	void render();
-
-	void SetRating(string rating);
-
-	void IncrementLevel();
 };
 
 #endif

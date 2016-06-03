@@ -11,6 +11,10 @@ using namespace std;
 
 #define SCREEN_WIDTH  480
 #define SCREEN_HEIGHT  340
-#define FPS 60.0f
+#define FPS 60
 
+#endif
+
+#ifndef GAMESTATS_H
+#include "GameStats.h"
 #endif

@@ -1,9 +1,10 @@
 #ifndef SCENEPOSTGAME_H
 #define SCENEPOSTGAME_H
 
+#include "Utils.h"
+#include "SceneManager.h"
 #include "FileManager.h"
 #include "ABCsAlphaNum.h"
-#include "SceneManager.h"
 #include "Background.h"
 
 class ScenePostGame :
@@ -14,10 +15,8 @@ private:
 
 	static ScenePostGame* gInstance; /*!<	Singleton instance*/
 
-	int level;
 	string lemmingsSaved;
 	string lemmingsToSave;
-	bool winGame;
 
 	Background* fons;
 
@@ -25,6 +24,8 @@ private:
 	vector<ABCsAlphaNum*>::iterator itDigits;
 
 	FileManager* fileManager;
+
+	GameStats* gameStats;
 
 	SceneManager* smManager;
 
@@ -40,8 +41,6 @@ public:
 	void clear();
 	void update();
 	void render();
-
-	void setWinGame();
 };
 
 #endif

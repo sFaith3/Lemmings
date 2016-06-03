@@ -36,7 +36,7 @@ public:
 	bool CheckPause();
 	bool CheckClickLeft();
 	bool CheckClickRight();
-	bool CheckEnter();
+	//bool CheckEnter();
 
 	void ResetNumber();
 	void ResetESC();

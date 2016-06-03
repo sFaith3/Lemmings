@@ -6,8 +6,6 @@ SceneGame* SceneGame::gInstance = NULL;
 SceneGame::SceneGame(){
 	idMusic = audioManager->getMusicID("Assets/Audios/Music/track_01.wav");
 
-	pausa = false;
-
 	actions = new Actions();
 
 	numLemmings = lemmingsToSave = 0;
@@ -23,6 +21,8 @@ SceneGame::SceneGame(){
 	cursor = Cursor::getInstanceCursor();
 
 	sPostGame = ScenePostGame::getInstanceScenePostGame();
+
+	gameStats = GameStats::getInstanceGameStats();
 
 	smManager = SceneManager::getInstanceSM();
 }
@@ -61,13 +61,13 @@ void SceneGame::init(){
 	temps = new Timer(250, 260, /*tempsRestant*/ "0:01");
 	temps->start();
 
-	if (!mutejarSo)
+	if (gameStats->GetSound())
 		audioManager->playMusic(idMusic, -1);
 }
 
 void SceneGame::clear(){
-	if (pausa)
-		pausa = false;
+	if (gameStats->GetPause())
+		gameStats->SetPause(false);
 	
 	delete mapa;
 
@@ -82,34 +82,33 @@ void SceneGame::clear(){
 }
 
 void SceneGame::update(){
-	// ACTIONS.
-	int action = actions->update();
-	switch (action){
-	case -1:
-		break;
-	case 0: // REST_VEL_SPAWN
-		actions->DecrementVelocitySkill();
-		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
-		break;
-	case 1: // PLUS_VEL_SPAWN
-		actions->IncrementVelocitySkill();
-		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
-		break;
-	case 10: // PAUSAR JOC.
-		pausa = true;
-		break;
-	case 11: // MOAB. Explotar tots els lemmings.
-		for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
-			if (!(*itLem)->GetContExplotar())
-				(*itLem)->SetContadorTemps(temps->getTime());
+	if (!gameStats->GetPause()){
+		// ACTIONS.
+		int action = actions->update();
+		switch (action){
+		case -1:
+			break;
+		case 0: // REST_VEL_SPAWN
+			actions->DecrementVelocitySkill();
+			enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
+			break;
+		case 1: // PLUS_VEL_SPAWN
+			actions->IncrementVelocitySkill();
+			enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
+			break;
+		case 10: // PAUSAR JOC.
+			gameStats->SetPause(true);
+			audioManager->pauseMusic();
+			inputManager->ResetClick();
+			break;
+		case 11: // MOAB. Explotar tots els lemmings.
+			for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+				if (!(*itLem)->GetContExplotar())
+					(*itLem)->SetContadorTemps(temps->getTime());
+			}
+			break;
 		}
-		break;
-	default:
-		pausa = false;
-		break;
-	}
 
-	if (!pausa){
 		temps->update();
 
 		// ENTER DOOR.
@@ -173,10 +172,8 @@ void SceneGame::update(){
 			}
 
 			if (lemmings.size() == 0){
-				if ((lemmingsSaved + lemmingsMorts) == numLemmings){
-					// Passar info necessària ScenePostGame.*
+				if ((lemmingsSaved + lemmingsMorts) == numLemmings)
 					gameFinish = true;
-				}
 				break;
 			}
 
@@ -207,30 +204,36 @@ void SceneGame::update(){
 		else if (!cursorChanged && cursor->GetChangedCursor())
 			cursor->ChangeCursor();
 
-		cursor->Update();
-
 		if (temps->getTempsOut()){
 			audioManager->pauseMusic();
 			// Passar info necessària ScenePostGame.*
 			gameFinish = true;
 		}
 
-		// EXIT TO THE MAIN MENU.
-		if (inputManager->CheckESC()){
-			inputManager->ResetESC();
-			inputManager->SetCursorRelative(false);
-			smManager->changeScene(smManager->MENU);
-		}
-
 		if (gameFinish){
 			if (lemmingsSaved >= lemmingsToSave)
-				sPostGame->setWinGame();
+				gameStats->SetWin(true);
 
 			sPostGame->initFromGame(lemmingsSaved, lemmingsToSave);
 			smManager->changeScene(smManager->POST_GAME);
 			gameFinish = false;
 		}
 	}
+	else if (inputManager->CheckClickLeft()){
+		gameStats->SetPause(false);
+		audioManager->resumeMusic();
+		inputManager->ResetClick();
+	}
+
+	cursor->Update(); 
+
+	// EXIT TO THE MAIN MENU.
+	if (inputManager->CheckESC()){
+		inputManager->ResetESC();
+		inputManager->SetCursorRelative(false);
+		smManager->changeScene(smManager->MENU);
+	}
+
 }
 
 void SceneGame::render(){
@@ -247,9 +250,4 @@ void SceneGame::render(){
 	temps->render();
 
 	cursor->render();
-}
-
-
-void SceneGame::setMuteigSo(bool mute){
-	mutejarSo = mute;
 }

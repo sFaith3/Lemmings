@@ -4,13 +4,13 @@
 ScenePostGame* ScenePostGame::gInstance = NULL;
 
 ScenePostGame::ScenePostGame(){
-	fileManager = FileManager::getInstanceFile();
-
-	winGame = false;
 	lemmingsSaved = lemmingsToSave = "";
 
 	fons = new Background();
-	fons->SetScale(0.75, 0.75);//
+
+	fileManager = FileManager::getInstanceFile();
+
+	gameStats = GameStats::getInstanceGameStats();
 
 	smManager = SceneManager::getInstanceSM();
 }
@@ -44,7 +44,7 @@ void ScenePostGame::init(){
 
 	// NUMBER LEMMINGS.
 	xDigit = _xDigit = 475;
-	yDigit = 50;
+	yDigit = 51;
 	for (int i = lemmingsSaved.length() - 1; i >= 0; i--){
 		num = (int)lemmingsSaved[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
@@ -61,10 +61,16 @@ void ScenePostGame::init(){
 		xDigit -= 16;
 	}
 	//if (winGame){
-		// CODE LEVEL
-		fileManager->Read("Assets/Levels/levels.txt");
+		// NUMBER LEVEL.
+		xDigit = 610;
+		yDigit = 217;
+		int numNivell = gameStats->GetLevel();
+		digits.push_back(new ABCsAlphaNum());
+		digits.back()->init(xDigit, yDigit, scaleX, 1, numNivell);
+		// CODE LEVEL.
+		fileManager->Read("Assets/Levels/levels.txt", gameStats->GetLevel());
 		string codeLvl = fileManager->GetValueFromData("code");
-		xDigit = 370;
+		xDigit = 367;
 		yDigit = 235;
 		scaleX = 0.55;
 		for (int i = 0; i < codeLvl.length(); i++){
@@ -80,16 +86,17 @@ void ScenePostGame::init(){
 }
 
 void ScenePostGame::clear(){
-	winGame = false;
+	gameStats->SetWin(false);
 
 	digits.clear();
 	digits.resize(0);
 }
 
 void ScenePostGame::update(){
-	if (inputManager->CheckClickLeft() || inputManager->CheckEnter()){
+	if (inputManager->CheckClickLeft()){
 		inputManager->ResetClick();
-		//Increment level.
+		if (gameStats->GetWin())
+			gameStats->IncrementLevel();
 		smManager->changeScene(smManager->PRE_GAME);
 	}
 	else if (inputManager->CheckClickRight()){
@@ -110,9 +117,4 @@ void ScenePostGame::render(){
 	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
 		(*itDigits)->Render();
 	}
-}
-
-
-void ScenePostGame::setWinGame(){
-	winGame = true;
 }
