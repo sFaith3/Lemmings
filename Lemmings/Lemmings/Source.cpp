@@ -2,18 +2,14 @@
 #include "SingletonManager.h"
 #include "SceneManager.h"
 
-bool fi = false;
-
-InputManager* inputManager = NULL;
-SceneManager* sceneManager = NULL;
-
 int main(int argc, char* args[]){
 
-	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
-	sceneManager = SceneManager::getInstanceSM();
+	InputManager* inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
+	SceneManager* sceneManager = SceneManager::getInstanceSM();
 
 	sceneManager->init();
 
+	bool fi = false; // Bucle del joc.
 	while (!fi){
 		/* --- LOAD SCENE --- */
 		sceneManager->update();
@@ -26,6 +22,7 @@ int main(int argc, char* args[]){
 		/* --- RENDER --- */
 		sceneManager->render();
 	}
+
 	sceneManager->~SceneManager();
 
 	return 0;

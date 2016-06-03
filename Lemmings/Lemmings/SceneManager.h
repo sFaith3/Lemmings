@@ -4,8 +4,6 @@
 #include "Utils.h"
 #include "Scene.h"
 
-//#define _LASTSCENE
-
 class SceneManager
 {
 public:

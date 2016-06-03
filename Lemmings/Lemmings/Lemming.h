@@ -8,27 +8,32 @@ class Lemming :
 {
 private:
 	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
-	int pintW, pintH;
+	int pintW, pintH; // Amplada i alçada de la imatge.
 
 	int limitX;
 
-	int estat;
-	int dir; // Direcció del Lemming a l'hora de moure's || 0 / 2.
+	int estat; // Estat actual d'EstatsEnum.
+	int dir; // Direcció del Lemming a l'hora de moure's. 0 / 2.
 
 	int maxCaure;
 	int tempsMax; // compte enrere de 5s.
-	
+
 	int desplasament;
+
+	// Equipa X habilitats al Lemming, que les realitzarà quan compleixi certa condició.
 	bool paraigues;
 	bool escalar;
+
 	bool mortInicial;
 	bool mortFinal;
-	bool explotaContador;
-	int tempsLvl; // temps restant de la partida.
 
-	bool rescatat;
+	bool explotaContador; // Variable que indica el començament del compte enrere de l'explosió.
+
+	int tempsLvl; // Temps restant de la partida.
+
+	bool rescatat; // S'activa quan un Lemming passa per la porta.
 	
-	SDL_RendererFlip flipType;
+	SDL_RendererFlip flipType; // Gira la imatge quan canvïa la direcció.
 
 	InputManager* inputManager;
 
@@ -49,7 +54,7 @@ public:
 	void SetDir(int dir);
 	void SetAnimacio();
 	/*
-	MOVE: Moures, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
+	MOVE: Moure's, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
 	STOP: Inmovilitzat, STAIR: Posar rajoles, PICK: Cavar amb el Pic,
 	EXPLOSION: Foc de l'Explosio, DEAD: El Lemming es destruït, DEADFALL: El Lemming cau d'una gran altura,
 	OPENUMBRELLA: El Lemming obra el paraigües, NOSTAIR: El Lemming es queda sense rajoles, ENDCLIMB El Lemming acaba d'escalar i torna a terra pla,

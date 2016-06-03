@@ -6,18 +6,17 @@ class Map :
 	public ElementGame
 {
 private:
-	bool mapTmx;
+	bool mapTmx; // Indica si el mapa a carregar és una img normal, com un background, que no influeix en el joc. O un mapa que prové d'un arxiu tmx.
 
-	const char* fileMap;
 	Sint32 idFileMap;
 
 	string rutaTilesets; // Directori on es troben els tilesets a utilitzar per a X arxiu TMX.
 	vector<tinyManager::Tileset*> tilesets;
 	vector<tinyManager::Tileset*>::iterator itTilesets;
 
-	int sizeTile;
+	int sizeTile; // Mesura d'una tile. Per tal de calcular la posició dels elements que interactuen amb el mapa de col·lisions.
 
-	vector <vector<int> > mapCollision;
+	vector <vector<int> > mapCollision; // Vector amb les dimensions X-Y del mapa de col·lisions. S'utilitza per a veure si a X punt del mapa hi ha cap impediment per al desplaçament dels Lemmings.
 
 	tinyManager* tManager;
 

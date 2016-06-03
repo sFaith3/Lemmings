@@ -4,15 +4,14 @@ class ElementGame :
 	public Element
 {
 protected:
-	// Animacio de SpriteSheet
-	int widthSpriteSheet;
-	int heightSpriteSheet;
-	int toNextSpriteX;
-	int toNextSpriteY;
-	int numImatges;
-	int contImatges;
-	int fpsAnimacio, currFpsAnim;
-	int numSaltsImatges;
+	int widthSpriteSheet, heightSpriteSheet; // Amplada i alçada total de l'spritesheet.
+	int toNextSpriteX, toNextSpriteY; // Posicions que ha de recórre per arribar al següent sprite.
+	int numImatges; // Número d'imatges que té aquell spritesheet.
+	int contImatges; // Sprite actual de l'animació que s'està pintant.
+	int fpsAnimacio, currFpsAnim; // Temps que triga en canviar d'animació i temps actual que té en aquell moment.
+								  // Quan currFpsAnim es igual a fpsAnimacio, l'sprite canvïa.
+	int numSaltsImatges; // Nombre de files què ha de desplaçar-se en total. Quan l'sprite arribi al límit de l'spritesheet, sense ser aquest l'últim, realitza un salt de fila en l'spritesheet.
+						 // i es posiciona a la x inicial d'aquest. S'indica el nombre màxim de desplaçaments per fila.
 
 public:
 	ElementGame();
@@ -20,7 +19,6 @@ public:
 
 	void init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim);
 
-	//Animacio de SpriteSheet
-	void UpdateAnimacio();
+	void UpdateAnimacio(); // Animacio de SpriteSheet.
 };
 

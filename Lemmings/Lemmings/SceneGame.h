@@ -26,15 +26,15 @@ private:
 	Actions* actions;
 	int currAction;
 
-	// Paràmetres de l'escena on s'informa sobre la missió.
+	// Paràmetres de l'escena on s'informa sobre la missió. També seteja els elements de la HUD que corresponen a aquestes variables.
 	int numLemmings;
 	int lemmingsToSave;
-	string tempsRestant, releaseRate;
+	string tempsRestant, releaseRate; 
 
 	int lemmingsMorts;
 	int lemmingsSaved;
 
-	bool gameFinish;
+	bool gameFinish; // S'activa quan finalitza el joc, per tal de realitzar les accions pertinents.
 
 	DoorEnter* enterDoor;
 	ElementGame* exitDoor;
@@ -42,6 +42,7 @@ private:
 	vector<Lemming*> lemmings;
 	vector<Lemming*>::iterator itLem;
 	
+	// Cursor.
 	bool cursorChanged;
 	Cursor* cursor;
 

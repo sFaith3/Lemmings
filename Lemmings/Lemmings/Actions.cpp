@@ -9,8 +9,7 @@ Actions::Actions(){
 }
 
 
-Actions::~Actions()
-{
+Actions::~Actions(){
 }
 
 
@@ -26,6 +25,7 @@ int Actions::init(float scaleX, float scaleY, string velMinimaSpawn, string trep
 	int wSkill = 40;
 	int hSkill = 61;
 	const char* imgSkillPressed = "Assets/Images/skillsPressed.png";
+
 	skills[0]->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, velMinimaSpawn);
 	xSkill += wSkill;
 	skills[1]->init(PLUS_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, velMinimaSpawn);
@@ -85,8 +85,6 @@ int Actions::update(){
 	}
 
 	int number = inputManager->CheckNumber();
-	//if (number != -1 && currButton != REST_VEL_SPAWN && currButton != PLUS_VEL_SPAWN && currButton != PAUSA && currButton != MOAB)
-
 	if (number != -1){
 		if (number != REST_VEL_SPAWN && number != PLUS_VEL_SPAWN && number != PAUSA && number != MOAB){
 			skills[currButton]->SetPressed(false);

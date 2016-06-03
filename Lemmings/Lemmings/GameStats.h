@@ -10,10 +10,10 @@ private:
 
 	static GameStats* pInstance; /*<!	Singleton instance*/
 
-	int level;
-	bool sound;
-	bool pause;
-	bool win;
+	int level; // Nivell de joc en què es troba.
+	bool sound; // Indica si el so s'ha de mutejar a SceneGame.
+	bool pause; // Quan s'activa el joc es pausa.
+	bool win; // Serveix per a saber si el jugador passa de nivell i per a mostrar l'informació que pertoca a ScenePostGame.
 
 public:
 	~GameStats();

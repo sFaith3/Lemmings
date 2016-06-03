@@ -13,8 +13,7 @@ Element::~Element()
 void Element::init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY){
 	posX = x;
 	posY = y;
-	imatge = img;
-	idImg = videoManager->getTextureID(imatge);
+	idImg = videoManager->getTextureID(img);
 	srcPosX = _srcPosX = srcX;
 	srcPosY = srcY;
 	width = w;

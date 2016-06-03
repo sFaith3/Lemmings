@@ -11,8 +11,8 @@ GameStats::GameStats(){
 }
 
 
-GameStats::~GameStats()
-{
+GameStats::~GameStats(){
+
 }
 
 

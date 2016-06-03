@@ -3,7 +3,7 @@
 
 ABCsAlphaNum::ABCsAlphaNum(){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
-	idImg = videoManager->getTextureID("Assets/Images/alphabet.png");
+	idImg = videoManager->getTextureID("Assets/Images/ABCAlphaNum/alphabet.png");
 }
 
 

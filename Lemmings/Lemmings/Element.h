@@ -5,11 +5,10 @@
 class Element
 {
 protected:
-	int posX, posY; //Posició de l'element en la pantalla.
-	const char* imatge;
+	int posX, posY; // Posició de l'element en la pantalla.
 	Sint32 idImg;
-	int srcPosX, _srcPosX, srcPosY; //Posició inicial en el sprite. Per agafar una regió de l'sprite, cal fer el requadre amb width i height.
-	int width, height; //Amplada i alçada de l'sprite.
+	int srcPosX, _srcPosX, srcPosY; // Posició inicial en el sprite. Per agafar una regió de l'sprite, cal fer el requadre amb width i height.
+	int width, height; // Amplada i alçada de l'sprite.
 	float scaleX, scaleY;
 
 	VideoManager* videoManager;

@@ -18,6 +18,7 @@ Timer::Timer(int x, int y, string tempsRestant){
 	primerNumSegons = tempsRestant[2] - 48;
 	segonNumSegons = tempsRestant[3] - 48;
 	this->tempsRestant = ((minuts * 60) + primerNumSegons + segonNumSegons);
+
 	int xNum, yNum;
 	xNum = x + 150;
 	yNum = y;

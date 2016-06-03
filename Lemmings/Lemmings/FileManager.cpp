@@ -34,49 +34,49 @@ void FileManager::Read(const char* name){
 		int pos = 0;
 		string linia = "";
 
-		getline(reader, linia, '\n');
-		map<string, string> dataFile;
-		dataFile.clear();
+		while (getline(reader, linia, '\n')){
+			map<string, string> dataFile;
+			dataFile.clear();
 
-		bool readedFile = false;
-		while (!readedFile){
-			while (linia[i] != ' '){
-				if (i >= linia.length() - 1){
-					readedFile = true;
-					break;
+			bool readedFile = false;
+			while (!readedFile){
+				while (linia[i] != ' '){
+					if (i >= linia.length() - 1){
+						readedFile = true;
+						break;
+					}
+					i++;
 				}
-				i++;
+				pos = i + 1;
+
+				while (linia[i] != '='){
+					if (i >= linia.length() - 1){
+						readedFile = true;
+						break;
+					}
+					i++;
+				}
+				string key = linia.substr(pos, i - pos);
+				pos = i + 2;
+
+				while (linia[i] != ' '){
+					if (i >= linia.length() - 1){
+						readedFile = true;
+						break;
+					}
+					i++;
+					if (linia[i] == '>'){
+						readedFile = true;
+						break;
+					}
+				}
+				i--;
+
+				string value = linia.substr(pos, i - pos);
+				dataFile.insert(pair<string, string>(key, value));
 			}
-			pos = i + 1;
-
-			while (linia[i] != '='){
-				if (i >= linia.length() - 1){
-					readedFile = true;
-					break;
-				}
-				i++;
-			}
-			string key = linia.substr(pos, i - pos);
-			pos = i + 2;
-
-			while (linia[i] != ' '){
-				if (i >= linia.length() - 1){
-					readedFile = true;
-					break;
-				}
-				i++;
-				if (linia[i] == '>'){
-					readedFile = true;
-					break;
-				}
-			}
-			i--;
-
-			string value = linia.substr(pos, i - pos);
-			dataFile.insert(pair<string, string>(key, value));
+			data.push_back(dataFile);
 		}
-		data.push_back(dataFile);
-
 		reader.close();
 	}
 	else
@@ -148,7 +148,7 @@ void FileManager::Read(const char* name, int line){
 }
 
 
-int FileManager::CheckFile(fstream reader){
+int FileManager::SizeFile(fstream reader){
 	reader.seekg(0, reader.end); // De la posició inicial zero, considerant el 0 com la posició on es troba el punter fstream, cap a l'última dada del fitxer.
 	int size = reader.tellg(); // 'tellg' retorna la posició de l'fstream 'lectura', a la qual està apuntant.
 	reader.seekg(0, reader.beg); // Torna a ubicar el punter 'lectura' al principi del tot.

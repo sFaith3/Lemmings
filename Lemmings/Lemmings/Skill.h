@@ -11,6 +11,7 @@ private:
 
 	int velMinimaSpawn; // Per el butó que controla el decrement de la velocitat en que ExitDoor instancia Lemmings.
 
+	// Vector dels números d'usos que té cada habilitat.
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;
 
@@ -29,4 +30,3 @@ public:
 	int GetNumberUses();
 	void OneUseLess();
 };
-

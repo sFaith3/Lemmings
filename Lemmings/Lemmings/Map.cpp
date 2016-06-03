@@ -37,7 +37,6 @@ void Map::init(int x, int y, bool mapTmx, const char* fileMap, const char* layer
 		sizeTile = tManager->GetTileSize();
 	}
 	else{
-		this->fileMap = fileMap;
 		idFileMap = videoManager->getTextureID(fileMap);
 	}
 

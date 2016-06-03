@@ -5,11 +5,11 @@
 class Button
 {
 protected:
-	int id; //Nom, del lloc on porta, si es clica a sobre d'ell. Depenent de varlo d'aquest string, el codi realitzarà X gestió.
-	int posX, posY; //Variables, que defineixen la posició en els eixos de coordenades. I s'utilitzen per a renderitzar i condicionen els inputs.
-	int width, height; //Defineixen el rectangle d'aquest. Per tal de poder pintar-lo i detectar l'input.
+	int id; // Nom relacionat amb al què ha de fer si es clica a sobre d'ell. Depenent de valor d'aquest string, el codi realitzarà X gestió.
+	int posX, posY; // Variables que defineixen la posició en els eixos de coordenades. S'utilitzen per a renderitzar i condicionen els inputs.
+	int width, height; // Defineixen el rectangle d'aquest. Per tal de poder pintar-lo i detectar l'input.
 	float scaleX, scaleY;
-	int posXini, posYini; //Posició X/Y, on es comença a agafar, la imatge per a realitzar l'sprite.
+	int posXini, posYini; // Posició X/Y, on es comença a agafar, la imatge per a realitzar l'sprite.
 	Sint32 idImgNormal, idImgButPressed;
 	bool pressed;
 

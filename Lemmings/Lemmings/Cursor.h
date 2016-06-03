@@ -12,11 +12,7 @@ private:
 	Sint32 idImg1, idImg2;
 	int width1, height1, width2, height2;
 
-	/*enum CursorsEnum{
-		NONE, NORMAL, LEMMING
-	};
-	int currCursor;*/
-	bool changedCursor;
+	bool changedCursor; // El cursor ha canviat al que surt quan és a sobre d'un Lemming.
 
 	InputManager* inputManager;
 

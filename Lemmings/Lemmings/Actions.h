@@ -8,6 +8,7 @@ class Actions :
 	public ElementHUD
 {
 private:
+	// Vector d'habilitats dels Lemmings.
 	vector<Skill*> skills;
 	vector<Skill*>::iterator itSkills;
 
@@ -15,7 +16,7 @@ private:
 		REST_VEL_SPAWN, PLUS_VEL_SPAWN, TREPAR, PARAIGUES, EXPLOSIO, PARAT, ESGRAONS, CAVAR_LATERAL, PICAR, CAVAR, PAUSA, MOAB
 	};
 
-	int currButton;
+	int currButton; // Indica l'ActionEnum en què es troba.
 
 	InputManager* inputManager;
 

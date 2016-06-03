@@ -2,7 +2,7 @@
 
 
 DoorEnter::DoorEnter(int x, int y, int timeToSpawn, int numInstancies){
-	ElementGame::init(x, y, "Assets/Images/Doors/_entrada.png", 0, 0, 57, 31, 1, 1, 126, 31, 69, 2, 25);
+	ElementGame::init(x, y, "Assets/Images/Doors/entrada.png", 0, 0, 57, 31, 1, 1, 126, 31, 69, 2, 25);
 	
 	timeToBeReady = 0.5 * 100;
 	this->timeToSpawn = _timeToSpawn = timeToSpawn * 100;
@@ -15,8 +15,8 @@ DoorEnter::DoorEnter(int x, int y, int timeToSpawn, int numInstancies){
 }
 
 
-DoorEnter::~DoorEnter()
-{
+DoorEnter::~DoorEnter(){
+
 }
 
 

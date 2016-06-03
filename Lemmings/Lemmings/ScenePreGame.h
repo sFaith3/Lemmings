@@ -15,17 +15,19 @@ private:
 
 	static ScenePreGame* gInstance; /*!<	Singleton instance*/
 
+	// Informació del nivell.
 	string nameLvl;
 	string numLemmings;
-	string lemmingsToSave;
-	string releaseRate;
+	string lemmingsToSave; 
+	string releaseRate; // Temps que triga DoorEnter a instanciar Lemmings.
 	string timeLvl;
-	string rating;
+	string rating; // Dificultad del nivell.
 
 	Background* fons;
 
 	Map* mapa;
 
+	// Número i lletres que provenen de les variables de l'informació del nivell.
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;
 

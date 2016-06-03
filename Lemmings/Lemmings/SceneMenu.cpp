@@ -29,7 +29,7 @@ SceneMenu::SceneMenu(){
 	button.init(EXIT, 260, 285, wButton, hButton - 1, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
 
-	idMusic = audioManager->getMusicID("Assets/Audios/Music/intro_00.wav");
+	idMusic = audioManager->getMusicID("Assets/Audios/Music/start.wav");
 }
 
 

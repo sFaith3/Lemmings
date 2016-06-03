@@ -4,7 +4,7 @@
 SceneGame* SceneGame::gInstance = NULL;
 
 SceneGame::SceneGame(){
-	idMusic = audioManager->getMusicID("Assets/Audios/Music/track_01.wav");
+	idMusic = audioManager->getMusicID("Assets/Audios/Music/inGame.wav");
 
 	actions = new Actions();
 
@@ -56,7 +56,7 @@ void SceneGame::init(){
 
 	// Inicialització de les portes del joc. Punt de respawn i de sortida dels lemmings.
 	enterDoor = new DoorEnter(110, 80, 20, numLemmings); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game.
-	exitDoor->init(338, 200, "Assets/Images/Doors/_sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
+	exitDoor->init(338, 200, "Assets/Images/Doors/sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
 
 	temps = new Timer(250, 260, /*tempsRestant*/ "0:01");
 	temps->start();

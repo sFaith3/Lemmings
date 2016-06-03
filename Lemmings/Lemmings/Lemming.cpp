@@ -12,7 +12,7 @@ Lemming::~Lemming(){
 
 
 void Lemming::init(int x, int y, int xMapa, int yMapa){
-	ElementGame::init(x, y, "Assets/Images/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
+	ElementGame::init(x, y, "Assets/Images/Lemmings/lem_ani.png", 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
 	posXmapa = xMapa;
 	posYmapa = yMapa;
 	pintW = 20;
@@ -39,7 +39,7 @@ void Lemming::init(int x, int y, int xMapa, int yMapa){
 	flipType = SDL_FLIP_NONE;	
 }
 
-void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){ //Es pot optimitzar codi. Com l'if pel SetCaure().
+void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 	switch (estat){
 	case MOVE:
 		if (fons->GetMapa(x1 + 1, y2 + 1) == 0 && fons->GetMapa(x2 - 1, y2 + 1) == 0)
@@ -490,10 +490,8 @@ void Lemming::TempsFinal(int temps){
 }
 void Lemming::Explotar(Map *fons, int x2, int y2){
 	// Destrucció del terreny.
-	if (contImatges == numImatges){
+	if (contImatges == numImatges)
 		mortFinal = true;
-	}
-
 }
 
 void Lemming::ConstruirEscala(){
@@ -507,4 +505,3 @@ void Lemming::PutParaigues(){
 void Lemming::PutEscalar(){
 	escalar = true;
 }
-

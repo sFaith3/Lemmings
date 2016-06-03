@@ -37,10 +37,8 @@ bool Button::update(){
 	if (inputManager->CheckClickLeft()){
 		int mouseX, mouseY;
 		inputManager->GetMouseXY(mouseX, mouseY);
-		if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height)){
-			//pressed = true;
+		if ((mouseX >= posX) && (mouseX <= posX + width) && (mouseY >= posY) && (mouseY <= posY + height))
 			return true;
-		}
 	}
 	return false;
 }
@@ -53,11 +51,6 @@ void Button::render(){
 	if (pressed){
 		if (idImgButPressed != -1)
 			videoManager->renderTexture(idImgButPressed, posXini, posYini, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
-		
-		// A l'inputManager hi hauria d'haver un MOUSEBUTTONUP i s'hauria de fer
-		// més comprovacions per tal de no repetir-se si el deixes pressionat.
-		/*if (!inputManager->CheckClick())
-			pressed = false;*/
 	}
 }
 
