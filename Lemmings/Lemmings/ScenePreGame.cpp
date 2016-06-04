@@ -64,17 +64,18 @@ void ScenePreGame::init(){
 	int xDigit = 95;
 	int yDigit = 83;
 	float scaleX, scaleY;
+
 	scaleX = 0.75;
 	scaleY = 1;
 	digits.push_back(new ABCsAlphaNum());
 	digits.back()->init(xDigit, yDigit, scaleX, scaleY, nivell);
 	// NAME LVL.
-	xDigit += 55;
+	xDigit += 45;
 	scaleX = 0.75;
 	scaleY = 1;
 	for (int i = 0; i < nameLvl.length(); i++){
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, scaleY, nameLvl[i]);
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, (char)nameLvl[i]);
 		if (nameLvl[i] != '_')
 			xDigit += 20;
 		else
@@ -137,7 +138,7 @@ void ScenePreGame::init(){
 
 	scaleX = scaleY = 0.33666;
 	mapa = new Map();
-	mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // Iniciar les posiciones que es volen a SceneGame.
+	mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // S'inicien les posicions X-Y que es volen a SceneGame.
 
 	sGame->initFromPreGame(mapa, numLem, lemToSave, releaseRate, timeLvl);
 

@@ -41,6 +41,7 @@ public:
 	void ResetNumber();
 	void ResetESC();
 	void ResetClick();
+	void ResetPause();
 
 	void SetNumber(int num);
 

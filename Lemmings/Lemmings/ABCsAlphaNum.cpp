@@ -3,12 +3,11 @@
 
 ABCsAlphaNum::ABCsAlphaNum(){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
-	idImg = videoManager->getTextureID("Assets/Images/ABCAlphaNum/alphabet.png");
+	idImg = videoManager->getTextureID("Assets/Images/ABCsAlphaNum/alphabet.png");
 }
 
 
-ABCsAlphaNum::~ABCsAlphaNum()
-{
+ABCsAlphaNum::~ABCsAlphaNum(){
 }
 
 
@@ -26,6 +25,22 @@ void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	digitsMaxRow = 13;
 
 	ChangeValue(alphaNum);
+}
+
+void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, char alphaLetter){
+	posX = x;
+	posY = y;
+
+	xIni = yIni = 3;
+	width = 16;
+	height = 15;
+	this->scaleX = scaleX;
+	this->scaleY = scaleY;
+	spacingX = 1;
+	spacingY = 1;
+	digitsMaxRow = 13;
+
+	ChangeValue(alphaLetter);
 }
 
 void ABCsAlphaNum::ChangeValue(int num){
@@ -63,50 +78,127 @@ void ABCsAlphaNum::ChangeValue(int num){
 		break;
 	}
 	
-	int row = 0;
-	if (pos >= ONE && pos <= ZERO)
-		row = 4;
-
-	if (row > 0)
-		pos -= (digitsMaxRow * row);
+	int row = 4;
+	pos -= (digitsMaxRow * row);
 
 	srcX = xIni + ((width + spacingX) * pos);
 	srcY = yIni + ((height + spacingY) * row);
 }
 
 
-void ABCsAlphaNum::ChangeValue(string lletres){
-	/*int pos = NULL;
-	switch (alpha){ // AMB LA RESTA DE L'SPRITESHEET QUE NO SIGUIN NÚMEROS.
-	case 0:
-		pos = ZERO;
+void ABCsAlphaNum::ChangeValue(char lletres){
+	int pos = -1;
+	switch (lletres){
+	case 'A': pos = A;
 		break;
-	case 1:
-		pos = ONE;
+	case 'B': pos = B;
 		break;
-	case 2:
-		pos = TWO;
+	case 'C': pos = C;
 		break;
-	case 3:
-		pos = THREE;
+	case 'D': pos = D;
 		break;
-	case 4:
-		pos = FOUR;
+	case 'E': pos = E;
 		break;
-	case 5:
-		pos = FIVE;
+	case 'F': pos = F;
 		break;
-	case 6:
-		pos = SIX;
+	case 'G': pos = G;
 		break;
-	case 7:
-		pos = SEVEN;
+	case 'H': pos = H;
 		break;
-	case 8:
-		pos = EIGHT;
+	case 'I': pos = I;
 		break;
-	case 9:
-		pos = NINE;
+	case 'J': pos = J;
+		break;
+	case 'K': pos = K;
+		break;
+	case 'L': pos = L;
+		break;
+	case 'M': pos = M;
+		break;
+	case 'N': pos = N;
+		break;
+	case 'O': pos = O;
+		break;
+	case 'P': pos = P;
+		break;
+	case 'Q': pos = Q;
+		break;
+	case 'R': pos = R;
+		break;
+	case 'S': pos = S;
+		break;
+	case 'T': pos = T;
+		break;
+	case 'U': pos = U;
+		break;
+	case 'V': pos = V;
+		break;
+	case 'W': pos = W;
+		break;
+	case 'X': pos = X;
+		break;
+	case 'Y': pos = Y;
+		break;
+	case 'Z': pos = Z;
+		break;
+
+	case 'a': pos = a;
+		break;
+	case 'b': pos = b;
+		break;
+	case 'c': pos = c;
+		break;
+	case 'd': pos = d;
+		break;
+	case 'e': pos = e;
+		break;
+	case 'f': pos = f;
+		break;
+	case 'g': pos = g;
+		break;
+	case 'h': pos = h;
+		break;
+	case 'i': pos = i;
+		break;
+	case 'j': pos = j;
+		break;
+	case 'k': pos = k;
+		break;
+	case 'l': pos = l;
+		break;
+	case 'm': pos = m;
+		break;
+	case 'n': pos = n;
+		break;
+	case 'o': pos = o;
+		break;
+	case 'p': pos = p;
+		break;
+	case 'q': pos = q;
+		break;
+	case 'r': pos = r;
+		break;
+	case 's': pos = s;
+		break;
+	case 't': pos = t;
+		break;
+	case 'u': pos = u;
+		break;
+	case 'v': pos = v;
+		break;
+	case 'w': pos = w;
+		break;
+	case 'x': pos = x;
+		break;
+	case 'y': pos = y;
+		break;
+	case 'z': pos = z;
+		break;
+
+	case '!': pos = EXCLAMATION;
+		break;
+
+	default:
 		break;
 	}
 
@@ -117,13 +209,17 @@ void ABCsAlphaNum::ChangeValue(string lletres){
 		row = 2;
 	else if (pos >= n && pos <= z)
 		row = 3;
-	//Resta spritesheets.
+	else if (pos >= EXCLAMATION){
+		row = 5;
+		// Canvis per a l'spritesheet posat.
+		pos += 3;
+	}
 
 	if (row > 0)
 		pos -= (digitsMaxRow * row);
 
-	srcX = xIni + ((width + spacing) * pos);
-	srcY = yIni + ((height + spacing) * row);*/	
+	srcX = xIni + ((width + spacingX) * pos);
+	srcY = yIni + ((height + spacingY) * row);
 }
 
 

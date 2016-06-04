@@ -4,9 +4,9 @@
 Cursor* Cursor::cInstance = NULL;
 
 Cursor::Cursor(){
-	ElementHUD::init(0, 0, "Assets/Images/Cursor/provaCursor.png", 0, 0, 12, 12, 1, 1);
+	ElementHUD::init(0, 0, "Assets/Images/Cursor/normalCursor.png", 0, 0, 12, 12, 1, 1);
 
-	idImg1 = videoManager->getTextureID("Assets/Images/Cursor/normalCursor.png");
+	idImg1 = idImg;
 	width1 = 12;
 	height1 = 12;
 	idImg2 = videoManager->getTextureID("Assets/Images/Cursor/changedCursor2.png");

@@ -60,7 +60,7 @@ void ScenePostGame::init(){
 		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
 		xDigit -= 16;
 	}
-	//if (winGame){
+	if (gameStats->GetWin()){
 		// NUMBER LEVEL.
 		xDigit = 610;
 		yDigit = 217;
@@ -75,14 +75,14 @@ void ScenePostGame::init(){
 		scaleX = 0.55;
 		for (int i = 0; i < codeLvl.length(); i++){
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->init(xDigit, yDigit, scaleX, 1, codeLvl[i]);
+			digits.back()->init(xDigit, yDigit, scaleX, 1, (char)codeLvl[i]);
 			xDigit += 20;
 		}
 
 		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", 0, 0, 480, 340, 1, 1);
-	//}
-	//else
-		//fons->init(0, 0, "Assets/Images/InfoScene/PostGame/lose.png", 0, 0, 480, 340, 1, 1);
+	}
+	else
+		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/lose.png", 0, 0, 480, 340, 1, 1);
 }
 
 void ScenePostGame::clear(){

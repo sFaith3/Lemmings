@@ -55,10 +55,10 @@ void SceneGame::init(){
 	currAction = actions->init(1, 1, releaseRate, "10", "10", "10", "10", "10", "10", "10", "10");
 
 	// Inicialització de les portes del joc. Punt de respawn i de sortida dels lemmings.
-	enterDoor = new DoorEnter(110, 80, 20, numLemmings); //50 es el valor de la variable que s'inicialitza a l'scene d'abans de la de game.
+	enterDoor = new DoorEnter(110, 80, 20, numLemmings);
 	exitDoor->init(338, 200, "Assets/Images/Doors/sortida.png", 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
 
-	temps = new Timer(250, 260, /*tempsRestant*/ "0:01");
+	temps = new Timer(355, 258, tempsRestant);
 	temps->start();
 
 	if (gameStats->GetSound())
@@ -83,147 +83,40 @@ void SceneGame::clear(){
 
 void SceneGame::update(){
 	if (!gameStats->GetPause()){
-		// ACTIONS.
-		int action = actions->update();
-		switch (action){
-		case -1:
-			break;
-		case 0: // REST_VEL_SPAWN
-			actions->DecrementVelocitySkill();
-			enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
-			break;
-		case 1: // PLUS_VEL_SPAWN
-			actions->IncrementVelocitySkill();
-			enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
-			break;
-		case 10: // PAUSAR JOC.
-			gameStats->SetPause(true);
-			audioManager->pauseMusic();
-			inputManager->ResetClick();
-			break;
-		case 11: // MOAB. Explotar tots els lemmings.
-			for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
-				if (!(*itLem)->GetContExplotar())
-					(*itLem)->SetContadorTemps(temps->getTime());
-			}
-			break;
-		}
-
+		updateActions();
 		temps->update();
-
-		// ENTER DOOR.
-		enterDoor->update(temps->getTimeMs());
-		if (enterDoor->getSpawnning()){
-			Lemming* lemming = new Lemming();
-			int posX = mapa->GetPosX() + ((enterDoor->GetPosX() / 2) - 3);
-			int posY = mapa->GetPosY() + enterDoor->GetPosY();
-			lemming->init(posX, posY, mapa->GetPosX(), mapa->GetPosY());
-			lemmings.push_back(lemming);
-		}
-
-		// EXIT DOOR.
-		exitDoor->UpdateAnimacio();
-
-		// LEMMINGS.
-		cursorChanged = false;
-		for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
-			int x1 = ((*itLem)->GetPosX() + (*itLem)->GetLimitX()) / mapa->GetSizeTile();
-			int y1 = (*itLem)->GetPosY() / mapa->GetSizeTile();
-			int x2 = ((*itLem)->GetPosX() + (*itLem)->GetWidth()) / mapa->GetSizeTile();
-			int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / mapa->GetSizeTile();
-			(*itLem)->update(mapa, x1, y1, x2, y2, temps->getTime());
-
-			if (!cursorChanged && (*itLem)->CursorOnLemming())
-				cursorChanged = true;
-
-			if (inputManager->CheckClickLeft()){
-				int numUsos = actions->GetNumberUsesSkill(currAction);
-				if ((*itLem)->SetSkill(numUsos, currAction, temps->getTime())){
-					actions->DetractUseSkill(currAction);
-					inputManager->ResetClick();
-				}
-			}
-
-			// Si el Lemming surt per la porta.
-			if ((*itLem)->GetEstat() != (*itLem)->RESCUED){
-				if (mapa->GetPosX() + x1 > (exitDoor->GetPosX() / mapa->GetSizeTile()) + 31 && mapa->GetPosX() + x2 < ((exitDoor->GetPosX() + exitDoor->GetWidth()) / mapa->GetSizeTile()) + 22 &&
-					mapa->GetPosY() + y1 >(exitDoor->GetPosY() / mapa->GetSizeTile()) + 5 && mapa->GetPosY() + y2 < exitDoor->GetPosY() + exitDoor->GetHeight()){
-					(*itLem)->SetRescatar();
-				}
-			}
-
-			// ESBORRAR LEMMINGS.
-
-			// Si el lemming ha completat l'animació de caminar cap a la porta, s'esborra i incrementa el número de Lemmings salvats.
-			if ((*itLem)->GetRescatat()){
-				lemmings.erase(itLem);
-				itLem = lemmings.begin();
-				lemmingsSaved++;
-				//updateNumeroLemSaved();
-			}
-
-			// Si surten del mapa o moren.
-			if ((mapa->GetPosX() + x1 < mapa->GetPosX() || mapa->GetPosX() + x2 > mapa->GetPosX() + mapa->GetWidthMap() || mapa->GetPosY() + y2 > mapa->GetPosY() + mapa->GetHeightMap())
-				|| (*itLem)->GetMort()){
-				lemmings.erase(itLem);
-				itLem = lemmings.begin();
-				lemmingsMorts++;
-				//updateNumeroLemEnJoc();
-			}
-
-			if (lemmings.size() == 0){
-				if ((lemmingsSaved + lemmingsMorts) == numLemmings)
-					gameFinish = true;
-				break;
-			}
-
-			if ((*itLem)->GetEstat() == (*itLem)->STOP && mapa->GetMapa(x1, y2 - 1) == 0 && mapa->GetMapa(x2 + 1, y2 - 1) == 0){
-
-				for (int i = -10; i < 3; i++){
-
-					mapa->CrearPosMapa(x1, y2 + i, 3);
-
-					mapa->CrearPosMapa(x1 + 1, y2 + i, 3);
-
-					mapa->CrearPosMapa(x1 + 2, y2 + i, 3);
-
-					mapa->CrearPosMapa(x1 + 3, y2 + i, 3);
-
-					mapa->CrearPosMapa(x2 + 1, y2 + i, 3);
-
-					mapa->CrearPosMapa(x2, y2 + i, 3);
-
-					mapa->CrearPosMapa(x2 - 1, y2 + i, 3);
-				}
-			}
-
-		}
-
-		if (cursorChanged && !cursor->GetChangedCursor())
-			cursor->ChangeCursor();
-		else if (!cursorChanged && cursor->GetChangedCursor())
-			cursor->ChangeCursor();
+		updateLemmings();
+		updateDoors();
+		updateChangeCursor();
 
 		if (temps->getTempsOut()){
 			audioManager->pauseMusic();
-			// Passar info necessària ScenePostGame.*
 			gameFinish = true;
 		}
 
 		if (gameFinish){
-			if (lemmingsSaved >= lemmingsToSave)
+			if (lemmingsSaved >= lemmingsToSave / 10)
 				gameStats->SetWin(true);
 
-			sPostGame->initFromGame(lemmingsSaved, lemmingsToSave);
+			sPostGame->initFromGame(lemmingsSaved * 10, lemmingsToSave * 10);
 			smManager->changeScene(smManager->POST_GAME);
 			gameFinish = false;
 		}
+
+		if (inputManager->CheckPause()){
+			gameStats->SetPause(true);
+			audioManager->pauseMusic();
+			inputManager->ResetPause();
+		}
+
 	}
-	else if (inputManager->CheckClickLeft()){
+	else if (gameStats->GetPause() && inputManager->CheckPause()){
 		gameStats->SetPause(false);
 		audioManager->resumeMusic();
-		inputManager->ResetClick();
+		inputManager->ResetPause();
 	}
+	else if (gameStats->GetPause() && inputManager->CheckClickLeft())
+		checkUnpaused();
 
 	cursor->Update(); 
 
@@ -250,4 +143,146 @@ void SceneGame::render(){
 	temps->render();
 
 	cursor->render();
+}
+
+
+void SceneGame::updateActions(){
+	int action = actions->update();
+	switch (action){
+	case -1:
+		break;
+	case 0: // REST_VEL_SPAWN
+		actions->DecrementVelocitySkill();
+		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
+		break;
+	case 1: // PLUS_VEL_SPAWN
+		actions->IncrementVelocitySkill();
+		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
+		break;
+	case 10: // PAUSAR JOC.
+		gameStats->SetPause(!gameStats->GetPause());
+		audioManager->pauseMusic();
+		inputManager->ResetClick();
+		break;
+	case 11: // MOAB.
+		if (lemmings.size() > 0){
+			enterDoor->notMoreSpawns();
+			//Explotar tots els lemmings.
+			for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+				if (!(*itLem)->GetContExplotar())
+					(*itLem)->SetContadorTemps(temps->getTime());
+			}
+		}
+		break;
+	default:
+		currAction = action;
+		break;
+	}
+}
+
+void SceneGame::updateDoors(){
+	// ENTER DOOR.
+	enterDoor->update(temps->getTimeMs());
+	if (enterDoor->getSpawnning()){
+		Lemming* lemming = new Lemming();
+		int posX = mapa->GetPosX() + ((enterDoor->GetPosX() / 2) - 3);
+		int posY = mapa->GetPosY() + enterDoor->GetPosY();
+		lemming->init(posX, posY, mapa->GetPosX(), mapa->GetPosY());
+		lemmings.push_back(lemming);
+	}
+
+	// EXIT DOOR.
+	exitDoor->UpdateAnimacio();
+}
+
+void SceneGame::updateLemmings(){
+	cursorChanged = false;
+	for (itLem = lemmings.begin(); itLem != lemmings.end(); itLem++){
+		int x1 = ((*itLem)->GetPosX() + (*itLem)->GetLimitX()) / mapa->GetSizeTile();
+		int y1 = (*itLem)->GetPosY() / mapa->GetSizeTile();
+		int x2 = ((*itLem)->GetPosX() + (*itLem)->GetWidth()) / mapa->GetSizeTile();
+		int y2 = ((*itLem)->GetPosY() + (*itLem)->GetHeight()) / mapa->GetSizeTile();
+		(*itLem)->update(mapa, x1, y1, x2, y2, temps->getTime());
+
+		if (!cursorChanged && (*itLem)->CursorOnLemming())
+			cursorChanged = true;
+
+		// Posar habilitats als Lemmings.
+		if (inputManager->CheckClickLeft()){
+			int numUsos = actions->GetNumberUsesSkill(currAction);
+			if ((*itLem)->SetSkill(numUsos, currAction, temps->getTime())){
+				actions->DetractUseSkill(currAction);
+				inputManager->ResetClick();
+			}
+		}
+
+		// Si el Lemming surt per la porta.
+		if ((*itLem)->GetEstat() != (*itLem)->RESCUED){
+			if (mapa->GetPosX() + x1 > (exitDoor->GetPosX() / mapa->GetSizeTile()) + 31 && mapa->GetPosX() + x2 < ((exitDoor->GetPosX() + exitDoor->GetWidth()) / mapa->GetSizeTile()) + 22 &&
+				mapa->GetPosY() + y1 >(exitDoor->GetPosY() / mapa->GetSizeTile()) + 5 && mapa->GetPosY() + y2 < exitDoor->GetPosY() + exitDoor->GetHeight()){
+				(*itLem)->SetRescatar();
+			}
+		}
+
+		// Si el lemming ha completat l'animació de caminar cap a la porta, s'esborra i incrementa el número de Lemmings salvats.
+		if ((*itLem)->GetRescatat()){
+			lemmingsSaved++;
+			lemmings.erase(itLem);
+			if (lemmings.size() == 0){
+				if (((lemmingsSaved + lemmingsMorts) >= numLemmings) || (enterDoor->getNumToSpawn() + lemmingsSaved + lemmingsMorts) >= numLemmings)
+					gameFinish = true;
+				break;
+			}
+			itLem = lemmings.begin();
+		}
+		// Si surten del mapa o moren.
+		else if ((mapa->GetPosX() + x1 < mapa->GetPosX() || mapa->GetPosX() + x2 > mapa->GetPosX() + mapa->GetWidthMap() || mapa->GetPosY() + y2 > mapa->GetPosY() + mapa->GetHeightMap())
+			|| (*itLem)->GetMort()){
+			lemmingsMorts++;
+			lemmings.erase(itLem);
+			if (lemmings.size() == 0){
+				if (((lemmingsSaved + lemmingsMorts) >= numLemmings) || (enterDoor->getNumToSpawn() + lemmingsSaved + lemmingsMorts) >= numLemmings)
+					gameFinish = true;
+				break;
+			}
+			itLem = lemmings.begin();
+		}
+
+		if ((*itLem)->GetEstat() == (*itLem)->STOP && mapa->GetMapa(x1, y2 - 1) == 0 && mapa->GetMapa(x2 + 1, y2 - 1) == 0){
+
+			for (int i = -6; i < 3; i++){
+				mapa->CrearPosMapa(x1, y2 + i, 3);
+				mapa->CrearPosMapa(x1 + 1, y2 + i, 3);
+				mapa->CrearPosMapa(x1 + 2, y2 + i, 3);
+				mapa->CrearPosMapa(x1 + 3, y2 + i, 3);
+
+				mapa->CrearPosMapa(x2 + 1, y2 + i, 3);
+				mapa->CrearPosMapa(x2, y2 + i, 3);
+				mapa->CrearPosMapa(x2 - 1, y2 + i, 3);
+				mapa->CrearPosMapa(x2 - 2, y2 + i, 3);
+			}
+		}
+	}
+}
+
+void SceneGame::updateChangeCursor(){
+	if (cursorChanged && !cursor->GetChangedCursor())
+		cursor->ChangeCursor();
+	else if (!cursorChanged && cursor->GetChangedCursor())
+		cursor->ChangeCursor();
+}
+
+void SceneGame::checkUnpaused(){
+	int action = actions->update();
+	switch (action){
+	case 10: // PAUSAR JOC.
+		gameStats->SetPause(!gameStats->GetPause());
+		audioManager->resumeMusic();
+		inputManager->ResetClick();
+		break;
+	default:
+		break;
+	}
+
+
 }

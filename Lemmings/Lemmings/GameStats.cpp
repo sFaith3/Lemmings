@@ -4,8 +4,8 @@
 GameStats* GameStats::pInstance = NULL;
 
 GameStats::GameStats(){
-	level = 2;
-	sound = false;
+	level = 1;
+	sound = true;
 	pause = false;
 	win = false;
 }

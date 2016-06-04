@@ -63,3 +63,11 @@ void DoorEnter::setTimeToSpawn(int temps){
 	temps = 50 - temps;
 	timeToSpawn = ((temps * _timeToSpawn) / 50) + _timeToSpawn;
 }
+
+int DoorEnter::getNumToSpawn(){
+	return leftToSpawn;
+}
+
+void DoorEnter::notMoreSpawns(){
+	currEstat = EMPTY;
+}

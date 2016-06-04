@@ -32,7 +32,6 @@ void InputManager::Update(){
 	SDL_Event test_event;
 	SDL_Scancode tecla;
 	back = false;
-	pause = false;
 	while (SDL_PollEvent(&test_event)) {
 		switch (test_event.type) {
 		case SDL_KEYDOWN:
@@ -74,6 +73,9 @@ void InputManager::Update(){
 				/*case SDL_SCANCODE_:
 					enter = true;
 					break;*/
+			case SDL_SCANCODE_PAUSE:
+				pause = true;
+				break;
 			default:
 				break;
 			}
@@ -174,6 +176,11 @@ void InputManager::ResetClick(){
 		clickLeft = false;
 	if (clickRight)
 		clickRight = false;
+}
+
+void InputManager::ResetPause(){
+	if (pause)
+		pause = false;
 }
 
 

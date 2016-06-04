@@ -3,7 +3,7 @@
 
 // \param tempsRestant en format "minuts : segons". Els minuts inferiors a 10 han d'anar sense el 0 davant.
 Timer::Timer(int x, int y, string tempsRestant){
-	ElementHUD::init(x, y, /*"Assets/Images/Timer/Temps2.png"*/NULL, 0, 0, 150, 25, 1, 1);
+	ElementHUD::init(x, y, "Assets/Images/HUD/Timer/Temps.png", 0, 0, 100, 19, 1, 1);
 	
 	mStarTicks = 0;
 	mPausedTicks = 0;
@@ -20,11 +20,11 @@ Timer::Timer(int x, int y, string tempsRestant){
 	this->tempsRestant = ((minuts * 60) + primerNumSegons + segonNumSegons);
 
 	int xNum, yNum;
-	xNum = x + 150;
-	yNum = y;
+	xNum = x + 45;
+	yNum = y + 2;
 	nums.push_back(new ABCsAlphaNum());
 	nums.back()->init(xNum, yNum, 1, 1, minuts);
-	xNum += 24;
+	xNum += 28;
 	nums.push_back(new ABCsAlphaNum());
 	nums.back()->init(xNum, yNum, 1, 1, primerNumSegons);
 	xNum += 17;

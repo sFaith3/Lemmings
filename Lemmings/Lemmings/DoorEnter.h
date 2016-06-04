@@ -27,5 +27,9 @@ public:
 	bool getSpawnning();
 
 	void setTimeToSpawn(int temps);
+
+	int getNumToSpawn();
+
+	void notMoreSpawns();
 };
 

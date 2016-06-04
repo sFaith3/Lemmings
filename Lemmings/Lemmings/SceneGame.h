@@ -64,6 +64,12 @@ public:
 	void clear();
 	void update();
 	void render();
+
+	void updateActions();
+	void updateDoors();
+	void updateLemmings();
+	void updateChangeCursor();
+	void checkUnpaused();
 };
 
 #endif

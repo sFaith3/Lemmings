@@ -5,6 +5,8 @@ Actions::Actions(){
 	for (int i = 0; i < 12; i++)
 		skills.push_back(new Skill());
 
+	gameStats = GameStats::getInstanceGameStats();
+
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
 
@@ -17,14 +19,14 @@ int Actions::init(float scaleX, float scaleY, string velMinimaSpawn, string trep
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
-	ElementHUD::init(x, y, "Assets/Images/hud.png", 0, 0, 480, hAction, scaleX, scaleY);
+	ElementHUD::init(x, y, "Assets/Images/HUD/Skills/hud.png", 0, 0, 480, hAction, scaleX, scaleY);
 	
 	currButton = TREPAR;
 
 	int xSkill = x + 1;
 	int wSkill = 40;
 	int hSkill = 61;
-	const char* imgSkillPressed = "Assets/Images/skillsPressed.png";
+	const char* imgSkillPressed = "Assets/Images/HUD/Skills/skillsPressed.png";
 
 	skills[0]->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, velMinimaSpawn);
 	xSkill += wSkill;
@@ -69,7 +71,7 @@ int Actions::update(){
 		if ((*itSkills)->update()){
 			if (currButton != -1){
 				int pressedBut = (*itSkills)->GetId();
-				if (pressedBut != REST_VEL_SPAWN && pressedBut != PLUS_VEL_SPAWN && pressedBut != PAUSA && pressedBut != MOAB){
+				if (!gameStats->GetPause() && (pressedBut != REST_VEL_SPAWN && pressedBut != PLUS_VEL_SPAWN && pressedBut != PAUSA && pressedBut != MOAB)){
 					skills[currButton]->SetPressed(false);
 					(*itSkills)->SetPressed(true);
 					inputManager->ResetClick();
@@ -79,14 +81,13 @@ int Actions::update(){
 
 				return (*itSkills)->GetId();
 			}
-
 			return -1;
 		}
 	}
 
 	int number = inputManager->CheckNumber();
 	if (number != -1){
-		if (number != REST_VEL_SPAWN && number != PLUS_VEL_SPAWN && number != PAUSA && number != MOAB){
+		if (number != REST_VEL_SPAWN && number != PLUS_VEL_SPAWN && number != MOAB){
 			skills[currButton]->SetPressed(false);
 			skills[number]->SetPressed(true);
 			inputManager->ResetNumber();

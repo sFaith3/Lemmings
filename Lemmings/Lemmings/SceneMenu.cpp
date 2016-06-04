@@ -13,7 +13,7 @@ SceneMenu::SceneMenu(){
 	float scaleX = 0.65;
 	float scaleY = 0.8;
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/menu.png", 0, 0, 809, 446, scaleX, scaleY);
+	fons->init(0, 0, "Assets/Images/Menu/menu.png", 0, 0, 809, 446, scaleX, scaleY);
 
 	Button button;
 	int wButton = 132 * scaleX;

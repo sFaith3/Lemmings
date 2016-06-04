@@ -29,8 +29,8 @@ void Skill::init(int id, int posX, int posY, int width, int height, int posXini,
 
 		velMinimaSpawn = NULL;
 
-		int spacingX = 10;
-		int xDigit = posX + spacingX;
+		int spacingX = 12;
+		int xDigit = posX + 4;
 		int spacingY = 8;
 		int yDigit = posY + spacingY;
 		float digScaleX = 1;

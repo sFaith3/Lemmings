@@ -18,6 +18,8 @@ private:
 
 	int currButton; // Indica l'ActionEnum en què es troba.
 
+	GameStats* gameStats;
+
 	InputManager* inputManager;
 
 public:
