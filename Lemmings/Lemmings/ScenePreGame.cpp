@@ -38,23 +38,20 @@ void ScenePreGame::init(){
 	string rutaTilesets = "Assets/Levels/";
 	int nivell = gameStats->GetLevel();
 	int ready = true;
-	switch (nivell){
-	case 1:
-		rutaMapa += "lvl01/lvl01.tmx";
-		rutaTilesets += "lvl01/";
-		break;
-	case 2:
-		rutaMapa += "lvl01/lvl01.tmx";
-		rutaTilesets += "lvl01/";
-		break;
-	default:
+
+	if (nivell > NUM_MAPS) {
 		cout << "More levels comming soon!\n";
 		ready = false;
 		gameStats->ResetLevel();
 		inputManager->SetCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
-		break;
 	}
+	else {
+		string strNivell = to_string(nivell);
+		rutaMapa += "lvl0" + strNivell + "/lvl0" + strNivell + ".tmx";
+		rutaTilesets += "lvl0" + strNivell + "/";
+	}
+
 	if (ready){
 		const char* _nomFile = nomFile.c_str();
 		const char* _rutaMapa = rutaMapa.c_str();
