@@ -1,35 +1,29 @@
 #include "Utils.h"
+#include "SingletonManager.h"
 #include "SceneManager.h"
-
 
 int main(int argc, char* args[]){
 
-	int scene = 0;
+	InputManager* inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
+	SceneManager* sceneManager = SceneManager::getInstanceSM();
 
-	cin >> scene;
+	sceneManager->init();
 
+	bool fi = false; // Bucle del joc.
+	while (!fi){
+		/* --- LOAD SCENE --- */
+		sceneManager->update();
 
-	// Init escena.
+		/* --- CHECK INPUT --- */
+		inputManager->Update();
+		if (((inputManager->CheckESC() || inputManager->CheckNumber() == 4) && sceneManager->getNumCurrScene() == sceneManager->MENU) || inputManager->CheckQuit())
+			fi = true;
 
-	//while (){
+		/* --- RENDER --- */
+		sceneManager->render();
+	}
 
-		/*UPDATE DELTATIME*/
-		//video->UpdateTime();
-		
-		/*CHECK INPUT*/
-		//input->Update();
-		
-		/*UPDATE GAME*/
-		//sceneManager.Update();
-		
-		/*RENDER*/
-		/*video->clearScreen(0xFFFFFF);
-		sceneManager.Render();
+	sceneManager->~SceneManager();
 
-		video->updateScreen();*/
-	//}
-
-
-	//video->close();
 	return 0;
 }

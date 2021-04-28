@@ -1,7 +1,10 @@
-#include "SceneManager.h"
-#include "InputManager.h"
-#include "VideoManager.h"
-#include "ResourceManager.h"
+#ifndef SINGLETONMANAGER_H
+#define SINGLETONMANAGER_H
+
+#include "SDL\InputManager.h"
+#include "SDL\VideoManager.h"
+#include "SDL\AudioManager.h"
+#include "SDL\ResourceManager.h"
 
 class SingletonManager
 {
@@ -10,13 +13,20 @@ private:
 	
 	static SingletonManager* sInstance;
 
-	SceneManager* sceneManager;
 	InputManager* inputManager;
 	VideoManager* videoManager;
+	AudioManager* audioManager;
 	ResourceManager* resourceManager;
 
 public:
 	~SingletonManager();
 
 	static SingletonManager* getInstanceSingleton();
+
+	InputManager* getInputManager();
+	VideoManager* getVideoManager();
+	AudioManager* getAudioManager();
+	ResourceManager* getResourceManager();
 };
+
+#endif

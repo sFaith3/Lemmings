@@ -6,5 +6,7 @@ class ElementHUD :
 public:
 	ElementHUD();
 	~ElementHUD();
+
+	void render();
 };
 
