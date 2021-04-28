@@ -355,16 +355,13 @@ void VideoManager::updateScreen(){
 }
 
 
-void VideoManager::updateTime(){
-	if (lastTime != -1){
+void VideoManager::updateTime() {
+	if (lastTime != -1) {
 		int currentTime = getTime();
 		deltaTime = (float)(currentTime - lastTime);
-		if (!texture){
-			//Per a evitar que l'input del ratolí es ralentitzi, s'ha d'eliminar la restricció de FPS.
-			if (deltaTime < msFrame){
-				waitTime(msFrame - deltaTime);
-				deltaTime = msFrame;
-			}
+		if (deltaTime < msFrame) {
+			waitTime(msFrame - deltaTime);
+			deltaTime = msFrame;
 		}
 		lastTime = currentTime;
 	}
