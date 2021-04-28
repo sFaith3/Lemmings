@@ -10,6 +10,8 @@
 #include "Cursor.h"
 #include "DoorEnter.h"
 #include "Timer.h"
+#include "Word.h"
+#include "Counter.h"
 
 class SceneGame :
 	public Scene
@@ -28,7 +30,7 @@ private:
 
 	// Paràmetres de l'escena on s'informa sobre la missió. També seteja els elements de la HUD que corresponen a aquestes variables.
 	int numLemmings;
-	int lemmingsToSave;
+	int lemmingsToSave; // En tant percent.
 	string tempsRestant, releaseRate; 
 
 	int lemmingsMorts;
@@ -42,6 +44,17 @@ private:
 	vector<Lemming*> lemmings;
 	vector<Lemming*>::iterator itLem;
 	
+	Word* states[17];
+	int currState;
+
+	Counter* counters[2];
+
+	enum SoundsEnum{
+		StartGame, SelectSkill, PutSkill
+	};
+	int idSounds[3];
+	int initialSound;
+
 	// Cursor.
 	bool cursorChanged;
 	Cursor* cursor;

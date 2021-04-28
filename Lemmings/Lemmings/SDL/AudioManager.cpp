@@ -9,7 +9,9 @@ AudioManager::AudioManager(){
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
 
-	Mix_AllocateChannels(128);
+	Mix_AllocateChannels(16);
+	Mix_Volume(-1, MIX_MAX_VOLUME / 2);
+	Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 }
 
 
@@ -48,7 +50,7 @@ Sint32 AudioManager::getMusicID(const char* file){
 
 
 Sint32 AudioManager::addSound(const char* file){
-	Mix_Chunk* sound = Mix_LoadWAV(file);
+	Mix_Chunk *sound = Mix_LoadWAV(file);
 	if (sound == NULL){
 		cout << "Failed to load sound effect! SDL_mixer Error:" << Mix_GetError() << endl;
 		return -1;
@@ -75,18 +77,18 @@ void AudioManager::playMusic(int audio){
 }
 
 void AudioManager::playMusic(int audio, int loop){
-Mix_Music *music = ResourceManager::getInstanceResourceManager()->getMusicByID(audio);
-Mix_PlayMusic(music, loop);
+	Mix_Music *music = ResourceManager::getInstanceResourceManager()->getMusicByID(audio);
+	Mix_PlayMusic(music, loop);
 }
 
 void AudioManager::playSound(int audio){
 	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getSoundByID(audio);
-	Mix_PlayChannel(1, sound, 0);
+	Mix_PlayChannel(-1, sound, 0);
 }
 
 void AudioManager::playSound(int audio, int loop){
 	Mix_Chunk *sound = ResourceManager::getInstanceResourceManager()->getSoundByID(audio);
-	Mix_PlayChannel(1, sound, loop);
+	Mix_PlayChannel(-1, sound, loop);
 }
 
 
@@ -114,4 +116,24 @@ void AudioManager::resumeMusic(){
 
 void AudioManager::resumeSound(){
 	Mix_Resume(-1);
+}
+
+
+void AudioManager::setVolumeMusic(int vol){
+	if (vol >= 0 && vol <= 128)
+		Mix_VolumeMusic(vol);
+}
+
+void AudioManager::setVolumeSound(int vol){
+	if (vol >= 0 && vol <= 128)
+		Mix_Volume(-1, vol);
+}
+
+
+void AudioManager::stopMusic(){
+	Mix_HaltMusic();
+}
+
+void AudioManager::stopSounds(){
+	Mix_HaltChannel(-1);
 }

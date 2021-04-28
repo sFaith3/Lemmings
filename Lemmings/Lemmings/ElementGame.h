@@ -17,7 +17,8 @@ public:
 	ElementGame();
 	~ElementGame();
 
-	void init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim);
+	void init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim);
+	void render();
 
 	void UpdateAnimacio(); // Animacio de SpriteSheet.
 };

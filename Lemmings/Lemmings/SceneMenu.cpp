@@ -6,14 +6,14 @@ SceneMenu* SceneMenu::gInstance = NULL;
 SceneMenu::SceneMenu(){
 	sGame = SceneGame::getInstanceSceneGame();
 
-	gameStats = GameStats::getInstanceGameStats();
-
 	smManager = SceneManager::getInstanceSM();
 
 	float scaleX = 0.65;
 	float scaleY = 0.8;
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/Menu/menu.png", 0, 0, 809, 446, scaleX, scaleY);
+	fons->init(0, 0, "Assets/Images/Menu/menu.png", false, 0, 0, 809, 446, scaleX, scaleY);
+	
+	idMusic = audioManager->getMusicID("Assets/Audios/Music/start.wav");
 
 	Button button;
 	int wButton = 132 * scaleX;
@@ -23,13 +23,21 @@ SceneMenu::SceneMenu(){
 	button.init(NEW_LEVEL, 260, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
 	button.init(MUTE_SOUND, 422, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
-	buttons.push_back(button); // TECLA.
+	buttons.push_back(button);
 	/*button.init(FUN, 584, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
-	buttons.push_back(button);*/ // TECLES AMUNT I AVALL.*/
+	buttons.push_back(button);*/ // TECLES AMUNT I AVALL.
 	button.init(EXIT, 260, 285, wButton, hButton - 1, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
 
-	idMusic = audioManager->getMusicID("Assets/Audios/Music/start.wav");
+	Background imgAudio;
+	int wImgAudio = 135;
+	int hImgAudio = 50;
+	imgAudio.init(422, 188, "Assets/Images/Menu/Fx.png", false, 0, 0, wImgAudio, hImgAudio, scaleX, scaleY);
+	imgAudios[0] = imgAudio;
+	imgAudio.init(422, 188, "Assets/Images/Menu/Music.png", false, 0, 0, wImgAudio, hImgAudio, scaleX, scaleY);
+	imgAudios[1] = imgAudio;
+
+	currAudio = Music;
 }
 
 
@@ -55,43 +63,76 @@ void SceneMenu::update(){
 		if (itBut->update()){
 			switch (itBut->GetId()){
 			case PLAYER:
-				inputManager->ResetClick();
 				audioManager->pauseMusic();
+				inputManager->SetCursorRelative(true);
 				smManager->changeScene(smManager->PRE_GAME);
-				return;
+				break;
 			case NEW_LEVEL:
-
+				//To load a map level through a code.
 				break;
 			case MUTE_SOUND:
-				gameStats->SetSound(!gameStats->GetSound());
+				switch (currAudio){
+				case Mute:
+					currAudio = Fx;
+					audioManager->setVolumeMusic(0);
+					audioManager->setVolumeSound(128);
+					break;
+				case Fx:
+					currAudio = Music;
+					audioManager->setVolumeMusic(128);
+					audioManager->setVolumeSound(0);
+					break;
+				case Music:
+					currAudio = Mute;
+					audioManager->setVolumeMusic(0);
+					audioManager->setVolumeSound(0);
+					break;
+				}
 				break;
 			case EXIT:
 				inputManager->SetNumber(EXIT);
 				break;
 			}
+			inputManager->ResetClick();
 		}
 	}
-	inputManager->ResetClick();
 
 	switch (inputManager->CheckNumber()){
 	case PLAYER:
-		inputManager->ResetNumber();
-		audioManager->pauseMusic();;
+		audioManager->pauseMusic();
+		inputManager->SetCursorRelative(true);
 		smManager->changeScene(smManager->PRE_GAME);
 		break;
 	case NEW_LEVEL:
-
+		//To load a map level through a code.
 		break;
 	case MUTE_SOUND:
-		bool soJoc = gameStats->GetSound();
-		gameStats->SetSound(!soJoc);
-		inputManager->ResetNumber();
+		switch (currAudio){
+		case Mute:
+			currAudio = Fx;
+			audioManager->setVolumeMusic(0);
+			audioManager->setVolumeSound(128);
+			break;
+		case Fx:
+			currAudio = Music;
+			audioManager->setVolumeMusic(128);
+			audioManager->setVolumeSound(0);
+			break;
+		case Music:
+			currAudio = Mute;
+			audioManager->setVolumeMusic(0);
+			audioManager->setVolumeSound(0);
+			break;
+		}
 		break;
 	}
+	if (inputManager->CheckNumber() != -1)
+		inputManager->ResetNumber();
 }
-
 
 
 void SceneMenu::render(){
 	fons->render();
+	if (currAudio != Mute)
+		imgAudios[currAudio].render();
 }

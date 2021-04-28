@@ -35,9 +35,9 @@ void Skill::init(int id, int posX, int posY, int width, int height, int posXini,
 		int yDigit = posY + spacingY;
 		float digScaleX = 1;
 		float digScaleY = 1;
-		digits[0]->init(xDigit, yDigit, digScaleX, digScaleY, numPrimerDigit);
+		digits[0]->Init(xDigit, yDigit, digScaleX, digScaleY, numPrimerDigit);
 		xDigit += 10;
-		digits[1]->init(xDigit, yDigit, digScaleX, digScaleY, numSegonDigit);
+		digits[1]->Init(xDigit, yDigit, digScaleX, digScaleY, numSegonDigit);
 	}
 }
 

@@ -11,7 +11,7 @@ ABCsAlphaNum::~ABCsAlphaNum(){
 }
 
 
-void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
+void ABCsAlphaNum::Init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	posX = x;
 	posY = y;
 
@@ -27,7 +27,9 @@ void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	ChangeValue(alphaNum);
 }
 
-void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, char alphaLetter){
+
+
+void ABCsAlphaNum::Init(int x, int y, float scaleX, float scaleY, char alphaLetter){
 	posX = x;
 	posY = y;
 
@@ -43,186 +45,71 @@ void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, char alphaLett
 	ChangeValue(alphaLetter);
 }
 
-void ABCsAlphaNum::ChangeValue(int num){
-	int pos = NULL;
-	switch (num){
-	case 0:
-		pos = ZERO;
-		break;
-	case 1:
-		pos = ONE;
-		break;
-	case 2:
-		pos = TWO;
-		break;
-	case 3:
-		pos = THREE;
-		break;
-	case 4:
-		pos = FOUR;
-		break;
-	case 5:
-		pos = FIVE;
-		break;
-	case 6:
-		pos = SIX;
-		break;
-	case 7:
-		pos = SEVEN;
-		break;
-	case 8:
-		pos = EIGHT;
-		break;
-	case 9:
-		pos = NINE;
-		break;
-	}
-	
-	int row = 4;
-	pos -= (digitsMaxRow * row);
-
-	srcX = xIni + ((width + spacingX) * pos);
-	srcY = yIni + ((height + spacingY) * row);
+void ABCsAlphaNum::Render(){
+	videoManager->renderTexture(idImg, srcX, srcY, width, height, scaleX, scaleY, posX, posY);
 }
 
 
-void ABCsAlphaNum::ChangeValue(char lletres){
-	int pos = -1;
-	switch (lletres){
-	case 'A': pos = A;
-		break;
-	case 'B': pos = B;
-		break;
-	case 'C': pos = C;
-		break;
-	case 'D': pos = D;
-		break;
-	case 'E': pos = E;
-		break;
-	case 'F': pos = F;
-		break;
-	case 'G': pos = G;
-		break;
-	case 'H': pos = H;
-		break;
-	case 'I': pos = I;
-		break;
-	case 'J': pos = J;
-		break;
-	case 'K': pos = K;
-		break;
-	case 'L': pos = L;
-		break;
-	case 'M': pos = M;
-		break;
-	case 'N': pos = N;
-		break;
-	case 'O': pos = O;
-		break;
-	case 'P': pos = P;
-		break;
-	case 'Q': pos = Q;
-		break;
-	case 'R': pos = R;
-		break;
-	case 'S': pos = S;
-		break;
-	case 'T': pos = T;
-		break;
-	case 'U': pos = U;
-		break;
-	case 'V': pos = V;
-		break;
-	case 'W': pos = W;
-		break;
-	case 'X': pos = X;
-		break;
-	case 'Y': pos = Y;
-		break;
-	case 'Z': pos = Z;
-		break;
+void ABCsAlphaNum::Move(int x, int y){
+	posX += x;
+	posY += y;
+}
 
-	case 'a': pos = a;
+void ABCsAlphaNum::ChangeValue(int num){
+	switch (num){
+	case 0:
+		num = ZERO;
 		break;
-	case 'b': pos = b;
-		break;
-	case 'c': pos = c;
-		break;
-	case 'd': pos = d;
-		break;
-	case 'e': pos = e;
-		break;
-	case 'f': pos = f;
-		break;
-	case 'g': pos = g;
-		break;
-	case 'h': pos = h;
-		break;
-	case 'i': pos = i;
-		break;
-	case 'j': pos = j;
-		break;
-	case 'k': pos = k;
-		break;
-	case 'l': pos = l;
-		break;
-	case 'm': pos = m;
-		break;
-	case 'n': pos = n;
-		break;
-	case 'o': pos = o;
-		break;
-	case 'p': pos = p;
-		break;
-	case 'q': pos = q;
-		break;
-	case 'r': pos = r;
-		break;
-	case 's': pos = s;
-		break;
-	case 't': pos = t;
-		break;
-	case 'u': pos = u;
-		break;
-	case 'v': pos = v;
-		break;
-	case 'w': pos = w;
-		break;
-	case 'x': pos = x;
-		break;
-	case 'y': pos = y;
-		break;
-	case 'z': pos = z;
-		break;
-
-	case '!': pos = EXCLAMATION;
-		break;
-
 	default:
+		num += 51;
 		break;
+	}
+
+	int row = 4;
+	num -= (digitsMaxRow * row);
+
+	srcX = xIni + ((width + spacingX) * num);
+	srcY = yIni + ((height + spacingY) * row);
+}
+
+void ABCsAlphaNum::ChangeValue(char noNum){
+	if ((noNum >= 'A' && noNum <= 'Z') || (noNum >= 'a' && noNum <= 'z')){
+		noNum -= 'A';
+		if (noNum >= 32)
+			noNum -= 6; // -6 perquè en ASCII hi ha signes entremig de les lletres en majúscula i minúscula.
+	}
+	else{
+		switch (noNum){
+		case '!': noNum = EXCLAMATION;
+			break;
+		case '@': noNum = AT;
+			break;
+		case '#': noNum = HASH;
+			break;
+		case '$': noNum = DOLLAR;
+			break;
+		case '%': noNum = PERCENT;
+			break;
+		default:
+			break;
+		}
 	}
 
 	int row = 0;
-	if (pos >= N && pos <= Z)
+	if (noNum >= N && noNum <= Z)
 		row = 1;
-	else if (pos >= a && pos <= m)
+	else if (noNum >= a && noNum <= m)
 		row = 2;
-	else if (pos >= n && pos <= z)
+	else if (noNum >= n && noNum <= z)
 		row = 3;
-	else if (pos >= EXCLAMATION){
+	else if (noNum >= EXCLAMATION){
 		row = 5;
-		// Canvis per a l'spritesheet posat.
-		pos += 3;
+		noNum += 3; // Canvis per a l'spritesheet posat.
 	}
 
 	if (row > 0)
-		pos -= (digitsMaxRow * row);
+		noNum -= (digitsMaxRow * row);
 
-	srcX = xIni + ((width + spacingX) * pos);
+	srcX = xIni + ((width + spacingX) * noNum);
 	srcY = yIni + ((height + spacingY) * row);
-}
-
-
-void ABCsAlphaNum::Render(){
-	videoManager->renderTexture(idImg, srcX, srcY, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
 }

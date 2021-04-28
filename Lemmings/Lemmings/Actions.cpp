@@ -19,7 +19,7 @@ int Actions::init(float scaleX, float scaleY, string velMinimaSpawn, string trep
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
-	ElementHUD::init(x, y, "Assets/Images/HUD/Skills/hud.png", 0, 0, 480, hAction, scaleX, scaleY);
+	ElementHUD::init(x, y, "Assets/Images/HUD/Skills/hud.png", false, 0, 0, 480, hAction, scaleX, scaleY);
 	
 	currButton = TREPAR;
 
@@ -76,7 +76,7 @@ int Actions::update(){
 					(*itSkills)->SetPressed(true);
 					inputManager->ResetClick();
 
-					return currButton = (*itSkills)->GetId();
+					return (currButton != pressedBut) ? currButton = (*itSkills)->GetId() : -1;
 				}
 
 				return (*itSkills)->GetId();
@@ -92,7 +92,7 @@ int Actions::update(){
 			skills[number]->SetPressed(true);
 			inputManager->ResetNumber();
 
-			return currButton = skills[number]->GetId();
+			return (currButton != number) ? currButton = skills[number]->GetId() : -1;
 		}
 
 		return skills[number]->GetId();

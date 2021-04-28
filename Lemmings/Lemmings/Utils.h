@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <array>
 #include <math.h>
 #include <time.h>
 #include <map>

@@ -42,13 +42,13 @@ void ScenePostGame::init(){
 	float scaleX = 0.65;
 	int num = 0;
 
-	// NUMBER LEMMINGS.
+	// NUMBER LEMMINGS SAVED.
 	xDigit = _xDigit = 475;
 	yDigit = 51;
 	for (int i = lemmingsSaved.length() - 1; i >= 0; i--){
 		num = (int)lemmingsSaved[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
+		digits.back()->Init(xDigit, yDigit, scaleX, 1, num);
 		xDigit -= 16;
 	}
 	// LEMMINGS TO SAVE.
@@ -57,7 +57,7 @@ void ScenePostGame::init(){
 	for (int i = lemmingsToSave.length() - 1; i >= 0; i--){
 		num = (int)lemmingsToSave[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
+		digits.back()->Init(xDigit, yDigit, scaleX, 1, num);
 		xDigit -= 16;
 	}
 	if (gameStats->GetWin()){
@@ -66,7 +66,7 @@ void ScenePostGame::init(){
 		yDigit = 217;
 		int numNivell = gameStats->GetLevel();
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, 1, numNivell);
+		digits.back()->Init(xDigit, yDigit, scaleX, 1, numNivell);
 		// CODE LEVEL.
 		fileManager->Read("Assets/Levels/levels.txt", gameStats->GetLevel());
 		string codeLvl = fileManager->GetValueFromData("code");
@@ -75,17 +75,17 @@ void ScenePostGame::init(){
 		scaleX = 0.55;
 		for (int i = 0; i < codeLvl.length(); i++){
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->init(xDigit, yDigit, scaleX, 1, (char)codeLvl[i]);
+			digits.back()->Init(xDigit, yDigit, scaleX, 1, (char)codeLvl[i]);
 			xDigit += 20;
 		}
 
-		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", 0, 0, 480, 340, 1, 1);
+		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", false, 0, 0, 480, 340, 1, 1);
 	}
 	else
-		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/lose.png", 0, 0, 480, 340, 1, 1);
+		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/lose.png", false, 0, 0, 480, 340, 1, 1);
 }
 
-void ScenePostGame::clear(){
+void ScenePostGame::clean(){
 	gameStats->SetWin(false);
 
 	digits.clear();

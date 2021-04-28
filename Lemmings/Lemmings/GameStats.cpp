@@ -5,7 +5,6 @@ GameStats* GameStats::pInstance = NULL;
 
 GameStats::GameStats(){
 	level = 1;
-	sound = true;
 	pause = false;
 	win = false;
 }
@@ -24,12 +23,13 @@ GameStats* GameStats::getInstanceGameStats(){
 }
 
 
-int GameStats::GetLevel(){
-	return level;
+void GameStats::ResetLevel(){
+	level = 1;
 }
 
-bool GameStats::GetSound(){
-	return sound;
+
+int GameStats::GetLevel(){
+	return level;
 }
 
 bool GameStats::GetPause(){
@@ -43,10 +43,6 @@ bool GameStats::GetWin(){
 
 void GameStats::IncrementLevel(){
 	level++;
-}
-
-void GameStats::SetSound(bool enabled){
-	sound = enabled;
 }
 
 void GameStats::SetPause(bool paused){

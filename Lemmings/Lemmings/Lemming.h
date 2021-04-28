@@ -31,7 +31,16 @@ private:
 
 	int tempsLvl; // Temps restant de la partida.
 
+	bool immobilitzat; // Per a bloquejar aquella posició del mapa quan el Lemming s'aturi passant a l'estat "STOP".
+
 	bool rescatat; // S'activa quan un Lemming passa per la porta.
+
+	int currStairs;
+
+	enum SoundsEnum{
+		BeforeExplode, Explosion, FallDead, Stair, Yippee
+	};
+	int idSounds[5];
 	
 	SDL_RendererFlip flipType; // Gira la imatge quan canvïa la direcció.
 
@@ -69,6 +78,7 @@ public:
 	bool GetMort();
 	bool GetContExplotar();
 	bool GetRescatat();
+	bool GetPutStair();
 
 	// Sets per canviar l'Estat 
 	void SetMoure();   
@@ -98,10 +108,12 @@ public:
 	void Escalar();
 	void Cavar(Map *fons, int x2, int y2);
 	void Picar(Map *fons, int x2, int y2);
+	void Immobilitzar(Map *fons, int x1, int x2, int y1, int y2);
+	void PosarEscala(Map *fons, int x1, int x2, int y2);
 	void Caure();
 	void TempsFinal(int temps);
 	void ConstruirEscala();
-	void Explotar(Map *fons, int x2, int y2);
+	void Explotar(Map *fons, int x1, int y1, int x2, int y2);
 
 	// Equipables, com Paraigües i Escalar
 	void PutParaigues();

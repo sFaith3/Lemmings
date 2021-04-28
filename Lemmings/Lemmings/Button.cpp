@@ -46,11 +46,11 @@ bool Button::update(){
 
 void Button::render(){
 	if (idImgNormal != -1)
-		videoManager->renderTexture(idImgNormal, posXini, posYini, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
+		videoManager->renderTexture(idImgNormal, posXini, posYini, width, height, scaleX, scaleY, posX, posY);
 	
 	if (pressed){
 		if (idImgButPressed != -1)
-			videoManager->renderTexture(idImgButPressed, posXini, posYini, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
+			videoManager->renderTexture(idImgButPressed, posXini, posYini, width, height, scaleX, scaleY, posX, posY);
 	}
 }
 

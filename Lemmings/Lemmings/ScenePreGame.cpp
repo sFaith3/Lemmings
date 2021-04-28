@@ -9,7 +9,7 @@ ScenePreGame::ScenePreGame(){
 	nameLvl = numLemmings = lemmingsToSave = releaseRate = timeLvl = rating = "";
 
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/InfoScene/PreGame/infoMision.png", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
+	fons->init(0, 0, "Assets/Images/InfoScene/PreGame/infoMision.png", false, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
 
 	sGame = SceneGame::getInstanceSceneGame();
 
@@ -33,12 +33,11 @@ ScenePreGame* ScenePreGame::getInstanceScenePreGame(){
 
 
 void ScenePreGame::init(){
-	inputManager->SetCursorRelative(true);
-
 	string nomFile = "Assets/Levels/levels.txt";
 	string rutaMapa = "Assets/Levels/";
 	string rutaTilesets = "Assets/Levels/";
 	int nivell = gameStats->GetLevel();
+	int ready = true;
 	switch (nivell){
 	case 1:
 		rutaMapa += "lvl01/lvl01.tmx";
@@ -48,105 +47,110 @@ void ScenePreGame::init(){
 		rutaMapa += "lvl01/lvl01.tmx";
 		rutaTilesets += "lvl01/";
 		break;
+	default:
+		cout << "More levels comming soon!\n";
+		ready = false;
+		gameStats->ResetLevel();
+		inputManager->SetCursorRelative(false);
+		smManager->changeScene(smManager->MENU);
+		break;
 	}
-	const char* _nomFile = nomFile.c_str();
-	const char* _rutaMapa = rutaMapa.c_str();
-	const char* _rutaTilesets = rutaTilesets.c_str();
+	if (ready){
+		const char* _nomFile = nomFile.c_str();
+		const char* _rutaMapa = rutaMapa.c_str();
+		const char* _rutaTilesets = rutaTilesets.c_str();
 
-	fileManager->Read(_nomFile, nivell);
+		fileManager->Read(_nomFile, nivell);
 
-	nameLvl = fileManager->GetValueFromData("name");
-	numLemmings = fileManager->GetValueFromData("numberLemmings");
-	lemmingsToSave = fileManager->GetValueFromData("lemmingsToSave");
-	releaseRate = fileManager->GetValueFromData("releaseRate");
-	timeLvl = fileManager->GetValueFromData("time");
+		nameLvl = fileManager->GetValueFromData("name");
+		numLemmings = fileManager->GetValueFromData("numberLemmings");
+		lemmingsToSave = fileManager->GetValueFromData("lemmingsToSave");
+		releaseRate = fileManager->GetValueFromData("releaseRate");
+		timeLvl = fileManager->GetValueFromData("time");
 
-	int xDigit = 95;
-	int yDigit = 83;
-	float scaleX, scaleY;
+		int xDigit = 95;
+		int yDigit = 83;
+		float scaleX, scaleY;
+		int num = 0;
 
-	scaleX = 0.75;
-	scaleY = 1;
-	digits.push_back(new ABCsAlphaNum());
-	digits.back()->init(xDigit, yDigit, scaleX, scaleY, nivell);
-	// NAME LVL.
-	xDigit += 45;
-	scaleX = 0.75;
-	scaleY = 1;
-	for (int i = 0; i < nameLvl.length(); i++){
+		scaleX = 0.75;
+		scaleY = 1;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, scaleY, (char)nameLvl[i]);
-		if (nameLvl[i] != '_')
-			xDigit += 20;
-		else
-			xDigit += 30;
-	}
-	// NUMBER LEMMINGS.
-	int numLem = 0;
-	xDigit = 465;
-	yDigit = 127;
-	for (int i = 0; i < numLemmings.length(); i++){
-		if (i == 0)
-			numLem += ((int)numLemmings[i] - 48) * 10;
-		else
+		digits.back()->Init(xDigit, yDigit, scaleX, scaleY, nivell);
+		// NAME LVL.
+		xDigit += 42;
+		scaleX = 0.75;
+		scaleY = 1;
+		for (int i = 0; i < nameLvl.length(); i++){
+			digits.push_back(new ABCsAlphaNum());
+			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, (char)nameLvl[i]);
+			if (nameLvl[i] != '_')
+				xDigit += 19;
+			else
+				xDigit += 15;
+		}
+		// NUMBER LEMMINGS.
+		int numLem = 0;
+		xDigit = 465;
+		yDigit = 127;
+		for (int i = 0; i < numLemmings.length(); i++){
+			numLem *= 10;
 			numLem += (int)numLemmings[i] - 48;
 
-		int num = (int)numLemmings[i] - 48;
-		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
-		xDigit += 18;
-	}
-	// LEMMINGS TO SAVE.
-	int lemToSave = 0;
-	xDigit = 158;
-	yDigit += 30;
-	for (int i = 0; i < lemmingsToSave.length(); i++){
-		if (i == 0)
-			lemToSave += ((int)lemmingsToSave[i] - 48) * 10;
-		else
+			num = (int)numLemmings[i] - 48;
+			digits.push_back(new ABCsAlphaNum());
+			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+			xDigit += 18;
+		}
+		// LEMMINGS TO SAVE.
+		int lemToSave = 0;
+		xDigit = 158;
+		yDigit += 30;
+		for (int i = 0; i < lemmingsToSave.length(); i++){
+			lemToSave *= 10;
 			lemToSave += (int)lemmingsToSave[i] - 48;
 
-		int num = (int)lemmingsToSave[i] - 48;
+			num = (int)lemmingsToSave[i] - 48;
+			digits.push_back(new ABCsAlphaNum());
+			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+			xDigit += 18;
+		}
+		// RELEASE RATE.
+		xDigit = 370;
+		yDigit += 30;
+		for (int i = 0; i < releaseRate.length(); i++){
+			num = (int)releaseRate[i] - 48;
+			digits.push_back(new ABCsAlphaNum());
+			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+			xDigit += 20;
+		}
+		// TIME.
+		xDigit = 240;
+		yDigit += 30;
+		num = (int)timeLvl[0] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
-		xDigit += 18;
-	}
-	// RELEASE RATE.
-	xDigit = 370;
-	yDigit += 30;
-	int num = 0;
-	for (int i = 0; i < releaseRate.length(); i++){
-		int num = (int)releaseRate[i] - 48;
-		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
-		xDigit += 20;
-	}
-	// TIME.
-	xDigit = 240;
-	yDigit += 30;
-	num = (int)timeLvl[0] - 48;
-	digits.push_back(new ABCsAlphaNum());
-	digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
-	// RATING.
-	xDigit = 80;
-	yDigit += 30;
-	for (int i = 0; i < rating.length(); i++){
-		digits.push_back(new ABCsAlphaNum());
-		digits.back()->init(xDigit, yDigit, scaleX, scaleY, rating[i]);
-		xDigit += 20;
-	}
+		digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+		// RATING.
+		xDigit = 80;
+		yDigit += 30;
+		for (int i = 0; i < rating.length(); i++){
+			digits.push_back(new ABCsAlphaNum());
+			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, rating[i]);
+			xDigit += 20;
+		}
 
-	scaleX = scaleY = 0.33666;
-	mapa = new Map();
-	mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // S'inicien les posicions X-Y que es volen a SceneGame.
+		scaleX = scaleY = 0.33666;
+		mapa = new Map();
+		mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // S'inicien les posicions X-Y que es volen a SceneGame.
 
-	sGame->initFromPreGame(mapa, numLem, lemToSave, releaseRate, timeLvl);
+		sGame->initFromPreGame(mapa, numLem, lemToSave, releaseRate, timeLvl);
 
-	mapa->SetPositionTiles(475, -22);
-	mapa->SetScaleTiles(scaleX, scaleY);
+		mapa->SetPositionTiles(475, -22);
+		mapa->SetScaleTiles(scaleX, scaleY);
+	}
 }
 
-void ScenePreGame::clear(){
+void ScenePreGame::clean(){
 	digits.clear();
 	digits.resize(0);
 }

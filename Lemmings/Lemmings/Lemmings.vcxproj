@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -9,27 +9,53 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4B5C1C34-0BAD-4C33-B367-84A5F74042B0}</ProjectGuid>
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{6eef08a8-e665-4957-9dea-299f0cc34ba4}</ProjectGuid>
     <RootNamespace>Lemmings</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -37,58 +63,103 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\DAM\Documents\lemmings2\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;C:\Users\DAM\Documents\lemmings2\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;C:\Users\DAM\Documents\lemmings2\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;C:\Users\victor.amoros\Documents\lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;C:\Users\victor.amoros\Documents\lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;C:\Users\victor.amoros\Documents\lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\DAM\Documents\lemmings2\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;C:\Users\DAM\Documents\lemmings2\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;C:\Users\DAM\Documents\lemmings2\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;C:\Users\victor.amoros\Documents\lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;C:\Users\victor.amoros\Documents\lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;C:\Users\victor.amoros\Documents\lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\vs_dev_lib\SDL2-2.0.14\include;C:\vs_dev_lib\SDL2_image-2.0.5\include;C:\vs_dev_lib\SDL2_mixer-2.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\vs_dev_lib\SDL2-2.0.14\lib\x86;C:\vs_dev_lib\SDL2_image-2.0.5\lib\x86;C:\vs_dev_lib\SDL2_mixer-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\include;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;D:\llllllll\P2\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_mixer-2.0.1\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2_image-2.0.0\lib\x86;C:\Users\USUARIO\Documents\DAM\2n_Curs\P2\ProjecteFinal\Lemmings\Lemmings\Lemmings\Libraries\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\vs_dev_lib\SDL2-2.0.14\include;C:\vs_dev_lib\SDL2_image-2.0.5\include;C:\vs_dev_lib\SDL2_mixer-2.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\vs_dev_lib\SDL2-2.0.14\lib\x86;C:\vs_dev_lib\SDL2_image-2.0.5\lib\x86;C:\vs_dev_lib\SDL2_mixer-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
       <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ABCsAlphaNum.cpp" />
     <ClCompile Include="Actions.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Counter.cpp" />
     <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="DoorEnter.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="ElementGame.cpp" />
     <ClCompile Include="ElementHUD.cpp" />
     <ClCompile Include="FileManager.cpp" />
-    <ClCompile Include="Background.cpp" />
     <ClCompile Include="GameStats.cpp" />
     <ClCompile Include="Lemming.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Minimap.cpp" />
-    <ClCompile Include="DoorEnter.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneCodeLevel.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -104,28 +175,32 @@
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="tinyManager.cpp" />
+    <ClCompile Include="tinyManager.cpp">
+      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level4</WarningLevel>
+    </ClCompile>
     <ClCompile Include="TinyXML\tinystr.cpp" />
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="Word.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABCsAlphaNum.h" />
     <ClInclude Include="Actions.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Counter.h" />
     <ClInclude Include="Cursor.h" />
+    <ClInclude Include="DoorEnter.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="ElementGame.h" />
     <ClInclude Include="ElementHUD.h" />
     <ClInclude Include="FileManager.h" />
-    <ClInclude Include="Background.h" />
     <ClInclude Include="GameStats.h" />
     <ClInclude Include="Lemming.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Minimap.h" />
-    <ClInclude Include="DoorEnter.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneCodeLevel.h" />
     <ClInclude Include="SceneGame.h" />
@@ -145,9 +220,7 @@
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Trap.h" />
     <ClInclude Include="Utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram3.cd" />
+    <ClInclude Include="Word.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

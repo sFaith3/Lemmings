@@ -18,6 +18,9 @@ private:
 	};
 	int currEstat;
 
+	int idSoundOpen;
+	bool soundOpen;
+
 public:
 	DoorEnter(int x, int y, int timeToSpawn, int numInstancies);
 	~DoorEnter();

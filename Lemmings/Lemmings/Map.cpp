@@ -41,9 +41,9 @@ void Map::init(int x, int y, bool mapTmx, const char* fileMap, const char* layer
 	}
 
 	if (mapTmx)
-		Element::init(x, y, NULL, srcX, srcY, tManager->GetWidthMap(), tManager->GetHeightMap(), 1, 1);
+		Element::init(x, y, NULL, false, srcX, srcY, tManager->GetWidthMap(), tManager->GetHeightMap(), 1, 1);
 	else
-		Element::init(x, y, fileMap, srcX, srcY, w, h, 1, 1);
+		Element::init(x, y, fileMap, false, srcX, srcY, w, h, 1, 1);
 
 	tManager->DestroyTMX();
 }
@@ -54,7 +54,7 @@ void Map::render(){
 			(*itTilesets)->render(videoManager);
 	}
 	else
-		videoManager->renderTexture(idFileMap, 0, 0, width, height, scaleX, scaleY, posX, posY, 0, 0, 0);
+		videoManager->renderTexture(idFileMap, 0, 0, width, height, scaleX, scaleY, posX, posY);
 }
 
 
@@ -108,5 +108,12 @@ void Map::DestroyPosMapa(int x, int y){
 void Map::CrearPosMapa(int x, int y, int tipo){
 	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size())) {
 		mapCollision[y][x] = tipo;
+	}
+}
+
+void Map::CrearPosMapa(int x, int y, int tipo, int layer, int idTile){
+	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size())) {
+		mapCollision[y][x] = tipo;
+		tilesets[layer]->changeTile(x, y, idTile);
 	}
 }

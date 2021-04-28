@@ -23,9 +23,14 @@ private:
 	vector<Button> buttons;
 	vector<Button>::iterator itBut;
 
-	SceneGame* sGame;
+	Background imgAudios[2];
 
-	GameStats* gameStats;
+	enum AudioEnum{
+		Fx, Music, Mute
+	};
+	int currAudio;
+
+	SceneGame* sGame;
 
 	SceneManager* smManager;
 

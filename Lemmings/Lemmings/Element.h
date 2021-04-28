@@ -11,14 +11,17 @@ protected:
 	int width, height; // Amplada i alçada de l'sprite.
 	float scaleX, scaleY;
 
+	int pixelCount;
+
 	VideoManager* videoManager;
+
+	AudioManager* audioManager;
 
 public:
 	Element();
 	~Element();
 
-	void init(int x, int y, const char* img, int srcX, int srcY, int w, int h, float scaleX, float scaleY);
-	void render();
+	void init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY);
 
 	int GetPosX();
 	int GetPosY();
@@ -27,4 +30,6 @@ public:
 
 	void SetPosition(int x, int y);
 	void SetScale(float x, float y);
+
+	void ChangePixelColor(Uint32 colorKey, Uint32 newColor);
 };

@@ -2,9 +2,9 @@
 
 
 DoorEnter::DoorEnter(int x, int y, int timeToSpawn, int numInstancies){
-	ElementGame::init(x, y, "Assets/Images/Doors/entrada.png", 0, 0, 57, 31, 1, 1, 126, 31, 69, 2, 25);
+	ElementGame::init(x, y, "Assets/Images/Doors/entrada.png", false, 0, 0, 57, 31, 1, 1, 126, 31, 69, 2, 25);
 	
-	timeToBeReady = 0.5 * 100;
+	timeToBeReady = 1000;
 	this->timeToSpawn = _timeToSpawn = timeToSpawn * 100;
 	lastTime = 0;
 
@@ -12,6 +12,9 @@ DoorEnter::DoorEnter(int x, int y, int timeToSpawn, int numInstancies){
 	leftToSpawn = numInstancies;
 	
 	currEstat = NOT_READY;
+
+	idSoundOpen = audioManager->getSoundID("Assets/Audios/Sounds/openDoor.wav");
+	soundOpen = true;
 }
 
 
@@ -29,9 +32,13 @@ void DoorEnter::update(int temps){
 		}
 		break;
 	case OPENNING:
-		UpdateAnimacio();
+		if (soundOpen){
+			audioManager->playSound(idSoundOpen);
+			soundOpen = false;
+		}
 		if (contImatges == numImatges)
 			currEstat = READY;
+		UpdateAnimacio();
 		break;
 	case READY:
 		temps -= lastTime;

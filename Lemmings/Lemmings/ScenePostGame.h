@@ -38,7 +38,7 @@ public:
 	void initFromGame(int lemmingsSaved, int lemmingsToSave);
 
 	void init();
-	void clear();
+	void clean();
 	void update();
 	void render();
 };

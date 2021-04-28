@@ -24,106 +24,42 @@ public:
 			int dstPosX, dstPosY; // Punt on es pintarà.
 
 		public:
-			Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY){
-				srcPosX = _srcPosX;
-				srcPosY = _srcPosY;
-				dstPosX = _dstPosX;
-				dstPosY = _dstPosY;
-			}
+			Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY);
 
-			int getSrcPosX(){
-				return srcPosX;
-			}
+			int getSrcPosX();
+			int getSrcPosY();
+			int getDstPosX();
+			int getDstPosY();
 
-			int getSrcPosY(){
-				return srcPosY;
-			}
-
-			int getDstPosX(){
-				return dstPosX;
-			}
-
-			int getDstPosY(){
-				return dstPosY;
-			}
-
-			void IncrementDstPos(int x, int y){
-				dstPosX += x;
-				dstPosY += y;
-			}
-
+			void IncrementDstPos(int x, int y);
+			void ChangeSrc(int srcX, int srcY);
 		};
 
-		void init(string rutaTileset, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight){
-			this->rutaTileset = rutaTileset;
-			this->sizeXtiles = sizeXtiles;
-			this->sizeYtiles = sizeYtiles;
-			tiles.clear();
-			tiles.resize(sizeYtiles + 1);
-			for (int i = 0; i <= sizeYtiles; i++)
-				tiles[i].resize(sizeXtiles + 1);
+		void init(string rutaTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight);
 
-			this->tileWidth = tileWidth;
-			this->tileHeight = tileHeight;
-			scaleXtile = scaleYtile = 1;
-		}
+		void addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
 
-		void addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY){
-			Tile *tile = new Tile(srcPosX, srcPosY, dstPosX, dstPosY);
-			tiles[posY][posX] = tile;
-		}
+		void render(VideoManager* videoManager);
 
-		void render(VideoManager* videoManager){
-			for (int j = 0; j < sizeYtiles; j++) {
-				for (int i = 0; i < sizeXtiles; i++) {
-					if (tiles[j][i] != NULL){
-						int srcPosXtile = tiles[j][i]->getSrcPosX();
-						int srcPosYtile = tiles[j][i]->getSrcPosY();
-						int dstPosXtile = tiles[j][i]->getDstPosX();
-						int dstPosYtile = tiles[j][i]->getDstPosY();
-						videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight, scaleXtile, scaleYtile, dstPosXtile, dstPosYtile, 0, 0, 0);
-					}
-				}
-			}
-		}
+		string getRutaTileset();
+		int getSizeXTiles();
+		int getSizeYTiles();
+		vector <vector<Tile*> > getTiles();
 
-		string getRutaTileset(){
-			return rutaTileset;
-		}
+		void changeTile(int x, int y, int idTile);
+		void setScaleTiles(float x, float y);
+		void setIdImg(int id);
+		int getIdImg();
 
-		int getSizeXTiles(){
-			return sizeXtiles;
-		}
-
-		int getSizeYTiles(){
-			return sizeYtiles;
-		}
-
-		vector <vector<Tile*> > getTiles(){
-			return tiles;
-		}
-
-		void setScaleTiles(float x, float y){
-			scaleXtile = x;
-			scaleYtile = y;
-		}
-
-		void setIdImg(int id){
-			idImg = id;
-		}
-
-		int getIdImg(){
-			return idImg;
-		}
-
-		void removeTile(int x, int y){
-			tiles[y][x] = NULL;
-		}
+		void removeTile(int x, int y);
 
 	private:
 		// TILESET.
 		string rutaTileset;
 		int idImg;
+		int spacing;
+		int width;
+		int height;
 
 		// TILES.
 		int tileWidth, tileHeight;

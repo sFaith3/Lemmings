@@ -15,13 +15,13 @@ void Scene::init(){
 }
 
 
+void Scene::clear(){
+}
+
+
 void Scene::update(){
 }
 
 
 void Scene::render(){
-}
-
-
-void Scene::clear(){
 }

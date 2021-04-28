@@ -4,7 +4,7 @@
 Cursor* Cursor::cInstance = NULL;
 
 Cursor::Cursor(){
-	ElementHUD::init(0, 0, "Assets/Images/Cursor/normalCursor.png", 0, 0, 12, 12, 1, 1);
+	ElementHUD::init(0, 0, "Assets/Images/Cursor/normalCursor.png", false, 0, 0, 12, 12, 1, 1);
 
 	idImg1 = idImg;
 	width1 = 12;
