@@ -1,0 +1,1 @@
+Si el proyecto no compila, actualizar las librerias SDL (incluyendo los tres `.dll` del proyecto) y actualizar las rutas (include y lib).
