@@ -34,10 +34,10 @@ Before you start, make sure you have an IDE/Compiler such as [Visual Studio](htt
 
 ### Run "Lemmings.exe"
 1. Paste in "Lemmings/x64/Debug or Release" the next files:
-  - `SDL2.dll` (Lemmings/Libraries/SDL2/lib/x64)
-  - `SDL2_image.dll` (../../SDL2_image/lib/x64)
-  - `SDL2_mixer.dll` (../../SDL2_mixer/lib/x64)
-  - "Art" and "Levels" folders (Lemmings/Assets)
+    * `SDL2.dll` (Lemmings/Libraries/SDL2/lib/x64)
+    * `SDL2_image.dll` (../../SDL2_image/lib/x64)
+    * `SDL2_mixer.dll` (../../SDL2_mixer/lib/x64)
+    * "Art" and "Levels" folders (Lemmings/Assets)
 2. Run the executable in "Lemmings/x64/Debug or Release".
 
 
