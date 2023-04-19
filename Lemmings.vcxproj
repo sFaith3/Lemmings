@@ -147,22 +147,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\vs_dev_lib\SDL2-2.0.14\include;C:\vs_dev_lib\SDL2_image-2.0.5\include;C:\vs_dev_lib\SDL2_mixer-2.0.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\vs_dev_lib\SDL2-2.0.14\lib\x86;C:\vs_dev_lib\SDL2_image-2.0.5\lib\x86;C:\vs_dev_lib\SDL2_mixer-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\vs_dev_lib\SDL2-2.0.14\include;C:\vs_dev_lib\SDL2_image-2.0.5\include;C:\vs_dev_lib\SDL2_mixer-2.0.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\vs_dev_lib\SDL2-2.0.14\lib\x86;C:\vs_dev_lib\SDL2_image-2.0.5\lib\x86;C:\vs_dev_lib\SDL2_mixer-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\SDL2_mixer-2.6.3\include;C:\SDL2_image-2.6.3\include;C:\SDL2-2.26.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SDL2_mixer-2.6.3\lib\x64;C:\SDL2_image-2.6.3\lib\x64;C:\SDL2-2.26.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libraries\SDL2_mixer\include;$(SolutionDir)Libraries\SDL2_image\include;$(SolutionDir)Libraries\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\SDL2_mixer\lib\x64;$(SolutionDir)Libraries\SDL2_image\lib\x64;$(SolutionDir)Libraries\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)Libraries\SDL2_mixer\include;$(SolutionDir)Libraries\SDL2_image\include;$(SolutionDir)Libraries\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\SDL2_mixer\lib\x64;$(SolutionDir)Libraries\SDL2_image\lib\x64;$(SolutionDir)Libraries\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -174,7 +172,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -191,7 +188,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -221,6 +217,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
