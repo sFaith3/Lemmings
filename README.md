@@ -37,15 +37,6 @@ Before you start, make sure you have an IDE/Compiler such as [Visual Studio](htt
 2. Run the executable in "Lemmings/x64/Debug or Release".
 
 
-## License
+# License
 
 [MIT License](./LICENSE)
-
-
-## Contributors
-
-<a href="https://github.com/sFaith3/Lemmings/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=sFaith3/Lemmings" />
-</a>
-
-Made with [contrib.rocks](https://contrib.rocks).
