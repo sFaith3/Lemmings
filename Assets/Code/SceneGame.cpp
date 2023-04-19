@@ -54,7 +54,7 @@ void SceneGame::initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, 
 }
 
 void SceneGame::init(){
-	idMusic = audioManager->getMusicID("Assets/Audios/Music/inGame.wav");
+	idMusic = audioManager->getMusicID("Assets/Art/Audios/Music/inGame.wav");
 
 	lemmingsMorts = lemmingsSaved = 0;
 
@@ -67,7 +67,7 @@ void SceneGame::init(){
 
 	// Inicialització de les portes del joc. Punt de respawn i de sortida dels lemmings.
 	enterDoor = new DoorEnter(110, 80, 20, numLemmings);
-	exitDoor->init(338, 200, "Assets/Images/Doors/sortida.png", false, 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
+	exitDoor->init(338, 200, "Assets/Art/Images/Doors/sortida.png", false, 0, 0, 42, 31, 1, 1, 92, 31, 49, 2, 12);
 
 	int x, y;
 	x = 20;
@@ -81,12 +81,12 @@ void SceneGame::init(){
 	}
 	currState = -1;
 
-	counters[0]->init(155, 258, "Assets/Images/HUD/Counters/Out.png", 35, 19, 1, 1, 42, 15, false);
-	counters[1]->init(253, 258, "Assets/Images/HUD/Counters/In.png", 25, 19, 1, 1, 33, 15, true);
+	counters[0]->init(155, 258, "Assets/Art/Images/HUD/Counters/Out.png", 35, 19, 1, 1, 42, 15, false);
+	counters[1]->init(253, 258, "Assets/Art/Images/HUD/Counters/In.png", 25, 19, 1, 1, 33, 15, true);
 
-	idSounds[0] = audioManager->getSoundID("Assets/Audios/Sounds/startGame.wav");
-	idSounds[1] = audioManager->getSoundID("Assets/Audios/Sounds/selectSkill.wav");
-	idSounds[2] = audioManager->getSoundID("Assets/Audios/Sounds/putSkill.wav");
+	idSounds[0] = audioManager->getSoundID("Assets/Art/Audios/Sounds/startGame.wav");
+	idSounds[1] = audioManager->getSoundID("Assets/Art/Audios/Sounds/selectSkill.wav");
+	idSounds[2] = audioManager->getSoundID("Assets/Art/Audios/Sounds/putSkill.wav");
 	initialSound = false;
 
 	temps = new Timer(355, 258, tempsRestant);

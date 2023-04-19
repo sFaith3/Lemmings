@@ -12,7 +12,7 @@ Lemming::~Lemming(){
 
 
 void Lemming::init(int x, int y, int xMapa, int yMapa){
-	ElementGame::init(x, y, "Assets/Images/Lemmings/lem_ani.png", false, 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
+	ElementGame::init(x, y, "Assets/Art/Images/Lemmings/lem_ani.png", false, 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
 	posXmapa = xMapa;
 	posYmapa = yMapa;
 	pintW = 20;
@@ -40,11 +40,11 @@ void Lemming::init(int x, int y, int xMapa, int yMapa){
 
 	currStairs = 0;
 
-	idSounds[0] = audioManager->getSoundID("Assets/Audios/Sounds/beforeExplode.wav");
-	idSounds[1] = audioManager->getSoundID("Assets/Audios/Sounds/explosion.wav");
-	idSounds[2] = audioManager->getSoundID("Assets/Audios/Sounds/fallDead.wav");
-	idSounds[3] = audioManager->getSoundID("Assets/Audios/Sounds/stair.wav");
-	idSounds[4] = audioManager->getSoundID("Assets/Audios/Sounds/yippee.wav");
+	idSounds[0] = audioManager->getSoundID("Assets/Art/Audios/Sounds/beforeExplode.wav");
+	idSounds[1] = audioManager->getSoundID("Assets/Art/Audios/Sounds/explosion.wav");
+	idSounds[2] = audioManager->getSoundID("Assets/Art/Audios/Sounds/fallDead.wav");
+	idSounds[3] = audioManager->getSoundID("Assets/Art/Audios/Sounds/stair.wav");
+	idSounds[4] = audioManager->getSoundID("Assets/Art/Audios/Sounds/yippee.wav");
 
 	flipType = SDL_FLIP_NONE;
 }
