@@ -79,10 +79,10 @@ void ScenePostGame::init(){
 			xDigit += 20;
 		}
 
-		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/win.png", false, 0, 0, 480, 340, 1, 1);
+		fons->init(0, 0, "Assets/Art/Images/InfoScene/PostGame/win.png", false, 0, 0, 480, 340, 1, 1);
 	}
 	else
-		fons->init(0, 0, "Assets/Images/InfoScene/PostGame/lose.png", false, 0, 0, 480, 340, 1, 1);
+		fons->init(0, 0, "Assets/Art/Images/InfoScene/PostGame/lose.png", false, 0, 0, 480, 340, 1, 1);
 }
 
 void ScenePostGame::clean(){

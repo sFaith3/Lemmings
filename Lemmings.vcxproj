@@ -18,6 +18,82 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Assets\Code\ABCsAlphaNum.cpp" />
+    <ClCompile Include="Assets\Code\Actions.cpp" />
+    <ClCompile Include="Assets\Code\Background.cpp" />
+    <ClCompile Include="Assets\Code\Button.cpp" />
+    <ClCompile Include="Assets\Code\Counter.cpp" />
+    <ClCompile Include="Assets\Code\Cursor.cpp" />
+    <ClCompile Include="Assets\Code\DoorEnter.cpp" />
+    <ClCompile Include="Assets\Code\Element.cpp" />
+    <ClCompile Include="Assets\Code\ElementGame.cpp" />
+    <ClCompile Include="Assets\Code\ElementHUD.cpp" />
+    <ClCompile Include="Assets\Code\FileManager.cpp" />
+    <ClCompile Include="Assets\Code\GameStats.cpp" />
+    <ClCompile Include="Assets\Code\Lemming.cpp" />
+    <ClCompile Include="Assets\Code\Map.cpp" />
+    <ClCompile Include="Assets\Code\Minimap.cpp" />
+    <ClCompile Include="Assets\Code\Scene.cpp" />
+    <ClCompile Include="Assets\Code\SceneCodeLevel.cpp" />
+    <ClCompile Include="Assets\Code\SceneGame.cpp" />
+    <ClCompile Include="Assets\Code\SceneManager.cpp" />
+    <ClCompile Include="Assets\Code\SceneMenu.cpp" />
+    <ClCompile Include="Assets\Code\ScenePostGame.cpp" />
+    <ClCompile Include="Assets\Code\ScenePreGame.cpp" />
+    <ClCompile Include="Assets\Code\SDL\AudioManager.cpp" />
+    <ClCompile Include="Assets\Code\SDL\InputManager.cpp" />
+    <ClCompile Include="Assets\Code\SDL\ResourceManager.cpp" />
+    <ClCompile Include="Assets\Code\SDL\VideoManager.cpp" />
+    <ClCompile Include="Assets\Code\SingletonManager.cpp" />
+    <ClCompile Include="Assets\Code\Skill.cpp" />
+    <ClCompile Include="Assets\Code\Source.cpp" />
+    <ClCompile Include="Assets\Code\Timer.cpp" />
+    <ClCompile Include="Assets\Code\tinyManager.cpp" />
+    <ClCompile Include="Assets\Code\TinyXML\tinystr.cpp" />
+    <ClCompile Include="Assets\Code\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="Assets\Code\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="Assets\Code\TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="Assets\Code\Trap.cpp" />
+    <ClCompile Include="Assets\Code\Word.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Assets\Code\ABCsAlphaNum.h" />
+    <ClInclude Include="Assets\Code\Actions.h" />
+    <ClInclude Include="Assets\Code\Background.h" />
+    <ClInclude Include="Assets\Code\Button.h" />
+    <ClInclude Include="Assets\Code\Counter.h" />
+    <ClInclude Include="Assets\Code\Cursor.h" />
+    <ClInclude Include="Assets\Code\DoorEnter.h" />
+    <ClInclude Include="Assets\Code\Element.h" />
+    <ClInclude Include="Assets\Code\ElementGame.h" />
+    <ClInclude Include="Assets\Code\ElementHUD.h" />
+    <ClInclude Include="Assets\Code\FileManager.h" />
+    <ClInclude Include="Assets\Code\GameStats.h" />
+    <ClInclude Include="Assets\Code\Lemming.h" />
+    <ClInclude Include="Assets\Code\Map.h" />
+    <ClInclude Include="Assets\Code\Minimap.h" />
+    <ClInclude Include="Assets\Code\Scene.h" />
+    <ClInclude Include="Assets\Code\SceneCodeLevel.h" />
+    <ClInclude Include="Assets\Code\SceneGame.h" />
+    <ClInclude Include="Assets\Code\SceneManager.h" />
+    <ClInclude Include="Assets\Code\SceneMenu.h" />
+    <ClInclude Include="Assets\Code\ScenePostGame.h" />
+    <ClInclude Include="Assets\Code\ScenePreGame.h" />
+    <ClInclude Include="Assets\Code\SDL\AudioManager.h" />
+    <ClInclude Include="Assets\Code\SDL\InputManager.h" />
+    <ClInclude Include="Assets\Code\SDL\ResourceManager.h" />
+    <ClInclude Include="Assets\Code\SDL\VideoManager.h" />
+    <ClInclude Include="Assets\Code\SingletonManager.h" />
+    <ClInclude Include="Assets\Code\Skill.h" />
+    <ClInclude Include="Assets\Code\Timer.h" />
+    <ClInclude Include="Assets\Code\tinyManager.h" />
+    <ClInclude Include="Assets\Code\TinyXML\tinystr.h" />
+    <ClInclude Include="Assets\Code\TinyXML\tinyxml.h" />
+    <ClInclude Include="Assets\Code\Trap.h" />
+    <ClInclude Include="Assets\Code\Utils.h" />
+    <ClInclude Include="Assets\Code\Word.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -29,26 +105,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -82,6 +158,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\SDL2_mixer-2.6.3\include;C:\SDL2_image-2.6.3\include;C:\SDL2-2.26.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2_mixer-2.6.3\lib\x64;C:\SDL2_image-2.6.3\lib\x64;C:\SDL2-2.26.5\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -126,6 +204,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,84 +223,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="ABCsAlphaNum.cpp" />
-    <ClCompile Include="Actions.cpp" />
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Counter.cpp" />
-    <ClCompile Include="Cursor.cpp" />
-    <ClCompile Include="DoorEnter.cpp" />
-    <ClCompile Include="Element.cpp" />
-    <ClCompile Include="ElementGame.cpp" />
-    <ClCompile Include="ElementHUD.cpp" />
-    <ClCompile Include="FileManager.cpp" />
-    <ClCompile Include="GameStats.cpp" />
-    <ClCompile Include="Lemming.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Minimap.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneCodeLevel.cpp" />
-    <ClCompile Include="SceneGame.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SceneMenu.cpp" />
-    <ClCompile Include="ScenePostGame.cpp" />
-    <ClCompile Include="ScenePreGame.cpp" />
-    <ClCompile Include="SDL\AudioManager.cpp" />
-    <ClCompile Include="SDL\InputManager.cpp" />
-    <ClCompile Include="SDL\ResourceManager.cpp" />
-    <ClCompile Include="SDL\VideoManager.cpp" />
-    <ClCompile Include="SingletonManager.cpp" />
-    <ClCompile Include="Skill.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="tinyManager.cpp">
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level4</WarningLevel>
-    </ClCompile>
-    <ClCompile Include="TinyXML\tinystr.cpp" />
-    <ClCompile Include="TinyXML\tinyxml.cpp" />
-    <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
-    <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
-    <ClCompile Include="Trap.cpp" />
-    <ClCompile Include="Word.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ABCsAlphaNum.h" />
-    <ClInclude Include="Actions.h" />
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="Counter.h" />
-    <ClInclude Include="Cursor.h" />
-    <ClInclude Include="DoorEnter.h" />
-    <ClInclude Include="Element.h" />
-    <ClInclude Include="ElementGame.h" />
-    <ClInclude Include="ElementHUD.h" />
-    <ClInclude Include="FileManager.h" />
-    <ClInclude Include="GameStats.h" />
-    <ClInclude Include="Lemming.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Minimap.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneCodeLevel.h" />
-    <ClInclude Include="SceneGame.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SceneMenu.h" />
-    <ClInclude Include="ScenePostGame.h" />
-    <ClInclude Include="ScenePreGame.h" />
-    <ClInclude Include="SDL\AudioManager.h" />
-    <ClInclude Include="SDL\InputManager.h" />
-    <ClInclude Include="SDL\ResourceManager.h" />
-    <ClInclude Include="SDL\VideoManager.h" />
-    <ClInclude Include="SingletonManager.h" />
-    <ClInclude Include="Skill.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="tinyManager.h" />
-    <ClInclude Include="TinyXML\tinystr.h" />
-    <ClInclude Include="TinyXML\tinyxml.h" />
-    <ClInclude Include="Trap.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Word.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

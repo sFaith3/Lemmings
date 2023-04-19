@@ -19,14 +19,14 @@ int Actions::init(float scaleX, float scaleY, string velMinimaSpawn, string trep
 	int hAction = 61;
 	int x = 0;
 	int y = SCREEN_HEIGHT - hAction;
-	ElementHUD::init(x, y, "Assets/Images/HUD/Skills/hud.png", false, 0, 0, 480, hAction, scaleX, scaleY);
+	ElementHUD::init(x, y, "Assets/Art/Images/HUD/Skills/hud.png", false, 0, 0, 480, hAction, scaleX, scaleY);
 	
 	currButton = TREPAR;
 
 	int xSkill = x + 1;
 	int wSkill = 40;
 	int hSkill = 61;
-	const char* imgSkillPressed = "Assets/Images/HUD/Skills/skillsPressed.png";
+	const char* imgSkillPressed = "Assets/Art/Images/HUD/Skills/skillsPressed.png";
 
 	skills[0]->init(REST_VEL_SPAWN, xSkill, y, wSkill, hSkill, 0, 0, NULL, NULL, velMinimaSpawn);
 	xSkill += wSkill;

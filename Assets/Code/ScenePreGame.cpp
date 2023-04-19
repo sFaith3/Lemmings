@@ -9,7 +9,7 @@ ScenePreGame::ScenePreGame(){
 	nameLvl = numLemmings = lemmingsToSave = releaseRate = timeLvl = rating = "";
 
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/InfoScene/PreGame/infoMision.png", false, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
+	fons->init(0, 0, "Assets/Art/Images/InfoScene/PreGame/infoMision.png", false, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
 
 	sGame = SceneGame::getInstanceSceneGame();
 

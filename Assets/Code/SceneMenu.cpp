@@ -11,9 +11,9 @@ SceneMenu::SceneMenu(){
 	float scaleX = 0.65;
 	float scaleY = 0.8;
 	fons = new Background();
-	fons->init(0, 0, "Assets/Images/Menu/menu.png", false, 0, 0, 809, 446, scaleX, scaleY);
+	fons->init(0, 0, "Assets/Art/Images/Menu/menu.png", false, 0, 0, 809, 446, scaleX, scaleY);
 	
-	idMusic = audioManager->getMusicID("Assets/Audios/Music/start.wav");
+	idMusic = audioManager->getMusicID("Assets/Art/Audios/Music/start.wav");
 
 	Button button;
 	int wButton = 132 * scaleX;
@@ -32,9 +32,9 @@ SceneMenu::SceneMenu(){
 	Background imgAudio;
 	int wImgAudio = 135;
 	int hImgAudio = 50;
-	imgAudio.init(422, 188, "Assets/Images/Menu/Fx.png", false, 0, 0, wImgAudio, hImgAudio, scaleX, scaleY);
+	imgAudio.init(422, 188, "Assets/Art/Images/Menu/Fx.png", false, 0, 0, wImgAudio, hImgAudio, scaleX, scaleY);
 	imgAudios[0] = imgAudio;
-	imgAudio.init(422, 188, "Assets/Images/Menu/Music.png", false, 0, 0, wImgAudio, hImgAudio, scaleX, scaleY);
+	imgAudio.init(422, 188, "Assets/Art/Images/Menu/Music.png", false, 0, 0, wImgAudio, hImgAudio, scaleX, scaleY);
 	imgAudios[1] = imgAudio;
 
 	currAudio = Music;
