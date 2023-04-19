@@ -4,10 +4,14 @@
 
 # Lemmings
 
-A non-exact copy of the video game [Lemmings (1991)](https://en.wikipedia.org/wiki/Lemmings_(video_game)) made with C++, SDL2 and TinyXML for PC at the technical college. This project has been made with Windows. But you should be able to use it in Linux and Mac.
+A non-exact copy of the video game [Lemmings (1991)](https://en.wikipedia.org/wiki/Lemmings_(video_game)) made with C++, SDL2 and TinyXML for PC at the technical college.
+
+https://user-images.githubusercontent.com/14791312/233218129-b5980646-b39e-4916-a688-f0fce6d1565b.mp4
 
 
 # Getting Started
+
+This project has been made with Windows. But you should be able to use it on Linux and Mac.
 
 ## Pre-requisites
 
@@ -35,6 +39,12 @@ Before you start, make sure you have an IDE/Compiler such as [Visual Studio](htt
   - `SDL2_mixer.dll` (../../SDL2_mixer/lib/x64)
   - "Art" and "Levels" folders (Lemmings/Assets)
 2. Run the executable in "Lemmings/x64/Debug or Release".
+
+
+# Authors
+
+| [<img src="https://user-images.githubusercontent.com/14791312/233219860-32856bfe-bfa3-4a68-b0c4-f4d7f6ab0730.png" width=115><br><sub>Samuel Balcells</sub>](https://github.com/sFaith3) | [<img src="https://user-images.githubusercontent.com/14791312/233219903-417078c4-c93e-4ad5-bdb1-4fcdafe6b293.jpg" width=115><br><sub>Víctor Amorós</sub>](https://github.com/Viamos)
+| :---: | :---: |
 
 
 # License
