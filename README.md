@@ -30,14 +30,14 @@ Before you start, make sure you have an IDE/Compiler such as [Visual Studio](htt
 1. Download the `VC.zip` for Visual Studio or the `mingw.tar.gz` for Code::Blocks and MinGW.
 2. Put the corresponding libraries in the next folder path (you have to create folders): "Lemmings/Libraries/SDL2-version", "../../SDL2_image-version" and "../../SDL2_mixer-version".
 3. Remove "-version" in the folders. Then you wil have the following names: "SDL2", "SDL2_image", "SDL2_mixer".
-4. Compile and run the solution in `Debug/Release-x64`.
-
-### Run "Lemmings.exe"
-1. Paste in "Lemmings/x64/Debug or Release" the next files:
+4. Paste in "Lemmings/x64/Debug or Release" the next `.dll`:
     * `SDL2.dll` (Lemmings/Libraries/SDL2/lib/x64)
     * `SDL2_image.dll` (../../SDL2_image/lib/x64)
     * `SDL2_mixer.dll` (../../SDL2_mixer/lib/x64)
-    * "Art" and "Levels" folders (Lemmings/Assets)
+5. Compile and run the solution in `Debug/Release-x64`.
+
+### Run "Lemmings.exe"
+1. Paste in "Lemmings/x64/Debug or Release" the next files: "Art" and "Levels" folders (Lemmings/Assets)
 2. Run the executable in "Lemmings/x64/Debug or Release".
 
 
