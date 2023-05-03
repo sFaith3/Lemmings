@@ -8,18 +8,18 @@ class AudioManager
 private:
 	AudioManager();
 
-	static AudioManager* aInstance; /*!<	Singleton instance*/
+	static AudioManager *aInstance; /*!<	Singleton instance*/
 
 public:
 	~AudioManager();
 
 	//! Gets Singleton instance.
-	static AudioManager* getInstanceAudio();
+	static AudioManager *getInstanceAudio();
 
-	Sint32 addMusic(const char* file);
-	Sint32 getMusicID(const char* file);
-	Sint32 addSound(const char* file);
-	Sint32 getSoundID(const char* file);
+	Sint32 addMusic(const char *file);
+	Sint32 getMusicID(const char *file);
+	Sint32 addSound(const char *file);
+	Sint32 getSoundID(const char *file);
 
 	void playMusic(int audio);
 	void playMusic(int audio, int loop);

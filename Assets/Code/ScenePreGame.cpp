@@ -1,15 +1,15 @@
 #include "ScenePreGame.h"
 
+ScenePreGame *ScenePreGame::gInstance = NULL;
 
-ScenePreGame* ScenePreGame::gInstance = NULL;
-
-ScenePreGame::ScenePreGame(){
+ScenePreGame::ScenePreGame()
+{
 	fileManager = FileManager::getInstanceFile();
 
 	nameLvl = numLemmings = lemmingsToSave = releaseRate = timeLvl = rating = "";
 
 	fons = new Background();
-	fons->init(0, 0, "Assets/Art/Images/InfoScene/PreGame/infoMision.png", false, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
+	fons->init(0, 0, "Assets/Art/Images/InfoScene/PreGame/missionInfo.png", false, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1);
 
 	sGame = SceneGame::getInstanceSceneGame();
 
@@ -18,44 +18,46 @@ ScenePreGame::ScenePreGame(){
 	smManager = SceneManager::getInstanceSM();
 }
 
-
-ScenePreGame::~ScenePreGame(){
-
+ScenePreGame::~ScenePreGame()
+{
 }
 
-
-ScenePreGame* ScenePreGame::getInstanceScenePreGame(){
+ScenePreGame *ScenePreGame::getInstanceScenePreGame()
+{
 	if (gInstance == NULL)
 		gInstance = new ScenePreGame();
 
 	return gInstance;
 }
 
-
-void ScenePreGame::init(){
+void ScenePreGame::init()
+{
 	string nomFile = "Assets/Levels/levels.txt";
 	string rutaMapa = "Assets/Levels/";
 	string rutaTilesets = "Assets/Levels/";
 	int nivell = gameStats->GetLevel();
 	int ready = true;
 
-	if (nivell > NUM_MAPS) {
+	if (nivell > NUM_MAPS)
+	{
 		cout << "More levels comming soon!\n";
 		ready = false;
 		gameStats->ResetLevel();
 		inputManager->SetCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
 	}
-	else {
+	else
+	{
 		string strNivell = to_string(nivell);
 		rutaMapa += "lvl0" + strNivell + "/lvl0" + strNivell + ".tmx";
 		rutaTilesets += "lvl0" + strNivell + "/";
 	}
 
-	if (ready){
-		const char* _nomFile = nomFile.c_str();
-		const char* _rutaMapa = rutaMapa.c_str();
-		const char* _rutaTilesets = rutaTilesets.c_str();
+	if (ready)
+	{
+		const char *_nomFile = nomFile.c_str();
+		const char *_rutaMapa = rutaMapa.c_str();
+		const char *_rutaTilesets = rutaTilesets.c_str();
 
 		fileManager->Read(_nomFile, nivell);
 
@@ -78,7 +80,8 @@ void ScenePreGame::init(){
 		xDigit += 42;
 		scaleX = 0.75;
 		scaleY = 1;
-		for (int i = 0; i < nameLvl.length(); i++){
+		for (int i = 0; i < nameLvl.length(); i++)
+		{
 			digits.push_back(new ABCsAlphaNum());
 			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, (char)nameLvl[i]);
 			if (nameLvl[i] != '_')
@@ -90,7 +93,8 @@ void ScenePreGame::init(){
 		int numLem = 0;
 		xDigit = 465;
 		yDigit = 127;
-		for (int i = 0; i < numLemmings.length(); i++){
+		for (int i = 0; i < numLemmings.length(); i++)
+		{
 			numLem *= 10;
 			numLem += (int)numLemmings[i] - 48;
 
@@ -103,7 +107,8 @@ void ScenePreGame::init(){
 		int lemToSave = 0;
 		xDigit = 158;
 		yDigit += 30;
-		for (int i = 0; i < lemmingsToSave.length(); i++){
+		for (int i = 0; i < lemmingsToSave.length(); i++)
+		{
 			lemToSave *= 10;
 			lemToSave += (int)lemmingsToSave[i] - 48;
 
@@ -115,7 +120,8 @@ void ScenePreGame::init(){
 		// RELEASE RATE.
 		xDigit = 370;
 		yDigit += 30;
-		for (int i = 0; i < releaseRate.length(); i++){
+		for (int i = 0; i < releaseRate.length(); i++)
+		{
 			num = (int)releaseRate[i] - 48;
 			digits.push_back(new ABCsAlphaNum());
 			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
@@ -130,7 +136,8 @@ void ScenePreGame::init(){
 		// RATING.
 		xDigit = 80;
 		yDigit += 30;
-		for (int i = 0; i < rating.length(); i++){
+		for (int i = 0; i < rating.length(); i++)
+		{
 			digits.push_back(new ABCsAlphaNum());
 			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, rating[i]);
 			xDigit += 20;
@@ -147,29 +154,35 @@ void ScenePreGame::init(){
 	}
 }
 
-void ScenePreGame::clean(){
+void ScenePreGame::clean()
+{
 	digits.clear();
 	digits.resize(0);
 }
 
-void ScenePreGame::update(){
-	if (inputManager->CheckClickLeft() || inputManager->CheckClickRight()){
+void ScenePreGame::update()
+{
+	if (inputManager->CheckClickLeft() || inputManager->CheckClickRight())
+	{
 		inputManager->ResetClick();
 		smManager->changeScene(smManager->GAME);
 	}
-	else if (inputManager->CheckESC()){
+	else if (inputManager->CheckESC())
+	{
 		inputManager->ResetESC();
 		inputManager->SetCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
 	}
 }
 
-void ScenePreGame::render(){
+void ScenePreGame::render()
+{
 	fons->render();
 
 	mapa->render();
 
-	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
+	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++)
+	{
 		(*itDigits)->Render();
 	}
 }

@@ -14,9 +14,9 @@ using namespace std;
 /*!
 Handles the load and management of the graphics in the game.
 */
-class ResourceManager{
+class ResourceManager
+{
 public:
-
 	//! Destructor.
 	~ResourceManager();
 
@@ -25,7 +25,6 @@ public:
 	\return Instance of ResourceManager (Singleton).
 	*/
 	static ResourceManager* getInstanceResourceManager();
-
 
 	/*--- SURFACE ---*/
 
@@ -36,7 +35,6 @@ public:
 	*/
 	Sint32 createGraphic(const char* name, SDL_Surface* newSurface);
 
-
 	//! Create a new surface graphic to the ResourceManager
 	/*!
 	\param name for the graphic
@@ -46,20 +44,17 @@ public:
 	*/
 	Sint32 createGraphic(const char* name, SDL_Surface* newSurface, Uint16 width, Uint16 height);
 
-
 	//! Deletes a graphic from the ResourceManager map
 	/*!
 	\param file Filepath to the graphic
 	*/
 	void removeGraphic(const char* file);
 
-
 	//! Deletes a graphic from the ResourceManager map
 	/*!
 	\param ID to the graphic
 	*/
 	void removeGraphic(Sint32 ID);
-
 
 	//! Gets the graphic ID
 	/*!
@@ -68,7 +63,6 @@ public:
 	*/
 	Sint32 getGraphicID(const char* file);
 
-
 	//! Gets the graphic path given an ID graphic
 	/*!
 	\param ID of the graphic
@@ -76,31 +70,27 @@ public:
 	*/
 	string getGraphicPathByID(Sint32 ID);
 
-
 	//! Returns width and Height of a Surface
 	/*!
-	*	\param img ID graphic
-	*	\param width Return variable for width value
-	*	\param height Return variable for height value
-	*/
-	void getGraphicSize(Sint32 img, int &width, int &height);
-
+	 *	\param img ID graphic
+	 *	\param width Return variable for width value
+	 *	\param height Return variable for height value
+	 */
+	void getGraphicSize(Sint32 img, int& width, int& height);
 
 	//! Returns width of a graphic
 	/*!
-	*	\param img ID graphic
-	* 	\return Width of graphic
-	*/
+	 *	\param img ID graphic
+	 * 	\return Width of graphic
+	 */
 	int getGraphicWidth(Sint32 img);
-
 
 	//! Returns Height of a graphic
 	/*!
-	*	\param img ID graphic
-	*  \return Height of graphic
-	*/
+	 *	\param img ID graphic
+	 *  \return Height of graphic
+	 */
 	int getGraphicHeight(Sint32 img);
-
 
 	//! Return the RGB color of the surface
 	/*!
@@ -109,14 +99,12 @@ public:
 	*/
 	void getColorGraphic(Sint32 ID, Uint8* R, Uint8* G, Uint8* B);
 
-
 	//! Returns the SDL_Surface of the graphic
 	/*!
 	\param ID ID of the graphic
 	\return SDL_Surface
 	*/
 	SDL_Surface* getGraphicByID(Sint32 ID);
-
 
 	//! Change general Alpha value to paint a concrete surface
 	/*!
@@ -125,15 +113,9 @@ public:
 	*/
 	void setAlphaGraphic(Sint32 ID, Uint8 alpha_value);
 
-
 	bool GetAlphaXY(int surface, int x, int y);
 
-	void EditSurfaceMuroBullet(int ID, int x, int y);
-
-	void EditSurfaceMuroEnemy(int ID, int x, int y, int w, int h);
-
-	void put_pixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
-	
+	void put_pixel32(SDL_Surface* surface, int x, int y, Uint32 pixel);
 
 	//! Change general Color value to paint a concrete surface
 	/*!
@@ -142,11 +124,9 @@ public:
 	*/
 	void setColorGraphic(Sint32 ID, Uint8 R, Uint8 G, Uint8 B);
 
-
 	//! Prints the path to loaded graphics
 	void printLoadedGraphics();
 	/*--- END SURFACE ---*/
-
 
 	/*--- TEXTURE ---*/
 
@@ -157,20 +137,17 @@ public:
 	*/
 	Sint32 createTexture(const char* name, SDL_Texture* newTexture);
 
-	
 	//! Deletes a texture from the ResourceManager mapTextures
 	/*!
 	\param file Filepath to the texture
 	*/
 	void removeTexture(const char* file);
 
-
 	//! Deletes a texture from the ResourceManager mapTextures
 	/*!
 	\param ID to the texture
 	*/
 	void removeTexture(Sint32 ID);
-
 
 	//! Gets the texture ID
 	/*!
@@ -179,14 +156,12 @@ public:
 	*/
 	Sint32 getTextureID(const char* file);
 
-
 	//! Gets the texture path given an ID texture
 	/*!
 	\param ID of the texture
 	\return Filepath to the texture
 	*/
 	string getTexturePathByID(Sint32 ID);
-
 
 	//! Return the RGB color of the texture
 	/*!
@@ -195,14 +170,12 @@ public:
 	*/
 	void getColorTexture(Sint32 ID, Uint8* R, Uint8* G, Uint8* B);
 
-
 	//! Returns the SDL_Texture of the texture
 	/*!
 	\param ID ID of the texture
 	\return SDL_Texture
 	*/
 	SDL_Texture* getTextureByID(Sint32 ID);
-
 
 	//! Change general Alpha value to paint a concrete texture
 	/*!
@@ -211,7 +184,6 @@ public:
 	*/
 	void setAlphaTexture(Sint32 ID, Uint8 alpha_value);
 
-
 	//! Change general Color value to paint a concrete texture
 	/*!
 	\param ID ID of the texture
@@ -219,15 +191,13 @@ public:
 	*/
 	void setColorTexture(Sint32 ID, Uint8 R, Uint8 G, Uint8 B);
 
-
 	//! Prints the path to loaded graphics
 	void printLoadedTextures();
 	/*--- END TEXTURE ---*/
 
-
 	/*--- MUSIC ---*/
 
-	//! Adds a music to the ResourceManager 
+	//! Adds a music to the ResourceManager
 	/*!
 	\param file Filepath to the music
 	\return -1 if there's an error when loading
@@ -254,15 +224,13 @@ public:
 	*/
 	Mix_Music* getMusicByID(Sint32 ID);
 
-
 	//! Prints the path to loaded musics
 	void printLoadedMusics();
 	/*--- END MUSIC ---*/
 
-
 	/*--- SOUND ---*/
 
-	//! Adds a sound to the ResourceManager 
+	//! Adds a sound to the ResourceManager
 	/*!
 	\param file Filepath to the sound
 	\return -1 if there's an error when loading
@@ -289,7 +257,6 @@ public:
 	*/
 	Mix_Chunk* getSoundByID(Sint32 ID);
 
-
 	//! Prints the path to loaded sounds
 	void printLoadedSounds();
 	/*--- END SOUND ---*/
@@ -299,16 +266,14 @@ protected:
 	ResourceManager();
 
 private:
-
 	/*--- SURFACE ---*/
 
-	//! Adds a graphic to the ResourceManager 
+	//! Adds a graphic to the ResourceManager
 	/*!
 	\param file Filepath to the graphic
 	\return -1 if there's an error when loading
 	*/
 	Sint32 addGraphic(const char* file, SDL_Surface* newSurface);
-
 
 	//! Searches in the ResourceManager and gets the graphic by its name. If it isn't there, loads it
 	/*!
@@ -316,7 +281,6 @@ private:
 	\return SDL_Surface
 	*/
 	SDL_Surface* getGraphic(const char* file, SDL_Surface* newSurface);
-
 
 	//! Searches the graphic in the vector and returns its ID
 	/*!
@@ -326,16 +290,14 @@ private:
 	Sint32 searchGraphic(SDL_Surface* img);
 	/*--- END SURFACE ---*/
 
-
 	/*--- TEXTURE ---*/
 
-	//! Adds a texture to the ResourceManager 
+	//! Adds a texture to the ResourceManager
 	/*!
 	\param file Filepath to the texture
 	\return -1 if there's an error when loading
 	*/
 	Sint32 addTexture(const char* file, SDL_Texture* newTexture);
-
 
 	//! Searches in the ResourceManager and gets the texture by its name. If it isn't there, loads it
 	/*!
@@ -344,7 +306,6 @@ private:
 	*/
 	SDL_Texture* getTexture(const char* file, SDL_Texture* newTexture);
 
-
 	//! Searches the texture in the vector and returns its ID
 	/*!
 	\param img SDL_Texture of the texture
@@ -352,7 +313,6 @@ private:
 	*/
 	Sint32 searchTexture(SDL_Texture* img);
 	/*--- END TEXTURE ---*/
-
 
 	//! Searches the first NULL in mGraphicsVector and updates mFirstFreeSlotGraphics to store its position
 	/*!
@@ -378,25 +338,21 @@ private:
 	*/
 	Uint32 updateFirstFreeSlotSound();
 
+	vector<SDL_Surface*> mGraphicsVector; /*!<  Vector that stores Surfaces. Useful for sequential access*/
+	vector<SDL_Texture*> mTexturesVector; /*!<  Vector that stores Textures. Useful for sequential access*/
+	vector<Mix_Music*> mMusicsVector;	   /*!<  Vector that stores Mix_Musics. Useful for sequential access*/
+	vector<Mix_Chunk*> mSoundsVector;	   /*!<  Vector that stores Mix_Chunks. Useful for sequential access*/
 
-	vector<SDL_Surface*>		mGraphicsVector;		/*!<  Vector that stores Surfaces. Useful for sequential access*/
-	vector<SDL_Texture*>		mTexturesVector;		/*!<  Vector that stores Textures. Useful for sequential access*/
-	vector<Mix_Music*>			mMusicsVector;			/*!<  Vector that stores Mix_Musics. Useful for sequential access*/
-	vector<Mix_Chunk*>			mSoundsVector;			/*!<  Vector that stores Mix_Chunks. Useful for sequential access*/
+	map<string, Sint32> mIDMapGraphics; /*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
+	map<string, Sint32> mIDMapTextures; /*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
+	map<string, Sint32> mIDMapMusics;	/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
+	map<string, Sint32> mIDMapSounds;	/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
+	Sint32 mFirstFreeSlotGraphics;		/*!<  First free slot in the mGraphicsVector*/
+	Sint32 mFirstFreeSlotTextures;		/*!<  First free slot in the mTexturesVector*/
+	Sint32 mFirstFreeSlotMusics;		/*!<  First free slot int the mMusicsVector*/
+	Sint32 mFirstFreeSlotSounds;		/*!<  First free slot int the mSoundsVector*/
 
-
-	map<string, Sint32>			mIDMapGraphics;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
-	map<string, Sint32>			mIDMapTextures;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
-	map<string, Sint32>			mIDMapMusics;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
-	map<string, Sint32>			mIDMapSounds;					/*!<  Map that stores ID. Links strings to ID, useful for sequential access*/
-	Sint32						mFirstFreeSlotGraphics;			/*!<  First free slot in the mGraphicsVector*/
-	Sint32						mFirstFreeSlotTextures;			/*!<  First free slot in the mTexturesVector*/
-	Sint32						mFirstFreeSlotMusics;			/*!<  First free slot int the mMusicsVector*/
-	Sint32						mFirstFreeSlotSounds;			/*!<  First free slot int the mSoundsVector*/
-
-
-	static ResourceManager*		pInstance;				/*!<  Singleton instance*/
-
+	static ResourceManager* pInstance; /*!<  Singleton instance*/
 };
 
 #endif

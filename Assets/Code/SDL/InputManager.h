@@ -4,10 +4,20 @@
 class InputManager
 {
 private:
-	static InputManager* iInstance; /*!<	Singleton instance*/
+	static InputManager *iInstance; /*!<	Singleton instance*/
 
-	enum numbers{
-		ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE
+	enum numbers
+	{
+		ZERO,
+		ONE,
+		TWO,
+		THREE,
+		FOUR,
+		FIVE,
+		SIX,
+		SEVEN,
+		EIGHT,
+		NINE
 	};
 	int number;
 
@@ -23,7 +33,7 @@ public:
 	~InputManager();
 
 	//! Gets Singleton instance.
-	static InputManager* getInstanceInput();
+	static InputManager *getInstanceInput();
 
 	void Update();
 
@@ -36,7 +46,7 @@ public:
 	bool CheckPause();
 	bool CheckClickLeft();
 	bool CheckClickRight();
-	//bool CheckEnter();
+	// bool CheckEnter();
 
 	void ResetNumber();
 	void ResetESC();
@@ -45,7 +55,7 @@ public:
 
 	void SetNumber(int num);
 
-	void GetMouseXY(int& x, int& y);
+	void GetMouseXY(int &x, int &y);
 };
 
 #endif

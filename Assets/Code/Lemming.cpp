@@ -153,7 +153,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		}
 		break;
 	case STAIR:
-		if ((dir == 0 && (fons->GetMapa(x2 + 1, y2 - 1) != 0 && fons->GetMapa(x2 + 2, y2 - 1) != 0)) || // **** --- Quan la posició estigui bé, s'ha de treure el "-1" de la condició. --- ****
+		if ((dir == 0 && (fons->GetMapa(x2 + 1, y2 - 1) != 0 && fons->GetMapa(x2 + 2, y2 - 1) != 0)) || // **** --- Quan la posiciï¿½ estigui bï¿½, s'ha de treure el "-1" de la condiciï¿½. --- ****
 			(dir == 2 && (fons->GetMapa(x1 - 1, y2 - 1) != 0 && fons->GetMapa(x1 - 2, y2 - 1) != 0))){
 			SetMoure();
 			currStairs = 0;
@@ -485,7 +485,7 @@ void Lemming::Escalar(){
 }
 
 void Lemming::Cavar(Map *fons, int x2, int y2){
-	// Destrucció del terreny.
+	// Destrucciï¿½ del terreny.
 	if (contImatges == 6){
 		for (int i = -1; i < 2; i++){
 			fons->DestroyPosMapa(x2 + i, y2);
@@ -495,7 +495,7 @@ void Lemming::Cavar(Map *fons, int x2, int y2){
 }
 
 void Lemming::Picar(Map *fons, int x2, int y2){
-	// Destrucció del terreny.
+	// Destrucciï¿½ del terreny.
 	if (contImatges == 5){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
@@ -560,7 +560,7 @@ void Lemming::TempsFinal(int temps){
 
 void Lemming::Explotar(Map *fons, int x1, int y1, int x2, int y2){
 	if (contImatges == numImatges){
-		// Destrucció del terreny.
+		// Destrucciï¿½ del terreny.
 		for (int i = -6; i < 3; i++){
 			fons->DestroyPosMapa(x1, y2 + i);
 			fons->DestroyPosMapa(x1 + 1, y2 + i);
