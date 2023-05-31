@@ -8,8 +8,7 @@ class Actions :
 	public ElementHUD
 {
 private:
-	// Vector d'habilitats dels Lemmings.
-	vector<Skill*> skills;
+	vector<Skill*> skills; // Lemming skills vector.
 	vector<Skill*>::iterator itSkills;
 
 	enum ActionEnum{

@@ -72,23 +72,26 @@ void ABCsAlphaNum::ChangeValue(int num){
 	srcY = yIni + ((height + spacingY) * row);
 }
 
-void ABCsAlphaNum::ChangeValue(char noNum){
-	if ((noNum >= 'A' && noNum <= 'Z') || (noNum >= 'a' && noNum <= 'z')){
-		noNum -= 'A';
-		if (noNum >= 32)
-			noNum -= 6; // -6 perquè en ASCII hi ha signes entremig de les lletres en majúscula i minúscula.
+/*
+* @param character can not be a number
+*/
+void ABCsAlphaNum::ChangeValue(char character) {
+	if ((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z')) {
+		character -= 'A';
+		if (character >= 32) // -6 because in ASCII there are signs between uppercase and lowercase letters.
+			character -= 6;
 	}
-	else{
-		switch (noNum){
-		case '!': noNum = EXCLAMATION;
+	else {
+		switch (character) {
+		case '!': character = EXCLAMATION;
 			break;
-		case '@': noNum = AT;
+		case '@': character = AT;
 			break;
-		case '#': noNum = HASH;
+		case '#': character = HASH;
 			break;
-		case '$': noNum = DOLLAR;
+		case '$': character = DOLLAR;
 			break;
-		case '%': noNum = PERCENT;
+		case '%': character = PERCENT;
 			break;
 		default:
 			break;
@@ -96,20 +99,21 @@ void ABCsAlphaNum::ChangeValue(char noNum){
 	}
 
 	int row = 0;
-	if (noNum >= N && noNum <= Z)
+	if (character >= N && character <= Z)
 		row = 1;
-	else if (noNum >= a && noNum <= m)
+	else if (character >= a && character <= m)
 		row = 2;
-	else if (noNum >= n && noNum <= z)
+	else if (character >= n && character <= z)
 		row = 3;
-	else if (noNum >= EXCLAMATION){
+	else if (character >= EXCLAMATION) {
 		row = 5;
-		noNum += 3; // Canvis per a l'spritesheet posat.
+		// Changes to the spritesheet set
+		character += 3;
 	}
 
 	if (row > 0)
-		noNum -= (digitsMaxRow * row);
+		character -= (digitsMaxRow * row);
 
-	srcX = xIni + ((width + spacingX) * noNum);
+	srcX = xIni + ((width + spacingX) * character);
 	srcY = yIni + ((height + spacingY) * row);
 }

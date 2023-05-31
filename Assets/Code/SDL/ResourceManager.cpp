@@ -18,7 +18,6 @@ ResourceManager *ResourceManager::getInstanceResourceManager()
 {
 	if (pInstance == NULL)
 	{
-
 		pInstance = new ResourceManager();
 	}
 
@@ -40,6 +39,7 @@ Sint32 ResourceManager::createGraphic(const char *name, SDL_Surface *newSurface,
 		mGraphicsVector[pos]->h = height;
 		mGraphicsVector[pos]->w = width;
 	}
+
 	return pos;
 }
 
@@ -59,6 +59,7 @@ Sint32 ResourceManager::addGraphic(const char *file, SDL_Surface *newSurface)
 		pos = mGraphicsVector.size() - 1;
 		mIDMapGraphics.emplace(file, pos);
 	}
+
 	return pos;
 }
 
@@ -111,6 +112,7 @@ Sint32 ResourceManager::getGraphicID(const char *file)
 		if (it->first == file)
 			return it->second;
 	}
+
 	return -1;
 }
 
@@ -121,6 +123,7 @@ string ResourceManager::getGraphicPathByID(Sint32 ID)
 		if (it->second == ID)
 			return (string)it->first;
 	}
+
 	return "Error";
 }
 
@@ -164,6 +167,7 @@ Sint32 ResourceManager::searchGraphic(SDL_Surface *img)
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -246,6 +250,7 @@ Uint32 ResourceManager::updateFirstFreeSlotGraphic()
 			break;
 		}
 	}
+
 	return mFirstFreeSlotGraphics;
 }
 /*--- END SURFACE ---*/
@@ -272,6 +277,7 @@ Sint32 ResourceManager::addTexture(const char *file, SDL_Texture *newTexture)
 		pos = mTexturesVector.size() - 1;
 		mIDMapTextures.emplace(file, pos);
 	}
+
 	return pos;
 }
 
@@ -326,6 +332,7 @@ SDL_Texture *ResourceManager::getTexture(const char *file, SDL_Texture *newTextu
 		Sint32 pos = it->second;
 		return mTexturesVector[pos];
 	}
+
 	return mTexturesVector[addTexture(file, newTexture)];
 }
 
@@ -351,6 +358,7 @@ Sint32 ResourceManager::getTextureID(const char *file)
 		if (it->first == file)
 			return it->second;
 	}
+
 	return -1;
 }
 
@@ -361,6 +369,7 @@ string ResourceManager::getTexturePathByID(Sint32 ID)
 		if (it->second == ID)
 			return (string)it->first;
 	}
+
 	return "Error";
 }
 
@@ -373,6 +382,7 @@ Sint32 ResourceManager::searchTexture(SDL_Texture *img)
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -400,6 +410,7 @@ Uint32 ResourceManager::updateFirstFreeSlotTexture()
 			break;
 		}
 	}
+
 	return mFirstFreeSlotTextures;
 }
 /*--- END TEXTURE ---*/
@@ -421,6 +432,7 @@ Sint32 ResourceManager::addMusic(const char *file, Mix_Music *sound)
 		pos = mMusicsVector.size() - 1;
 		mIDMapMusics.emplace(file, pos);
 	}
+
 	return pos;
 }
 
@@ -439,6 +451,7 @@ Sint32 ResourceManager::getMusicID(const char *file)
 		if (it->first == file)
 			return it->second;
 	}
+
 	return -1;
 }
 
@@ -466,6 +479,7 @@ Uint32 ResourceManager::updateFirstFreeSlotMusic()
 			break;
 		}
 	}
+
 	return mFirstFreeSlotMusics;
 }
 /*--- END MUSIC ---*/
@@ -487,6 +501,7 @@ Sint32 ResourceManager::addSound(const char *file, Mix_Chunk *sound)
 		pos = mSoundsVector.size() - 1;
 		mIDMapSounds.emplace(file, pos);
 	}
+
 	return pos;
 }
 
@@ -505,6 +520,7 @@ Sint32 ResourceManager::getSoundID(const char *file)
 		if (it->first == file)
 			return it->second;
 	}
+
 	return -1;
 }
 
@@ -532,6 +548,7 @@ Uint32 ResourceManager::updateFirstFreeSlotSound()
 			break;
 		}
 	}
+
 	return mFirstFreeSlotSounds;
 }
 /*--- END SOUND ---*/
