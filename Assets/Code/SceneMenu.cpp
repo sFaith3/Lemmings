@@ -75,12 +75,12 @@ void SceneMenu::update(){
 				case Mute:
 					currAudio = Fx;
 					audioManager->setVolumeMusic(0);
-					audioManager->setVolumeSound(128);
+					audioManager->setVolumeSound(audioManager->Volume);
 					break;
 				case Fx:
 					currAudio = Music;
-					audioManager->setVolumeMusic(128);
-					audioManager->setVolumeSound(0);
+					audioManager->setVolumeMusic(audioManager->Volume);
+					audioManager->setVolumeSound(audioManager->Volume);
 					break;
 				case Music:
 					currAudio = Mute;
@@ -111,12 +111,12 @@ void SceneMenu::update(){
 		case Mute:
 			currAudio = Fx;
 			audioManager->setVolumeMusic(0);
-			audioManager->setVolumeSound(128);
+			audioManager->setVolumeSound(audioManager->Volume);
 			break;
 		case Fx:
 			currAudio = Music;
-			audioManager->setVolumeMusic(128);
-			audioManager->setVolumeSound(0);
+			audioManager->setVolumeMusic(audioManager->Volume);
+			audioManager->setVolumeSound(audioManager->Volume);
 			break;
 		case Music:
 			currAudio = Mute;

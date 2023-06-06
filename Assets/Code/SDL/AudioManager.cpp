@@ -1,6 +1,5 @@
 #include "AudioManager.h"
 #include "ResourceManager.h"
-#include "SDL_mixer.h"
 #include <iostream>
 
 AudioManager *AudioManager::aInstance = NULL;
@@ -11,8 +10,9 @@ AudioManager::AudioManager()
 		cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
 
 	Mix_AllocateChannels(16);
-	Mix_Volume(-1, MIX_MAX_VOLUME / 2);
-	Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+
+	setVolumeMusic(Volume);
+	setVolumeSound(Volume);
 }
 
 AudioManager::~AudioManager()
@@ -129,14 +129,12 @@ void AudioManager::resumeSound()
 
 void AudioManager::setVolumeMusic(int vol)
 {
-	if (vol >= 0 && vol <= 128)
-		Mix_VolumeMusic(vol);
+	Mix_VolumeMusic(vol);
 }
 
 void AudioManager::setVolumeSound(int vol)
 {
-	if (vol >= 0 && vol <= 128)
-		Mix_Volume(-1, vol);
+	Mix_Volume(-1, vol);
 }
 
 void AudioManager::stopMusic()

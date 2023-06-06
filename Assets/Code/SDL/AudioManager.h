@@ -2,6 +2,7 @@
 #define AUDIOMANAGER_H
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 
 class AudioManager
 {
@@ -12,6 +13,8 @@ private:
 
 public:
 	~AudioManager();
+
+	const int Volume = static_cast<int>(MIX_MAX_VOLUME * 0.6f);
 
 	//! Gets Singleton instance.
 	static AudioManager *getInstanceAudio();
