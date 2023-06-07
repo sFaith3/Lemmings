@@ -6,7 +6,7 @@ class Counter :
 	public ElementHUD
 {
 private:
-	int primerNum, segonNum;
+	int firstNum, secondNum;
 	vector<ABCsAlphaNum*> nums;
 	vector<ABCsAlphaNum*>::iterator itNums;
 
@@ -19,6 +19,7 @@ public:
 	~Counter();
 
 	void init(int x, int y, const char* img, int widht, int height, int scaleX, int scaleY, int separationInital, int separationX, bool addPercent);
+	void InitNums(int x, int y, int separationInitial, int separationX, bool addPercent);
 	void clear();
 	void render();
 
@@ -26,4 +27,5 @@ public:
 	void decrementNumber();
 	void setNumber(int num);
 	void setNumber(string num);
+	void changeValue();
 };

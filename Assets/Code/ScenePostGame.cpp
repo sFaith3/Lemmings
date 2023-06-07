@@ -85,7 +85,7 @@ void ScenePostGame::init(){
 		fons->init(0, 0, "Assets/Art/Images/InfoScene/PostGame/lose.png", false, 0, 0, 480, 340, 1, 1);
 }
 
-void ScenePostGame::clean(){
+void ScenePostGame::clear(){
 	gameStats->SetWin(false);
 
 	digits.clear();

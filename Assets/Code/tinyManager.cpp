@@ -18,129 +18,129 @@ tinyManager* tinyManager::getInstanceTinyManager(){
 }
 
 
-	/* --- Class Tileset --- */
-		/* --- Struct Tile --- */
-		tinyManager::Tileset::Tile::Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY){
-			srcPosX = _srcPosX;
-			srcPosY = _srcPosY;
-			dstPosX = _dstPosX;
-			dstPosY = _dstPosY;
-		}
+/* --- Class Tileset --- */
+/* --- Struct Tile --- */
+tinyManager::Tileset::Tile::Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY) {
+	srcPosX = _srcPosX;
+	srcPosY = _srcPosY;
+	dstPosX = _dstPosX;
+	dstPosY = _dstPosY;
+}
 
-		int tinyManager::Tileset::Tile::getSrcPosX(){
-			return srcPosX;
-		}
+int tinyManager::Tileset::Tile::getSrcPosX() {
+	return srcPosX;
+}
 
-		int tinyManager::Tileset::Tile::getSrcPosY(){
-			return srcPosY;
-		}
+int tinyManager::Tileset::Tile::getSrcPosY() {
+	return srcPosY;
+}
 
-		int tinyManager::Tileset::Tile::getDstPosX(){
-			return dstPosX;
-		}
+int tinyManager::Tileset::Tile::getDstPosX() {
+	return dstPosX;
+}
 
-		int tinyManager::Tileset::Tile::getDstPosY(){
-			return dstPosY;
-		}
+int tinyManager::Tileset::Tile::getDstPosY() {
+	return dstPosY;
+}
 
-		void tinyManager::Tileset::Tile::IncrementDstPos(int x, int y){
-			dstPosX += x;
-			dstPosY += y;
-		}
+void tinyManager::Tileset::Tile::IncrementDstPos(int x, int y) {
+	dstPosX += x;
+	dstPosY += y;
+}
 
-		void tinyManager::Tileset::Tile::ChangeSrc(int srcX, int srcY){
-			srcPosX = srcX;
-			srcPosY = srcY;
-		}
-		/* --- End Struct Tile --- */
+void tinyManager::Tileset::Tile::ChangeSrc(int srcX, int srcY) {
+	srcPosX = srcX;
+	srcPosY = srcY;
+}
+/* --- End Struct Tile --- */
 
-	void tinyManager::Tileset::init(string rutaTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight){
-		this->rutaTileset = rutaTileset;
-		this->spacing = spacing;
-		this->width = width;
-		this->height = height;
-		this->sizeXtiles = sizeXtiles;
-		this->sizeYtiles = sizeYtiles;
-		tiles.clear();
-		tiles.resize(sizeYtiles + 1);
-		for (int i = 0; i <= sizeYtiles; i++)
-			tiles[i].resize(sizeXtiles + 1);
+void tinyManager::Tileset::init(string rutaTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight) {
+	this->rutaTileset = rutaTileset;
+	this->spacing = spacing;
+	this->width = width;
+	this->height = height;
+	this->sizeXtiles = sizeXtiles;
+	this->sizeYtiles = sizeYtiles;
+	tiles.clear();
+	tiles.resize(sizeYtiles + 1);
+	for (int i = 0; i <= sizeYtiles; i++)
+		tiles[i].resize(sizeXtiles + 1);
 
-		this->tileWidth = tileWidth;
-		this->tileHeight = tileHeight;
-		scaleXtile = scaleYtile = 1;
-	}
+	this->tileWidth = tileWidth;
+	this->tileHeight = tileHeight;
+	scaleXtile = scaleYtile = 1;
+}
 
-	void tinyManager::Tileset::addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY){
-		Tile *tile = new Tile(srcPosX, srcPosY, dstPosX, dstPosY);
-		tiles[posY][posX] = tile;
-	}
+void tinyManager::Tileset::addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY) {
+	Tile* tile = new Tile(srcPosX, srcPosY, dstPosX, dstPosY);
+	tiles[posY][posX] = tile;
+}
 
-	void tinyManager::Tileset::render(VideoManager* videoManager){
-		int dstPosXtile = tiles[0][0]->getDstPosX();
-		int dstPosYtile = tiles[0][0]->getDstPosY();
-		for (int j = 0; j < sizeYtiles; j++) {
-			for (int i = 0; i < sizeXtiles; i++) {
-				if (tiles[j][i] != NULL){
-					int srcPosXtile = tiles[j][i]->getSrcPosX();
-					int srcPosYtile = tiles[j][i]->getSrcPosY();
-					videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight, scaleXtile, scaleYtile, dstPosXtile + (i * tileWidth), dstPosYtile + (j * tileHeight));
-				}
-			}
-			//dstPosYtile += tileHeight;
-		}
-	}
-
-	string tinyManager::Tileset::getRutaTileset(){
-		return rutaTileset;
-	}
-
-	int tinyManager::Tileset::getSizeXTiles(){
-		return sizeXtiles;
-	}
-
-	int tinyManager::Tileset::getSizeYTiles(){
-		return sizeYtiles;
-	}
-
-	vector <vector<tinyManager::Tileset::Tile*> > tinyManager::Tileset::getTiles(){
-		return tiles;
-	}
-
-	void tinyManager::Tileset::changeTile(int x, int y, int idTile){
-		int srcPosX = 0;
-		int srcPosY = 0;
-		// Es fa un requadre de retall al tileset, i s'indica on se situa.
-		int tile = idTile; // Id de la tile a pintar.
-		for (int h = 1; h <= height; h++){ // Segons la fila on es trobi.
-			if (tile < width * h){
-				// S'obté la ID de la tile i se li resta el número total de tiles que hi ha en una fila, multiplicat per la fila on sigui menys 1 més l'espai que es deixa entre tile.
-				// Perquè si es troba a la primera fila, no es resta cap, de manera que la x del requadre que s'obté ja és de la primera fila.
-				srcPosX = ((tile - (width * (h - 1))) * tileWidth) + (spacing * (tile - (width * (h - 1))));
-				srcPosY = ((h - 1) * tileHeight) + (spacing * (h - 1));
-				break;
+void tinyManager::Tileset::render(VideoManager* videoManager) {
+	int dstPosXtile = tiles[0][0]->getDstPosX();
+	int dstPosYtile = tiles[0][0]->getDstPosY();
+	for (int j = 0; j < sizeYtiles; j++) {
+		for (int i = 0; i < sizeXtiles; i++) {
+			if (tiles[j][i] != NULL) {
+				int srcPosXtile = tiles[j][i]->getSrcPosX();
+				int srcPosYtile = tiles[j][i]->getSrcPosY();
+				videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight, scaleXtile, scaleYtile, dstPosXtile + (i * tileWidth), dstPosYtile + (j * tileHeight));
 			}
 		}
-		tiles[y][x]->ChangeSrc(srcPosX, srcPosY);
+		//dstPosYtile += tileHeight;
 	}
+}
 
-	void tinyManager::Tileset::setScaleTiles(float x, float y){
-		scaleXtile = x;
-		scaleYtile = y;
-	}
+string tinyManager::Tileset::getRutaTileset() {
+	return rutaTileset;
+}
 
-	void tinyManager::Tileset::setIdImg(int id){
-		idImg = id;
-	}
+int tinyManager::Tileset::getSizeXTiles() {
+	return sizeXtiles;
+}
 
-	int tinyManager::Tileset::getIdImg(){
-		return idImg;
-	}
+int tinyManager::Tileset::getSizeYTiles() {
+	return sizeYtiles;
+}
 
-	void tinyManager::Tileset::removeTile(int x, int y){
-		tiles[y][x] = NULL;
+vector <vector<tinyManager::Tileset::Tile*> > tinyManager::Tileset::getTiles() {
+	return tiles;
+}
+
+void tinyManager::Tileset::changeTile(int x, int y, int idTile) {
+	int srcPosX = 0;
+	int srcPosY = 0;
+	// Es fa un requadre de retall al tileset, i s'indica on se situa.
+	int tile = idTile; // Id de la tile a pintar.
+	for (int h = 1; h <= height; h++) { // Segons la fila on es trobi.
+		if (tile < width * h) {
+			// S'obté la ID de la tile i se li resta el número total de tiles que hi ha en una fila, multiplicat per la fila on sigui menys 1 més l'espai que es deixa entre tile.
+			// Perquè si es troba a la primera fila, no es resta cap, de manera que la x del requadre que s'obté ja és de la primera fila.
+			srcPosX = ((tile - (width * (h - 1))) * tileWidth) + (spacing * (tile - (width * (h - 1))));
+			srcPosY = ((h - 1) * tileHeight) + (spacing * (h - 1));
+			break;
+		}
 	}
-	/* --- End Class Tileset --- */
+	tiles[y][x]->ChangeSrc(srcPosX, srcPosY);
+}
+
+void tinyManager::Tileset::setScaleTiles(float x, float y) {
+	scaleXtile = x;
+	scaleYtile = y;
+}
+
+void tinyManager::Tileset::setIdImg(int id) {
+	idImg = id;
+}
+
+int tinyManager::Tileset::getIdImg() {
+	return idImg;
+}
+
+void tinyManager::Tileset::removeTile(int x, int y) {
+	tiles[y][x] = NULL;
+}
+/* --- End Class Tileset --- */
 
 
 void tinyManager::Init(){

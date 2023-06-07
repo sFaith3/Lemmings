@@ -5,12 +5,12 @@
 class Button
 {
 protected:
-	int id; // Nom relacionat amb al què ha de fer si es clica a sobre d'ell. Depenent de valor d'aquest string, el codi realitzarà X gestió.
-	int posX, posY; // Variables que defineixen la posició en els eixos de coordenades. S'utilitzen per a renderitzar i condicionen els inputs.
-	int width, height; // Defineixen el rectangle d'aquest. Per tal de poder pintar-lo i detectar l'input.
+	int id; // Name related to what to do if clicked on it. Depending on the value of this string, the code will perform X management.
+	int posX, posY; // Variables that define the position on the coordinate axis. They are used to render and condition inputs.
+	int width, height; // They define the rectangle of this one to be able to paint it and detect input.
 	float scaleX, scaleY;
-	int posXini, posYini; // Posició X/Y, on es comença a agafar, la imatge per a realitzar l'sprite.
-	Sint32 idImgNormal, idImgButPressed;
+	int posXini, posYini; // X/Y position where the image is started to be taken to perform the sprite.
+	Sint32 idImgNormal, idImgPressed;
 	bool pressed;
 
 	InputManager* inputManager;
@@ -22,7 +22,7 @@ public:
 
 	int GetId();
 
-	void init(int _id, int _posX, int _posY, int _width, int _height, float _scaleX, float _scaleY, int _posXini, int _posYini, const char* imgNormal, const char* imgButPressed);
+	void init(int _id, int _posX, int _posY, int _width, int _height, float _scaleX, float _scaleY, int _posXini, int _posYini, const char* imgNormal, const char* imgPressed);
 	bool update();
 	void render();
 

@@ -8,8 +8,6 @@ class Actions :
 	public ElementHUD
 {
 private:
-	const int NextCheck = -2; // To check if it needs to go to the next method in update()
-
 	vector<Skill*> skills; // Lemming skills vector.
 	vector<Skill*>::iterator itSkills;
 

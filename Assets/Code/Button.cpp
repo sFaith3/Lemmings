@@ -17,7 +17,7 @@ int Button::GetId(){
 }
 
 
-void Button::init(int _id, int _posX, int _posY, int _width, int _height, float _scaleX, float _scaleY, int _posXini, int _posYini, const char* imgNormal, const char* imgButPressed){
+void Button::init(int _id, int _posX, int _posY, int _width, int _height, float _scaleX, float _scaleY, int _posXini, int _posYini, const char* imgNormal, const char* imgPressed){
 	id = _id;
 	posX = _posX * _scaleX;
 	posY = _posY * _scaleY;
@@ -28,7 +28,7 @@ void Button::init(int _id, int _posX, int _posY, int _width, int _height, float 
 	posXini = _posXini;
 	posYini = _posYini;
 	idImgNormal = videoManager->getTextureID(imgNormal);
-	idImgButPressed = videoManager->getTextureID(imgButPressed);
+	idImgPressed = videoManager->getTextureID(imgPressed);
 	pressed = false;
 }
 
@@ -49,8 +49,8 @@ void Button::render(){
 		videoManager->renderTexture(idImgNormal, posXini, posYini, width, height, scaleX, scaleY, posX, posY);
 	
 	if (pressed){
-		if (idImgButPressed != -1)
-			videoManager->renderTexture(idImgButPressed, posXini, posYini, width, height, scaleX, scaleY, posX, posY);
+		if (idImgPressed != -1)
+			videoManager->renderTexture(idImgPressed, posXini, posYini, width, height, scaleX, scaleY, posX, posY);
 	}
 }
 

@@ -46,7 +46,7 @@ public:
 	static ScenePreGame* getInstanceScenePreGame();
 
 	void init();
-	void clean();
+	void clear();
 	void update();
 	void render();
 };

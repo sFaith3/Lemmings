@@ -83,7 +83,9 @@ int Actions::update() {
 	return (!IsNextCheck(actionToReturn)) ? actionToReturn : -1;
 }
 
+// To check if it needs to go to the next method in update()
 bool Actions::IsNextCheck(int actionToReturn) {
+	const int NextCheck = -2;
 	return actionToReturn == NextCheck;
 }
 

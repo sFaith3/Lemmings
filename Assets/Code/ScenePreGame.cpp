@@ -154,7 +154,7 @@ void ScenePreGame::init()
 	}
 }
 
-void ScenePreGame::clean()
+void ScenePreGame::clear()
 {
 	digits.clear();
 	digits.resize(0);
