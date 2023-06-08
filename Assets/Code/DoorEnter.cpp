@@ -1,15 +1,15 @@
 #include "DoorEnter.h"
 
-DoorEnter::DoorEnter(int x, int y, int timeToSpawn, int numInstancies)
+DoorEnter::DoorEnter(int x, int y, int currentTimeToSpawn, int numInstances)
 {
 	ElementGame::init(x, y, "Assets/Art/Images/Doors/entry.png", false, 0, 0, 57, 31, 1, 1, 126, 31, 69, 2, 25);
 
 	timeToBeReady = 1000;
-	this->timeToSpawn = _timeToSpawn = timeToSpawn * 100;
-	lastTime = 0;
+	this->currentTimeToSpawn = initialTimeToSpawn = currentTimeToSpawn * 100;
+	lastSpawnTime = 0;
 
-	spawnning = false;
-	leftToSpawn = numInstancies;
+	isSpawning = false;
+	remainingToSpawn = numInstances;
 
 	currEstat = NOT_READY;
 
@@ -21,18 +21,36 @@ DoorEnter::~DoorEnter()
 {
 }
 
-void DoorEnter::update(int temps)
+
+int DoorEnter::getRemainingToSpawn()
+{
+	return remainingToSpawn;
+}
+
+bool DoorEnter::getIsSpawning()
+{
+	if (isSpawning)
+	{
+		isSpawning = false;
+		return true;
+	}
+
+	return false;
+}
+
+
+void DoorEnter::update(int time)
 {
 	switch (currEstat)
 	{
 	case NOT_READY:
-		if (temps >= timeToBeReady)
+		if (time >= timeToBeReady)
 		{
-			currEstat = OPENNING;
-			lastTime = timeToBeReady;
+			currEstat = OPENING;
+			lastSpawnTime = timeToBeReady;
 		}
 		break;
-	case OPENNING:
+	case OPENING:
 		if (soundOpen)
 		{
 			audioManager->playSound(idSoundOpen);
@@ -43,13 +61,13 @@ void DoorEnter::update(int temps)
 		UpdateAnimacio();
 		break;
 	case READY:
-		temps -= lastTime;
-		if (temps >= timeToSpawn)
+		time -= lastSpawnTime;
+		if (time >= currentTimeToSpawn)
 		{
-			lastTime += timeToSpawn;
-			spawnning = true;
-			leftToSpawn--;
-			if (leftToSpawn == 0)
+			lastSpawnTime += currentTimeToSpawn;
+			isSpawning = true;
+			remainingToSpawn--;
+			if (remainingToSpawn == 0)
 				currEstat = EMPTY;
 		}
 		break;
@@ -58,27 +76,12 @@ void DoorEnter::update(int temps)
 	}
 }
 
-bool DoorEnter::getSpawnning()
+void DoorEnter::updateTimeToSpawn(int time)
 {
-	if (spawnning)
-	{
-		spawnning = false;
-		return !spawnning;
-	}
-
-	return false;
+	time = 50 - time;
+	currentTimeToSpawn = ((time * initialTimeToSpawn) / 50) + initialTimeToSpawn;
 }
 
-void DoorEnter::setTimeToSpawn(int temps)
-{
-	temps = 50 - temps;
-	timeToSpawn = ((temps * _timeToSpawn) / 50) + _timeToSpawn;
-}
-
-int DoorEnter::getNumToSpawn()
-{
-	return leftToSpawn;
-}
 
 void DoorEnter::notMoreSpawns()
 {

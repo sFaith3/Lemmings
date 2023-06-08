@@ -228,11 +228,11 @@ void SceneGame::updateActions()
 		break;
 	case 0: // REST_VEL_SPAWN
 		actions->DecrementVelocitySkill();
-		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
+		enterDoor->updateTimeToSpawn(actions->GetNumberUsesSkill(1));
 		break;
 	case 1: // PLUS_VEL_SPAWN
 		actions->IncrementVelocitySkill();
-		enterDoor->setTimeToSpawn(actions->GetNumberUsesSkill(1));
+		enterDoor->updateTimeToSpawn(actions->GetNumberUsesSkill(1));
 		break;
 	case 10: // PAUSAR JOC.
 		gameStats->SetPause(!gameStats->GetPause());
@@ -262,7 +262,7 @@ void SceneGame::updateDoors()
 {
 	// ENTER DOOR.
 	enterDoor->update(temps->getTimeMs());
-	if (enterDoor->getSpawnning())
+	if (enterDoor->getIsSpawning())
 	{
 		Lemming *lemming = new Lemming();
 		int posX = mapa->GetPosX() + ((enterDoor->GetPosX() / 2) - 3);
@@ -301,7 +301,7 @@ void SceneGame::updateLemmings()
 			lemmings.erase(itLem);
 			if (lemmings.size() == 0)
 			{
-				if (((lemmingsSaved + lemmingsMorts) >= numLemmings) || (enterDoor->getNumToSpawn() + lemmingsSaved + lemmingsMorts) >= numLemmings)
+				if (((lemmingsSaved + lemmingsMorts) >= numLemmings) || (enterDoor->getRemainingToSpawn() + lemmingsSaved + lemmingsMorts) >= numLemmings)
 					gameFinish = true;
 				break;
 			}
@@ -315,7 +315,7 @@ void SceneGame::updateLemmings()
 			lemmings.erase(itLem);
 			if (lemmings.size() == 0)
 			{
-				if (((lemmingsSaved + lemmingsMorts) >= numLemmings) || (enterDoor->getNumToSpawn() + lemmingsSaved + lemmingsMorts) >= numLemmings)
+				if (((lemmingsSaved + lemmingsMorts) >= numLemmings) || (enterDoor->getRemainingToSpawn() + lemmingsSaved + lemmingsMorts) >= numLemmings)
 					gameFinish = true;
 				break;
 			}
