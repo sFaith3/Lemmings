@@ -61,10 +61,10 @@ void SceneMenu::init(){
 void SceneMenu::update(){
 	for (itBut = buttons.begin(); itBut != buttons.end(); itBut++){
 		if (itBut->update()){
-			switch (itBut->GetId()){
+			switch (itBut->getId()){
 			case PLAYER:
 				audioManager->pauseMusic();
-				inputManager->SetCursorRelative(true);
+				inputManager->setCursorRelative(true);
 				smManager->changeScene(smManager->PRE_GAME);
 				break;
 			case NEW_LEVEL:
@@ -90,17 +90,17 @@ void SceneMenu::update(){
 				}
 				break;
 			case EXIT:
-				inputManager->SetNumber(EXIT);
+				inputManager->setNumber(EXIT);
 				break;
 			}
-			inputManager->ResetClick();
+			inputManager->resetClick();
 		}
 	}
 
-	switch (inputManager->CheckNumber()){
+	switch (inputManager->getNumber()){
 	case PLAYER:
 		audioManager->pauseMusic();
-		inputManager->SetCursorRelative(true);
+		inputManager->setCursorRelative(true);
 		smManager->changeScene(smManager->PRE_GAME);
 		break;
 	case NEW_LEVEL:
@@ -126,8 +126,8 @@ void SceneMenu::update(){
 		}
 		break;
 	}
-	if (inputManager->CheckNumber() != -1)
-		inputManager->ResetNumber();
+	if (inputManager->getNumber() != -1)
+		inputManager->resetNumber();
 }
 
 

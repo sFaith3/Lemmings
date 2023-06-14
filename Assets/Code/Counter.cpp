@@ -11,30 +11,30 @@ void Counter::init(int x, int y, const char* img, int widht, int height, int sca
 	addNumber = false;
 
 	ElementHUD::init(x, y, img, false, 0, 0, widht, height, scaleX, scaleY);
-	InitNums(x, y, separationInitial, separationX, addPercent);
+	initNums(x, y, separationInitial, separationX, addPercent);
 }
 
-void Counter::InitNums(int x, int y, int separationInitial, int separationX, bool addPercent) {
+void Counter::initNums(int x, int y, int separationInitial, int separationX, bool addPercent) {
 	int xNum, yNum;
 
 	// First number
 	xNum = x + separationInitial;
 	yNum = y + 2;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, scaleX, scaleY, firstNum);
+	nums.back()->init(xNum, yNum, scaleX, scaleY, firstNum);
 
 
 	// Second number
 	this->separationX = separationX;
 	xNum += separationX;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, scaleX, scaleY, secondNum);
+	nums.back()->init(xNum, yNum, scaleX, scaleY, secondNum);
 
 	// Optional percent
 	this->addPercent = addPercent;
 	if (addPercent) {
 		nums.push_back(new ABCsAlphaNum());
-		nums.back()->Init(xNum, yNum, scaleX, scaleY, '%');
+		nums.back()->init(xNum, yNum, scaleX, scaleY, '%');
 	}
 }
 
@@ -47,13 +47,13 @@ void Counter::render() {
 	ElementHUD::render();
 
 	if (!addNumber) {
-		nums[0]->Render();
+		nums[0]->render();
 		if (addPercent)
-			nums.back()->Render();
+			nums.back()->render();
 	}
 	else {
 		for (int i = 0; i < nums.size(); i++)
-			nums[i]->Render();
+			nums[i]->render();
 	}
 }
 
@@ -66,7 +66,7 @@ void Counter::incrementNumber() {
 			addNumber = true;
 			firstNum = 1;
 			if (nums.size() > 2)
-				nums.back()->Move(separationX, 0);
+				nums.back()->move(separationX, 0);
 		}
 	}
 	else {
@@ -109,7 +109,7 @@ void Counter::setNumber(int num) {
 		if (!addNumber) {
 			addNumber = true;
 			if (nums.size() > 2)
-				nums.back()->Move(separationX, 0);
+				nums.back()->move(separationX, 0);
 		}
 	}
 	else if (addNumber)
@@ -132,9 +132,9 @@ void Counter::setNumber(string num) {
 
 void Counter::changeValue() {
 	if (addNumber) {
-		nums[0]->ChangeValue(firstNum);
-		nums[1]->ChangeValue(secondNum);
+		nums[0]->changeValue(firstNum);
+		nums[1]->changeValue(secondNum);
 	}
 	else
-		nums[0]->ChangeValue(firstNum);
+		nums[0]->changeValue(firstNum);
 }

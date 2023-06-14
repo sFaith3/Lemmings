@@ -43,7 +43,7 @@ void ScenePreGame::init()
 		cout << "More levels comming soon!\n";
 		ready = false;
 		gameStats->ResetLevel();
-		inputManager->SetCursorRelative(false);
+		inputManager->setCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
 	}
 	else
@@ -75,7 +75,7 @@ void ScenePreGame::init()
 		scaleX = 0.75;
 		scaleY = 1;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->Init(xDigit, yDigit, scaleX, scaleY, nivell);
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, nivell);
 		// NAME LVL.
 		xDigit += 42;
 		scaleX = 0.75;
@@ -83,7 +83,7 @@ void ScenePreGame::init()
 		for (int i = 0; i < nameLvl.length(); i++)
 		{
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, (char)nameLvl[i]);
+			digits.back()->init(xDigit, yDigit, scaleX, scaleY, (char)nameLvl[i]);
 			if (nameLvl[i] != '_')
 				xDigit += 19;
 			else
@@ -100,7 +100,7 @@ void ScenePreGame::init()
 
 			num = (int)numLemmings[i] - 48;
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+			digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 			xDigit += 18;
 		}
 		// LEMMINGS TO SAVE.
@@ -114,7 +114,7 @@ void ScenePreGame::init()
 
 			num = (int)lemmingsToSave[i] - 48;
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+			digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 			xDigit += 18;
 		}
 		// RELEASE RATE.
@@ -124,7 +124,7 @@ void ScenePreGame::init()
 		{
 			num = (int)releaseRate[i] - 48;
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+			digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 			xDigit += 20;
 		}
 		// TIME.
@@ -132,14 +132,14 @@ void ScenePreGame::init()
 		yDigit += 30;
 		num = (int)timeLvl[0] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->Init(xDigit, yDigit, scaleX, scaleY, num);
+		digits.back()->init(xDigit, yDigit, scaleX, scaleY, num);
 		// RATING.
 		xDigit = 80;
 		yDigit += 30;
 		for (int i = 0; i < rating.length(); i++)
 		{
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->Init(xDigit, yDigit, scaleX, scaleY, rating[i]);
+			digits.back()->init(xDigit, yDigit, scaleX, scaleY, rating[i]);
 			xDigit += 20;
 		}
 
@@ -162,15 +162,15 @@ void ScenePreGame::clear()
 
 void ScenePreGame::update()
 {
-	if (inputManager->CheckClickLeft() || inputManager->CheckClickRight())
+	if (inputManager->isClickLeft() || inputManager->isClickRight())
 	{
-		inputManager->ResetClick();
+		inputManager->resetClick();
 		smManager->changeScene(smManager->GAME);
 	}
-	else if (inputManager->CheckESC())
+	else if (inputManager->isESC())
 	{
-		inputManager->ResetESC();
-		inputManager->SetCursorRelative(false);
+		inputManager->resetESC();
+		inputManager->setCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
 	}
 }
@@ -183,6 +183,6 @@ void ScenePreGame::render()
 
 	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++)
 	{
-		(*itDigits)->Render();
+		(*itDigits)->render();
 	}
 }

@@ -11,7 +11,7 @@ ABCsAlphaNum::~ABCsAlphaNum(){
 }
 
 
-void ABCsAlphaNum::Init(int x, int y, float scaleX, float scaleY, int alphaNum){
+void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	posX = x;
 	posY = y;
 
@@ -24,12 +24,12 @@ void ABCsAlphaNum::Init(int x, int y, float scaleX, float scaleY, int alphaNum){
 	spacingY = 1;
 	digitsMaxRow = 13;
 
-	ChangeValue(alphaNum);
+	changeValue(alphaNum);
 }
 
 
 
-void ABCsAlphaNum::Init(int x, int y, float scaleX, float scaleY, char alphaLetter){
+void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, char alphaLetter){
 	posX = x;
 	posY = y;
 
@@ -42,20 +42,20 @@ void ABCsAlphaNum::Init(int x, int y, float scaleX, float scaleY, char alphaLett
 	spacingY = 1;
 	digitsMaxRow = 13;
 
-	ChangeValue(alphaLetter);
+	changeValue(alphaLetter);
 }
 
-void ABCsAlphaNum::Render(){
+void ABCsAlphaNum::render(){
 	videoManager->renderTexture(idImg, srcX, srcY, width, height, scaleX, scaleY, posX, posY);
 }
 
 
-void ABCsAlphaNum::Move(int x, int y){
+void ABCsAlphaNum::move(int x, int y){
 	posX += x;
 	posY += y;
 }
 
-void ABCsAlphaNum::ChangeValue(int num){
+void ABCsAlphaNum::changeValue(int num){
 	switch (num){
 	case 0:
 		num = ZERO;
@@ -75,7 +75,7 @@ void ABCsAlphaNum::ChangeValue(int num){
 /*
 * @param character can not be a number
 */
-void ABCsAlphaNum::ChangeValue(char character) {
+void ABCsAlphaNum::changeValue(char character) {
 	if ((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z')) {
 		character -= 'A';
 		if (character >= 32) // -6 because in ASCII there are signs between uppercase and lowercase letters.

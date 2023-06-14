@@ -18,7 +18,7 @@ void Word::init(int x, int y, int scaleX, int scaleY, int separationX, string wo
 	int _y = y;
 	for (int i = 0; i < word.length(); i++){
 		lettersNums.push_back(new ABCsAlphaNum());
-		lettersNums.back()->Init(_x, _y, scaleX, scaleY, word[i]);
+		lettersNums.back()->init(_x, _y, scaleX, scaleY, word[i]);
 		_x += separationX;
 	}
 }
@@ -30,6 +30,6 @@ void Word::clear(){
 
 void Word::render(){
 	for (itLettersNum = lettersNums.begin(); itLettersNum != lettersNums.end(); itLettersNum++){
-		(*itLettersNum)->Render();
+		(*itLettersNum)->render();
 	}
 }

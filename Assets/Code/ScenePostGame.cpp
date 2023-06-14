@@ -35,7 +35,7 @@ void ScenePostGame::initFromGame(int lemmingsSaved, int lemmingsToSave){
 }
 
 void ScenePostGame::init(){
-	inputManager->SetCursorRelative(true);
+	inputManager->setCursorRelative(true);
 
 	int xDigit = 0, _xDigit = 0;
 	int yDigit = 0;
@@ -48,7 +48,7 @@ void ScenePostGame::init(){
 	for (int i = lemmingsSaved.length() - 1; i >= 0; i--){
 		num = (int)lemmingsSaved[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->Init(xDigit, yDigit, scaleX, 1, num);
+		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
 		xDigit -= 16;
 	}
 	// LEMMINGS TO SAVE.
@@ -57,7 +57,7 @@ void ScenePostGame::init(){
 	for (int i = lemmingsToSave.length() - 1; i >= 0; i--){
 		num = (int)lemmingsToSave[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->Init(xDigit, yDigit, scaleX, 1, num);
+		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
 		xDigit -= 16;
 	}
 	if (gameStats->GetWin()){
@@ -66,7 +66,7 @@ void ScenePostGame::init(){
 		yDigit = 217;
 		int numNivell = gameStats->GetLevel();
 		digits.push_back(new ABCsAlphaNum());
-		digits.back()->Init(xDigit, yDigit, scaleX, 1, numNivell);
+		digits.back()->init(xDigit, yDigit, scaleX, 1, numNivell);
 		// CODE LEVEL.
 		fileManager->Read("Assets/Levels/levels.txt", gameStats->GetLevel());
 		string codeLvl = fileManager->GetValueFromData("code");
@@ -75,7 +75,7 @@ void ScenePostGame::init(){
 		scaleX = 0.55;
 		for (int i = 0; i < codeLvl.length(); i++){
 			digits.push_back(new ABCsAlphaNum());
-			digits.back()->Init(xDigit, yDigit, scaleX, 1, (char)codeLvl[i]);
+			digits.back()->init(xDigit, yDigit, scaleX, 1, (char)codeLvl[i]);
 			xDigit += 20;
 		}
 
@@ -93,20 +93,20 @@ void ScenePostGame::clear(){
 }
 
 void ScenePostGame::update(){
-	if (inputManager->CheckClickLeft()){
-		inputManager->ResetClick();
+	if (inputManager->isClickLeft()){
+		inputManager->resetClick();
 		if (gameStats->GetWin())
 			gameStats->IncrementLevel();
 		smManager->changeScene(smManager->PRE_GAME);
 	}
-	else if (inputManager->CheckClickRight()){
-		inputManager->ResetClick();
-		inputManager->SetCursorRelative(false);
+	else if (inputManager->isClickRight()){
+		inputManager->resetClick();
+		inputManager->setCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
 	}
-	else if (inputManager->CheckESC()){
-		inputManager->ResetESC();
-		inputManager->SetCursorRelative(false);
+	else if (inputManager->isESC()){
+		inputManager->resetESC();
+		inputManager->setCursorRelative(false);
 		smManager->changeScene(smManager->MENU);
 	}
 }
@@ -115,6 +115,6 @@ void ScenePostGame::render(){
 	fons->render();
 
 	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++){
-		(*itDigits)->Render();
+		(*itDigits)->render();
 	}
 }

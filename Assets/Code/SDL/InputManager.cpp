@@ -29,11 +29,13 @@ InputManager *InputManager::getInstanceInput()
 	return iInstance;
 }
 
-void InputManager::Update()
+void InputManager::update()
 {
+	back = false;
+
 	SDL_Event test_event;
 	SDL_Scancode key;
-	back = false;
+
 	while (SDL_PollEvent(&test_event))
 	{
 		switch (test_event.type)
@@ -127,7 +129,17 @@ void InputManager::Update()
 	}
 }
 
-void InputManager::SetCursorRelative(bool active)
+void InputManager::getMouseXY(int& x, int& y)
+{
+	SDL_GetMouseState(&x, &y);
+}
+
+int InputManager::getNumber()
+{
+	return number;
+}
+
+void InputManager::setCursorRelative(bool active)
 {
 	if (active)
 		SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -135,56 +147,56 @@ void InputManager::SetCursorRelative(bool active)
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
-int InputManager::CheckNumber()
+void InputManager::setNumber(int num)
 {
-	return number;
+	number = num;
 }
 
-bool InputManager::CheckQuit()
+bool InputManager::isQuit()
 {
 	return quit;
 }
 
-bool InputManager::CheckESC()
+bool InputManager::isESC()
 {
 	return esc;
 }
 
-bool InputManager::CheckBack()
+bool InputManager::isBack()
 {
 	return back;
 }
 
-bool InputManager::CheckPause()
+bool InputManager::isPause()
 {
 	return pause;
 }
 
-bool InputManager::CheckClickLeft()
+bool InputManager::isClickLeft()
 {
 	return clickLeft;
 }
 
-bool InputManager::CheckClickRight()
+bool InputManager::isClickRight()
 {
 	return clickRight;
 }
 
-/*bool InputManager::CheckEnter(){
+/*bool InputManager::isEnter(){
 	return enter;
 }*/
 
-void InputManager::ResetNumber()
+void InputManager::resetNumber()
 {
 	number = -1;
 }
 
-void InputManager::ResetESC()
+void InputManager::resetESC()
 {
 	esc = false;
 }
 
-void InputManager::ResetClick()
+void InputManager::resetClick()
 {
 	if (clickLeft)
 		clickLeft = false;
@@ -192,18 +204,8 @@ void InputManager::ResetClick()
 		clickRight = false;
 }
 
-void InputManager::ResetPause()
+void InputManager::resetPause()
 {
 	if (pause)
 		pause = false;
-}
-
-void InputManager::SetNumber(int num)
-{
-	number = num;
-}
-
-void InputManager::GetMouseXY(int &x, int &y)
-{
-	SDL_GetMouseState(&x, &y);
 }

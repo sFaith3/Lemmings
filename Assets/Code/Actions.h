@@ -18,7 +18,6 @@ private:
 	int currButton; // To know the current ActionEnum.
 
 	GameStats* gameStats;
-
 	InputManager* inputManager;
 
 public:
@@ -26,17 +25,16 @@ public:
 	~Actions();
 
 	int init(float scaleX, float scaleY, string minVelSpawn, string climb, string umbrella, string explosion, string standing, string steps, string sideDig, string chip, string dig);
-	void InitSkills(int x, int y, string minVelSpawn, string climb, string umbrella, string explosion, string standing, string steps, string sideDig, string chip, string dig);
+	void initSkills(int x, int y, string minVelSpawn, string climb, string umbrella, string explosion, string standing, string steps, string sideDig, string chip, string dig);
 	int update();
-	bool IsNextCheck(int actionToReturn);
+	bool isNextCheck(int actionToReturn);
 	void render();
 
-	int CheckPressButton();
-	int CheckPressNumber();
+	int getPressButton();
+	int getPressNumber();
+	int getNumberUsesSkill(int skill);
 
-	int GetNumberUsesSkill(int skill);
-	void DetractUseSkill(int skill);
-
-	void DecrementVelocitySkill();
-	void IncrementVelocitySkill();
+	void detractUseSkill(int skill);
+	void decrementVelocitySkill();
+	void incrementVelocitySkill();
 };

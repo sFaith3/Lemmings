@@ -22,8 +22,8 @@ public:
 	//! Gets Singleton instance
 	static Cursor* getInstanceCursor();
 
-	void Update();
+	void update();
 
-	bool GetChangedCursor();
-	void ChangeCursor();
+	bool isCursorChanged();
+	void changeCursor();
 };

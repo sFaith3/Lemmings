@@ -241,7 +241,7 @@ bool Lemming::GetRescatat(){
 
 bool Lemming::CursorOnLemming(){
 	int mouseX, mouseY;
-	inputManager->GetMouseXY(mouseX, mouseY);
+	inputManager->getMouseXY(mouseX, mouseY);
 	if ((mouseX > posX + posXmapa && mouseX < posX + posXmapa + pintW) && (mouseY > posY + posYmapa && mouseY < posY + posYmapa + height))
 		return true;
 

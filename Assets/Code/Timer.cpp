@@ -24,13 +24,13 @@ Timer::Timer(int x, int y, string tempsRestant)
 	xNum = x + 45;
 	yNum = y + 2;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, 1, 1, minuts);
+	nums.back()->init(xNum, yNum, 1, 1, minuts);
 	xNum += 28;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, 1, 1, primerNumSegons);
+	nums.back()->init(xNum, yNum, 1, 1, primerNumSegons);
 	xNum += 17;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, 1, 1, segonNumSegons);
+	nums.back()->init(xNum, yNum, 1, 1, segonNumSegons);
 }
 
 Timer::~Timer()
@@ -64,23 +64,23 @@ void Timer::update()
 				else if (segonNumSegons > 0)
 				{
 					segonNumSegons--;
-					nums.back()->ChangeValue(segonNumSegons);
+					nums.back()->changeValue(segonNumSegons);
 				}
 				else if (primerNumSegons > 0)
 				{
 					primerNumSegons--;
 					segonNumSegons = 9;
-					nums[1]->ChangeValue(primerNumSegons);
-					nums.back()->ChangeValue(segonNumSegons);
+					nums[1]->changeValue(primerNumSegons);
+					nums.back()->changeValue(segonNumSegons);
 				}
 				else
 				{
 					minuts--;
 					primerNumSegons = 9;
 					segonNumSegons = 9;
-					nums[0]->ChangeValue(minuts);
-					nums[1]->ChangeValue(primerNumSegons);
-					nums.back()->ChangeValue(segonNumSegons);
+					nums[0]->changeValue(minuts);
+					nums[1]->changeValue(primerNumSegons);
+					nums.back()->changeValue(segonNumSegons);
 				}
 			}
 		}
@@ -92,7 +92,7 @@ void Timer::render()
 	ElementHUD::render();
 
 	for (itNums = nums.begin(); itNums != nums.end(); itNums++)
-		(*itNums)->Render();
+		(*itNums)->render();
 }
 
 void Timer::pause()

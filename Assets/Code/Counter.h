@@ -19,13 +19,14 @@ public:
 	~Counter();
 
 	void init(int x, int y, const char* img, int widht, int height, int scaleX, int scaleY, int separationInital, int separationX, bool addPercent);
-	void InitNums(int x, int y, int separationInitial, int separationX, bool addPercent);
+	void initNums(int x, int y, int separationInitial, int separationX, bool addPercent);
 	void clear();
 	void render();
 
-	void incrementNumber();
-	void decrementNumber();
 	void setNumber(int num);
 	void setNumber(string num);
+
+	void incrementNumber();
+	void decrementNumber();
 	void changeValue();
 };

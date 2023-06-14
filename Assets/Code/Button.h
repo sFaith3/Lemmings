@@ -20,11 +20,11 @@ public:
 	Button();
 	~Button();
 
-	int GetId();
-
 	void init(int _id, int _posX, int _posY, int _width, int _height, float _scaleX, float _scaleY, int _posXini, int _posYini, const char* imgNormal, const char* imgPressed);
 	bool update();
 	void render();
 
-	void SetPressed(bool _pressed);
+	int getId();
+
+	void setPressed(bool _pressed);
 };

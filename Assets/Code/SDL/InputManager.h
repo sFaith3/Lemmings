@@ -35,27 +35,26 @@ public:
 	//! Gets Singleton instance.
 	static InputManager *getInstanceInput();
 
-	void Update();
+	void update();
 
-	void SetCursorRelative(bool active);
+	void getMouseXY(int& x, int& y);
+	int getNumber();
 
-	int CheckNumber();
-	bool CheckQuit();
-	bool CheckESC();
-	bool CheckBack();
-	bool CheckPause();
-	bool CheckClickLeft();
-	bool CheckClickRight();
-	// bool CheckEnter();
+	void setCursorRelative(bool active);
+	void setNumber(int num);
 
-	void ResetNumber();
-	void ResetESC();
-	void ResetClick();
-	void ResetPause();
+	bool isQuit();
+	bool isESC();
+	bool isBack();
+	bool isPause();
+	bool isClickLeft();
+	bool isClickRight();
+	//bool isEnter();
 
-	void SetNumber(int num);
-
-	void GetMouseXY(int &x, int &y);
+	void resetNumber();
+	void resetESC();
+	void resetClick();
+	void resetPause();
 };
 
 #endif

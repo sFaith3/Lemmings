@@ -32,18 +32,18 @@ Cursor* Cursor::getInstanceCursor(){
 }
 
 
-void Cursor::Update(){
-	inputManager->GetMouseXY(posX, posY);
+void Cursor::update(){
+	inputManager->getMouseXY(posX, posY);
 	posX -= width / 2;
 	posY -= height / 2;
 }
 
 
-bool Cursor::GetChangedCursor(){
+bool Cursor::isCursorChanged(){
 	return changedCursor;
 }
 
-void Cursor::ChangeCursor() {
+void Cursor::changeCursor() {
 	changedCursor = !changedCursor;
 	idImg = changedCursor ? idImgHover : idImgNormal;
 	width = changedCursor ? widthHover : widthNormal;

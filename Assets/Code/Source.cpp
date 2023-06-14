@@ -15,8 +15,8 @@ int main(int argc, char* args[]){
 		sceneManager->update();
 
 		/* --- CHECK INPUT --- */
-		inputManager->Update();
-		if (((inputManager->CheckESC() || inputManager->CheckNumber() == 4) && sceneManager->getNumCurrScene() == sceneManager->MENU) || inputManager->CheckQuit())
+		inputManager->update();
+		if (((inputManager->isESC() || inputManager->getNumber() == 4) && sceneManager->getNumCurrScene() == sceneManager->MENU) || inputManager->isQuit())
 			fi = true;
 
 		/* --- RENDER --- */

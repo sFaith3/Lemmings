@@ -6,8 +6,6 @@
 class ABCsAlphaNum
 {
 private:
-	VideoManager* videoManager;
-
 	int posX, posY; // Where is rendered.
 	Sint32 idImg;
 
@@ -25,16 +23,18 @@ private:
 		EXCLAMATION, AT, HASH, DOLLAR, PERCENT
 	};
 
+	VideoManager* videoManager;
+
 public:
 	ABCsAlphaNum();
 	~ABCsAlphaNum();
 
-	void Init(int x, int y, float scaleX, float scaleY, int alphaNum);
-	void Init(int x, int y, float scaleX, float scaleY, char alphaLetter);
-	void Render();
+	void init(int x, int y, float scaleX, float scaleY, int alphaNum);
+	void init(int x, int y, float scaleX, float scaleY, char alphaLetter);
+	void render();
 
-	void Move(int x, int y);
-	void ChangeValue(int num);
-	void ChangeValue(char lletres);
+	void move(int x, int y);
+	void changeValue(int num);
+	void changeValue(char lletres);
 };
 
