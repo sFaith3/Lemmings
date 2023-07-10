@@ -34,18 +34,18 @@ void ScenePostGame::initFromGame(int lemmingsSaved, int lemmingsToSave){
 	this->lemmingsToSave = to_string(lemmingsToSave);
 }
 
-void ScenePostGame::init(){
+void ScenePostGame::init() {
 	inputManager->setCursorRelative(true);
 
 	int xDigit = 0, _xDigit = 0;
 	int yDigit = 0;
-	float scaleX = 0.65;
+	float scaleX = 0.65f;
 	int num = 0;
 
 	// NUMBER LEMMINGS SAVED.
 	xDigit = _xDigit = 475;
 	yDigit = 51;
-	for (int i = lemmingsSaved.length() - 1; i >= 0; i--){
+	for (int i = lemmingsSaved.length() - 1; i >= 0; i--) {
 		num = (int)lemmingsSaved[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
 		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
@@ -54,13 +54,13 @@ void ScenePostGame::init(){
 	// LEMMINGS TO SAVE.
 	xDigit = _xDigit;
 	yDigit += 16;
-	for (int i = lemmingsToSave.length() - 1; i >= 0; i--){
+	for (int i = lemmingsToSave.length() - 1; i >= 0; i--) {
 		num = (int)lemmingsToSave[i] - 48;
 		digits.push_back(new ABCsAlphaNum());
 		digits.back()->init(xDigit, yDigit, scaleX, 1, num);
 		xDigit -= 16;
 	}
-	if (gameStats->GetWin()){
+	if (gameStats->GetWin()) {
 		// NUMBER LEVEL.
 		xDigit = 610;
 		yDigit = 217;
@@ -72,8 +72,8 @@ void ScenePostGame::init(){
 		string codeLvl = fileManager->GetValueFromData("code");
 		xDigit = 367;
 		yDigit = 235;
-		scaleX = 0.55;
-		for (int i = 0; i < codeLvl.length(); i++){
+		scaleX = 0.55f;
+		for (int i = 0; i < codeLvl.length(); i++) {
 			digits.push_back(new ABCsAlphaNum());
 			digits.back()->init(xDigit, yDigit, scaleX, 1, (char)codeLvl[i]);
 			xDigit += 20;

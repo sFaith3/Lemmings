@@ -15,7 +15,7 @@ private:
 
 	static FileManager* fInstance; /*!<	Singleton instance*/
 
-	vector <map<string, string> > data; // Data of the readed file.
+	vector<map<string, string>> data; // Data of the readed file.
 
 public:
 	~FileManager();
@@ -23,12 +23,14 @@ public:
 	//! Gets Singleton instance.
 	static FileManager* getInstanceFile();
 
-	// Methods to save the data in a std::map to treat it then,
+	// Methods to save the data in a std::map to treat it later.
 	void Read(const char* file);
-	void Read(const char* file, int line);
+	void ReadLines(fstream &reader);
+	void Read(const char* file, int numLines);
+	void ReadLines(fstream &reader, int numLines);
 
-	int SizeFile(fstream reader);
-	int ReadContents(vector<string> &words, fstream &in); // Read all data to save them in a vector to treat it then.
+	int SizeFile(fstream &reader);
+	int ReadContents(vector<string> &words, fstream &in); // Read all data to save them in a vector to treat it later.
 
 	string GetValueFromData(string key); // Get the value of the correspondent key in the std::map.
 };

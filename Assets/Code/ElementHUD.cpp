@@ -5,7 +5,6 @@ ElementHUD::ElementHUD()
 {
 }
 
-
 ElementHUD::~ElementHUD()
 {
 }

@@ -6,7 +6,6 @@ ABCsAlphaNum::ABCsAlphaNum(){
 	idImg = videoManager->getTextureID("Assets/Art/Images/ABCsAlphaNum/alphabet.png");
 }
 
-
 ABCsAlphaNum::~ABCsAlphaNum(){
 }
 
@@ -26,8 +25,6 @@ void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, int alphaNum){
 
 	changeValue(alphaNum);
 }
-
-
 
 void ABCsAlphaNum::init(int x, int y, float scaleX, float scaleY, char alphaLetter){
 	posX = x;

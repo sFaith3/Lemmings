@@ -26,7 +26,6 @@ private:
 	bool back;
 	bool pause;
 	bool clickLeft, clickRight;
-	bool enter;
 
 public:
 	InputManager();
@@ -49,7 +48,6 @@ public:
 	bool isPause();
 	bool isClickLeft();
 	bool isClickRight();
-	//bool isEnter();
 
 	void resetNumber();
 	void resetESC();

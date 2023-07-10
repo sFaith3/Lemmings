@@ -4,22 +4,22 @@ class ElementGame :
 	public Element
 {
 protected:
-	int widthSpriteSheet, heightSpriteSheet; // Amplada i alçada total de l'spritesheet.
-	int toNextSpriteX, toNextSpriteY; // Posicions que ha de recórre per arribar al següent sprite.
-	int numImatges; // Número d'imatges que té aquell spritesheet.
-	int contImatges; // Sprite actual de l'animació que s'està pintant.
-	int fpsAnimacio, currFpsAnim; // Temps que triga en canviar d'animació i temps actual que té en aquell moment.
-								  // Quan currFpsAnim es igual a fpsAnimacio, l'sprite canvïa.
-	int numSaltsImatges; // Nombre de files què ha de desplaçar-se en total. Quan l'sprite arribi al límit de l'spritesheet, sense ser aquest l'últim, realitza un salt de fila en l'spritesheet.
-						 // i es posiciona a la x inicial d'aquest. S'indica el nombre màxim de desplaçaments per fila.
+	int widthSpriteSheet, heightSpriteSheet; // Total width and height of the spritesheet.
+	int toNextSpriteX, toNextSpriteY; // Positions to get the next sprite.
+	int numSprites; // The number of sprite that has that spritesheet.
+	int currentSprite; // The current sprite of the animation that is being rendered.
+	int timeToNextSprite, currTimeToNextSprite; // Time to change the sprite of the animation and his current time.
+												// When 'currTimeToNextSprite' is equal to 'timeToNextSprite', the sprite changes.
+	int numRowsSpritesheet; // Number of rows to be moved in total. When the sprite reaches the boundary of the spritesheet, without this being the last, it makes a row jump in the spritesheet
+							// and is positioned in the initial X of this. The maximum number of moves per row.
 
 public:
 	ElementGame();
 	~ElementGame();
 
-	void init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim);
+	void init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numSprites, int timeToNextSprite);
 	void render();
 
-	void UpdateAnimacio(); // Animacio de SpriteSheet.
+	void UpdateAnimation(); // Animation of the spritesheet.
 };
 

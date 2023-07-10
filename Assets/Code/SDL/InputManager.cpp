@@ -12,7 +12,6 @@ InputManager::InputManager()
 	pause = false;
 	clickLeft = false;
 	clickRight = false;
-	enter = false;
 }
 
 InputManager::~InputManager()
@@ -77,9 +76,6 @@ void InputManager::update()
 			case SDL_SCANCODE_9:
 				number = NINE;
 				break;
-				/*case SDL_SCANCODE_:
-					enter = true;
-					break;*/
 			case SDL_SCANCODE_PAUSE:
 				pause = true;
 				break;
@@ -103,9 +99,6 @@ void InputManager::update()
 			case SDL_SCANCODE_9:
 				number = -1;
 				break;
-				/*case SDL_SCANCODE_:
-					enter = false;
-					break;*/
 			default:
 				break;
 			}
@@ -181,10 +174,6 @@ bool InputManager::isClickRight()
 {
 	return clickRight;
 }
-
-/*bool InputManager::isEnter(){
-	return enter;
-}*/
 
 void InputManager::resetNumber()
 {

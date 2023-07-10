@@ -14,8 +14,8 @@ Button::~Button(){
 
 void Button::init(int _id, int _posX, int _posY, int _width, int _height, float _scaleX, float _scaleY, int _posXini, int _posYini, const char* imgNormal, const char* imgPressed){
 	id = _id;
-	posX = _posX * _scaleX;
-	posY = _posY * _scaleY;
+	posX = static_cast<int>(static_cast<float>(_posX) * _scaleX);
+	posY = static_cast<int>(static_cast<float>(_posY) * _scaleY);
 	width = _width;
 	height = _height;
 	scaleX = _scaleX;

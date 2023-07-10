@@ -143,7 +143,7 @@ void ScenePreGame::init()
 			xDigit += 20;
 		}
 
-		scaleX = scaleY = 0.33666;
+		scaleX = scaleY = 0.33666f;
 		mapa = new Map();
 		mapa->init(40, 2, true, _rutaMapa, "colisiones", 3, _rutaTilesets, false, 1, 0, 0, NULL, NULL); // S'inicien les posicions X-Y que es volen a SceneGame.
 

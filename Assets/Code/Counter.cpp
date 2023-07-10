@@ -10,7 +10,7 @@ void Counter::init(int x, int y, const char* img, int widht, int height, int sca
 	firstNum = secondNum = 0;
 	addNumber = false;
 
-	ElementHUD::init(x, y, img, false, 0, 0, widht, height, scaleX, scaleY);
+	ElementHUD::init(x, y, img, false, 0, 0, widht, height, static_cast<float>(scaleX), static_cast<float>(scaleY));
 	initNums(x, y, separationInitial, separationX, addPercent);
 }
 
@@ -22,7 +22,6 @@ void Counter::initNums(int x, int y, int separationInitial, int separationX, boo
 	yNum = y + 2;
 	nums.push_back(new ABCsAlphaNum());
 	nums.back()->init(xNum, yNum, scaleX, scaleY, firstNum);
-
 
 	// Second number
 	this->separationX = separationX;

@@ -56,9 +56,9 @@ void DoorEnter::update(int time)
 			audioManager->playSound(idSoundOpen);
 			soundOpen = false;
 		}
-		if (contImatges == numImatges)
+		if (currentSprite == numSprites)
 			currEstat = READY;
-		UpdateAnimacio();
+		UpdateAnimation();
 		break;
 	case READY:
 		time -= lastSpawnTime;

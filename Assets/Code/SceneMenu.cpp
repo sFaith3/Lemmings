@@ -8,16 +8,16 @@ SceneMenu::SceneMenu(){
 
 	smManager = SceneManager::getInstanceSM();
 
-	float scaleX = 0.65;
-	float scaleY = 0.8;
+	float scaleX = 0.65f;
+	float scaleY = 0.8f;
 	fons = new Background();
 	fons->init(0, 0, "Assets/Art/Images/Menu/menu.png", false, 0, 0, 809, 446, scaleX, scaleY);
 	
 	idMusic = audioManager->getMusicID("Assets/Art/Audios/Music/start.wav");
 
 	Button button;
-	int wButton = 132 * scaleX;
-	int hButton = 48 * scaleY;
+	int wButton = static_cast<int>(132.f * scaleX);
+	int hButton = static_cast<int>(48.f * scaleY);
 	button.init(PLAYER, 98, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
 	button.init(NEW_LEVEL, 260, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);

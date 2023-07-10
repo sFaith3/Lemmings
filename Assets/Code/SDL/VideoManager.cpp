@@ -408,7 +408,7 @@ void VideoManager::updateTime()
 		deltaTime = (float)(currentTime - lastTime);
 		if (deltaTime < msFrame)
 		{
-			waitTime(msFrame - deltaTime);
+			waitTime(static_cast<int>(msFrame - deltaTime));
 			deltaTime = msFrame;
 		}
 		lastTime = currentTime;

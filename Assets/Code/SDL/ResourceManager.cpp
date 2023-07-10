@@ -56,7 +56,7 @@ Sint32 ResourceManager::addGraphic(const char *file, SDL_Surface *newSurface)
 	else
 	{
 		mGraphicsVector.push_back(newSurface);
-		pos = mGraphicsVector.size() - 1;
+		pos = static_cast<Sint32>(mGraphicsVector.size() - 1);
 		mIDMapGraphics.emplace(file, pos);
 	}
 
@@ -274,7 +274,7 @@ Sint32 ResourceManager::addTexture(const char *file, SDL_Texture *newTexture)
 	else
 	{
 		mTexturesVector.push_back(newTexture);
-		pos = mTexturesVector.size() - 1;
+		pos = static_cast<Sint32>(mTexturesVector.size()) - 1;
 		mIDMapTextures.emplace(file, pos);
 	}
 
@@ -429,7 +429,7 @@ Sint32 ResourceManager::addMusic(const char *file, Mix_Music *sound)
 	else
 	{
 		mMusicsVector.push_back(sound);
-		pos = mMusicsVector.size() - 1;
+		pos = static_cast<Sint32>(mMusicsVector.size()) - 1;
 		mIDMapMusics.emplace(file, pos);
 	}
 
@@ -498,7 +498,7 @@ Sint32 ResourceManager::addSound(const char *file, Mix_Chunk *sound)
 	else
 	{
 		mSoundsVector.push_back(sound);
-		pos = mSoundsVector.size() - 1;
+		pos = static_cast<Sint32>(mSoundsVector.size()) - 1;
 		mIDMapSounds.emplace(file, pos);
 	}
 

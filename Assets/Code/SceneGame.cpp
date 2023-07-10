@@ -273,7 +273,7 @@ void SceneGame::updateDoors()
 	}
 
 	// EXIT DOOR.
-	exitDoor->UpdateAnimacio();
+	exitDoor->UpdateAnimation();
 }
 
 void SceneGame::updateLemmings()

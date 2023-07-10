@@ -159,13 +159,13 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 			currStairs = 0;
 			break;
 		}
-		else if (contImatges == 11){
+		else if (currentSprite == 11){
 			PosarEscala(fons, x1, x2, y2);
 			currStairs++;
 			if (currStairs == 25 || currStairs == 28 || currStairs == 33)
 				audioManager->playSound(idSounds[Stair]);
 		}
-		else if (contImatges == numImatges){
+		else if (currentSprite == numSprites){
 			Moure(true);
 			if (currStairs >= 32){
 				SetNoEscales();
@@ -174,7 +174,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		}
 		break;
 	case NOSTAIR:
-		if (contImatges == numImatges){
+		if (currentSprite == numSprites){
 			SetMoure();
 		}
 		break;
@@ -182,7 +182,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 
 		break;
 	case DEADFALL:
-		if (contImatges == numImatges){
+		if (currentSprite == numSprites){
 			mortFinal = true;
 		}
 		break;
@@ -194,12 +194,12 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		break;
 	case RESCUED:
 		if (!rescatat){
-			if (contImatges == numImatges)
+			if (currentSprite == numSprites)
 				rescatat = true;
 		}
 		break;
 	case EXPLODING:
-		if (contImatges == numImatges){
+		if (currentSprite == numSprites){
 			SetExplosio();
 		}
 		break;
@@ -212,7 +212,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		TempsFinal(temps);
 	}
 
-	UpdateAnimacio();
+	UpdateAnimation();
 }
 
 void Lemming::render(){
@@ -319,14 +319,14 @@ int Lemming::GetEstat(){
 
 void Lemming::SetMoure(){
 	estat = MOVE;
-	numImatges = 10;
+	numSprites = 10;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 0;
 }
 
 void Lemming::SetCaure(){
 	estat = FALL;
-	numImatges = 4;
+	numSprites = 4;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 40;
 	maxCaure = 0;
@@ -335,21 +335,21 @@ void Lemming::SetCaure(){
 void Lemming::SetMortCaure(){
 	audioManager->playSound(idSounds[FallDead]);
 	estat = DEADFALL;
-	numImatges = 16;
+	numSprites = 16;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 220;
 }
 
 void Lemming::SetForadarParet(){
 	estat = BREAK;
-	numImatges = 32;
+	numSprites = 32;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 120;
 }
 
 void Lemming::SetObrirParaigues(){
 	estat = OPENUMBRELLA;
-	numImatges = 4;
+	numSprites = 4;
 	srcPosX = _srcPosX = 80;
 	srcPosY = 40;
 	height = 16;
@@ -358,56 +358,56 @@ void Lemming::SetObrirParaigues(){
 
 void Lemming::SetPlanejarParaigues(){
 	estat = GLIDE;
-	numImatges = 4;
+	numSprites = 4;
 	srcPosX = _srcPosX = 140;
 	srcPosY = 40;
 }
 
 void Lemming::SetCavar(){
 	estat = DIG;
-	numImatges = 8;
+	numSprites = 8;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 160;
 }
 
 void Lemming::SetPicar(){
 	estat = PICK;
-	numImatges = 24;
+	numSprites = 24;
 	srcPosX = _srcPosX = 160;
 	srcPosY = 160;
 }
 
 void Lemming::SetImmobilitzar(){
 	estat = STOP;
-	numImatges = 16;
+	numSprites = 16;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 60;
 }
 
 void Lemming::SetConstruirEscala(){
 	estat = STAIR;
-	numImatges = 16;
+	numSprites = 16;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 100;
 }
 
 void Lemming::SetNoEscales(){
 	estat = NOSTAIR;
-	numImatges = 7;
+	numSprites = 7;
 	srcPosX = _srcPosX = 200;
 	srcPosY = 0;
 }
 
 void Lemming::SetEscalar(){
 	estat = CLIMB;
-	numImatges = 9;
+	numSprites = 9;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 80;
 }
 
 void Lemming::SetFinalEscalar(){
 	estat = ENDCLIMB;
-	numImatges = 7;
+	numSprites = 7;
 	srcPosX = _srcPosX = 180;
 	srcPosY = 80;
 }
@@ -420,7 +420,7 @@ void Lemming::SetContadorTemps(int temps){
 void Lemming::SetRescatar(){
 	audioManager->playSound(idSounds[Yippee]);
 	estat = RESCUED;
-	numImatges = 4;
+	numSprites = 4;
 	srcPosX = _srcPosX = 20;
 	srcPosY = 20;
 }
@@ -428,7 +428,7 @@ void Lemming::SetRescatar(){
 void Lemming::SetExplotar(){
 	audioManager->playSound(idSounds[BeforeExplode]);
 	estat = EXPLODING;
-	numImatges = 16;
+	numSprites = 16;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 200;
 }
@@ -436,7 +436,7 @@ void Lemming::SetExplotar(){
 void Lemming::SetExplosio(){
 	audioManager->playSound(idSounds[Explosion]);
 	estat = EXPLOSION;
- 	numImatges = 9;
+ 	numSprites = 9;
 	srcPosX = _srcPosX = 100;
 	srcPosY = 260;
 }
@@ -462,7 +462,7 @@ void Lemming::Moure(bool diagAmunt){
 }
 
 void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
-	if (contImatges == 8 || contImatges == 16 || contImatges == 24 || contImatges == 32){
+	if (currentSprite == 8 || currentSprite == 16 || currentSprite == 24 || currentSprite == 32){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
 				fons->DestroyPosMapa(x2 + i, y2 - j);
@@ -473,20 +473,20 @@ void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
 }
 
 void Lemming::Levitar(){
-	if (contImatges == 2 || contImatges == 4){
+	if (currentSprite == 2 || currentSprite == 4){
 		posY += desplasament;
 	}
 }
 
 void Lemming::Escalar(){
-	if (contImatges == 3 || contImatges == 6 || contImatges == 9){
+	if (currentSprite == 3 || currentSprite == 6 || currentSprite == 9){
 		posY -= desplasament;
 	}
 }
 
 void Lemming::Cavar(Map *fons, int x2, int y2){
 	// Destrucci� del terreny.
-	if (contImatges == 6){
+	if (currentSprite == 6){
 		for (int i = -1; i < 2; i++){
 			fons->DestroyPosMapa(x2 + i, y2);
 		}
@@ -496,7 +496,7 @@ void Lemming::Cavar(Map *fons, int x2, int y2){
 
 void Lemming::Picar(Map *fons, int x2, int y2){
 	// Destrucci� del terreny.
-	if (contImatges == 5){
+	if (currentSprite == 5){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
 				fons->DestroyPosMapa(x2 + i, y2 - j);
@@ -559,7 +559,7 @@ void Lemming::TempsFinal(int temps){
 }
 
 void Lemming::Explotar(Map *fons, int x1, int y1, int x2, int y2){
-	if (contImatges == numImatges){
+	if (currentSprite == numSprites){
 		// Destrucci� del terreny.
 		for (int i = -6; i < 3; i++){
 			fons->DestroyPosMapa(x1, y2 + i);
