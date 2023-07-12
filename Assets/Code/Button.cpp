@@ -1,12 +1,18 @@
 #include "Button.h"
 
-
 Button::Button(){
+	id = -1;
+	posX = posY = 0;
+	width = height = 0;
+	scaleX = scaleY = 1.f;
+	posXini = posYini = 0;
+	idImgNormal = idImgPressed = -1;
+	pressed = false;
+
 	SingletonManager* sManager = SingletonManager::getInstanceSingleton();
 	inputManager = sManager->getInputManager();
 	videoManager = sManager->getVideoManager();
 }
-
 
 Button::~Button(){
 }

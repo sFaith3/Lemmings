@@ -1,6 +1,5 @@
 #include "ElementHUD.h"
 
-
 ElementHUD::ElementHUD()
 {
 }

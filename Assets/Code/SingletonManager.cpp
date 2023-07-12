@@ -1,7 +1,6 @@
 #include "SingletonManager.h"
 #include"SDL.h"
 
-
 SingletonManager* SingletonManager::sInstance = NULL;
 
 SingletonManager::SingletonManager(){
@@ -14,6 +13,7 @@ SingletonManager::SingletonManager(){
 SingletonManager::~SingletonManager(){
 
 }
+
 
 SingletonManager* SingletonManager::getInstanceSingleton(){
 	if (sInstance == NULL){

@@ -2,7 +2,6 @@
 #include "Utils.h"
 #include "SingletonManager.h"
 
-
 class ABCsAlphaNum
 {
 private:

@@ -1,11 +1,14 @@
 #include "Skill.h"
 
-
 Skill::Skill(){
+	usosRestants = 0;
+	numPrimerDigit = numSegonDigit = 0;
+
+	velMinimaSpawn = 0;
+
 	for (int i = 0; i < 2; i++)
 		digits.push_back(new ABCsAlphaNum());
 }
-
 
 Skill::~Skill()
 {

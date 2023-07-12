@@ -22,6 +22,7 @@ ScenePreGame::~ScenePreGame()
 {
 }
 
+
 ScenePreGame *ScenePreGame::getInstanceScenePreGame()
 {
 	if (gInstance == NULL)

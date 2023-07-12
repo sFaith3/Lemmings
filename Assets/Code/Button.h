@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ElementHUD.h"
 
 class Button

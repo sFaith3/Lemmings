@@ -1,6 +1,5 @@
 #include "ScenePostGame.h"
 
-
 ScenePostGame* ScenePostGame::gInstance = NULL;
 
 ScenePostGame::ScenePostGame(){
@@ -15,9 +14,7 @@ ScenePostGame::ScenePostGame(){
 	smManager = SceneManager::getInstanceSM();
 }
 
-
 ScenePostGame::~ScenePostGame(){
-
 }
 
 

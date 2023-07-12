@@ -1,7 +1,13 @@
 #include "ElementGame.h"
 
-
 ElementGame::ElementGame(){
+	widthSpriteSheet = heightSpriteSheet = 0;
+	toNextSpriteX = toNextSpriteY = 0;
+	numSprites = 0;
+	currentSprite = 0;
+	timeToNextSprite = currTimeToNextSprite = 0;
+	
+	numRowsSpritesheet = 0;
 }
 
 ElementGame::~ElementGame(){

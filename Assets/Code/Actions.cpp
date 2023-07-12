@@ -1,15 +1,15 @@
 #include "Actions.h"
 
-
 Actions::Actions() {
 	const int NumSkills = 12;
 	for (int i = 0; i < NumSkills; i++)
 		skills.push_back(new Skill());
 
+	currButton = -1;
+
 	gameStats = GameStats::getInstanceGameStats();
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
-
 
 Actions::~Actions() {
 }

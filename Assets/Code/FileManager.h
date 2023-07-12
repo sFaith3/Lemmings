@@ -30,7 +30,7 @@ public:
 	void ReadLines(fstream &reader, int numLines);
 
 	int SizeFile(fstream &reader);
-	int ReadContents(vector<string> &words, fstream &in); // Read all data to save them in a vector to treat it later.
+	int ReadContent(vector<string> &words, fstream &in); // Read all data to save them in a vector to treat it later.
 
 	string GetValueFromData(string key); // Get the value of the correspondent key in the std::map.
 };

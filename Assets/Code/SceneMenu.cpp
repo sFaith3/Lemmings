@@ -1,6 +1,5 @@
 #include "SceneMenu.h"
 
-
 SceneMenu* SceneMenu::gInstance = NULL;
 
 SceneMenu::SceneMenu(){

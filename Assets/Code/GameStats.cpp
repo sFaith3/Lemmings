@@ -1,6 +1,5 @@
 #include "GameStats.h"
 
-
 GameStats* GameStats::pInstance = NULL;
 
 GameStats::GameStats(){
@@ -8,7 +7,6 @@ GameStats::GameStats(){
 	pause = false;
 	win = false;
 }
-
 
 GameStats::~GameStats(){
 

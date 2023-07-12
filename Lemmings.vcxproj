@@ -33,7 +33,6 @@
     <ClCompile Include="Assets\Code\GameStats.cpp" />
     <ClCompile Include="Assets\Code\Lemming.cpp" />
     <ClCompile Include="Assets\Code\Map.cpp" />
-    <ClCompile Include="Assets\Code\Minimap.cpp" />
     <ClCompile Include="Assets\Code\Scene.cpp" />
     <ClCompile Include="Assets\Code\SceneCodeLevel.cpp" />
     <ClCompile Include="Assets\Code\SceneGame.cpp" />
@@ -54,7 +53,6 @@
     <ClCompile Include="Assets\Code\TinyXML\tinyxml.cpp" />
     <ClCompile Include="Assets\Code\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="Assets\Code\TinyXML\tinyxmlparser.cpp" />
-    <ClCompile Include="Assets\Code\Trap.cpp" />
     <ClCompile Include="Assets\Code\Word.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +70,6 @@
     <ClInclude Include="Assets\Code\GameStats.h" />
     <ClInclude Include="Assets\Code\Lemming.h" />
     <ClInclude Include="Assets\Code\Map.h" />
-    <ClInclude Include="Assets\Code\Minimap.h" />
     <ClInclude Include="Assets\Code\Scene.h" />
     <ClInclude Include="Assets\Code\SceneCodeLevel.h" />
     <ClInclude Include="Assets\Code\SceneGame.h" />
@@ -90,7 +87,6 @@
     <ClInclude Include="Assets\Code\tinyManager.h" />
     <ClInclude Include="Assets\Code\TinyXML\tinystr.h" />
     <ClInclude Include="Assets\Code\TinyXML\tinyxml.h" />
-    <ClInclude Include="Assets\Code\Trap.h" />
     <ClInclude Include="Assets\Code\Utils.h" />
     <ClInclude Include="Assets\Code\Word.h" />
   </ItemGroup>

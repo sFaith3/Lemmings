@@ -1,6 +1,5 @@
 #include "Map.h"
 
-
 Map::Map(){
 	tManager = tinyManager::getInstanceTinyManager();
 }

@@ -5,8 +5,8 @@ class Scene
 {
 protected:
 	InputManager* inputManager;
-
 	AudioManager* audioManager;
+
 	Sint32 idMusic;
 
 public:

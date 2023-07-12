@@ -156,14 +156,14 @@ void FileManager::ReadLines(fstream &reader, int numLines)
 
 
 int FileManager::SizeFile(fstream &reader){
-	reader.seekg(0, reader.end); // De la posició inicial zero, considerant el 0 com la posició on es troba el punter fstream, cap a l'última dada del fitxer.
-	int size = static_cast<int>(reader.tellg()); // 'tellg' retorna la posició de l'fstream 'lectura', a la qual està apuntant.
-	reader.seekg(0, reader.beg); // Torna a ubicar el punter 'lectura' al principi del tot.
+	reader.seekg(0, reader.end); // From the initial position 0, where the pointer fstream is initially located, to the last data in the file.
+	int size = static_cast<int>(reader.tellg()); // 'tellg' returns the position of the fstream 'reader', to which it is pointing.
+	reader.seekg(0, reader.beg); // Put the 'reader' pointer back to the top of everything.
 
 	return size;
 }
 
-int FileManager::ReadContents(vector<string> &words, fstream &in){
+int FileManager::ReadContent(vector<string> &words, fstream &in){
 	int i = -1;
 	while (!in.eof()){
 		i++;

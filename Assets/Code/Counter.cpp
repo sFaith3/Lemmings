@@ -1,9 +1,15 @@
 #include "Counter.h"
 
+Counter::Counter() {
+	firstNum = secondNum = 0;
 
-Counter::Counter() {}
+	separationX = 0;
+	addPercent = false;
+	addNumber = false;
+}
 
-Counter::~Counter() {}
+Counter::~Counter() {
+}
 
 
 void Counter::init(int x, int y, const char* img, int widht, int height, int scaleX, int scaleY, int separationInitial, int separationX, bool addPercent) {

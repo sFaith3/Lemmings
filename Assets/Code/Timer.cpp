@@ -37,6 +37,7 @@ Timer::~Timer()
 {
 }
 
+
 void Timer::start()
 {
 	mStarted = true;

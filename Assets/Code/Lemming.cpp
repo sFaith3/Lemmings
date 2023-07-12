@@ -1,10 +1,8 @@
 #include "Lemming.h"
 
-
 Lemming::Lemming(){
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
-
 
 Lemming::~Lemming(){
 

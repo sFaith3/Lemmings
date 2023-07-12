@@ -1,6 +1,5 @@
 #include "ABCsAlphaNum.h"
 
-
 ABCsAlphaNum::ABCsAlphaNum(){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
 	idImg = videoManager->getTextureID("Assets/Art/Images/ABCsAlphaNum/alphabet.png");

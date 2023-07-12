@@ -1,15 +1,22 @@
 #include "Element.h"
 
-
 Element::Element(){
+	posX = posY = 0;
+	idImg = -1;
+	srcPosX = _srcPosX = srcPosY = 0;
+	width = height = 0;
+	scaleX = scaleY = 1.f;
+
+	pixelCount = 0;
+
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
 	audioManager = SingletonManager::getInstanceSingleton()->getAudioManager();
 }
 
-
 Element::~Element()
 {
 }
+
 
 void Element::init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY){
 	posX = x;

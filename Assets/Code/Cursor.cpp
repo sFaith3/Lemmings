@@ -1,6 +1,5 @@
 #include "Cursor.h"
 
-
 Cursor* Cursor::cInstance = NULL;
 
 Cursor::Cursor() {
@@ -17,7 +16,6 @@ Cursor::Cursor() {
 
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
-
 
 Cursor::~Cursor()
 {

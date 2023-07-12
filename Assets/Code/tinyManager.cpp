@@ -5,10 +5,10 @@ tinyManager* tinyManager::tInstance = NULL;
 tinyManager::tinyManager(){
 }
 
-
 tinyManager::~tinyManager(){
 
 }
+
 
 tinyManager* tinyManager::getInstanceTinyManager(){
 	if (tInstance == NULL)

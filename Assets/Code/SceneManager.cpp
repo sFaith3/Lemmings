@@ -9,6 +9,7 @@ SceneManager* SceneManager::smInstance = NULL;
 
 SceneManager::SceneManager(){
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
+	mCurrScene = MENU;
 }
 
 SceneManager::~SceneManager(){
@@ -37,12 +38,10 @@ void SceneManager::init(){
 	mVectorScenes[mCurrScene]->init();
 }
 
-
 void SceneManager::update(){
 	mVectorScenes[mCurrScene]->update();
 	videoManager->updateTime();
 }
-
 
 void SceneManager::render(){
 	videoManager->clearScreen(0x000000);
@@ -51,13 +50,13 @@ void SceneManager::render(){
 }
 
 
-void SceneManager::changeScene(SceneEnum next_scene){
-	mVectorScenes[mCurrScene]->clear();
-	mCurrScene = next_scene;
-	mVectorScenes[mCurrScene]->init();
+int SceneManager::getNumCurrScene() {
+	return mCurrScene;
 }
 
 
-int SceneManager::getNumCurrScene(){
-	return mCurrScene;
+void SceneManager::changeScene(SceneEnum nextScene){
+	mVectorScenes[mCurrScene]->clear();
+	mCurrScene = nextScene;
+	mVectorScenes[mCurrScene]->init();
 }
