@@ -149,7 +149,7 @@ void SceneGame::update()
 		updateDoors();
 		updateChangeCursor();
 
-		if (temps->getTempsOut())
+		if (temps->getTimeOut())
 		{
 			audioManager->pauseMusic();
 			gameFinish = true;

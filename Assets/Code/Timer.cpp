@@ -1,8 +1,8 @@
 #include "Timer.h"
 #include "SingletonManager.h"
 
-// \param tempsRestant en format "minuts : segons". Els minuts inferiors a 10 han d'anar sense el 0 davant.
-Timer::Timer(int x, int y, string tempsRestant)
+// \param remainingTime in "minutes : seconds" format. Minutes below 10 must go without a 0 ahead.
+Timer::Timer(int x, int y, string remainingTime)
 {
 	ElementHUD::init(x, y, "Assets/Art/Images/HUD/Timer/timer.png", false, 0, 0, 100, 19, 1, 1);
 
@@ -12,25 +12,25 @@ Timer::Timer(int x, int y, string tempsRestant)
 	mStarted = false;
 	mPaused = false;
 
-	tempsOut = false;
+	timeOut = false;
 	lastTime = 0;
 
-	minuts = tempsRestant[0] - 48;
-	primerNumSegons = tempsRestant[2] - 48;
-	segonNumSegons = tempsRestant[3] - 48;
-	this->tempsRestant = ((minuts * 60) + primerNumSegons + segonNumSegons);
+	minutes = remainingTime[0] - 48;
+	firstNumSeconds = remainingTime[2] - 48;
+	secondNumSeconds = remainingTime[3] - 48;
+	this->remainingTime = ((minutes * 60) + firstNumSeconds + secondNumSeconds);
 
 	int xNum, yNum;
 	xNum = x + 45;
 	yNum = y + 2;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->init(xNum, yNum, 1, 1, minuts);
+	nums.back()->init(xNum, yNum, 1, 1, minutes);
 	xNum += 28;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->init(xNum, yNum, 1, 1, primerNumSegons);
+	nums.back()->init(xNum, yNum, 1, 1, firstNumSeconds);
 	xNum += 17;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->init(xNum, yNum, 1, 1, segonNumSegons);
+	nums.back()->init(xNum, yNum, 1, 1, secondNumSeconds);
 }
 
 Timer::~Timer()
@@ -46,45 +46,14 @@ void Timer::start()
 	mStarTicks = videoManager->getTime();
 	mPausedTicks = 0;
 
-	lastTime = tempsRestant;
+	lastTime = remainingTime;
 }
 
 void Timer::update()
 {
-	if (!tempsOut)
+	if (!timeOut)
 	{
-		Uint32 time = tempsRestant - getTime();
-		if (time >= 0)
-		{
-			Uint32 diferenciaTemps = lastTime - time;
-			lastTime = time;
-			if (diferenciaTemps > 0)
-			{
-				if (minuts == 0 && primerNumSegons == 0 && segonNumSegons == 0)
-					tempsOut = true;
-				else if (segonNumSegons > 0)
-				{
-					segonNumSegons--;
-					nums.back()->changeValue(segonNumSegons);
-				}
-				else if (primerNumSegons > 0)
-				{
-					primerNumSegons--;
-					segonNumSegons = 9;
-					nums[1]->changeValue(primerNumSegons);
-					nums.back()->changeValue(segonNumSegons);
-				}
-				else
-				{
-					minuts--;
-					primerNumSegons = 9;
-					segonNumSegons = 9;
-					nums[0]->changeValue(minuts);
-					nums[1]->changeValue(primerNumSegons);
-					nums.back()->changeValue(segonNumSegons);
-				}
-			}
-		}
+		updateTimer();
 	}
 }
 
@@ -94,6 +63,43 @@ void Timer::render()
 
 	for (itNums = nums.begin(); itNums != nums.end(); itNums++)
 		(*itNums)->render();
+}
+
+
+void Timer::updateTimer()
+{
+	Uint32 time = remainingTime - getTime();
+	if (time >= 0)
+	{
+		Uint32 differenceTime = lastTime - time;
+		lastTime = time;
+		if (differenceTime > 0)
+		{
+			if (minutes == 0 && firstNumSeconds == 0 && secondNumSeconds == 0)
+				timeOut = true;
+			else if (secondNumSeconds > 0)
+			{
+				secondNumSeconds--;
+				nums.back()->changeValue(secondNumSeconds);
+			}
+			else if (firstNumSeconds > 0)
+			{
+				firstNumSeconds--;
+				secondNumSeconds = 9;
+				nums[1]->changeValue(firstNumSeconds);
+				nums.back()->changeValue(secondNumSeconds);
+			}
+			else
+			{
+				minutes--;
+				firstNumSeconds = 9;
+				secondNumSeconds = 9;
+				nums[0]->changeValue(minutes);
+				nums[1]->changeValue(firstNumSeconds);
+				nums.back()->changeValue(secondNumSeconds);
+			}
+		}
+	}
 }
 
 void Timer::pause()
@@ -128,6 +134,12 @@ void Timer::stop()
 	mPausedTicks = 0;
 }
 
+
+bool Timer::getTimeOut()
+{
+	return timeOut;
+}
+
 Uint32 Timer::getTime()
 {
 	Uint32 time = 0;
@@ -152,6 +164,7 @@ Uint32 Timer::getTimeMs()
 	return time;
 }
 
+
 bool Timer::isStarted()
 {
 	return mStarted;
@@ -160,9 +173,4 @@ bool Timer::isStarted()
 bool Timer::isPaused()
 {
 	return mStarted && mPaused;
-}
-
-bool Timer::getTempsOut()
-{
-	return tempsOut;
 }
