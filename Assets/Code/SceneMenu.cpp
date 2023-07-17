@@ -1,17 +1,17 @@
 #include "SceneMenu.h"
 
+
 SceneMenu* SceneMenu::gInstance = NULL;
 
-SceneMenu::SceneMenu(){
+SceneMenu::SceneMenu() {
 	sGame = SceneGame::getInstanceSceneGame();
-
 	smManager = SceneManager::getInstanceSM();
 
 	float scaleX = 0.65f;
 	float scaleY = 0.8f;
-	fons = new Background();
-	fons->init(0, 0, "Assets/Art/Images/Menu/menu.png", false, 0, 0, 809, 446, scaleX, scaleY);
-	
+	background = new Background();
+	background->init(0, 0, "Assets/Art/Images/Menu/menu.png", false, 0, 0, 809, 446, scaleX, scaleY);
+
 	idMusic = audioManager->getMusicID("Assets/Art/Audios/Music/start.wav");
 
 	Button button;
@@ -19,12 +19,8 @@ SceneMenu::SceneMenu(){
 	int hButton = static_cast<int>(48.f * scaleY);
 	button.init(PLAYER, 98, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	button.init(NEW_LEVEL, 260, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
-	buttons.push_back(button);
 	button.init(MUTE_SOUND, 422, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
-	/*button.init(FUN, 584, 188, wButton, hButton, scaleX, scaleY, 0, 0, NULL, NULL);
-	buttons.push_back(button);*/ // TECLES AMUNT I AVALL.
 	button.init(EXIT, 260, 285, wButton, hButton - 1, scaleX, scaleY, 0, 0, NULL, NULL);
 	buttons.push_back(button);
 
@@ -39,12 +35,11 @@ SceneMenu::SceneMenu(){
 	currAudio = Music;
 }
 
-
-SceneMenu::~SceneMenu(){
+SceneMenu::~SceneMenu() {
 }
 
 
-SceneMenu* SceneMenu::getInstanceSceneMenu(){
+SceneMenu* SceneMenu::getInstanceSceneMenu() {
 	if (gInstance == NULL)
 		gInstance = new SceneMenu();
 
@@ -52,25 +47,33 @@ SceneMenu* SceneMenu::getInstanceSceneMenu(){
 }
 
 
-void SceneMenu::init(){
+void SceneMenu::init() {
 	audioManager->playMusic(idMusic, -1);
 }
 
+void SceneMenu::update() {
+	updateButtons();
+	updateInput();
+}
 
-void SceneMenu::update(){
-	for (itBut = buttons.begin(); itBut != buttons.end(); itBut++){
-		if (itBut->update()){
-			switch (itBut->getId()){
+void SceneMenu::render() {
+	background->render();
+	if (currAudio != Mute)
+		imgAudios[currAudio].render();
+}
+
+
+void SceneMenu::updateButtons() {
+	for (itBut = buttons.begin(); itBut != buttons.end(); itBut++) {
+		if (itBut->update()) {
+			switch (itBut->getId()) {
 			case PLAYER:
 				audioManager->pauseMusic();
 				inputManager->setCursorRelative(true);
 				smManager->changeScene(smManager->PRE_GAME);
 				break;
-			case NEW_LEVEL:
-				//To load a map level through a code.
-				break;
 			case MUTE_SOUND:
-				switch (currAudio){
+				switch (currAudio) {
 				case Mute:
 					currAudio = Fx;
 					audioManager->setVolumeMusic(0);
@@ -95,18 +98,17 @@ void SceneMenu::update(){
 			inputManager->resetClick();
 		}
 	}
+}
 
-	switch (inputManager->getNumber()){
+void SceneMenu::updateInput() {
+	switch (inputManager->getNumber()) {
 	case PLAYER:
 		audioManager->pauseMusic();
 		inputManager->setCursorRelative(true);
 		smManager->changeScene(smManager->PRE_GAME);
 		break;
-	case NEW_LEVEL:
-		//To load a map level through a code.
-		break;
 	case MUTE_SOUND:
-		switch (currAudio){
+		switch (currAudio) {
 		case Mute:
 			currAudio = Fx;
 			audioManager->setVolumeMusic(0);
@@ -127,11 +129,4 @@ void SceneMenu::update(){
 	}
 	if (inputManager->getNumber() != -1)
 		inputManager->resetNumber();
-}
-
-
-void SceneMenu::render(){
-	fons->render();
-	if (currAudio != Mute)
-		imgAudios[currAudio].render();
 }
