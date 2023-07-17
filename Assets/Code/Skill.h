@@ -7,11 +7,11 @@ class Skill :
 {
 private:
 	int remainingUses;
-	int firstDigitNum, secondDigitNum; // Igual que 'usosRestants'. Però, cada xifra per separat, per tal de mostrar els números a la HUD.
+	int firstDigitNum, secondDigitNum; // Like 'remainingUses', but each number separately, to show the numbers in the HUD.
 
-	int minSpawnVelocity; // Per el butó que controla el decrement de la velocitat en que ExitDoor instancia Lemmings.
+	int minSpawnVelocity; // For the button that controls the speed decrease in which the ExitDoor class instantiates Lemmings.
 
-	// Vector dels números d'usos que té cada habilitat.
+	// Vector of the number of uses that each skill has.
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;
 
