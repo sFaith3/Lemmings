@@ -21,28 +21,28 @@ private:
 
 	static SceneGame* gInstance; /*!<	Singleton instance*/
 
-	Map* mapa;
+	Map* map;
 
-	Timer* temps;
+	Timer* time;
 
 	Actions* actions;
 	int currAction;
 
-	// Paràmetres de l'escena on s'informa sobre la missió. També seteja els elements de la HUD que corresponen a aquestes variables.
+	// Scene parameters where the mission is reported. It also sets the HUD elements corresponding to these variables.
 	int numLemmings;
-	int lemmingsToSave; // En tant percent.
-	string tempsRestant, releaseRate; 
+	int lemmingsToSave; // In a percentage.
+	string remainingTime, releaseRate; 
 
-	int lemmingsMorts;
+	int lemmingsDead;
 	int lemmingsSaved;
 
-	bool gameFinish; // S'activa quan finalitza el joc, per tal de realitzar les accions pertinents.
+	bool gameFinished; // It's activated when the game ends in order to perform the relevant actions.
 
 	DoorEnter* enterDoor;
 	ElementGame* exitDoor;
 
 	vector<Lemming*> lemmings;
-	vector<Lemming*>::iterator itLem;
+	vector<Lemming*>::iterator itLemmings;
 	
 	Word* states[17];
 	int currState;
@@ -55,14 +55,11 @@ private:
 	int idSounds[3];
 	int initialSound;
 
-	// Cursor.
 	bool cursorChanged;
 	Cursor* cursor;
 
 	ScenePostGame* sPostGame;
-
 	GameStats* gameStats;
-
 	SceneManager* smManager;
 
 public:
@@ -71,7 +68,7 @@ public:
 	//! Gets Singleton instance.
 	static SceneGame* getInstanceSceneGame();
 
-	void initFromPreGame(Map* mapa, int numLemmings, int lemmingsToSave, string rateSpeed, string temps);
+	void initFromPreGame(Map* map, int numLemmings, int lemmingsToSave, string rateSpeed, string time);
 
 	void init();
 	void clear();

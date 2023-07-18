@@ -209,7 +209,8 @@ void ScenePreGame::initMap(const char* PATH_MAP, const char* PATH_TILESETS) {
 	scaleX = scaleY = 0.33666f;
 
 	map = new Map();
-	map->init(40, 2, true, PATH_MAP, "colisiones", 3, PATH_TILESETS, false, 1, 0, 0, NULL, NULL); // S'inicien les posicions X-Y que es volen a SceneGame.
+	// The X-Y positions that we want in SceneGame are initialized.
+	map->init(40, 2, true, PATH_MAP, "collisions", 3, PATH_TILESETS, false, 1, 0, 0, NULL, NULL);
 	map->SetPositionTiles(475, -22);
 	map->SetScaleTiles(scaleX, scaleY);
 }
