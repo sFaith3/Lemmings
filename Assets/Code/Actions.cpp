@@ -1,8 +1,8 @@
 #include "Actions.h"
 
+
 Actions::Actions() {
-	const int NumSkills = 12;
-	for (int i = 0; i < NumSkills; i++)
+	for (int i = 0; i <= (int)MAX_NUM_ACTIONS_ENUM; i++)
 		skills.push_back(new Skill());
 
 	currButton = -1;
@@ -15,8 +15,55 @@ Actions::~Actions() {
 }
 
 
+int Actions::getPressButton() {
+	for (itSkills = skills.begin(); itSkills != skills.end(); itSkills++) {
+		if ((*itSkills)->update()) {
+			if (currButton == -1)
+				return -1;
+
+			const int pressedBut = (*itSkills)->getId();
+			if (!gameStats->GetPause() && (pressedBut != REST_VEL_SPAWN && pressedBut != PLUS_VEL_SPAWN && pressedBut != PAUSE && pressedBut != MOAB)) {
+				skills[currButton]->setPressed(false);
+				(*itSkills)->setPressed(true);
+				inputManager->resetClick();
+
+				return (currButton != pressedBut) ? currButton = (*itSkills)->getId() : -1;
+			}
+
+			return (*itSkills)->getId();
+		}
+	}
+
+	return -2;
+}
+
+int Actions::getPressNumber() {
+	const int number = inputManager->getNumber();
+
+	if (number == -1)
+		return -2;
+
+	if (number != REST_VEL_SPAWN && number != PLUS_VEL_SPAWN && number != MOAB) {
+		skills[currButton]->setPressed(false);
+		skills[number]->setPressed(true);
+		inputManager->resetNumber();
+
+		return (currButton != number) ? currButton = skills[number]->getId() : -1;
+	}
+
+	return skills[number]->getId();
+}
+
+int Actions::getNumberUsesSkill(const int skill) {
+	if (skill >= 0)
+		return skills[skill]->GetNumberUses();
+
+	return 0;
+}
+
+
 int Actions::init(float scaleX, float scaleY, string minVelSpawn, string climb, string umbrella, string explosion, string standing, string steps, string sideDig, string chip, string dig) {
-	currButton = CLIMB;
+	currButton = static_cast<int>(CLIMB);
 
 	int hAction = 61;
 	int x = 0;
@@ -69,7 +116,6 @@ void Actions::initSkills(int x, int y, string minVelSpawn, string climb, string 
 	skills[currButton]->setPressed(true);
 }
 
-
 int Actions::update() {
 	int actionToReturn = -1;
 
@@ -83,11 +129,10 @@ int Actions::update() {
 }
 
 // To check if it needs to go to the next method in update()
-bool Actions::isNextCheck(int actionToReturn) {
+bool Actions::isNextCheck(const int actionToReturn) {
 	const int NextCheck = -2;
 	return actionToReturn == NextCheck;
 }
-
 
 void Actions::render() {
 	ElementHUD::render();
@@ -98,56 +143,9 @@ void Actions::render() {
 }
 
 
-int Actions::getPressButton() {
-	for (itSkills = skills.begin(); itSkills != skills.end(); itSkills++) {
-		if ((*itSkills)->update()) {
-			if (currButton == -1)
-				return -1;
-
-			int pressedBut = (*itSkills)->getId();
-			if (!gameStats->GetPause() && (pressedBut != REST_VEL_SPAWN && pressedBut != PLUS_VEL_SPAWN && pressedBut != PAUSE && pressedBut != MOAB)) {
-				skills[currButton]->setPressed(false);
-				(*itSkills)->setPressed(true);
-				inputManager->resetClick();
-
-				return (currButton != pressedBut) ? currButton = (*itSkills)->getId() : -1;
-			}
-
-			return (*itSkills)->getId();
-		}
-	}
-
-	return -2;
-}
-
-int Actions::getPressNumber() {
-	int number = inputManager->getNumber();
-
-	if (number == -1)
-		return -2;
-
-	if (number != REST_VEL_SPAWN && number != PLUS_VEL_SPAWN && number != MOAB) {
-		skills[currButton]->setPressed(false);
-		skills[number]->setPressed(true);
-		inputManager->resetNumber();
-
-		return (currButton != number) ? currButton = skills[number]->getId() : -1;
-	}
-
-	return skills[number]->getId();
-}
-
-int Actions::getNumberUsesSkill(int skill) {
-	if (skill >= 0)
-		return skills[skill]->GetNumberUses();
-
-	return 0;
-}
-
-void Actions::detractUseSkill(int skill) {
+void Actions::detractUseSkill(const int skill) {
 	skills[skill]->OneUseLess();
 }
-
 
 void Actions::decrementVelocitySkill() {
 	skills[PLUS_VEL_SPAWN]->LessVelocity();

@@ -44,15 +44,17 @@ private:
 	vector<Lemming*> lemmings;
 	vector<Lemming*>::iterator itLemmings;
 	
-	Word* states[17];
+	static const int NUM_STATES = 17;
+	Word* states[NUM_STATES];
 	int currState;
 
-	Counter* counters[2];
+	static const int NUM_COUNTERS = 2;
+	Counter* counters[NUM_COUNTERS];
 
 	enum SoundsEnum{
-		StartGame, SelectSkill, PutSkill
+		StartGame, SelectSkill, PutSkill, MaxNumSoundsEnum = 2
 	};
-	int idSounds[3];
+	int idSounds[(int)MaxNumSoundsEnum + 1];
 	int initialSound;
 
 	bool cursorChanged;
