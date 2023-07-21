@@ -78,10 +78,22 @@ public:
 	void render();
 
 	void updateActions();
+	void playInitialSound();
 	void updateDoors();
 	void updateLemmings();
+	void rescueLemming();
+	void checkActiveLemmings();
+	bool areThereAnyActiveLemming();
+	bool isOutOfMap(const int x1, const int x2, const int y2);
+	void killLemming();
+	void checkCursorChanged();
+	void putSkillIntoLemming();
+	bool isLemmingInOutDoor(const int x1, const int x2, const int y1, const int y2);
 	void updateChangeCursor();
+	void finishGame();
+	void setPauseGame(const bool isPause);
 	void checkUnpaused();
+	void exitToTheMainMenu();
 };
 
 #endif
