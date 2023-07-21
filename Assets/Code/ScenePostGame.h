@@ -18,16 +18,14 @@ private:
 	string lemmingsSaved;
 	string lemmingsToSave;
 
-	Background* fons;
+	Background* background;
 
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;
 
-	FileManager* fileManager;
-
 	GameStats* gameStats;
-
-	SceneManager* smManager;
+	FileManager* fileManager;
+	SceneManager* sceneManager;
 
 public:
 	~ScenePostGame();
@@ -35,9 +33,12 @@ public:
 	//! Gets Singleton instance.
 	static ScenePostGame* getInstanceScenePostGame();
 
-	void initFromGame(int lemmingsSaved, int lemmingsToSave);
-
+	void initFromGame(const int lemmingsSaved, const int lemmingsToSave);
 	void init();
+	void initDigitsNumberLemmingsSaved(int& xDigit, int& _xDigit, int& yDigit, float scaleX, int alphaNum);
+	void initDigitsNumberLemmingsToSave(int& xDigit, int& _xDigit, int& yDigit, float scaleX, int alphaNum);
+	void initDigitsNumberLevel(int& xDigit, int& yDigit, float scaleX);
+	void initDigitsCodeLevel(int& xDigit, int& yDigit, float scaleX);
 	void clear();
 	void update();
 	void render();
