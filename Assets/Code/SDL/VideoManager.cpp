@@ -170,7 +170,7 @@ Sint32 VideoManager::addTextureManipulation(const char *file)
 				SDL_LockTexture(newTexture, NULL, &mPixels, &mPitch);
 
 				// Copy loaded/formatted surface pixels
-				memcpy(mPixels, formattedSurface->pixels, formattedSurface->pitch * formattedSurface->h);
+				memcpy(mPixels, formattedSurface->pixels, static_cast<size_t>(formattedSurface->pitch) * formattedSurface->h);
 
 				// Unlock texture to update
 				SDL_UnlockTexture(newTexture);

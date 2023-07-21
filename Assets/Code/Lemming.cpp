@@ -50,15 +50,15 @@ void Lemming::init(int x, int y, int xMapa, int yMapa){
 void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 	switch (estat){
 	case MOVE:
-		if (fons->GetMapa(x1 + 1, y2 + 1) == 0 && fons->GetMapa(x2 - 1, y2 + 1) == 0)
+		if (fons->GetMap(x1 + 1, y2 + 1) == 0 && fons->GetMap(x2 - 1, y2 + 1) == 0)
 			SetCaure();
 		else if (dir == 0){ // Cap a la dreta.
-			if (fons->GetMapa(x2, y2 - 1) != 0 && fons->GetMapa(x2, y2 - 2) == 0)
+			if (fons->GetMap(x2, y2 - 1) != 0 && fons->GetMap(x2, y2 - 2) == 0)
 				Moure(true); // Diagonal cap amunt.
-			else if (fons->GetMapa(x2, y2) == 0 && fons->GetMapa(x2, y2 + 1) != 0)
+			else if (fons->GetMap(x2, y2) == 0 && fons->GetMap(x2, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x2 + 1, y2 - 2) != 0){
-				if (fons->GetMapa(x2 + 1, y2 - 2) == 1 && escalar){
+			else if (fons->GetMap(x2 + 1, y2 - 2) != 0){
+				if (fons->GetMap(x2 + 1, y2 - 2) == 1 && escalar){
 					SetEscalar();
 				}
 				else{
@@ -70,13 +70,13 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 			}
 		}
 		else{
-			if (fons->GetMapa(x1, y2 - 1) != 0 && fons->GetMapa(x1, y2 - 2) == 0)
+			if (fons->GetMap(x1, y2 - 1) != 0 && fons->GetMap(x1, y2 - 2) == 0)
 				Moure(true); // Diagonal cap amunt.
-			else if (fons->GetMapa(x1, y2) == 0 && fons->GetMapa(x1, y2 + 1) != 0)
+			else if (fons->GetMap(x1, y2) == 0 && fons->GetMap(x1, y2 + 1) != 0)
 				Moure(false); // Cap avall.
-			else if (fons->GetMapa(x1, y2 - 2) != 0){
+			else if (fons->GetMap(x1, y2 - 2) != 0){
 
-				if (fons->GetMapa(x1, y2 - 2) == 1 && escalar){
+				if (fons->GetMap(x1, y2 - 2) == 1 && escalar){
 					SetEscalar();
 				}
 				else{
@@ -93,7 +93,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		}
 		else{
 			Caure();
-			if (fons->GetMapa(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMapa(x2 - desplasament, y2 + desplasament) != 0){
+			if (fons->GetMap(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMap(x2 - desplasament, y2 + desplasament) != 0){
 				if (mortInicial){
 					SetMortCaure();
 				}
@@ -104,7 +104,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		}
 		break;
 	case BREAK:
-		if ((fons->GetMapa(x1 + 1, y2 + 1) == 0 && fons->GetMapa(x1, y1 + 1) == 0) || (fons->GetMapa(x2 + 1, y2 + 1) == 0 && fons->GetMapa(x2, y1 + 1) == 0)){
+		if ((fons->GetMap(x1 + 1, y2 + 1) == 0 && fons->GetMap(x1, y1 + 1) == 0) || (fons->GetMap(x2 + 1, y2 + 1) == 0 && fons->GetMap(x2, y1 + 1) == 0)){
 			SetMoure();
 		}
 		else{
@@ -113,23 +113,23 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		break;
 	case GLIDE:
 		Levitar();
-		if (fons->GetMapa(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMapa(x2 - desplasament, y2 + desplasament) != 0)
+		if (fons->GetMap(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMap(x2 - desplasament, y2 + desplasament) != 0)
 			SetMoure();
 		break;
 	case CLIMB:
 		Escalar();
-		if ((fons->GetMapa(x2, y2) == 0 && fons->GetMapa(x2, y2 + 1) == 0) && (fons->GetMapa(x2 + 1, y2) == 0 && fons->GetMapa(x2 + 1, y2 + 1) != 0) ||
-			(fons->GetMapa(x1, y2) == 0 && fons->GetMapa(x1, y2 + 1) == 0) && (fons->GetMapa(x1 - 1, y2) == 0 && fons->GetMapa(x1 - 1, y2 + 1) != 0)){
+		if ((fons->GetMap(x2, y2) == 0 && fons->GetMap(x2, y2 + 1) == 0) && (fons->GetMap(x2 + 1, y2) == 0 && fons->GetMap(x2 + 1, y2 + 1) != 0) ||
+			(fons->GetMap(x1, y2) == 0 && fons->GetMap(x1, y2 + 1) == 0) && (fons->GetMap(x1 - 1, y2) == 0 && fons->GetMap(x1 - 1, y2 + 1) != 0)){
 			Moure();
 			SetMoure();
 		}
-		else if (fons->GetMapa(x1, y1) == 1 && fons->GetMapa(x2, y1) == 1){
+		else if (fons->GetMap(x1, y1) == 1 && fons->GetMap(x2, y1) == 1){
 			SetCaure();
 		}
 
 		break;
 	case DIG:
-		if ((fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y1 + 1) == 0) && fons->GetMapa(x2, y2 + 1) == 0){
+		if ((fons->GetMap(x1 - 1, y1 + 1) == 0 && fons->GetMap(x2 + 1, y1 + 1) == 0) && fons->GetMap(x2, y2 + 1) == 0){
 			SetMoure();
 		}
 		else{
@@ -137,7 +137,7 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		}
 		break;
 	case PICK:
-		if ((fons->GetMapa(x1 - 1, y1 + 1) == 0 && fons->GetMapa(x2 + 1, y1 + 1) == 0) && fons->GetMapa(x2, y2 + 1) == 0){
+		if ((fons->GetMap(x1 - 1, y1 + 1) == 0 && fons->GetMap(x2 + 1, y1 + 1) == 0) && fons->GetMap(x2, y2 + 1) == 0){
 			SetMoure();
 		}
 		else{
@@ -151,8 +151,8 @@ void Lemming::update(Map *fons, int x1, int y1, int x2, int y2, int temps){
 		}
 		break;
 	case STAIR:
-		if ((dir == 0 && (fons->GetMapa(x2 + 1, y2 - 1) != 0 && fons->GetMapa(x2 + 2, y2 - 1) != 0)) || // **** --- Quan la posici� estigui b�, s'ha de treure el "-1" de la condici�. --- ****
-			(dir == 2 && (fons->GetMapa(x1 - 1, y2 - 1) != 0 && fons->GetMapa(x1 - 2, y2 - 1) != 0))){
+		if ((dir == 0 && (fons->GetMap(x2 + 1, y2 - 1) != 0 && fons->GetMap(x2 + 2, y2 - 1) != 0)) || // **** --- Quan la posici� estigui b�, s'ha de treure el "-1" de la condici�. --- ****
+			(dir == 2 && (fons->GetMap(x1 - 1, y2 - 1) != 0 && fons->GetMap(x1 - 2, y2 - 1) != 0))){
 			SetMoure();
 			currStairs = 0;
 			break;
@@ -463,7 +463,7 @@ void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
 	if (currentSprite == 8 || currentSprite == 16 || currentSprite == 24 || currentSprite == 32){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
-				fons->DestroyPosMapa(x2 + i, y2 - j);
+				fons->DestroyMapAtPos(x2 + i, y2 - j);
 			}
 		}
 		Moure();
@@ -486,7 +486,7 @@ void Lemming::Cavar(Map *fons, int x2, int y2){
 	// Destrucci� del terreny.
 	if (currentSprite == 6){
 		for (int i = -1; i < 2; i++){
-			fons->DestroyPosMapa(x2 + i, y2);
+			fons->DestroyMapAtPos(x2 + i, y2);
 		}
 		posY += desplasament;
 	}
@@ -497,9 +497,9 @@ void Lemming::Picar(Map *fons, int x2, int y2){
 	if (currentSprite == 5){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
-				fons->DestroyPosMapa(x2 + i, y2 - j);
+				fons->DestroyMapAtPos(x2 + i, y2 - j);
 			}
-			fons->DestroyPosMapa(x2 + i, y2);
+			fons->DestroyMapAtPos(x2 + i, y2);
 		}
 		Moure();
 		posY += desplasament;
@@ -509,12 +509,12 @@ void Lemming::Picar(Map *fons, int x2, int y2){
 void Lemming::Immobilitzar(Map *fons, int x1, int x2, int y1, int y2){
 	for (int i = 1; i < 3; i++){
 		for (int j = -4; j < 3; j++){
-			if (fons->GetMapa(x1 + i, y2 + j) == 0){
-				fons->CrearPosMapa(x1 + i, y2 + j, 3);
+			if (fons->GetMap(x1 + i, y2 + j) == 0){
+				fons->CreateMapAtPos(x1 + i, y2 + j, 3);
 			}
 
-			if (fons->GetMapa((x2 - 2) + i, y2 + j) == 0){
-				fons->CrearPosMapa((x2 - 2) + i, y2 + j, 3);
+			if (fons->GetMap((x2 - 2) + i, y2 + j) == 0){
+				fons->CreateMapAtPos((x2 - 2) + i, y2 + j, 3);
 			}
 		}
 	}
@@ -524,14 +524,14 @@ void Lemming::PosarEscala(Map *fons, int x1, int x2, int y2){
 	switch (dir){
 	case 0:
 		for (int i = 0; i < 3; i++){
-			if (fons->GetMapa(x2 + i, y2) == 0)
-				fons->CrearPosMapa(x2 + i, y2, 3, 0, 3);
+			if (fons->GetMap(x2 + i, y2) == 0)
+				fons->CreateMapAtPos(x2 + i, y2, 3, 0, 3);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < 3; i++){
-			if (fons->GetMapa(x1 - i, y2) == 0)
-				fons->CrearPosMapa(x1 - i, y2, 3, 0, 3);
+			if (fons->GetMap(x1 - i, y2) == 0)
+				fons->CreateMapAtPos(x1 - i, y2, 3, 0, 3);
 		}
 		break;
 	}
@@ -560,15 +560,15 @@ void Lemming::Explotar(Map *fons, int x1, int y1, int x2, int y2){
 	if (currentSprite == numSprites){
 		// Destrucci� del terreny.
 		for (int i = -6; i < 3; i++){
-			fons->DestroyPosMapa(x1, y2 + i);
-			fons->DestroyPosMapa(x1 + 1, y2 + i);
-			fons->DestroyPosMapa(x1 + 2, y2 + i);
-			fons->DestroyPosMapa(x1 + 3, y2 + i);
+			fons->DestroyMapAtPos(x1, y2 + i);
+			fons->DestroyMapAtPos(x1 + 1, y2 + i);
+			fons->DestroyMapAtPos(x1 + 2, y2 + i);
+			fons->DestroyMapAtPos(x1 + 3, y2 + i);
 
-			fons->DestroyPosMapa(x2 + 1, y2 + i);
-			fons->DestroyPosMapa(x2, y2 + i);
-			fons->DestroyPosMapa(x2 - 1, y2 + i);
-			fons->DestroyPosMapa(x2 - 2, y2 + i);
+			fons->DestroyMapAtPos(x2 + 1, y2 + i);
+			fons->DestroyMapAtPos(x2, y2 + i);
+			fons->DestroyMapAtPos(x2 - 1, y2 + i);
+			fons->DestroyMapAtPos(x2 - 2, y2 + i);
 		}
 		mortFinal = true;
 	}

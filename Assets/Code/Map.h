@@ -6,37 +6,43 @@ class Map :
 	public ElementGame
 {
 private:
-	bool mapTmx; // Indica si el mapa a carregar és una img normal, com un background, que no influeix en el joc. O un mapa que prové d'un arxiu tmx.
+	bool mapTMX; // Indicates whether the map to load is a normal img, like a background, that does not influence the game.
+				 // Or a map coming from a TMX file.
 
 	Sint32 idFileMap;
 
-	string rutaTilesets; // Directori on es troben els tilesets a utilitzar per a X arxiu TMX.
+	string pathTilesets; // Directory where the tilesets to use for the X TMB file are located.
 	vector<tinyManager::Tileset*> tilesets;
 	vector<tinyManager::Tileset*>::iterator itTilesets;
 
-	int sizeTile; // Mesura d'una tile. Per tal de calcular la posició dels elements que interactuen amb el mapa de col·lisions.
+	int sizeTile; // Measurament of a tile. To calculate the position of the elements that interact with the collision map.
 
-	vector <vector<int> > mapCollision; // Vector amb les dimensions X-Y del mapa de col·lisions. S'utilitza per a veure si a X punt del mapa hi ha cap impediment per al desplaçament dels Lemmings.
+	vector <vector<int>> mapCollision; // Vector with the X-Y dimensions of the collision map. It is used to see if there is any
+									   // impediment to the Lemmings scrolling at X point on the map.
 
-	tinyManager* tManager;
+	tinyManager* tinyManager;
 
 public:
 	Map();
 	~Map();
 
-	void init(int x, int y, bool mapTmx, const char* fileMap, const char* layerCollision, int numLayers, const char* rutaTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
+	void init(int x, int y, bool mapTMX, const char* fileMap, const char* layerCollision, int numLayers, const char* pathTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h);
+	void initMapTMX(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets, const int srcX, const int srcY);
+	void loadMapAndTilesets(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets);
+	void setTilesetImgID();
 	void render();
 
 	int GetWidthMap();
 	int GetHeightMap();
 	int GetSizeTile();
 
-	void SetPositionTiles(int x, int y);
-	void SetScaleTiles(float x, float y);
+	void SetPositionTiles(const int x, const int y);
+	void SetScaleTiles(const float x, const float y);
 
-	int GetMapa(int x, int y);
-	void DestroyPosMapa(int x, int y);
-	void CrearPosMapa(int x, int y, int tipo);
-	void CrearPosMapa(int x, int y, int tipo, int layer, int idTile);
+	int GetMap(const int x, const int y);
+	void DestroyMapAtPos(const int x, const int y);
+	void CreateMapAtPos(const int x, const int y, const int type);
+	void CreateMapAtPos(const int x, const int y, const int type, const int layer, const int idTile);
+	bool isWithinRangeOfMap(const int x, const int y);
 };
 
