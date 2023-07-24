@@ -16,9 +16,9 @@ public:
 
 	static tinyManager* getInstanceTinyManager();
 
-	class Tileset{
+	class Tileset {
 	public:
-		struct Tile{
+		struct Tile {
 		private:
 			int srcPosX, srcPosY; // Punt de retall inicial de l'spritesheet.
 			int dstPosX, dstPosY; // Punt on es pintarà.
@@ -36,21 +36,19 @@ public:
 		};
 
 		void init(string rutaTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight);
-
-		void addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
-
 		void render(VideoManager* videoManager);
 
 		string getRutaTileset();
 		int getSizeXTiles();
 		int getSizeYTiles();
-		vector <vector<Tile*> > getTiles();
-
-		void changeTile(int x, int y, int idTile);
-		void setScaleTiles(float x, float y);
-		void setIdImg(int id);
+		vector <vector<Tile*>> getTiles();
 		int getIdImg();
 
+		void setScaleTiles(float x, float y);
+		void setIdImg(int id);
+
+		void addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
+		void changeTile(int x, int y, int idTile);
 		void removeTile(int x, int y);
 
 	private:
@@ -65,19 +63,19 @@ public:
 		int tileWidth, tileHeight;
 		float scaleXtile, scaleYtile;
 		int sizeXtiles, sizeYtiles; // Nombre de files i columnes de tiles. Per recórre el vector de vectors en aquelles posicions.
-		vector <vector<Tile*> > tiles;
+		vector <vector<Tile*>> tiles;
 	};
 
 	void Init();
-	void LoadTmx(const char* fileTMX, string layerCollision);
-	vector <vector<int> > LoadMap(int numLayers);
-	vector <vector<int> > LoadMapCollision();
-	Tileset* LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa, int posX, int posY);
 
 	int GetWidthMap();
 	int GetHeightMap();
 	int GetTileSize();
 
+	void LoadTmx(const char* fileTMX, string layerCollision);
+	vector <vector<int>> LoadMap(int numLayers);
+	vector <vector<int>> LoadMapCollision();
+	Tileset* LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int>> mapa, int posX, int posY);
 	int DestroyTMX();
 
 private:

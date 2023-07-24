@@ -1,8 +1,13 @@
 #include "tinyManager.h"
 
-tinyManager* tinyManager::tInstance = NULL;
+
+tinyManager* tinyManager::tInstance = nullptr;
 
 tinyManager::tinyManager(){
+	doc = nullptr;
+	x = y = 0;
+	widthMap = heightMap = 0;
+	tileSize = 0;
 }
 
 tinyManager::~tinyManager(){
@@ -11,21 +16,22 @@ tinyManager::~tinyManager(){
 
 
 tinyManager* tinyManager::getInstanceTinyManager(){
-	if (tInstance == NULL)
+	if (tInstance == nullptr)
 		tInstance = new tinyManager();
 
 	return tInstance;
 }
 
 
-/* --- Class Tileset --- */
-/* --- Struct Tile --- */
+#pragma region Tileset_Class
+#pragma region Tile_Struct
 tinyManager::Tileset::Tile::Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY) {
 	srcPosX = _srcPosX;
 	srcPosY = _srcPosY;
 	dstPosX = _dstPosX;
 	dstPosY = _dstPosY;
 }
+
 
 int tinyManager::Tileset::Tile::getSrcPosX() {
 	return srcPosX;
@@ -43,6 +49,7 @@ int tinyManager::Tileset::Tile::getDstPosY() {
 	return dstPosY;
 }
 
+
 void tinyManager::Tileset::Tile::IncrementDstPos(int x, int y) {
 	dstPosX += x;
 	dstPosY += y;
@@ -52,7 +59,7 @@ void tinyManager::Tileset::Tile::ChangeSrc(int srcX, int srcY) {
 	srcPosX = srcX;
 	srcPosY = srcY;
 }
-/* --- End Struct Tile --- */
+#pragma endregion
 
 void tinyManager::Tileset::init(string rutaTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight) {
 	this->rutaTileset = rutaTileset;
@@ -71,17 +78,12 @@ void tinyManager::Tileset::init(string rutaTileset, int spacing, int width, int 
 	scaleXtile = scaleYtile = 1;
 }
 
-void tinyManager::Tileset::addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY) {
-	Tile* tile = new Tile(srcPosX, srcPosY, dstPosX, dstPosY);
-	tiles[posY][posX] = tile;
-}
-
 void tinyManager::Tileset::render(VideoManager* videoManager) {
 	int dstPosXtile = tiles[0][0]->getDstPosX();
 	int dstPosYtile = tiles[0][0]->getDstPosY();
 	for (int j = 0; j < sizeYtiles; j++) {
 		for (int i = 0; i < sizeXtiles; i++) {
-			if (tiles[j][i] != NULL) {
+			if (tiles[j][i] != nullptr) {
 				int srcPosXtile = tiles[j][i]->getSrcPosX();
 				int srcPosYtile = tiles[j][i]->getSrcPosY();
 				videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight, scaleXtile, scaleYtile, dstPosXtile + (i * tileWidth), dstPosYtile + (j * tileHeight));
@@ -90,6 +92,7 @@ void tinyManager::Tileset::render(VideoManager* videoManager) {
 		//dstPosYtile += tileHeight;
 	}
 }
+
 
 string tinyManager::Tileset::getRutaTileset() {
 	return rutaTileset;
@@ -103,8 +106,28 @@ int tinyManager::Tileset::getSizeYTiles() {
 	return sizeYtiles;
 }
 
-vector <vector<tinyManager::Tileset::Tile*> > tinyManager::Tileset::getTiles() {
+vector <vector<tinyManager::Tileset::Tile*>> tinyManager::Tileset::getTiles() {
 	return tiles;
+}
+
+int tinyManager::Tileset::getIdImg() {
+	return idImg;
+}
+
+
+void tinyManager::Tileset::setScaleTiles(float x, float y) {
+	scaleXtile = x;
+	scaleYtile = y;
+}
+
+void tinyManager::Tileset::setIdImg(int id) {
+	idImg = id;
+}
+
+
+void tinyManager::Tileset::addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY) {
+	Tile* tile = new Tile(srcPosX, srcPosY, dstPosX, dstPosY);
+	tiles[posY][posX] = tile;
 }
 
 void tinyManager::Tileset::changeTile(int x, int y, int idTile) {
@@ -124,28 +147,40 @@ void tinyManager::Tileset::changeTile(int x, int y, int idTile) {
 	tiles[y][x]->ChangeSrc(srcPosX, srcPosY);
 }
 
-void tinyManager::Tileset::setScaleTiles(float x, float y) {
-	scaleXtile = x;
-	scaleYtile = y;
-}
-
-void tinyManager::Tileset::setIdImg(int id) {
-	idImg = id;
-}
-
-int tinyManager::Tileset::getIdImg() {
-	return idImg;
-}
-
 void tinyManager::Tileset::removeTile(int x, int y) {
-	tiles[y][x] = NULL;
+	tiles[y][x] = nullptr;
 }
-/* --- End Class Tileset --- */
+#pragma endregion
 
 
 void tinyManager::Init(){
 	x = y = 0;
-	doc = NULL;
+	doc = nullptr;
+}
+
+
+int tinyManager::GetWidthMap() {
+	int _widthMap = widthMap;
+	if (widthMap != 0)
+		widthMap = 0;
+
+	return _widthMap;
+}
+
+int tinyManager::GetHeightMap() {
+	int _heightMap = heightMap;
+	if (heightMap != 0)
+		heightMap = 0;
+
+	return _heightMap;
+}
+
+int tinyManager::GetTileSize() {
+	int _tileSize = tileSize;
+	if (tileSize != 0)
+		tileSize = 0;
+
+	return _tileSize;
 }
 
 
@@ -160,8 +195,8 @@ void tinyManager::LoadTmx(const char* fileTMX, string layerCollision){
 	}
 }
 
-vector <vector<int> > tinyManager::LoadMap(int numLayers){
-	vector <vector<int> > mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
+vector <vector<int>> tinyManager::LoadMap(int numLayers){
+	vector <vector<int>> mapa; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
 
 	TiXmlElement *map = doc->FirstChildElement();
 	widthMap = atoi(map->Attribute("width"));
@@ -177,7 +212,7 @@ vector <vector<int> > tinyManager::LoadMap(int numLayers){
 		}
 	}
 
-	TiXmlElement *data = layer->FirstChildElement("data");
+	TiXmlElement* data = layer->FirstChildElement("data");
 	string text = data->GetText(); // Mapa de tmx.
 	string num = ""; // Contingut a insertar a l'array.
 	int layerWidth = atoi(layer->Attribute("width")) - 1;
@@ -210,7 +245,7 @@ vector <vector<int> > tinyManager::LoadMap(int numLayers){
 	return mapa;
 }
 
-vector <vector<int> > tinyManager::LoadMapCollision(){
+vector <vector<int>> tinyManager::LoadMapCollision(){
 	TiXmlElement *map = doc->FirstChildElement();
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
@@ -226,7 +261,7 @@ vector <vector<int> > tinyManager::LoadMapCollision(){
 
 	TiXmlElement* data = layer->FirstChildElement("data");
 	string text = data->GetText(); // Mapa de tmx.
-	vector <vector<int> > mapaCollisio; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
+	vector <vector<int>> mapaCollisio; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
 	string num = ""; // Contingut a insertar a l'array.
 	int layerWidth = atoi(layer->Attribute("width")) - 1;
 
@@ -258,7 +293,7 @@ vector <vector<int> > tinyManager::LoadMapCollision(){
 	return mapaCollisio;
 }
 
-tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int> > mapa, int posX, int posY){
+tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int>> mapa, int posX, int posY){
 	TiXmlElement *map = doc->FirstChildElement();
 	TiXmlElement* tileset = map->FirstChildElement("tileset");
 	for (int i = 0; i < numTilesets; i++){
@@ -305,32 +340,6 @@ tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing
 
 	return _tileset;
 }
-
-
-int tinyManager::GetWidthMap(){
-	int _widthMap = widthMap;
-	if (widthMap != 0)
-		widthMap = 0;
-
-	return _widthMap;
-}
-
-int tinyManager::GetHeightMap(){
-	int _heightMap = heightMap;
-	if (heightMap != 0)
-		heightMap = 0;
-
-	return _heightMap;
-}
-
-int tinyManager::GetTileSize(){
-	int _tileSize = tileSize;
-	if (tileSize != 0)
-		tileSize = 0;
-
-	return _tileSize;
-}
-
 
 int tinyManager::DestroyTMX(){
 	delete doc;
