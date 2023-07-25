@@ -40,9 +40,8 @@ public:
 	void SetScaleTiles(const float x, const float y);
 
 	int GetMap(const int x, const int y);
-	void DestroyMapAtPos(const int x, const int y);
-	void CreateMapAtPos(const int x, const int y, const int type);
-	void CreateMapAtPos(const int x, const int y, const int type, const int layer, const int idTile);
+	void ChangeMapAtPos(const int x, const int y, const int typeCollision);
+	void ChangeMapAtPos(const int x, const int y, const int typeCollision, const int idTile);
 	bool isWithinRangeOfMap(const int x, const int y);
 };
 

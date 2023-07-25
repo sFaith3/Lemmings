@@ -52,7 +52,6 @@ public:
 		bool isIndexOutOfRangeInTilesAtPos(const int posX, const int posY) const;
 		void addTileAtPos(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
 		void changeTileAtPos(int posX, int posY, int idTile);
-		void removeTileAtPos(int posX, int posY);
 
 	private:
 		// TILESET.

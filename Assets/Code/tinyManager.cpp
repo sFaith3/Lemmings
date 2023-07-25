@@ -166,13 +166,6 @@ void tinyManager::Tileset::changeTileAtPos(int posX, int posY, int idTile) {
 
 	tiles[posY][posX]->ChangeSrcPos(srcPosX, srcPosY);
 }
-
-void tinyManager::Tileset::removeTileAtPos(int posX, int posY) {
-	if (isIndexOutOfRangeInTilesAtPos(posX, posY))
-		return;
-
-	tiles[posY][posX] = nullptr;
-}
 #pragma endregion
 
 

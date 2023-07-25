@@ -463,7 +463,7 @@ void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
 	if (currentSprite == 8 || currentSprite == 16 || currentSprite == 24 || currentSprite == 32){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
-				fons->DestroyMapAtPos(x2 + i, y2 - j);
+				fons->ChangeMapAtPos(x2 + i, y2 - j, 0, 0);
 			}
 		}
 		Moure();
@@ -486,7 +486,7 @@ void Lemming::Cavar(Map *fons, int x2, int y2){
 	// Destrucci� del terreny.
 	if (currentSprite == 6){
 		for (int i = -1; i < 2; i++){
-			fons->DestroyMapAtPos(x2 + i, y2);
+			fons->ChangeMapAtPos(x2 + i, y2, 0, 0);
 		}
 		posY += desplasament;
 	}
@@ -497,9 +497,9 @@ void Lemming::Picar(Map *fons, int x2, int y2){
 	if (currentSprite == 5){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
-				fons->DestroyMapAtPos(x2 + i, y2 - j);
+				fons->ChangeMapAtPos(x2 + i, y2 - j, 0, 0);
 			}
-			fons->DestroyMapAtPos(x2 + i, y2);
+			fons->ChangeMapAtPos(x2 + i, y2, 0, 0);
 		}
 		Moure();
 		posY += desplasament;
@@ -510,11 +510,11 @@ void Lemming::Immobilitzar(Map *fons, int x1, int x2, int y1, int y2){
 	for (int i = 1; i < 3; i++){
 		for (int j = -4; j < 3; j++){
 			if (fons->GetMap(x1 + i, y2 + j) == 0){
-				fons->CreateMapAtPos(x1 + i, y2 + j, 3);
+				fons->ChangeMapAtPos(x1 + i, y2 + j, 3);
 			}
 
 			if (fons->GetMap((x2 - 2) + i, y2 + j) == 0){
-				fons->CreateMapAtPos((x2 - 2) + i, y2 + j, 3);
+				fons->ChangeMapAtPos((x2 - 2) + i, y2 + j, 3);
 			}
 		}
 	}
@@ -525,13 +525,13 @@ void Lemming::PosarEscala(Map *fons, int x1, int x2, int y2){
 	case 0:
 		for (int i = 0; i < 3; i++){
 			if (fons->GetMap(x2 + i, y2) == 0)
-				fons->CreateMapAtPos(x2 + i, y2, 3, 0, 3);
+				fons->ChangeMapAtPos(x2 + i, y2, 3, 3);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < 3; i++){
 			if (fons->GetMap(x1 - i, y2) == 0)
-				fons->CreateMapAtPos(x1 - i, y2, 3, 0, 3);
+				fons->ChangeMapAtPos(x1 - i, y2, 3, 3);
 		}
 		break;
 	}
@@ -560,15 +560,15 @@ void Lemming::Explotar(Map *fons, int x1, int y1, int x2, int y2){
 	if (currentSprite == numSprites){
 		// Destrucci� del terreny.
 		for (int i = -6; i < 3; i++){
-			fons->DestroyMapAtPos(x1, y2 + i);
-			fons->DestroyMapAtPos(x1 + 1, y2 + i);
-			fons->DestroyMapAtPos(x1 + 2, y2 + i);
-			fons->DestroyMapAtPos(x1 + 3, y2 + i);
+			fons->ChangeMapAtPos(x1, y2 + i, 0, 0);
+			fons->ChangeMapAtPos(x1 + 1, y2 + i, 0, 0);
+			fons->ChangeMapAtPos(x1 + 2, y2 + i, 0, 0);
+			fons->ChangeMapAtPos(x1 + 3, y2 + i, 0, 0);
 
-			fons->DestroyMapAtPos(x2 + 1, y2 + i);
-			fons->DestroyMapAtPos(x2, y2 + i);
-			fons->DestroyMapAtPos(x2 - 1, y2 + i);
-			fons->DestroyMapAtPos(x2 - 2, y2 + i);
+			fons->ChangeMapAtPos(x2 + 1, y2 + i, 0, 0);
+			fons->ChangeMapAtPos(x2, y2 + i, 0, 0);
+			fons->ChangeMapAtPos(x2 - 1, y2 + i, 0, 0);
+			fons->ChangeMapAtPos(x2 - 2, y2 + i, 0, 0);
 		}
 		mortFinal = true;
 	}

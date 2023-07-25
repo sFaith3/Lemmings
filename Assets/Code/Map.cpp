@@ -105,31 +105,24 @@ void Map::SetScaleTiles(const float x, const float y){
 }
 
 
-int Map::GetMap(const int x, const int y){
-	if (isWithinRangeOfMap(x, y))
-		return mapCollision[y][x];
-
-	return 0;
+int Map::GetMap(const int x, const int y) {
+	return isWithinRangeOfMap(x, y) ? mapCollision[y][x] : 0;
 }
 
-void Map::DestroyMapAtPos(const int x, const int y){
-	if (isWithinRangeOfMap(x, y)) {
-		mapCollision[y][x] = 0;
-		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
-			(*itTilesets)->removeTileAtPos(x, y);
-	}
+void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision) {
+	if (!isWithinRangeOfMap(x, y))
+		return;
+
+	mapCollision[y][x] = typeCollision;
 }
 
-void Map::CreateMapAtPos(const int x, const int y, const int type) {
-	if (isWithinRangeOfMap(x, y)) {
-		mapCollision[y][x] = type;
-	}
-}
+void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision, const int idTile) {
+	if (!isWithinRangeOfMap(x, y))
+		return;
 
-void Map::CreateMapAtPos(const int x, const int y, const int type, const int layer, const int idTile) {
-	if (isWithinRangeOfMap(x, y)) {
-		mapCollision[y][x] = type;
-		tilesets[layer]->changeTileAtPos(x, y, idTile);
+	mapCollision[y][x] = typeCollision;
+	for (auto tileset : tilesets) {
+		tileset->changeTileAtPos(x, y, idTile);
 	}
 }
 
