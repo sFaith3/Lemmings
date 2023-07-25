@@ -13,7 +13,10 @@ SceneManager::SceneManager(){
 }
 
 SceneManager::~SceneManager(){
-	videoManager->close();
+	for (auto scene : mVectorScenes) {
+		delete scene;
+	}
+	delete videoManager;
 }
 
 

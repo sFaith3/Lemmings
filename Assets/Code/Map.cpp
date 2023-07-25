@@ -11,6 +11,9 @@ Map::Map(){
 }
 
 Map::~Map(){
+	for (auto tileset : tilesets) {
+		delete tileset;
+	}
 }
 
 
@@ -43,7 +46,7 @@ void Map::initMapTMX(const int x, const int y, const int numLayers, const bool h
 
 void Map::loadMapAndTilesets(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets) {
 	for (int i = 0; i < numLayers; i++) {
-		vector <vector<int> > map = tinyManager->LoadMap(i);
+		vector <vector<int>> map = tinyManager->LoadMap(i);
 		if (map.empty())
 			continue;
 
@@ -56,7 +59,7 @@ void Map::loadMapAndTilesets(const int x, const int y, const int numLayers, cons
 }
 
 void Map::setTilesetImgID() {
-	string idImgTileset = pathTilesets + tilesets.back()->getRutaTileset();
+	string idImgTileset = pathTilesets + tilesets.back()->getPathTileset();
 	const char* _idImgTileset = idImgTileset.c_str();
 	tilesets.back()->setIdImg(videoManager->getTextureID(_idImgTileset));
 }
@@ -113,7 +116,7 @@ void Map::DestroyMapAtPos(const int x, const int y){
 	if (isWithinRangeOfMap(x, y)) {
 		mapCollision[y][x] = 0;
 		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
-			(*itTilesets)->removeTile(x, y);
+			(*itTilesets)->removeTileAtPos(x, y);
 	}
 }
 
@@ -126,7 +129,7 @@ void Map::CreateMapAtPos(const int x, const int y, const int type) {
 void Map::CreateMapAtPos(const int x, const int y, const int type, const int layer, const int idTile) {
 	if (isWithinRangeOfMap(x, y)) {
 		mapCollision[y][x] = type;
-		tilesets[layer]->changeTile(x, y, idTile);
+		tilesets[layer]->changeTileAtPos(x, y, idTile);
 	}
 }
 

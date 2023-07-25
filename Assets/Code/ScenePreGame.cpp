@@ -18,8 +18,8 @@ ScenePreGame::ScenePreGame()
 	smManager = SceneManager::getInstanceSM();
 }
 
-ScenePreGame::~ScenePreGame()
-{
+ScenePreGame::~ScenePreGame(){
+	delete background;
 }
 
 
@@ -61,6 +61,7 @@ void ScenePreGame::update()
 	{
 		inputManager->resetClick();
 		smManager->changeScene(smManager->GAME);
+		map = nullptr;
 	}
 	else if (isPreviousScene())
 	{
@@ -76,8 +77,7 @@ void ScenePreGame::render()
 
 	map->render();
 
-	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++)
-	{
+	for (itDigits = digits.begin(); itDigits != digits.end(); itDigits++) {
 		(*itDigits)->render();
 	}
 }
@@ -100,7 +100,9 @@ void ScenePreGame::loadLevelInfo(const int LEVEL) {
 	getPathsToInitMap(pathMap, pathTilesets, LEVEL);
 	const char* PATH_MAP = pathMap.c_str();
 	const char* PATH_TILESETS = pathTilesets.c_str();
-	initMap(PATH_MAP, PATH_TILESETS);
+	if (map == nullptr) {
+		initMap(PATH_MAP, PATH_TILESETS);
+	}
 
 	sGame->initFromPreGame(map, numLem, lemToSave, releaseRate, timeLvl);
 }

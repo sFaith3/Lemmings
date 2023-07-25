@@ -25,7 +25,7 @@ int main(int argc, char* args[]) {
 		sceneManager->render();
 	}
 
-	sceneManager->~SceneManager();
+	delete sceneManager;
 
 	return 0;
 }

@@ -20,8 +20,8 @@ public:
 	public:
 		struct Tile {
 		private:
-			int srcPosX, srcPosY; // Punt de retall inicial de l'spritesheet.
-			int dstPosX, dstPosY; // Punt on es pintarà.
+			int srcPosX, srcPosY; // Initial clipping point of the spritesheet.
+			int dstPosX, dstPosY; // Point where it will be painted.
 
 		public:
 			Tile(int _srcPosX, int _srcPosY, int _dstPosX, int _dstPosY);
@@ -31,14 +31,16 @@ public:
 			int getDstPosX();
 			int getDstPosY();
 
-			void IncrementDstPos(int x, int y);
-			void ChangeSrc(int srcX, int srcY);
+			void IncrementDstPos(int dstX, int dstY);
+			void ChangeSrcPos(int srcX, int srcY);
 		};
 
-		void init(string rutaTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight);
+		~Tileset();
+
+		void init(string pathTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight);
 		void render(VideoManager* videoManager);
 
-		string getRutaTileset();
+		string getPathTileset();
 		int getSizeXTiles();
 		int getSizeYTiles();
 		vector <vector<Tile*>> getTiles();
@@ -47,13 +49,14 @@ public:
 		void setScaleTiles(float x, float y);
 		void setIdImg(int id);
 
-		void addTile(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
-		void changeTile(int x, int y, int idTile);
-		void removeTile(int x, int y);
+		bool isIndexOutOfRangeInTilesAtPos(const int posX, const int posY) const;
+		void addTileAtPos(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
+		void changeTileAtPos(int posX, int posY, int idTile);
+		void removeTileAtPos(int posX, int posY);
 
 	private:
 		// TILESET.
-		string rutaTileset;
+		string pathTileset;
 		int idImg;
 		int spacing;
 		int width;
@@ -62,7 +65,7 @@ public:
 		// TILES.
 		int tileWidth, tileHeight;
 		float scaleXtile, scaleYtile;
-		int sizeXtiles, sizeYtiles; // Nombre de files i columnes de tiles. Per recórre el vector de vectors en aquelles posicions.
+		int sizeXtiles, sizeYtiles; // Number of rows and columns of tiles to travel the vector of vectors at those positions.
 		vector <vector<Tile*>> tiles;
 	};
 
@@ -75,19 +78,19 @@ public:
 	void LoadTmx(const char* fileTMX, string layerCollision);
 	vector <vector<int>> LoadMap(int numLayers);
 	vector <vector<int>> LoadMapCollision();
-	Tileset* LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int>> mapa, int posX, int posY);
-	int DestroyTMX();
+	Tileset* LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int>> map, int posX, int posY);
+	void DestroyTMX();
 
 private:
 	tinyManager();
 
 	static tinyManager* tInstance;
 
-	TiXmlDocument *doc;
-	string layerCollision; // Nom de la layer del tmx on es troba el mapa de col·lisions.
-	int x, y; // Posicions del vector de vectors 'mapa'.
+	TiXmlDocument* doc;
+	string layerCollision; // Name of the TMX layer where the collision map is located.
+	int x, y; // Positions of the vector of vectors 'map'.
 	int widthMap, heightMap;
-	int tileSize; // Número de tiles que té el mapa.
+	int tileSize; // Number of tiles the map has.
 };
 
 #endif

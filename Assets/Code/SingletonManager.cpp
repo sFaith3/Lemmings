@@ -11,7 +11,6 @@ SingletonManager::SingletonManager(){
 }
 
 SingletonManager::~SingletonManager(){
-
 }
 
 

@@ -5,6 +5,10 @@ SceneGame *SceneGame::gInstance = NULL;
 
 SceneGame::SceneGame()
 {
+	map = nullptr;
+
+	time = nullptr;
+
 	actions = new Actions();
 
 	numLemmings = lemmingsToSave = 0;
@@ -32,8 +36,7 @@ SceneGame::SceneGame()
 	smManager = SceneManager::getInstanceSM();
 }
 
-SceneGame::~SceneGame()
-{
+SceneGame::~SceneGame(){
 }
 
 
@@ -46,7 +49,7 @@ SceneGame *SceneGame::getInstanceSceneGame()
 }
 
 
-void SceneGame::initFromPreGame(Map *map, int numLemmings, int lemmingsToSave, string rateSpeed, string time)
+void SceneGame::initFromPreGame(Map* map, int numLemmings, int lemmingsToSave, string rateSpeed, string time)
 {
 	this->map = map;
 	this->numLemmings = numLemmings;

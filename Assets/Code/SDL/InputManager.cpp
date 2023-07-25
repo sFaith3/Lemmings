@@ -14,15 +14,13 @@ InputManager::InputManager()
 	clickRight = false;
 }
 
-InputManager::~InputManager()
-{
+InputManager::~InputManager(){
 }
 
 InputManager *InputManager::getInstanceInput()
 {
 	if (iInstance == NULL)
 	{
-
 		iInstance = new InputManager();
 	}
 	return iInstance;

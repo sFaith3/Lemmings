@@ -52,8 +52,8 @@ void VideoManager::CreateWindow()
 	}
 }
 
-VideoManager::~VideoManager()
-{
+VideoManager::~VideoManager(){
+	close();
 }
 
 VideoManager *VideoManager::getInstanceVideo()
