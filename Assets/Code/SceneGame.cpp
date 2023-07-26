@@ -307,13 +307,13 @@ void SceneGame::updateLemmings()
 		}
 		else
 		{
-			if ((*itLemmings)->CursorOnLemming())
+			if ((*itLemmings)->IsCursorOnLemming())
 			{
 				checkCursorChanged();
 				putSkillIntoLemming();
 			}
 
-			if ((*itLemmings)->GetEstat() != (*itLemmings)->RESCUED)
+			if ((*itLemmings)->GetCurrState() != (*itLemmings)->RESCUED)
 			{
 				if (isLemmingInOutDoor(x1, x2, y1, y2))
 				{
@@ -358,7 +358,7 @@ void SceneGame::killLemming() {
 void SceneGame::checkCursorChanged() {
 	if (!cursorChanged) {
 		cursorChanged = true;
-		currState = (*itLemmings)->GetEstat();
+		currState = (*itLemmings)->GetCurrState();
 	}
 }
 
