@@ -38,6 +38,7 @@ public:
 		~Tileset();
 
 		void init(string pathTileset, int spacing, int width, int height, int sizeXtiles, int sizeYtiles, int tileWidth, int tileHeight);
+		void addTiles(const int mapPosX, const int mapPosY, const vector <vector<int>> map, Tileset* tileset, const int numMaxTilesWidth, const int numMaxTilesHeight, const int posX, const int posY);
 		void render(VideoManager* videoManager);
 
 		string getPathTileset();
@@ -51,17 +52,18 @@ public:
 
 		bool isIndexOutOfRangeInTilesAtPos(const int posX, const int posY) const;
 		void addTileAtPos(int posX, int posY, int srcPosX, int srcPosY, int dstPosX, int dstPosY);
-		void changeTileAtPos(int posX, int posY, int idTile);
+		void changeTileAtPos(const int posX, const int posY, const int newTile);
+		void clippingBoxToGetSrcPositions(const int width, const int height, const int tile, int& srcPosX, int& srcPosY);
 
 	private:
-		// TILESET.
+		// Tileset.
 		string pathTileset;
 		int idImg;
 		int spacing;
 		int width;
 		int height;
 
-		// TILES.
+		// Tiles.
 		int tileWidth, tileHeight;
 		float scaleXtile, scaleYtile;
 		int sizeXtiles, sizeYtiles; // Number of rows and columns of tiles to travel the vector of vectors at those positions.
@@ -70,14 +72,16 @@ public:
 
 	void Init();
 
-	int GetWidthMap();
-	int GetHeightMap();
+	int GetMapWidth();
+	int GetMapHeight();
 	int GetTileSize();
 
-	void LoadTmx(const char* fileTMX, string layerCollision);
-	vector <vector<int>> LoadMap(int numLayers);
-	vector <vector<int>> LoadMapCollision();
-	Tileset* LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int>> map, int posX, int posY);
+	void LoadTMX(const char* fileTMX, string layerCollision);
+	bool IsMapCollisionLayer(const int numLayer, TiXmlElement*& layer);
+	vector <vector<int>> GetMapData(vector<vector<int>> map, const string text, string num, const int layerWidth);
+	vector <vector<int>> GetLoadedMap(const int numLayer);
+	vector <vector<int>> GetLoadedMapCollision();
+	Tileset* GetLoadedTileset(int numTilesets, bool haveSpacing, vector <vector<int>> map, int posX, int posY);
 	void DestroyTMX();
 
 private:
@@ -87,8 +91,8 @@ private:
 
 	TiXmlDocument* doc;
 	string layerCollision; // Name of the TMX layer where the collision map is located.
-	int x, y; // Positions of the vector of vectors 'map'.
-	int widthMap, heightMap;
+	int mapPosX, mapPosY; // Positions of the vector of vectors 'map'.
+	int mapWidth, mapHeight;
 	int tileSize; // Number of tiles the map has.
 };
 

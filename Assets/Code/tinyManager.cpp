@@ -5,8 +5,8 @@ tinyManager* tinyManager::tInstance = nullptr;
 
 tinyManager::tinyManager(){
 	doc = nullptr;
-	x = y = 0;
-	widthMap = heightMap = 0;
+	mapPosX = mapPosY = 0;
+	mapWidth = mapHeight = 0;
 	tileSize = 0;
 }
 
@@ -86,6 +86,23 @@ void tinyManager::Tileset::init(string pathTileset, int spacing, int width, int 
 		tiles[i].resize(sizeXtiles + 1);
 }
 
+void tinyManager::Tileset::addTiles(const int mapPosX, const int mapPosY, const vector <vector<int>> map, Tileset* tileset,
+	const int numMaxTilesWidth, const int numMaxTilesHeight, const int posX, const int posY) {
+	// The tileset is traversed to paint each tile. The two "for" indicate the position of the screen, multiplied
+	// by the corresponding measure (X/Y) of the tile.
+	for (int i = 0; i <= mapPosX; i++) {
+		for (int j = 0; j <= mapPosY; j++) {
+			int tile = map[j][i] - 1; // The tile ID to paint.
+			int srcPosX = 0, srcPosY = 0;
+			tileset->clippingBoxToGetSrcPositions(numMaxTilesWidth, numMaxTilesHeight, tile, srcPosX, srcPosY);
+
+			int dstPosX = (i * tileWidth) + posX;
+			int dstPosY = (j * tileHeight) + posY;
+			tileset->addTileAtPos(i, j, srcPosX, srcPosY, dstPosX, dstPosY);
+		}
+	}
+}
+
 void tinyManager::Tileset::render(VideoManager* videoManager) {
 	int dstPosXtile = tiles[0][0]->getDstPosX();
 	int dstPosYtile = tiles[0][0]->getDstPosY();
@@ -95,7 +112,11 @@ void tinyManager::Tileset::render(VideoManager* videoManager) {
 			if (tiles[j][i] != nullptr) {
 				int srcPosXtile = tiles[j][i]->getSrcPosX();
 				int srcPosYtile = tiles[j][i]->getSrcPosY();
-				videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight, scaleXtile, scaleYtile, dstPosXtile + (i * tileWidth), dstPosYtile + (j * tileHeight));
+				int dstPosX = dstPosXtile + (i * tileWidth);
+				int dstPosY = dstPosYtile + (j * tileHeight);
+
+				videoManager->renderTexture(idImg, srcPosXtile, srcPosYtile, tileWidth, tileHeight,
+					scaleXtile, scaleYtile, dstPosX, dstPosY);
 			}
 		}
 		//dstPosYtile += tileHeight;
@@ -146,49 +167,51 @@ void tinyManager::Tileset::addTileAtPos(int posX, int posY, int srcPosX, int src
 	tiles[posY][posX] = tile;
 }
 
-void tinyManager::Tileset::changeTileAtPos(int posX, int posY, int idTile) {
+void tinyManager::Tileset::changeTileAtPos(const int posX, const int posY, const int newTile) {
 	if (isIndexOutOfRangeInTilesAtPos(posX, posY))
 		return;
 
-	int srcPosX = 0;
-	int srcPosY = 0;
-	// Es fa un requadre de retall al tileset, i s'indica on se situa.
-	int tile = idTile; // Id de la tile a pintar.
-	for (int h = 1; h <= height; h++) { // Segons la fila on es trobi.
+	int srcPosX = 0, srcPosY = 0;
+	clippingBoxToGetSrcPositions(width, height, newTile, srcPosX, srcPosY);
+	tiles[posY][posX]->ChangeSrcPos(srcPosX, srcPosY);
+}
+
+// A clipping box is made in the tileset, indicating where it is located.
+void tinyManager::Tileset::clippingBoxToGetSrcPositions(const int width, const int height, const int tile, int& srcPosX, int& srcPosY) {
+	for (int h = 1; h <= height; h++) { // Depending on the row it is in.
 		if (tile < width * h) {
-			// S'obté la ID de la tile i se li resta el número total de tiles que hi ha en una fila, multiplicat per la fila on sigui menys 1 més l'espai que es deixa entre tile.
-			// Perquè si es troba a la primera fila, no es resta cap, de manera que la x del requadre que s'obté ja és de la primera fila.
+			// The tile ID is obtained and the total number of tiles in a row is subtracted, multiplied by the row
+			// where less than 1 plus the space left between tiles. Because if it is in the first row, it does not
+			// subtract any, so the X in the box obtained is already in the first row.
 			srcPosX = ((tile - (width * (h - 1))) * tileWidth) + (spacing * (tile - (width * (h - 1))));
 			srcPosY = ((h - 1) * tileHeight) + (spacing * (h - 1));
 			break;
 		}
 	}
-
-	tiles[posY][posX]->ChangeSrcPos(srcPosX, srcPosY);
 }
 #pragma endregion
 
 
 void tinyManager::Init(){
-	x = y = 0;
+	mapPosX = mapPosY = 0;
 	doc = nullptr;
 }
 
 
-int tinyManager::GetWidthMap() {
-	const int _widthMap = widthMap;
-	if (widthMap != 0)
-		widthMap = 0;
+int tinyManager::GetMapWidth() {
+	const int _widthMap = mapWidth;
+	if (mapWidth != 0)
+		mapWidth = 0;
 
 	return _widthMap;
 }
 
-int tinyManager::GetHeightMap() {
-	const int _heightMap = heightMap;
-	if (heightMap != 0)
-		heightMap = 0;
+int tinyManager::GetMapHeight() {
+	const int _mapHeight = mapHeight;
+	if (mapHeight != 0)
+		mapHeight = 0;
 
-	return _heightMap;
+	return _mapHeight;
 }
 
 int tinyManager::GetTileSize() {
@@ -200,55 +223,44 @@ int tinyManager::GetTileSize() {
 }
 
 
-void tinyManager::LoadTmx(const char* fileTMX, string layerCollision) {
+void tinyManager::LoadTMX(const char* fileTMX, string layerCollision) {
 	doc = new TiXmlDocument(fileTMX);
 	this->layerCollision = layerCollision;
 	if (!doc->LoadFile()) // parse file
 	{
 		cout << "Could not load test file '" << fileTMX << "' Error=" << doc->ErrorDesc() << ".\n" <<
 			"Exiting." << endl;
-		//return -1;
 	}
 }
 
-vector <vector<int>> tinyManager::LoadMap(int numLayers) {
-	vector <vector<int>> map; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
-
-	TiXmlElement* tmxMap = doc->FirstChildElement();
-	widthMap = atoi(tmxMap->Attribute("width"));
-	heightMap = atoi(tmxMap->Attribute("height"));
-	tileSize = atoi(tmxMap->Attribute("tilewidth"));
-	TiXmlElement* layer = tmxMap->FirstChildElement("layer");
-	for (int i = 0; i < numLayers; i++) {
+bool tinyManager::IsMapCollisionLayer(const int numLayer, TiXmlElement*& layer) {
+	for (int i = 0; i < numLayer; i++) {
 		layer = layer->NextSiblingElement("layer");
 		if ((string)layer->Attribute("name") == layerCollision) {
-			map.clear();
-			map.resize(0);
-
-			return map;
+			return true;
 		}
 	}
 
-	TiXmlElement* data = layer->FirstChildElement("data");
-	string text = data->GetText(); // Mapa de tmx.
-	string num = ""; // Contingut a insertar a l'array.
-	int layerWidth = atoi(layer->Attribute("width")) - 1;
+	return false;
+}
 
-	// Es desa l'informació de 'data' en una matriu de 2 dimensions o en un vector de vectors, per tal de saber les tiles a pintar, gràcies a la seva ID. I amb la posició de la matriu se sap on ubicar-la.
+// The 'data' information is stored in a 2-dimensional array or vector of vectors in order to know the tiles
+// to be painted, thanks to their ID. And with the position of the array we know where to locate it.
+vector<vector<int>> tinyManager::GetMapData(vector<vector<int>> map, const string text, string num, const int layerWidth) {
 	vector<int> row;
 	map.push_back(row);
+
 	for (int i = 0; i < text.length(); i++) {
 		if (text[i] == ',') {
-			//mapa[x][y] = atoi(num.c_str());
-			map[y].push_back(atoi(num.c_str()));
-
+			//map[mapPosX][mapPosY] = atoi(num.c_str());
+			map[mapPosY].push_back(atoi(num.c_str()));
 			num = "";
 
-			if (x < layerWidth)
-				x++;
+			if (mapPosX < layerWidth)
+				mapPosX++;
 			else {
-				y++;
-				x = 0;
+				mapPosY++;
+				mapPosX = 0;
 				vector<int> row;
 				map.push_back(row);
 			}
@@ -256,16 +268,41 @@ vector <vector<int>> tinyManager::LoadMap(int numLayers) {
 		else if (text[i] != ' ')
 			num += text[i];
 	}
-	//mapa[x][y] = atoi(num.c_str());
-	map[y].push_back(atoi(num.c_str()));
+	//map[mapPosX][mapPosY] = atoi(num.c_str());
+	map[mapPosY].push_back(atoi(num.c_str()));
 
 	return map;
 }
 
-vector <vector<int>> tinyManager::LoadMapCollision() {
+vector <vector<int>> tinyManager::GetLoadedMap(const int numLayer) {
+	vector <vector<int>> loadedMap; // Map of integers: map[row(y)][column(x)].
+
+	TiXmlElement* tmxMap = doc->FirstChildElement();
+	TiXmlElement* layer = tmxMap->FirstChildElement("layer");
+	if (IsMapCollisionLayer(numLayer, layer)) {
+		loadedMap.clear();
+		loadedMap.resize(0);
+
+		return loadedMap;
+	}
+
+	mapWidth = atoi(tmxMap->Attribute("width"));
+	mapHeight = atoi(tmxMap->Attribute("height"));
+	tileSize = atoi(tmxMap->Attribute("tilewidth"));
+
+	TiXmlElement* data = layer->FirstChildElement("data");
+	string text = data->GetText(); // TMX map.
+	string num = ""; // Content to insert in the array.
+	int layerWidth = atoi(layer->Attribute("width")) - 1;
+	
+	return GetMapData(loadedMap, text, num, layerWidth);
+}
+
+vector <vector<int>> tinyManager::GetLoadedMapCollision() {
 	TiXmlElement* map = doc->FirstChildElement();
 	tileSize = atoi(map->Attribute("tilewidth"));
 	TiXmlElement* layer = map->FirstChildElement("layer");
+
 	if ((string)layer->Attribute("name") != layerCollision) {
 		bool isFound = false;
 		while (!isFound) {
@@ -275,85 +312,39 @@ vector <vector<int>> tinyManager::LoadMapCollision() {
 			}
 		}
 	}
-
-	TiXmlElement* data = layer->FirstChildElement("data");
-	string text = data->GetText(); // Mapa de tmx.
-	vector <vector<int>> mapCollision; // Mapa d'ints.  - mapa[fila(y)][columna(x)] -
-	string num = ""; // Contingut a insertar a l'array.
-	int layerWidth = atoi(layer->Attribute("width")) - 1;
-
-	// Es desa l'informació de 'data' en una matriu de 2 dimensions o en un vector de vectors, per tal de saber les tiles a pintar, gràcies a la seva ID. I amb la posició de la matriu se sap on ubicar-la.
-	vector<int> row;
-	mapCollision.push_back(row);
-	for (int i = 0; i < text.length(); i++) {
-		if (text[i] == ',') {
-			mapCollision[y].push_back(atoi(num.c_str()));
-
-			num = "";
-
-			if (x < layerWidth)
-				x++;
-			else {
-				y++;
-				x = 0;
-				vector<int> row;
-				mapCollision.push_back(row);
-			}
-		}
-		else if (text[i] != ' ')
-			num += text[i];
-	}
-	mapCollision[y].push_back(atoi(num.c_str()));
-
 	layerCollision = "";
 
-	return mapCollision;
+	vector <vector<int>> mapCollision; // Map of integers: map[row(y)][column(x)].
+	TiXmlElement* data = layer->FirstChildElement("data");
+	string text = data->GetText(); // TMX map.
+	string num = ""; // Content to insert in the array.
+	int layerWidth = atoi(layer->Attribute("width")) - 1;
+
+	return GetMapData(mapCollision, text, num, layerWidth);
 }
 
-tinyManager::Tileset* tinyManager::LoadTileset(int numTilesets, bool haveSpacing, vector <vector<int>> mapa, int posX, int posY) {
-	TiXmlElement* map = doc->FirstChildElement();
-	TiXmlElement* tileset = map->FirstChildElement("tileset");
+tinyManager::Tileset* tinyManager::GetLoadedTileset(int numTilesets, bool haveSpacing, vector <vector<int>> map, int posX, int posY) {
+	TiXmlElement* tmxMap = doc->FirstChildElement();
+	TiXmlElement* tileset = tmxMap->FirstChildElement("tileset");
+	TiXmlElement* image = tileset->FirstChildElement("image");
+
 	for (int i = 0; i < numTilesets; i++) {
 		tileset = tileset->NextSiblingElement("tileset");
 	}
-	int tileWidth = atoi(tileset->Attribute("tilewidth"));
-	int tileHeight = atoi(tileset->Attribute("tileheight"));
-	int spacing = 0;
-	if (haveSpacing)
-		spacing = atoi(tileset->Attribute("spacing"));
-
-	TiXmlElement* image = tileset->FirstChildElement("image");
+	int spacing = (haveSpacing) ? atoi(tileset->Attribute("spacing")) : 0;
 	int tilesetWidth = atoi(image->Attribute("width"));
 	int tilesetHeigth = atoi(image->Attribute("height"));
+	int tileWidth = atoi(tileset->Attribute("tilewidth"));
+	int tileHeight = atoi(tileset->Attribute("tileheight"));
 	int numMaxTilesWidth = tilesetWidth / (tileWidth + spacing);
 	int numMaxTilesHeight = tilesetHeigth / (tileHeight + spacing);
 
 	Tileset* _tileset = new Tileset();
 	string pathTileset = image->Attribute("source");
-	_tileset->init(pathTileset, spacing, tilesetWidth, tilesetHeigth, x, y, tileWidth, tileHeight);
-	// Es recórre el tileset per sàpiguer quina tile es pinta. Els 2 primers for's indiquen la posició de la pantalla, a la qual se li multiplica per la mesura corresponent (X/Y) de la tile.
-	for (int i = 0; i <= x; i++) {
-		for (int j = 0; j <= y; j++) {
-			int srcPosX = 0;
-			int srcPosY = 0;
-			// Es fa un requadre de retall al tileset, i s'indica on se situa.
-			int tile = mapa[j][i] - 1; // Id de la tile a pintar.
-			for (int h = 1; h <= numMaxTilesHeight; h++) { // Segons la fila on es trobi.
-				if (tile < numMaxTilesWidth * h) {
-					// S'obté la ID de la tile i se li resta el número total de tiles que hi ha en una fila, multiplicat per la fila on sigui menys 1 més l'espai que es deixa entre tile.
-					// Perquè si es troba a la primera fila, no es resta cap, de manera que la x del requadre que s'obté ja és de la primera fila.
-					srcPosX = ((tile - (numMaxTilesWidth * (h - 1))) * tileWidth) + (spacing * (tile - (numMaxTilesWidth * (h - 1))));
-					srcPosY = ((h - 1) * tileHeight) + (spacing * (h - 1));
-					break;
-				}
-			}
-			int dstPosX = (i * tileWidth) + posX;
-			int dstPosY = (j * tileHeight) + posY;
+	_tileset->init(pathTileset, spacing, tilesetWidth, tilesetHeigth, mapPosX, mapPosY, tileWidth, tileHeight);
+	_tileset->addTiles(mapPosX, mapPosY, map, _tileset, numMaxTilesWidth, numMaxTilesHeight, posX, posY);
 
-			_tileset->addTileAtPos(i, j, srcPosX, srcPosY, dstPosX, dstPosY);
-		}
-	}
-	x = y = 0;
+	mapPosX = mapPosY = 0;
 
 	return _tileset;
 }

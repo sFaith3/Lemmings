@@ -24,7 +24,7 @@ void Map::init(int x, int y, bool mapTMX, const char* fileMap, const char* layer
 	sizeTile = 0;
 	
 	tinyManager->Init();
-	tinyManager->LoadTmx(fileMap, layerCollision);
+	tinyManager->LoadTMX(fileMap, layerCollision);
 	if (mapTMX){
 		initMapTMX(x, y, numLayers, haveSpacingTileset, numTilesets, srcX, srcY);
 	}
@@ -39,19 +39,19 @@ void Map::init(int x, int y, bool mapTMX, const char* fileMap, const char* layer
 void Map::initMapTMX(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets, const int srcX, const int srcY) {
 	loadMapAndTilesets(x, y, numLayers, haveSpacingTileset, numTilesets);
 	sizeTile = tinyManager->GetTileSize();
-	mapCollision = tinyManager->LoadMapCollision();
+	mapCollision = tinyManager->GetLoadedMapCollision();
 
-	Element::init(x, y, NULL, false, srcX, srcY, tinyManager->GetWidthMap(), tinyManager->GetHeightMap(), 1, 1);
+	Element::init(x, y, NULL, false, srcX, srcY, tinyManager->GetMapWidth(), tinyManager->GetMapHeight(), 1, 1);
 }
 
 void Map::loadMapAndTilesets(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets) {
 	for (int i = 0; i < numLayers; i++) {
-		vector <vector<int>> map = tinyManager->LoadMap(i);
+		vector <vector<int>> map = tinyManager->GetLoadedMap(i);
 		if (map.empty())
 			continue;
 
 		for (int currNumTilesets = 0; currNumTilesets < numTilesets; currNumTilesets++) {
-			tinyManager::Tileset* tileSet = tinyManager->LoadTileset(currNumTilesets, haveSpacingTileset, map, x, y);
+			tinyManager::Tileset* tileSet = tinyManager->GetLoadedTileset(currNumTilesets, haveSpacingTileset, map, x, y);
 			tilesets.push_back(tileSet);
 		}
 		setTilesetImgID();
@@ -116,13 +116,13 @@ void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision) {
 	mapCollision[y][x] = typeCollision;
 }
 
-void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision, const int idTile) {
+void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision, const int newTile) {
 	if (!isWithinRangeOfMap(x, y))
 		return;
 
 	mapCollision[y][x] = typeCollision;
 	for (auto tileset : tilesets) {
-		tileset->changeTileAtPos(x, y, idTile);
+		tileset->changeTileAtPos(x, y, newTile);
 	}
 }
 

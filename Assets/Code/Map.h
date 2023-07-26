@@ -41,7 +41,7 @@ public:
 
 	int GetMap(const int x, const int y);
 	void ChangeMapAtPos(const int x, const int y, const int typeCollision);
-	void ChangeMapAtPos(const int x, const int y, const int typeCollision, const int idTile);
+	void ChangeMapAtPos(const int x, const int y, const int typeCollision, const int newTile);
 	bool isWithinRangeOfMap(const int x, const int y);
 };
 
