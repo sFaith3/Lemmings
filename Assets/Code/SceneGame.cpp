@@ -20,13 +20,13 @@ SceneGame::SceneGame()
 
 	exitDoor = new ElementGame();
 
-	for (int i = 0; i < NUM_STATES; i++)
-	{
+	for (int i = 0; i < NUM_STATES; i++) {
 		states[i] = new Word();
 	}
 
-	counters[0] = new Counter();
-	counters[1] = new Counter();
+	for (int i = 0; i < NUM_COUNTERS; i++) {
+		counters[i] = new Counter();
+	}
 
 	cursorChanged = false;
 	cursor = Cursor::getInstanceCursor();
@@ -36,7 +36,16 @@ SceneGame::SceneGame()
 	smManager = SceneManager::getInstanceSM();
 }
 
-SceneGame::~SceneGame(){
+SceneGame::~SceneGame() {
+	delete actions;
+	delete exitDoor;
+
+	for (int i = 0; i < NUM_STATES; i++) {
+		delete states[i];
+	}
+	for (int i = 0; i < NUM_COUNTERS; i++) {
+		delete counters[i];
+	}
 }
 
 
@@ -79,10 +88,10 @@ void SceneGame::init()
 	x = 20;
 	y = 260;
 	const string NAME_STATES[] = {
-		"MOVE", "FALL", "BREAK", "GLIDE", "CLIMB", "DIG", "PICK", "STOP", "STAIR", "EXPLOSION",
-		"DEAD", "DEADFALL", "OPENUMBRELLA", "NOSTAIR", "ENDCLIMB", "RESCUED", "EXPLODING"};
-	for (int i = 0; i < NUM_STATES; i++)
-	{
+		"MOVE", "FALL", "BREAK", "GLIDE", "CLIMB", "DIG", "PICK", "IMMOBILE", "STAIRS", "EXPLOSION",
+		"DEAD", "DEAD_FALL", "OPEN_UMBRELLA", "NO_STAIRS", "END_CLIMB", "RESCUED", "EXPLODING"
+	};
+	for (int i = 0; i < NUM_STATES; i++) {
 		states[i]->init(x, y, 1, 1, 15, NAME_STATES[i]);
 	}
 	currState = -1;
@@ -116,21 +125,23 @@ void SceneGame::clear()
 
 	delete enterDoor;
 
+	for (auto lemming : lemmings) {
+		delete lemming;
+	}
 	lemmings.clear();
 	lemmings.resize(0);
 
-	for (int i = 0; i < NUM_STATES; i++)
-	{
+	for (int i = 0; i < NUM_STATES; i++) {
 		states[i]->clear();
 	}
 	if (currState != -1)
 		currState = -1;
 
-	counters[0]->clear();
-	counters[1]->clear();
+	for (int i = 0; i < NUM_COUNTERS; i++) {
+		counters[i]->clear();
+	}
 
-	for (int i = 0; i <= (int)MaxNumSoundsEnum; i++)
-	{
+	for (int i = 0; i <= (int)MaxNumSoundsEnum; i++) {
 		idSounds[i] = -1;
 	}
 }

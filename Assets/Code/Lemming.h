@@ -2,7 +2,6 @@
 #include "ElementGame.h"
 #include "Map.h"
 
-// NOTA: Si els getters no s'utilitzen, s'hauràn d'esborrar. Els setters es poden deixar.
 class Lemming :
 	public ElementGame
 {
@@ -13,17 +12,17 @@ public:
 	// OPENUMBRELLA: El Lemming obra el paraigües, NOSTAIR: El Lemming es queda sense rajoles, ENDCLIMB El Lemming acaba d'escalar i torna a terra pla,
 	// EXPLODING: El Lemming fa l'animacio de que va a explotar.
 	enum StatesEnum {
-		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION,
-		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, RESCUED, EXPLODING
+		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, IMMOBILE, STAIRS, EXPLOSION,
+		DEAD, DEAD_FALL, OPEN_UMBRELLA, NO_STAIRS, END_CLIMB, RESCUED, EXPLODING
 	};
 private:
-	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
-	int pintW, pintH; // Amplada i alçada de la imatge.
+	int mapPosX, mapPosY; // Desplaçament adicional, solament per al render, degut al mapa.
+	int width, height; // Amplada i alçada de la imatge.
 
-	int limitX;
+	int limitX; // Un marge per a calcular el desplaçament i que no travessi alguna cosa.
 
 	StatesEnum currState;
-	int dir; // Direcció del Lemming a l'hora de moure's. 0 / 2.
+	int direction; // Direcció del Lemming a l'hora de moure's. 0 / 2.
 
 	int maxCaure;
 	int tempsMax; // compte enrere de 5s.
@@ -65,7 +64,7 @@ public:
 	void render();
 
 	int GetLimitX();
-	int GetDir();
+	int GetDirection();
 	StatesEnum GetCurrState();
 	bool GetMort();
 	bool GetContExplotar();
@@ -74,7 +73,7 @@ public:
 	bool IsCursorOnLemming();
 
 	bool SetSkill(int numUsos, int skill, int temps);
-	void SetDir(int dir);
+	void SetDirection(int direction);
 	void SetMoure();
 	void SetCaure();
 	void SetMortCaure();
