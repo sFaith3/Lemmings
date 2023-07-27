@@ -24,14 +24,16 @@ private:
 	StatesEnum currState;
 	int direction; // Direcció del Lemming a l'hora de moure's. 0 / 2.
 
-	int maxCaure;
-	int tempsMax; // compte enrere de 5s.
 
-	int desplasament;
+	const int fallMaxTime = 60;
+	int currFallTime;
+	int lifeTime; // compte enrere de X s. //---int tempsMax;
+
+	int displacement;
 
 	// Equipa X habilitats al Lemming, que les realitzarà quan compleixi certa condició.
-	bool paraigues;
-	bool escalar;
+	bool hasUmbrella;//bool paraigues;
+	bool canClimb;//bool escalar;
 
 	bool mortInicial;
 	bool mortFinal;

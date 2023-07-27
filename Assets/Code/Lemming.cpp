@@ -21,12 +21,12 @@ void Lemming::init(int x, int y, int xMapa, int yMapa){
 	currState = FALL;
 	direction = 0;
 	
-	maxCaure = 0;
-	tempsMax = 4;
+	currFallTime = 0;
+	lifeTime = 4;
 	
-	desplasament = 1;
-	paraigues = false;
-	escalar = false;
+	displacement = 1;
+	hasUmbrella = false;
+	canClimb = false;
 	mortInicial = false;
 	mortFinal = false;
 	explotaContador = false;
@@ -58,7 +58,7 @@ void Lemming::update(Map* fons, int x1, int y1, int x2, int y2, int temps) {
 			else if (fons->GetMap(x2, y2) == 0 && fons->GetMap(x2, y2 + 1) != 0)
 				Moure(false); // Cap avall.
 			else if (fons->GetMap(x2 + 1, y2 - 2) != 0) {
-				if (fons->GetMap(x2 + 1, y2 - 2) == 1 && escalar) {
+				if (fons->GetMap(x2 + 1, y2 - 2) == 1 && canClimb) {
 					SetEscalar();
 				}
 				else {
@@ -76,7 +76,7 @@ void Lemming::update(Map* fons, int x1, int y1, int x2, int y2, int temps) {
 				Moure(false); // Cap avall.
 			else if (fons->GetMap(x1, y2 - 2) != 0) {
 
-				if (fons->GetMap(x1, y2 - 2) == 1 && escalar) {
+				if (fons->GetMap(x1, y2 - 2) == 1 && canClimb) {
 					SetEscalar();
 				}
 				else {
@@ -88,12 +88,12 @@ void Lemming::update(Map* fons, int x1, int y1, int x2, int y2, int temps) {
 		}
 		break;
 	case FALL:
-		if (paraigues) {
+		if (hasUmbrella) {
 			SetObrirParaigues();
 		}
 		else {
 			Caure();
-			if (fons->GetMap(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMap(x2 - desplasament, y2 + desplasament) != 0) {
+			if (fons->GetMap(x1 + displacement, y2 + displacement) != 0 || fons->GetMap(x2 - displacement, y2 + displacement) != 0) {
 				if (mortInicial) {
 					SetMortCaure();
 				}
@@ -113,7 +113,7 @@ void Lemming::update(Map* fons, int x1, int y1, int x2, int y2, int temps) {
 		break;
 	case GLIDE:
 		Levitar();
-		if (fons->GetMap(x1 + desplasament, y2 + desplasament) != 0 || fons->GetMap(x2 - desplasament, y2 + desplasament) != 0)
+		if (fons->GetMap(x1 + displacement, y2 + displacement) != 0 || fons->GetMap(x2 - displacement, y2 + displacement) != 0)
 			SetMoure();
 		break;
 	case CLIMB:
@@ -255,14 +255,14 @@ bool Lemming::SetSkill(int numUsos, int skill, int temps){
 	if (numUsos > 0){
 		switch (skill){ // Si no tenen l'habilitat posada, se'ls hi posa.
 		case 2: // TREPAR
-			if (!escalar && currState != IMMOBILE){
-				escalar = true;
+			if (!canClimb && currState != IMMOBILE){
+				canClimb = true;
 				return true;
 			}
 			break;
 		case 3: // PARAIGUES
-			if (!paraigues && currState != IMMOBILE){
-				paraigues = true;
+			if (!hasUmbrella && currState != IMMOBILE){
+				hasUmbrella = true;
 				return true;
 			}
 			break;
@@ -328,7 +328,7 @@ void Lemming::SetCaure(){
 	numSprites = 4;
 	srcPosX = _srcPosX = 0;
 	srcPosY = 40;
-	maxCaure = 0;
+	currFallTime = 0;
 }
 
 void Lemming::SetMortCaure(){
@@ -442,21 +442,21 @@ void Lemming::SetRescatar(){
 
 
 void Lemming::PutParaigues() {
-	paraigues = true;
+	hasUmbrella = true;
 }
 
 void Lemming::PutEscalar() {
-	escalar = true;
+	canClimb = true;
 }
 
 
 void Lemming::Moure(){
 	switch (direction){
 	case 0:
-		posX += desplasament;
+		posX += displacement;
 		break;
 	case 2:
-		posX -= desplasament;
+		posX -= displacement;
 		break;
 	}
 }
@@ -464,10 +464,10 @@ void Lemming::Moure(){
 void Lemming::Moure(bool diagAmunt){
 	if (diagAmunt){
 		Moure();
-		posY -= desplasament;
+		posY -= displacement;
 	}
 	else
-		posY += desplasament;
+		posY += displacement;
 }
 
 void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
@@ -483,13 +483,13 @@ void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
 
 void Lemming::Levitar(){
 	if (currentSprite == 2 || currentSprite == 4){
-		posY += desplasament;
+		posY += displacement;
 	}
 }
 
 void Lemming::Escalar(){
 	if (currentSprite == 3 || currentSprite == 6 || currentSprite == 9){
-		posY -= desplasament;
+		posY -= displacement;
 	}
 }
 
@@ -499,7 +499,7 @@ void Lemming::Cavar(Map *fons, int x2, int y2){
 		for (int i = -1; i < 2; i++){
 			fons->ChangeMapAtPos(x2 + i, y2, 0, 0);
 		}
-		posY += desplasament;
+		posY += displacement;
 	}
 }
 
@@ -513,7 +513,7 @@ void Lemming::Picar(Map *fons, int x2, int y2){
 			fons->ChangeMapAtPos(x2 + i, y2, 0, 0);
 		}
 		Moure();
-		posY += desplasament;
+		posY += displacement;
 	}
 }
 
@@ -553,19 +553,19 @@ void Lemming::ConstruirEscala() {
 }
 
 void Lemming::Caure(){
-	posY += desplasament;
+	posY += displacement;
 
-	if (maxCaure == 60){
+	if (currFallTime == fallMaxTime){
 		mortInicial = true;
 	}
-	else if (maxCaure < 60){
-		maxCaure++;
+	else if (currFallTime < fallMaxTime){
+		currFallTime++;
 	}
 }
 
 void Lemming::TempsFinal(int temps){
 	int _temps = temps - tempsLvl;
-	if (_temps >= tempsMax){
+	if (_temps >= lifeTime){
 		SetExplotar();
 		explotaContador = false;
 	}
