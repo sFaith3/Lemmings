@@ -6,41 +6,41 @@ class Lemming :
 	public ElementGame
 {
 public:
-	// BREAK: Trenca parets, STAIRS: Posa rajoles, NO_STAIRS: Es queda sense rajoles,
-	// EXPLODING: Fa l'animacio de que va a explotar.
+	// BREAK: Break walls, STAIRS: Put steps, NO_STAIRS: No steps left,
+	// EXPLODING: Making the animation of going to explode.
 	enum StatesEnum {
 		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, IMMOBILE, STAIRS, EXPLOSION,
 		DEAD, DEAD_FALL, OPEN_UMBRELLA, NO_STAIRS, END_CLIMB, RESCUED, EXPLODING
 	};
 private:
-	int mapPosX, mapPosY; // Desplaçament adicional, solament per al render, degut al mapa.
-	int width, height; // Amplada i alçada de la imatge.
+	int mapPosX, mapPosY; // Additional displacement, only for the render, due to the map.
+	int width, height; // Width and height of the image.
 
-	int limitX; // Un marge per a calcular el desplaçament i que no travessi alguna cosa.
+	int limitX; // A margin to calculate the displacement and not cross the map.
 
 	StatesEnum currState;
-	int direction; // Direcció del Lemming a l'hora de moure's. 0 / 2.
+	int direction; // Direction when moving: 0 / 2.
 
 	const int fallMaxTime = 60;
 	int currFallTime;
-	int lifeTime; // Compte enrere de X s.
+	int lifeTime; // Countdown to Xs.
 
 	int displacement;
 
-	// Equipa X habilitats al Lemming, que les realitzarà quan compleixi certa condició.
+	// Equip X skills that will perform them when it fulfill a certain condition.
 	bool hasUmbrella;
 	bool canClimb;
 
 	bool initialFallenDead;
 	bool isDead;
 
-	bool isGoingToExplode; // Variable que indica el començament del compte enrere de l'explosió.
+	bool isGoingToExplode; // Variable indicating the start of the explosion countdown.
 
-	int levelTime; // Temps restant del nivell.
+	int levelTime; // Remaining time of level.
 
-	bool isImmobilized; // Per a bloquejar aquella posició del mapa quan el Lemming s'aturi passant a l'estat "IMMOBILE".
+	bool isImmobilized; // To block that map position when stops moving to 'IMMOBILE' state.
 
-	bool isRescued; // S'activa quan un Lemming passa per la porta de sortida.
+	bool isRescued; // It's triggered when it passes through the exit door.
 
 	int currNumberStairsBuilt;
 
@@ -49,7 +49,7 @@ private:
 	};
 	int idSounds[MaxSounds];
 
-	SDL_RendererFlip flipType; // Gira la imatge quan canvia la direcció.
+	SDL_RendererFlip flipType; // Rotates the image when the direction changes.
 
 	InputManager* inputManager;
 
