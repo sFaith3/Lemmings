@@ -243,8 +243,8 @@ void SceneGame::updateActions()
 			// Explode all lemmings.
 			for (itLemmings = lemmings.begin(); itLemmings != lemmings.end(); itLemmings++)
 			{
-				if (!(*itLemmings)->GetContExplotar())
-					(*itLemmings)->SetContadorTemps(time->getTime());
+				if (!(*itLemmings)->GetIsGoingToExplode())
+					(*itLemmings)->SetLevelTimeToExplode(time->getTime());
 			}
 		}
 		break;
@@ -295,7 +295,7 @@ void SceneGame::updateLemmings()
 		
 		(*itLemmings)->update(map, x1, y1, x2, y2, time->getTime());
 
-		if ((*itLemmings)->GetRescatat())
+		if ((*itLemmings)->GetIsRescued())
 		{
 			rescueLemming();
 			if (lemmings.empty()) {
@@ -305,7 +305,7 @@ void SceneGame::updateLemmings()
 
 			itLemmings = lemmings.begin();
 		}
-		else if (isOutOfMap(x1, x2, y2) || (*itLemmings)->GetMort())
+		else if (isOutOfMap(x1, x2, y2) || (*itLemmings)->GetIsDead())
 		{
 			killLemming();
 			if (lemmings.empty())
@@ -328,7 +328,7 @@ void SceneGame::updateLemmings()
 			{
 				if (isLemmingInOutDoor(x1, x2, y1, y2))
 				{
-					(*itLemmings)->SetRescatar();
+					(*itLemmings)->SetRescued();
 				}
 			}
 		}
