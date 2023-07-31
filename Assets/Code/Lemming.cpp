@@ -54,9 +54,9 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 			SetFall();
 		else if (direction == 0) { // Cap a la dreta.
 			if (map->GetMap(x2, y2 - 1) != 0 && map->GetMap(x2, y2 - 2) == 0)
-				Moure(true); // Diagonal cap amunt.
+				Move(true); // Diagonal cap amunt.
 			else if (map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) != 0)
-				Moure(false); // Cap avall.
+				Move(false); // Cap avall.
 			else if (map->GetMap(x2 + 1, y2 - 2) != 0) {
 				if (map->GetMap(x2 + 1, y2 - 2) == 1 && canClimb) {
 					SetClimb();
@@ -66,14 +66,14 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 				}
 			}
 			else {
-				Moure();
+				Move();
 			}
 		}
 		else {
 			if (map->GetMap(x1, y2 - 1) != 0 && map->GetMap(x1, y2 - 2) == 0)
-				Moure(true); // Diagonal cap amunt.
+				Move(true); // Diagonal cap amunt.
 			else if (map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) != 0)
-				Moure(false); // Cap avall.
+				Move(false); // Cap avall.
 			else if (map->GetMap(x1, y2 - 2) != 0) {
 
 				if (map->GetMap(x1, y2 - 2) == 1 && canClimb) {
@@ -84,7 +84,7 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 				}
 			}
 			else
-				Moure();
+				Move();
 		}
 		break;
 	case FALL:
@@ -92,7 +92,7 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 			SetOpenUmbrella();
 		}
 		else {
-			Caure();
+			Fall();
 			if (map->GetMap(x1 + displacement, y2 + displacement) != 0 || map->GetMap(x2 - displacement, y2 + displacement) != 0) {
 				if (initialFallenDead) {
 					SetFallenDeath();
@@ -108,19 +108,19 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 			SetMove();
 		}
 		else {
-			TrencarMur(map, x1, x2, y1, y2);
+			BreakWall(map, x1, x2, y1, y2);
 		}
 		break;
 	case GLIDE:
-		Levitar();
+		Glide();
 		if (map->GetMap(x1 + displacement, y2 + displacement) != 0 || map->GetMap(x2 - displacement, y2 + displacement) != 0)
 			SetMove();
 		break;
 	case CLIMB:
-		Escalar();
+		Climb();
 		if ((map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) == 0) && (map->GetMap(x2 + 1, y2) == 0 && map->GetMap(x2 + 1, y2 + 1) != 0) ||
 			(map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) == 0) && (map->GetMap(x1 - 1, y2) == 0 && map->GetMap(x1 - 1, y2 + 1) != 0)) {
-			Moure();
+			Move();
 			SetMove();
 		}
 		else if (map->GetMap(x1, y1) == 1 && map->GetMap(x2, y1) == 1) {
@@ -133,7 +133,7 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 			SetMove();
 		}
 		else {
-			Cavar(map, x2, y2);
+			Dig(map, x2, y2);
 		}
 		break;
 	case PICK:
@@ -141,12 +141,12 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 			SetMove();
 		}
 		else {
-			Picar(map, x2, y2);
+			Pick(map, x2, y2);
 		}
 		break;
 	case IMMOBILE:
 		if (!isImmobilized) {
-			Immobilitzar(map, x1, x2, y1, y2);
+			Immobilize(map, x1, x2, y1, y2);
 			isImmobilized = true;
 		}
 		break;
@@ -159,13 +159,13 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 			break;
 		}
 		else if (currentSprite == 11) {
-			PosarEscala(map, x1, x2, y2);
+			PutStep(map, x1, x2, y2);
 			currNumberStairsBuilt++;
 			if (currNumberStairsBuilt == 25 || currNumberStairsBuilt == 28 || currNumberStairsBuilt == 33)
 				audioManager->playSound(idSounds[Stairs]);
 		}
 		else if (currentSprite == numSprites) {
-			Moure(true);
+			Move(true);
 			if (currNumberStairsBuilt >= 32) {
 				SetNoStairs();
 				currNumberStairsBuilt = 0;
@@ -201,12 +201,12 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		}
 		break;
 	case EXPLOSION:
-		Explotar(map, x1, y1, x2, y2);
+		Explode(map, x1, y1, x2, y2);
 		break;
 	}
 
 	if (isGoingToExplode) {
-		TempsFinal(time);
+		CheckExplosion(time);
 	}
 
 	UpdateAnimation();
@@ -239,15 +239,6 @@ bool Lemming::GetIsGoingToExplode(){
 
 bool Lemming::GetIsRescued(){
 	return isRescued;
-}
-
-
-bool Lemming::IsCursorOnLemming() {
-	int mouseX, mouseY;
-	inputManager->getMouseXY(mouseX, mouseY);
-
-	return ((mouseX > posX + mapPosX && mouseX < posX + mapPosX + width)
-		&& (mouseY > posY + mapPosY && mouseY < posY + mapPosY + height));
 }
 
 
@@ -290,13 +281,13 @@ bool Lemming::SetSkill(int numUses, int skill, int time){
 				return true;
 			}
 			break;
-		case 8: // PICAR
+		case 8: // PICK
 			if (currState != PICK && currState != IMMOBILE && currState != FALL && currState != CLIMB){
 				SetPick();
 				return true;
 			}
 			break;
-		case 9: // CAVAR
+		case 9: // DIG
 			if (currState != DIG && currState != IMMOBILE && currState != FALL && currState != CLIMB){
 				SetDig();
 				return true;
@@ -441,6 +432,14 @@ void Lemming::SetRescued(){
 }
 
 
+bool Lemming::IsCursorOnLemming() {
+	int mouseX, mouseY;
+	inputManager->getMouseXY(mouseX, mouseY);
+
+	return ((mouseX > posX + mapPosX && mouseX < posX + mapPosX + width)
+		&& (mouseY > posY + mapPosY && mouseY < posY + mapPosY + height));
+}
+
 void Lemming::PutUmbrella() {
 	hasUmbrella = true;
 }
@@ -449,8 +448,7 @@ void Lemming::PutClimb() {
 	canClimb = true;
 }
 
-
-void Lemming::Moure(){
+void Lemming::Move(){
 	switch (direction){
 	case 0:
 		posX += displacement;
@@ -461,98 +459,98 @@ void Lemming::Moure(){
 	}
 }
 
-void Lemming::Moure(bool diagAmunt){
-	if (diagAmunt){
-		Moure();
+void Lemming::Move(bool isDiagonalUp){
+	if (isDiagonalUp){
+		Move();
 		posY -= displacement;
 	}
 	else
 		posY += displacement;
 }
 
-void Lemming::TrencarMur(Map *fons, int x1, int x2, int y1, int y2){
+void Lemming::BreakWall(Map* map, int x1, int x2, int y1, int y2){
 	if (currentSprite == 8 || currentSprite == 16 || currentSprite == 24 || currentSprite == 32){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
-				fons->ChangeMapAtPos(x2 + i, y2 - j, 0, 0);
+				map->ChangeMapAtPos(x2 + i, y2 - j, 0, 0);
 			}
 		}
-		Moure();
+		Move();
 	}
 }
 
-void Lemming::Levitar(){
+void Lemming::Glide(){
 	if (currentSprite == 2 || currentSprite == 4){
 		posY += displacement;
 	}
 }
 
-void Lemming::Escalar(){
+void Lemming::Climb(){
 	if (currentSprite == 3 || currentSprite == 6 || currentSprite == 9){
 		posY -= displacement;
 	}
 }
 
-void Lemming::Cavar(Map *fons, int x2, int y2){
+void Lemming::Dig(Map* map, int x2, int y2){
 	// Destrucci� del terreny.
 	if (currentSprite == 6){
 		for (int i = -1; i < 2; i++){
-			fons->ChangeMapAtPos(x2 + i, y2, 0, 0);
+			map->ChangeMapAtPos(x2 + i, y2, 0, 0);
 		}
 		posY += displacement;
 	}
 }
 
-void Lemming::Picar(Map *fons, int x2, int y2){
+void Lemming::Pick(Map* map, int x2, int y2){
 	// Destrucci� del terreny.
 	if (currentSprite == 5){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
-				fons->ChangeMapAtPos(x2 + i, y2 - j, 0, 0);
+				map->ChangeMapAtPos(x2 + i, y2 - j, 0, 0);
 			}
-			fons->ChangeMapAtPos(x2 + i, y2, 0, 0);
+			map->ChangeMapAtPos(x2 + i, y2, 0, 0);
 		}
-		Moure();
+		Move();
 		posY += displacement;
 	}
 }
 
-void Lemming::Immobilitzar(Map *fons, int x1, int x2, int y1, int y2){
+void Lemming::Immobilize(Map* map, int x1, int x2, int y1, int y2){
 	for (int i = 1; i < 3; i++){
 		for (int j = -4; j < 3; j++){
-			if (fons->GetMap(x1 + i, y2 + j) == 0){
-				fons->ChangeMapAtPos(x1 + i, y2 + j, 3);
+			if (map->GetMap(x1 + i, y2 + j) == 0){
+				map->ChangeMapAtPos(x1 + i, y2 + j, 3);
 			}
 
-			if (fons->GetMap((x2 - 2) + i, y2 + j) == 0){
-				fons->ChangeMapAtPos((x2 - 2) + i, y2 + j, 3);
+			if (map->GetMap((x2 - 2) + i, y2 + j) == 0){
+				map->ChangeMapAtPos((x2 - 2) + i, y2 + j, 3);
 			}
 		}
 	}
 }
 
-void Lemming::PosarEscala(Map *fons, int x1, int x2, int y2){
+void Lemming::PutStep(Map* map, int x1, int x2, int y2){
 	switch (direction){
 	case 0:
 		for (int i = 0; i < 3; i++){
-			if (fons->GetMap(x2 + i, y2) == 0)
-				fons->ChangeMapAtPos(x2 + i, y2, 3, 3);
+			if (map->GetMap(x2 + i, y2) == 0)
+				map->ChangeMapAtPos(x2 + i, y2, 3, 3);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < 3; i++){
-			if (fons->GetMap(x1 - i, y2) == 0)
-				fons->ChangeMapAtPos(x1 - i, y2, 3, 3);
+			if (map->GetMap(x1 - i, y2) == 0)
+				map->ChangeMapAtPos(x1 - i, y2, 3, 3);
 		}
 		break;
 	}
 }
 
-void Lemming::ConstruirEscala() {
+void Lemming::BuildStairs() {
 
 }
 
-void Lemming::Caure(){
+void Lemming::Fall(){
 	posY += displacement;
 
 	if (currFallTime == fallMaxTime){
@@ -563,27 +561,27 @@ void Lemming::Caure(){
 	}
 }
 
-void Lemming::TempsFinal(int temps){
-	int _temps = temps - levelTime;
-	if (_temps >= lifeTime){
+void Lemming::CheckExplosion(int time){
+	int currTime = time - levelTime;
+	if (currTime >= lifeTime){
 		SetExploding();
 		isGoingToExplode = false;
 	}
 }
 
-void Lemming::Explotar(Map *fons, int x1, int y1, int x2, int y2){
+void Lemming::Explode(Map* map, int x1, int y1, int x2, int y2){
 	if (currentSprite == numSprites){
 		// Destrucci� del terreny.
 		for (int i = -6; i < 3; i++){
-			fons->ChangeMapAtPos(x1, y2 + i, 0, 0);
-			fons->ChangeMapAtPos(x1 + 1, y2 + i, 0, 0);
-			fons->ChangeMapAtPos(x1 + 2, y2 + i, 0, 0);
-			fons->ChangeMapAtPos(x1 + 3, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x1, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x1 + 1, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x1 + 2, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x1 + 3, y2 + i, 0, 0);
 
-			fons->ChangeMapAtPos(x2 + 1, y2 + i, 0, 0);
-			fons->ChangeMapAtPos(x2, y2 + i, 0, 0);
-			fons->ChangeMapAtPos(x2 - 1, y2 + i, 0, 0);
-			fons->ChangeMapAtPos(x2 - 2, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x2 + 1, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x2, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x2 - 1, y2 + i, 0, 0);
+			map->ChangeMapAtPos(x2 - 2, y2 + i, 0, 0);
 		}
 		isDead = true;
 	}
