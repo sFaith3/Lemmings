@@ -42,7 +42,7 @@ Lemming::~Lemming(){
 }
 
 
-void Lemming::init(int x, int y, int mapPosX, int mapPosY){
+void Lemming::init(const int x, const int y, const int mapPosX, const int mapPosY){
 	ElementGame::init(x, y, "Assets/Art/Images/Lemmings/lem_ani.png", false, 0, 40, 10, 10, 1, 1, 318, 0, 20, 4, 2);
 	this->mapPosX = mapPosX;
 	this->mapPosY = mapPosY;
@@ -80,105 +80,28 @@ void Lemming::init(int x, int y, int mapPosX, int mapPosY){
 	flipType = SDL_FLIP_NONE;
 }
 
-void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
+void Lemming::update(Map* map, const int x1, const int y1, const int x2, const int y2, const int time) {
 	switch (currState) {
 	case MOVE:
-		if (map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x2 - 1, y2 + 1) == 0)
-			SetFall();
-		else if (direction == 0) { // To the right.
-			if (map->GetMap(x2, y2 - 1) != 0 && map->GetMap(x2, y2 - 2) == 0)
-				Move(true); // Diagonal up.
-			else if (map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) != 0)
-				Move(false); // Down.
-			else if (map->GetMap(x2 + 1, y2 - 2) != 0) {
-				if (map->GetMap(x2 + 1, y2 - 2) == 1 && canClimb) {
-					SetClimb();
-				}
-				else {
-					SetDirection(2);
-				}
-			}
-			else {
-				Move();
-			}
-		}
-		else { // To the left.
-			if (map->GetMap(x1, y2 - 1) != 0 && map->GetMap(x1, y2 - 2) == 0)
-				Move(true); // Diagonal up.
-			else if (map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) != 0)
-				Move(false); // Down.
-			else if (map->GetMap(x1, y2 - 2) != 0) {
-
-				if (map->GetMap(x1, y2 - 2) == 1 && canClimb) {
-					SetClimb();
-				}
-				else {
-					SetDirection(0);
-				}
-			}
-			else
-				Move();
-		}
+		updateMove(map, x1, x2, y2);
 		break;
 	case FALL:
-		if (hasUmbrella) {
-			SetOpenUmbrella();
-		}
-		else {
-			Fall();
-			if (map->GetMap(x1 + displacement, y2 + displacement) != 0
-				|| map->GetMap(x2 - displacement, y2 + displacement) != 0) {
-				if (initialFallenDead) {
-					SetFallenDeath();
-				}
-				else {
-					SetMove();
-				}
-			}
-		}
+		updateFall(map, x1, x2, y2);
 		break;
 	case BREAK:
-		if ((map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x1, y1 + 1) == 0)
-			|| (map->GetMap(x2 + 1, y2 + 1) == 0 && map->GetMap(x2, y1 + 1) == 0)) {
-			SetMove();
-		}
-		else {
-			BreakWall(map, x1, x2, y1, y2);
-		}
+		updateBreak(map, x1, y1, x2, y2);
 		break;
 	case GLIDE:
-		Glide();
-		if (map->GetMap(x1 + displacement, y2 + displacement) != 0
-			|| map->GetMap(x2 - displacement, y2 + displacement) != 0)
-			SetMove();
+		updateGlide(map, x1, x2, y2);
 		break;
 	case CLIMB:
-		Climb();
-		if ((map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) == 0) && (map->GetMap(x2 + 1, y2) == 0 && map->GetMap(x2 + 1, y2 + 1) != 0) ||
-			(map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) == 0) && (map->GetMap(x1 - 1, y2) == 0 && map->GetMap(x1 - 1, y2 + 1) != 0)) {
-			Move();
-			SetMove();
-		}
-		else if (map->GetMap(x1, y1) == 1 && map->GetMap(x2, y1) == 1) {
-			SetFall();
-		}
-
+		updateClimb(map, x1, y1, x2, y2);
 		break;
 	case DIG:
-		if ((map->GetMap(x1 - 1, y1 + 1) == 0 && map->GetMap(x2 + 1, y1 + 1) == 0) && map->GetMap(x2, y2 + 1) == 0) {
-			SetMove();
-		}
-		else {
-			Dig(map, x2, y2);
-		}
+		updateDig(map, x1, y1, x2, y2);
 		break;
 	case PICK:
-		if ((map->GetMap(x1 - 1, y1 + 1) == 0 && map->GetMap(x2 + 1, y1 + 1) == 0) && map->GetMap(x2, y2 + 1) == 0) {
-			SetMove();
-		}
-		else {
-			Pick(map, x2, y2);
-		}
+		updatePick(map, x1, y1, x2, y2);
 		break;
 	case IMMOBILE:
 		if (!isImmobilized) {
@@ -187,26 +110,7 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		}
 		break;
 	case STAIRS:
-		// TODO: When the position is fixed, the '-1' must be removed from the condition.
-		if ((direction == 0 && (map->GetMap(x2 + 1, y2 - 1) != 0 && map->GetMap(x2 + 2, y2 - 1) != 0)) ||
-			(direction == 2 && (map->GetMap(x1 - 1, y2 - 1) != 0 && map->GetMap(x1 - 2, y2 - 1) != 0))) {
-			SetMove();
-			currNumberStairsBuilt = 0;
-			break;
-		}
-		else if (currentSprite == 11) {
-			PutStep(map, x1, x2, y2);
-			currNumberStairsBuilt++;
-			if (currNumberStairsBuilt == 25 || currNumberStairsBuilt == 28 || currNumberStairsBuilt == 33)
-				audioManager->playSound(idSounds[Stairs]);
-		}
-		else if (currentSprite == numSprites) {
-			Move(true);
-			if (currNumberStairsBuilt >= 32) {
-				SetNoStairs();
-				currNumberStairsBuilt = 0;
-			}
-		}
+		updateStairs(map, x1, x2, y2);
 		break;
 	case NO_STAIRS:
 		if (currentSprite == numSprites) {
@@ -214,7 +118,6 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		}
 		break;
 	case DEAD:
-
 		break;
 	case DEAD_FALL:
 		if (currentSprite == numSprites) {
@@ -239,6 +142,8 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 	case EXPLOSION:
 		Explode(map, x1, y1, x2, y2);
 		break;
+	default:
+		break;
 	}
 
 	if (isGoingToExplode) {
@@ -246,6 +151,132 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 	}
 
 	UpdateAnimation();
+}
+
+void Lemming::updateMove(Map* map, const int x1, const int x2, const int y2) {
+	if (map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x2 - 1, y2 + 1) == 0) {
+		SetFall();
+	}
+	else if (direction == 0) { // To the right.
+		if (map->GetMap(x2, y2 - 1) != 0 && map->GetMap(x2, y2 - 2) == 0)
+			Move(true); // Diagonal up.
+		else if (map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) != 0)
+			Move(false); // Down.
+		else if (map->GetMap(x2 + 1, y2 - 2) != 0) {
+			if (map->GetMap(x2 + 1, y2 - 2) == 1 && canClimb) {
+				SetClimb();
+			}
+			else {
+				SetDirection(2);
+			}
+		}
+		else {
+			Move();
+		}
+	}
+	else { // To the left.
+		if (map->GetMap(x1, y2 - 1) != 0 && map->GetMap(x1, y2 - 2) == 0)
+			Move(true); // Diagonal up.
+		else if (map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) != 0)
+			Move(false); // Down.
+		else if (map->GetMap(x1, y2 - 2) != 0) {
+
+			if (map->GetMap(x1, y2 - 2) == 1 && canClimb) {
+				SetClimb();
+			}
+			else {
+				SetDirection(0);
+			}
+		}
+		else
+			Move();
+	}
+}
+
+void Lemming::updateFall(Map* map, const int x1, const int x2, const int y2) {
+	if (hasUmbrella) {
+		SetOpenUmbrella();
+		return;
+	}
+
+	Fall();
+	if (map->GetMap(x1 + displacement, y2 + displacement) != 0 || map->GetMap(x2 - displacement, y2 + displacement) != 0) {
+		if (initialFallenDead) {
+			SetFallenDeath();
+		}
+		else {
+			SetMove();
+		}
+	}
+}
+
+void Lemming::updateBreak(Map* map, const int x1, const int y1, const int x2, const int y2) {
+	if ((map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x1, y1 + 1) == 0) || (map->GetMap(x2 + 1, y2 + 1) == 0 && map->GetMap(x2, y1 + 1) == 0)) {
+		SetMove();
+	}
+	else {
+		BreakWall(map, x1, x2, y1, y2);
+	}
+}
+
+void Lemming::updateGlide(Map* map, const int x1, const int x2, const int y2) {
+	Glide();
+	if (map->GetMap(x1 + displacement, y2 + displacement) != 0 || map->GetMap(x2 - displacement, y2 + displacement) != 0) {
+		SetMove();
+	}
+}
+
+void Lemming::updateClimb(Map* map, const int x1, const int y1, const int x2, const int y2) {
+	Climb();
+	if ((map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) == 0) && (map->GetMap(x2 + 1, y2) == 0 && map->GetMap(x2 + 1, y2 + 1) != 0) ||
+		(map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) == 0) && (map->GetMap(x1 - 1, y2) == 0 && map->GetMap(x1 - 1, y2 + 1) != 0)) {
+		Move();
+		SetMove();
+	}
+	else if (map->GetMap(x1, y1) == 1 && map->GetMap(x2, y1) == 1) {
+		SetFall();
+	}
+}
+
+void Lemming::updateDig(Map* map, const int x1, const int y1, const int x2, const int y2) {
+	if ((map->GetMap(x1 - 1, y1 + 1) == 0 && map->GetMap(x2 + 1, y1 + 1) == 0) && map->GetMap(x2, y2 + 1) == 0) {
+		SetMove();
+	}
+	else {
+		Dig(map, x2, y2);
+	}
+}
+
+void Lemming::updatePick(Map* map, const int x1, const int y1, const int x2, const int y2) {
+	if ((map->GetMap(x1 - 1, y1 + 1) == 0 && map->GetMap(x2 + 1, y1 + 1) == 0) && map->GetMap(x2, y2 + 1) == 0) {
+		SetMove();
+	}
+	else {
+		Pick(map, x2, y2);
+	}
+}
+
+void Lemming::updateStairs(Map* map, const int x1, const int x2, const int y2) {
+	// TODO: When the position is fixed, the '-1' must be removed from the condition.
+	if ((direction == 0 && (map->GetMap(x2 + 1, y2 - 1) != 0 && map->GetMap(x2 + 2, y2 - 1) != 0)) ||
+		(direction == 2 && (map->GetMap(x1 - 1, y2 - 1) != 0 && map->GetMap(x1 - 2, y2 - 1) != 0))) {
+		SetMove();
+		currNumberStairsBuilt = 0;
+		return;
+	}
+	else if (currentSprite == 11) {
+		PutStep(map, x1, x2, y2);
+		currNumberStairsBuilt++;
+		if (currNumberStairsBuilt == 25 || currNumberStairsBuilt == 28 || currNumberStairsBuilt == 33)
+			audioManager->playSound(idSounds[Stairs]);
+	}
+	else if (currentSprite == numSprites) {
+		Move(true);
+		if (currNumberStairsBuilt >= 32) {
+			SetNoStairs();
+			currNumberStairsBuilt = 0;
+		}
+	}
 }
 
 void Lemming::render(){

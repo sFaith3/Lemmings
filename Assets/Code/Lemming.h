@@ -57,8 +57,16 @@ public:
 	Lemming();
 	~Lemming();
 
-	void init(int x, int y, int mapPosX, int mapPosY);
-	void update(Map* map, int x1, int y1, int x2, int y2, int time);
+	void init(const int x, const int y, const int mapPosX, const int mapPosY);
+	void update(Map* map, const int x1, const int y1, const int x2, const int y2, const int time);
+	void updateMove(Map* map, const int x1, const int x2, const int y2);
+	void updateFall(Map* map, const int x1, const int x2, const int y2);
+	void updateBreak(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updateGlide(Map* map, const int x1, const int x2, const int y2);
+	void updateClimb(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updateDig(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updatePick(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updateStairs(Map* map, const int x1, const int x2, const int y2);
 	void render();
 
 	int GetLimitX();
