@@ -2,24 +2,27 @@
 #define AUDIOMANAGER_H
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 
 class AudioManager
 {
 private:
 	AudioManager();
 
-	static AudioManager* aInstance; /*!<	Singleton instance*/
+	static AudioManager *aInstance; /*!<	Singleton instance*/
 
 public:
 	~AudioManager();
 
-	//! Gets Singleton instance.
-	static AudioManager* getInstanceAudio();
+	const int Volume = static_cast<int>(MIX_MAX_VOLUME * 0.6f);
 
-	Sint32 addMusic(const char* file);
-	Sint32 getMusicID(const char* file);
-	Sint32 addSound(const char* file);
-	Sint32 getSoundID(const char* file);
+	//! Gets Singleton instance.
+	static AudioManager *getInstanceAudio();
+
+	Sint32 addMusic(const char *file);
+	Sint32 getMusicID(const char *file);
+	Sint32 addSound(const char *file);
+	Sint32 getSoundID(const char *file);
 
 	void playMusic(int audio);
 	void playMusic(int audio, int loop);

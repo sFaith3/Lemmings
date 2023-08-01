@@ -15,10 +15,10 @@ private:
 
 	static SceneMenu* gInstance; /*!<	Singleton instance*/
 
-	Background *fons;
+	Background* background;
 
 	enum ButtonsEnum{
-		PLAYER = 1, NEW_LEVEL, MUTE_SOUND, EXIT
+		PLAYER = 1, MUTE_SOUND = 3, EXIT
 	};
 	vector<Button> buttons;
 	vector<Button>::iterator itBut;
@@ -43,6 +43,9 @@ public:
 	void init();
 	void update();
 	void render();
+
+	void updateButtons();
+	void updateInput();
 };
 
 #endif

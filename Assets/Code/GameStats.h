@@ -10,9 +10,9 @@ private:
 
 	static GameStats* pInstance; /*<!	Singleton instance*/
 
-	int level; // Nivell de joc en què es troba.
-	bool pause; // Quan s'activa el joc es pausa.
-	bool win; // Serveix per a saber si el jugador passa de nivell i per a mostrar la informació que pertoca a ScenePostGame.
+	int level; // The current level.
+	bool pause; // When 'pause' is true, the game is stopped.
+	bool win; // It serves to know if the player passes to the next level and to show the corresponding information in 'ScenePostGame'.
 
 public:
 	~GameStats();

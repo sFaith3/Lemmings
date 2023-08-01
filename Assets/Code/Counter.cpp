@@ -1,145 +1,145 @@
 #include "Counter.h"
 
+Counter::Counter() {
+	firstNum = secondNum = 0;
 
-Counter::Counter()
-{
-}
-
-
-Counter::~Counter()
-{
-}
-
-
-void Counter::init(int x, int y, const char* img, int widht, int height, int scaleX, int scaleY, int separationInitial, int separationX, bool addPercent){
-	ElementHUD::init(x, y, img, false, 0, 0, widht, height, scaleX, scaleY);
-	primerNum = segonNum = 0;
-
-	int xNum, yNum;
-	xNum = x + separationInitial;
-	yNum = y + 2;
-	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, scaleX, scaleY, primerNum);
-	this->separationX = separationX;
-	xNum += separationX;
-	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, scaleX, scaleY, segonNum);
-	this->addPercent = addPercent;
-	if (addPercent){
-		nums.push_back(new ABCsAlphaNum());
-		nums.back()->Init(xNum, yNum, scaleX, scaleY, '%');
-	}
-
+	separationX = 0;
+	addPercent = false;
 	addNumber = false;
 }
 
-void Counter::clear(){
+Counter::~Counter() {
+}
+
+
+void Counter::init(int x, int y, const char* img, int widht, int height, int scaleX, int scaleY, int separationInitial, int separationX, bool addPercent) {
+	firstNum = secondNum = 0;
+	addNumber = false;
+
+	ElementHUD::init(x, y, img, false, 0, 0, widht, height, static_cast<float>(scaleX), static_cast<float>(scaleY));
+	initNums(x, y, separationInitial, separationX, addPercent);
+}
+
+void Counter::initNums(int x, int y, int separationInitial, int separationX, bool addPercent) {
+	int xNum, yNum;
+
+	// First number
+	xNum = x + separationInitial;
+	yNum = y + 2;
+	nums.push_back(new ABCsAlphaNum());
+	nums.back()->init(xNum, yNum, scaleX, scaleY, firstNum);
+
+	// Second number
+	this->separationX = separationX;
+	xNum += separationX;
+	nums.push_back(new ABCsAlphaNum());
+	nums.back()->init(xNum, yNum, scaleX, scaleY, secondNum);
+
+	// Optional percent
+	this->addPercent = addPercent;
+	if (addPercent) {
+		nums.push_back(new ABCsAlphaNum());
+		nums.back()->init(xNum, yNum, scaleX, scaleY, '%');
+	}
+}
+
+void Counter::clear() {
 	nums.clear();
 	nums.resize(0);
 }
 
-void Counter::render(){
+void Counter::render() {
 	ElementHUD::render();
-	if (!addNumber){
-		nums[0]->Render();
+
+	if (!addNumber) {
+		nums[0]->render();
 		if (addPercent)
-			nums.back()->Render();
+			nums.back()->render();
 	}
-	else{
+	else {
 		for (int i = 0; i < nums.size(); i++)
-			nums[i]->Render();
+			nums[i]->render();
 	}
 }
 
 
-void Counter::incrementNumber(){
-	if (!addNumber){
-		if (primerNum < 9)
-			primerNum++;
-		else{
+void Counter::incrementNumber() {
+	if (!addNumber) {
+		if (firstNum < 9)
+			firstNum++;
+		else {
 			addNumber = true;
-			primerNum = 1;
+			firstNum = 1;
 			if (nums.size() > 2)
-				nums.back()->Move(separationX, 0);
+				nums.back()->move(separationX, 0);
 		}
 	}
-	else{
-		if (segonNum < 9){
-			segonNum++;
+	else {
+		if (secondNum < 9) {
+			secondNum++;
 		}
-		else{
-			primerNum++;
-			segonNum = 9;
+		else {
+			firstNum++;
+			secondNum = 9;
 		}
 	}
 
-	if (addNumber){
-		nums[0]->ChangeValue(primerNum);
-		nums[1]->ChangeValue(segonNum);
-	}
-	else
-		nums[0]->ChangeValue(primerNum);
+	changeValue();
 }
 
-void Counter::decrementNumber(){
-	if (addNumber){
-		if (segonNum > 0)
-			segonNum--;
-		else{
-			primerNum--;
-			if (primerNum < 1){
+void Counter::decrementNumber() {
+	if (addNumber) {
+		if (secondNum > 0)
+			secondNum--;
+		else {
+			firstNum--;
+			if (firstNum < 1) {
 				addNumber = false;
-				primerNum = 9;
+				firstNum = 9;
 			}
 		}
 	}
-	else if (primerNum > 0)
-		primerNum--;
+	else if (firstNum > 0)
+		firstNum--;
 
-	if (addNumber){
-		nums[0]->ChangeValue(primerNum);
-		nums[1]->ChangeValue(segonNum);
-	}
-	else
-		nums[0]->ChangeValue(primerNum);
+	changeValue();
 }
 
-void Counter::setNumber(int num){
+void Counter::setNumber(int num) {
 	string _num = to_string(num);
 
-	primerNum = (int)_num[0] - 48;
-	if (_num.length() > 1){
-		segonNum = (int)_num[1] - 48;
-		if (!addNumber){
+	firstNum = (int)_num[0] - 48;
+	if (_num.length() > 1) {
+		secondNum = (int)_num[1] - 48;
+		if (!addNumber) {
 			addNumber = true;
 			if (nums.size() > 2)
-				nums.back()->Move(separationX, 0);
+				nums.back()->move(separationX, 0);
 		}
 	}
 	else if (addNumber)
 		addNumber = false;
 
-	if (addNumber){
-		nums[0]->ChangeValue(primerNum);
-		nums[1]->ChangeValue(segonNum);
-	}
-	else
-		nums[0]->ChangeValue(primerNum);
+	changeValue();
 }
 
-void Counter::setNumber(string num){
-	primerNum = (int)num[0] - 48;
-	segonNum = (int)num[1] - 48;
+void Counter::setNumber(string num) {
+	firstNum = (int)num[0] - 48;
+	secondNum = (int)num[1] - 48;
 
-	if ((primerNum > 0 && segonNum > 0) && !addNumber)
+	if ((firstNum > 0 && secondNum > 0) && !addNumber)
 		addNumber = true;
 	else if (addNumber)
 		addNumber = false;
 
-	if (addNumber){
-		nums[0]->ChangeValue(primerNum);
-		nums[1]->ChangeValue(segonNum);
+	changeValue();
+}
+
+void Counter::changeValue() {
+	if (addNumber) {
+		nums[0]->changeValue(firstNum);
+		nums[1]->changeValue(secondNum);
 	}
 	else
-		nums[0]->ChangeValue(primerNum);
+		nums[0]->changeValue(firstNum);
 }

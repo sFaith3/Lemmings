@@ -22,9 +22,9 @@ public:
 	void update();
 	void render();
 
-	void changeScene(SceneEnum next_scene);
-
 	int getNumCurrScene();
+
+	void changeScene(SceneEnum nextScene);
 
 private:
 	SceneManager();

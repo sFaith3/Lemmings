@@ -10,6 +10,7 @@
 #include <vector>
 using namespace std;
 
+#define WINDOW_TITLE "Lemmings"
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 340
 #define FPS 60

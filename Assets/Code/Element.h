@@ -5,16 +5,15 @@
 class Element
 {
 protected:
-	int posX, posY; // Posició de l'element en la pantalla.
+	int posX, posY; // Element position in the screen.
 	Sint32 idImg;
-	int srcPosX, _srcPosX, srcPosY; // Posició inicial en el sprite. Per agafar una regió de l'sprite, cal fer el requadre amb width i height.
-	int width, height; // Amplada i alçada de l'sprite.
+	int srcPosX, _srcPosX, srcPosY; // Initial position in the sprite. To take a region from the sprite it's necessary to make the box with width and height.
+	int width, height; // Width and height of the sprite.
 	float scaleX, scaleY;
 
 	int pixelCount;
 
 	VideoManager* videoManager;
-
 	AudioManager* audioManager;
 
 public:
@@ -23,13 +22,13 @@ public:
 
 	void init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY);
 
-	int GetPosX();
-	int GetPosY();
-	int GetWidth();
-	int GetHeight();
+	int getPosX();
+	int getPosY();
+	int getWidth();
+	int getHeight();
 
-	void SetPosition(int x, int y);
-	void SetScale(float x, float y);
+	void setPosition(int x, int y);
+	void setScale(float x, float y);
 
-	void ChangePixelColor(Uint32 colorKey, Uint32 newColor);
+	void changePixelColor(Uint32 colorKey, Uint32 newColor);
 };
