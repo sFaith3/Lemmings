@@ -8,31 +8,33 @@ class Actions :
 	public ElementHUD
 {
 private:
-	// Vector d'habilitats dels Lemmings.
-	vector<Skill*> skills;
+	vector<Skill*> skills; // Lemming skills vector.
 	vector<Skill*>::iterator itSkills;
 
-	enum ActionEnum{
-		REST_VEL_SPAWN, PLUS_VEL_SPAWN, TREPAR, PARAIGUES, EXPLOSIO, PARAT, ESGRAONS, CAVAR_LATERAL, PICAR, CAVAR, PAUSA, MOAB
-	};
-
-	int currButton; // Indica l'ActionEnum en què es troba.
+	int currButton; // To know the current ActionEnum.
 
 	GameStats* gameStats;
-
 	InputManager* inputManager;
 
 public:
+	enum ActionEnum {
+		REST_VEL_SPAWN, PLUS_VEL_SPAWN, CLIMB, UMBRELLA, EXPLOSION, STANDING, STEPS, SIDE_DIG, CHIP, DIG, PAUSE, MOAB, MAX_NUM_ACTIONS_ENUM = 11
+	};
+
 	Actions();
 	~Actions();
 
-	int init(float scaleX, float scaleY, string velMinimaSpawn, string trepar, string paraigues, string explosio, string parat, string esgraons, string cavarLateral, string picar, string cavar);
+	int getPressButton();
+	int getPressNumber();
+	int getNumberUsesSkill(const int skill);
+
+	int init(float scaleX, float scaleY, string minVelSpawn, string climb, string umbrella, string explosion, string standing, string steps, string sideDig, string chip, string dig);
+	void initSkills(int x, int y, string minVelSpawn, string climb, string umbrella, string explosion, string standing, string steps, string sideDig, string chip, string dig);
 	int update();
+	bool isNextCheck(const int actionToReturn);
 	void render();
 
-	int GetNumberUsesSkill(int skill);
-	void DetractUseSkill(int skill);
-
-	void DecrementVelocitySkill();
-	void IncrementVelocitySkill();
+	void detractUseSkill(const int skill);
+	void decrementVelocitySkill();
+	void incrementVelocitySkill();
 };

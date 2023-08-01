@@ -1,3 +1,3 @@
 <level name="Just_Dig!" numberLemmings="10" lemmingsToSave="10" releaseRate="50" time="3" code="AHEFUMOCUR">
-<level name="Only_Floaters_Can_Survive_This" numberLemmings="10" lemmingsToSave="20" releaseRate="60" time="3" code="AHEFUMOCUR">
-<level name="Only_Plagues_Can_Survive_This" numberLemmings="25" lemmingsToSave="8" releaseRate="60" time="5" code="AHEFUMOCUR">
+<level name="Only_Floaters_Can_Survive" numberLemmings="10" lemmingsToSave="20" releaseRate="60" time="3" code="AHEFUMOCUR">
+<level name="Only_Plagues_Can_Survive" numberLemmings="25" lemmingsToSave="8" releaseRate="60" time="5" code="AHEFUMOCUR">

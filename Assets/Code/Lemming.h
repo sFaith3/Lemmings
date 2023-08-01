@@ -2,47 +2,54 @@
 #include "ElementGame.h"
 #include "Map.h"
 
-// NOTA: Si els getters no s'utilitzen, s'hauràn d'esborrar. Els setters es poden deixar.
 class Lemming :
 	public ElementGame
 {
-private:
-	int posXmapa, posYmapa; // Desplaçament adicional, solament per al render, degut al mapa.
-	int pintW, pintH; // Amplada i alçada de la imatge.
-
-	int limitX;
-
-	int estat; // Estat actual d'EstatsEnum.
-	int dir; // Direcció del Lemming a l'hora de moure's. 0 / 2.
-
-	int maxCaure;
-	int tempsMax; // compte enrere de 5s.
-
-	int desplasament;
-
-	// Equipa X habilitats al Lemming, que les realitzarà quan compleixi certa condició.
-	bool paraigues;
-	bool escalar;
-
-	bool mortInicial;
-	bool mortFinal;
-
-	bool explotaContador; // Variable que indica el començament del compte enrere de l'explosió.
-
-	int tempsLvl; // Temps restant de la partida.
-
-	bool immobilitzat; // Per a bloquejar aquella posició del mapa quan el Lemming s'aturi passant a l'estat "STOP".
-
-	bool rescatat; // S'activa quan un Lemming passa per la porta.
-
-	int currStairs;
-
-	enum SoundsEnum{
-		BeforeExplode, Explosion, FallDead, Stair, Yippee
+public:
+	// BREAK: Break walls, STAIRS: Put steps, NO_STAIRS: No steps left,
+	// EXPLODING: Making the animation of going to explode.
+	enum StatesEnum {
+		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, IMMOBILE, STAIRS, EXPLOSION,
+		DEAD, DEAD_FALL, OPEN_UMBRELLA, NO_STAIRS, END_CLIMB, RESCUED, EXPLODING
 	};
-	int idSounds[5];
-	
-	SDL_RendererFlip flipType; // Gira la imatge quan canvïa la direcció.
+private:
+	int mapPosX, mapPosY; // Additional displacement, only for the render, due to the map.
+	int width, height; // Width and height of the image.
+
+	int limitX; // A margin to calculate the displacement and not cross the map.
+
+	StatesEnum currState;
+	int direction; // Direction when moving: 0: Right / 2: Left.
+
+	const int fallMaxTime = 60;
+	int currFallTime;
+	int lifeTime; // Countdown to Xs.
+
+	int displacement;
+
+	// Equip X skills that will perform them when it fulfill a certain condition.
+	bool hasUmbrella;
+	bool canClimb;
+
+	bool initialFallenDead;
+	bool isDead;
+
+	bool isGoingToExplode; // Variable indicating the start of the explosion countdown.
+
+	int levelTime; // Remaining time of level.
+
+	bool isImmobilized; // To block that map position when stops moving to 'IMMOBILE' state.
+
+	bool isRescued; // It's triggered when it passes through the exit door.
+
+	int currNumberStairsBuilt;
+
+	enum SoundsEnum {
+		BeforeExplode, Explosion, FallenDead, Stairs, Yippee, MaxSounds
+	};
+	int idSounds[MaxSounds];
+
+	SDL_RendererFlip flipType; // Rotates the image when the direction changes.
 
 	InputManager* inputManager;
 
@@ -50,74 +57,58 @@ public:
 	Lemming();
 	~Lemming();
 
-	void init(int x, int y, int xMapa, int yMapa);
-	void update(Map *fons, int x1, int y1, int x2, int y2, int temps);
+	void init(const int x, const int y, const int mapPosX, const int mapPosY);
+	void update(Map* map, const int x1, const int y1, const int x2, const int y2, const int time);
+	void updateMove(Map* map, const int x1, const int x2, const int y2);
+	void updateFall(Map* map, const int x1, const int x2, const int y2);
+	void updateBreak(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updateGlide(Map* map, const int x1, const int x2, const int y2);
+	void updateClimb(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updateDig(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updatePick(Map* map, const int x1, const int y1, const int x2, const int y2);
+	void updateStairs(Map* map, const int x1, const int x2, const int y2);
 	void render();
 
 	int GetLimitX();
-	int GetDir();
+	int GetDirection();
+	StatesEnum GetCurrState();
+	bool GetIsDead();
+	bool GetIsGoingToExplode();
+	bool GetIsRescued();
 
-	bool CursorOnLemming();
-	bool SetSkill(int numUsos, int skill, int temps);
+	bool SetSkill(int numUses, int skill, int time);
+	void SetDirection(int dir);
+	void SetMove();
+	void SetFall();
+	void SetFallenDeath();
+	void SetBreakWall();
+	void SetOpenUmbrella();
+	void SetGlidingUmbrella();
+	void SetDig();
+	void SetPick();
+	void SetImmobilize();
+	void SetBuiltStairs();
+	void SetNoStairs();
+	void SetClimb();
+	void SetFinalClimb();
+	void SetExploding();
+	void SetExplosion();
+	void SetLevelTimeToExplode(int time);
+	void SetRescued();
 
-	void SetDir(int dir);
-	void SetAnimacio();
-	/*
-	MOVE: Moure's, FALL: Caure, BREAK: Trencar Parets, GLIDE: Levitar, DIG: Cavar,
-	STOP: Inmovilitzat, STAIR: Posar rajoles, PICK: Cavar amb el Pic,
-	EXPLOSION: Foc de l'Explosio, DEAD: El Lemming es destruït, DEADFALL: El Lemming cau d'una gran altura,
-	OPENUMBRELLA: El Lemming obra el paraigües, NOSTAIR: El Lemming es queda sense rajoles, ENDCLIMB El Lemming acaba d'escalar i torna a terra pla,
-	EXPLODING: El Lemming fa l'animacio de que va a explotar.
-	*/
-	enum EstatsEnum{
-		MOVE, FALL, BREAK, GLIDE, CLIMB, DIG, PICK, STOP, STAIR, EXPLOSION, 
-		DEAD, DEADFALL, OPENUMBRELLA, NOSTAIR, ENDCLIMB, RESCUED, EXPLODING
-	};
-
-	int GetEstat();
-	bool GetMort();
-	bool GetContExplotar();
-	bool GetRescatat();
-	bool GetPutStair();
-
-	// Sets per canviar l'Estat 
-	void SetMoure();   
-	void SetCaure();   
-
-	void SetForadarParet();
-	void SetObrirParaigues();
-	void SetPlanejarParaigues();
-	void SetCavar();
-	void SetPicar();
-	void SetImmobilitzar();
-	void SetConstruirEscala();
-	void SetNoEscales();
-	void SetExplosio(); 
-	void SetExplotar();
-	void SetEscalar(); 
-	void SetFinalEscalar(); 
-	void SetMortCaure(); 
-	void SetContadorTemps(int temps);
-	void SetRescatar();
-
-	// Estats temporals 
-	void Moure();
-	void Moure(bool diagAmunt);
-	void TrencarMur(Map *fons, int x1, int x2, int y1, int y2);
-	void Levitar();
-	void Escalar();
-	void Cavar(Map *fons, int x2, int y2);
-	void Picar(Map *fons, int x2, int y2);
-	void Immobilitzar(Map *fons, int x1, int x2, int y1, int y2);
-	void PosarEscala(Map *fons, int x1, int x2, int y2);
-	void Caure();
-	void TempsFinal(int temps);
-	void ConstruirEscala();
-	void Explotar(Map *fons, int x1, int y1, int x2, int y2);
-
-	// Equipables, com Paraigües i Escalar
-	void PutParaigues();
-	void PutEscalar();
-
+	bool IsCursorOnLemming();
+	void PutUmbrella();
+	void PutClimb();
+	void Move();
+	void Move(bool isDiagonalUp);
+	void BreakWall(Map* map, int x1, int x2, int y1, int y2);
+	void Glide();
+	void Climb();
+	void Dig(Map* map, int x2, int y2);
+	void Pick(Map* map, int x2, int y2);
+	void Immobilize(Map* map, int x1, int x2, int y1, int y2);
+	void PutStep(Map* map, int x1, int x2, int y2);
+	void Fall();
+	void CheckExplosion(int time);
+	void Explode(Map* map, int x1, int y1, int x2, int y2);
 };
-

@@ -1,94 +1,111 @@
 #include "Timer.h"
 #include "SingletonManager.h"
 
-// \param tempsRestant en format "minuts : segons". Els minuts inferiors a 10 han d'anar sense el 0 davant.
-Timer::Timer(int x, int y, string tempsRestant){
-	ElementHUD::init(x, y, "Assets/Art/Images/HUD/Timer/Temps.png", false, 0, 0, 100, 19, 1, 1);
-	
+// \param remainingTime in "minutes : seconds" format. Minutes below 10 must go without a 0 ahead.
+Timer::Timer(int x, int y, string remainingTime)
+{
+	ElementHUD::init(x, y, "Assets/Art/Images/HUD/Timer/timer.png", false, 0, 0, 100, 19, 1, 1);
+
 	mStarTicks = 0;
 	mPausedTicks = 0;
 
 	mStarted = false;
 	mPaused = false;
 
-	tempsOut = false;
+	timeOut = false;
 	lastTime = 0;
 
-	minuts = tempsRestant[0] - 48;
-	primerNumSegons = tempsRestant[2] - 48;
-	segonNumSegons = tempsRestant[3] - 48;
-	this->tempsRestant = ((minuts * 60) + primerNumSegons + segonNumSegons);
+	minutes = remainingTime[0] - 48;
+	firstNumSeconds = remainingTime[2] - 48;
+	secondNumSeconds = remainingTime[3] - 48;
+	this->remainingTime = ((minutes * 60) + firstNumSeconds + secondNumSeconds);
 
 	int xNum, yNum;
 	xNum = x + 45;
 	yNum = y + 2;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, 1, 1, minuts);
+	nums.back()->init(xNum, yNum, 1, 1, minutes);
 	xNum += 28;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, 1, 1, primerNumSegons);
+	nums.back()->init(xNum, yNum, 1, 1, firstNumSeconds);
 	xNum += 17;
 	nums.push_back(new ABCsAlphaNum());
-	nums.back()->Init(xNum, yNum, 1, 1, segonNumSegons);
+	nums.back()->init(xNum, yNum, 1, 1, secondNumSeconds);
+}
+
+Timer::~Timer()
+{
 }
 
 
-Timer::~Timer(){
-}
-
-
-void Timer::start(){
+void Timer::start()
+{
 	mStarted = true;
 	mPaused = false;
 
 	mStarTicks = videoManager->getTime();
 	mPausedTicks = 0;
 
-	lastTime = tempsRestant;
+	lastTime = remainingTime;
 }
 
-void Timer::update(){
-	if (!tempsOut){
-		Uint32 time = tempsRestant - getTime();
-		if (time >= 0){
-			Uint32 diferenciaTemps = lastTime - time;
-			lastTime = time;
-			if (diferenciaTemps > 0){
-				if (minuts == 0 && primerNumSegons == 0 && segonNumSegons == 0)
-					tempsOut = true;
-				else if (segonNumSegons > 0){
-					segonNumSegons--;
-					nums.back()->ChangeValue(segonNumSegons);
-				}
-				else if (primerNumSegons > 0){
-					primerNumSegons--;
-					segonNumSegons = 9;
-					nums[1]->ChangeValue(primerNumSegons);
-					nums.back()->ChangeValue(segonNumSegons);
-				}
-				else{
-					minuts--;
-					primerNumSegons = 9;
-					segonNumSegons = 9;
-					nums[0]->ChangeValue(minuts);
-					nums[1]->ChangeValue(primerNumSegons);
-					nums.back()->ChangeValue(segonNumSegons);
-				}
+void Timer::update()
+{
+	if (!timeOut)
+	{
+		updateTimer();
+	}
+}
+
+void Timer::render()
+{
+	ElementHUD::render();
+
+	for (itNums = nums.begin(); itNums != nums.end(); itNums++)
+		(*itNums)->render();
+}
+
+
+void Timer::updateTimer()
+{
+	Uint32 time = remainingTime - getTime();
+	if (time >= 0)
+	{
+		Uint32 differenceTime = lastTime - time;
+		lastTime = time;
+		if (differenceTime > 0)
+		{
+			if (minutes == 0 && firstNumSeconds == 0 && secondNumSeconds == 0)
+				timeOut = true;
+			else if (secondNumSeconds > 0)
+			{
+				secondNumSeconds--;
+				nums.back()->changeValue(secondNumSeconds);
+			}
+			else if (firstNumSeconds > 0)
+			{
+				firstNumSeconds--;
+				secondNumSeconds = 9;
+				nums[1]->changeValue(firstNumSeconds);
+				nums.back()->changeValue(secondNumSeconds);
+			}
+			else
+			{
+				minutes--;
+				firstNumSeconds = 9;
+				secondNumSeconds = 9;
+				nums[0]->changeValue(minutes);
+				nums[1]->changeValue(firstNumSeconds);
+				nums.back()->changeValue(secondNumSeconds);
 			}
 		}
 	}
 }
 
-void Timer::render(){
-	ElementHUD::render();
-
-	for (itNums = nums.begin(); itNums != nums.end(); itNums++)
-		(*itNums)->Render();
-}
-
-
-void Timer::pause(){
-	if (mStarted && !mPaused){
+void Timer::pause()
+{
+	if (mStarted && !mPaused)
+	{
 		mPaused = true;
 
 		mPausedTicks = videoManager->getTime() - mStarTicks;
@@ -96,17 +113,20 @@ void Timer::pause(){
 	}
 }
 
-void Timer::unpause(){
-	if (mStarted && mPaused){
+void Timer::unpause()
+{
+	if (mStarted && mPaused)
+	{
 		mPaused = false;
 
 		mStarTicks = videoManager->getTime() - mPausedTicks;
-		
+
 		mPausedTicks = 0;
 	}
 }
 
-void Timer::stop(){
+void Timer::stop()
+{
 	mStarted = false;
 	mPaused = false;
 
@@ -115,9 +135,16 @@ void Timer::stop(){
 }
 
 
-Uint32 Timer::getTime(){
+bool Timer::getTimeOut()
+{
+	return timeOut;
+}
+
+Uint32 Timer::getTime()
+{
 	Uint32 time = 0;
-	if (mStarted){
+	if (mStarted)
+	{
 		if (!mPaused)
 			time = (videoManager->getTime() - mStarTicks) / 1000;
 	}
@@ -125,9 +152,11 @@ Uint32 Timer::getTime(){
 	return time;
 }
 
-Uint32 Timer::getTimeMs(){
+Uint32 Timer::getTimeMs()
+{
 	Uint32 time = 0;
-	if (mStarted){
+	if (mStarted)
+	{
 		if (!mPaused)
 			time = videoManager->getTime() - mStarTicks;
 	}
@@ -136,15 +165,12 @@ Uint32 Timer::getTimeMs(){
 }
 
 
-bool Timer::isStarted(){
+bool Timer::isStarted()
+{
 	return mStarted;
 }
 
-bool Timer::isPaused(){
+bool Timer::isPaused()
+{
 	return mStarted && mPaused;
-}
-
-
-bool Timer::getTempsOut(){
-	return tempsOut;
 }

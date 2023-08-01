@@ -15,28 +15,25 @@ private:
 
 	static ScenePreGame* gInstance; /*!<	Singleton instance*/
 
-	// Informació del nivell.
+	// Information about the level.
 	string nameLvl;
 	string numLemmings;
-	string lemmingsToSave; 
-	string releaseRate; // Temps que triga DoorEnter a instanciar Lemmings.
+	string lemmingsToSave;
+	string releaseRate; // Time it takes the DoorEnter class to instantiate Lemmings.
 	string timeLvl;
-	string rating; // Dificultad del nivell.
+	string rating; // Difficulty of the level.
 
-	Background* fons;
-
-	Map* mapa;
-
-	// Número i lletres que provenen de les variables de l'informació del nivell.
+	// Numbers and letters that come from the variables of the level information.
 	vector<ABCsAlphaNum*> digits;
 	vector<ABCsAlphaNum*>::iterator itDigits;
 
+	Background* background;
+
+	Map* map;
+
 	FileManager* fileManager;
-
 	SceneGame* sGame;
-
 	GameStats* gameStats;
-
 	SceneManager* smManager;
 
 public:
@@ -46,9 +43,18 @@ public:
 	static ScenePreGame* getInstanceScenePreGame();
 
 	void init();
-	void clean();
+	void clear();
 	void update();
 	void render();
+
+	bool isLastMap(const int LEVEL);
+	void loadLevelInfo(const int LEVEL);
+	void initLevelInfo(const int LEVEL, int& numLem, int& lemToSave);
+	void initLevelInfoForRender(const int LEVEL, int& numLem, int& lemToSave);
+	void getPathsToInitMap(string& pathMap, string& pathTilesets, const int LEVEL);
+	void initMap(const char* PATH_MAP, const char* PATH_TILESETS);
+	bool isNextScene();
+	bool isPreviousScene();
 };
 
 #endif

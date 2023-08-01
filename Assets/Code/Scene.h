@@ -5,13 +5,13 @@ class Scene
 {
 protected:
 	InputManager* inputManager;
-
 	AudioManager* audioManager;
+
 	Sint32 idMusic;
 
 public:
 	Scene();
-	~Scene();
+	virtual ~Scene();
 
 	virtual void init();
 	virtual void clear();

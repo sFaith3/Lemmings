@@ -1,53 +1,59 @@
 #include "ElementGame.h"
 
-
 ElementGame::ElementGame(){
+	widthSpriteSheet = heightSpriteSheet = 0;
+	toNextSpriteX = toNextSpriteY = 0;
+	numSprites = 0;
+	currentSprite = 0;
+	timeToNextSprite = currTimeToNextSprite = 0;
+	
+	numRowsSpritesheet = 0;
 }
-
 
 ElementGame::~ElementGame(){
 }
 
 
-void ElementGame::init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numImgs, int fpsAnim){
+void ElementGame::init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY, int wSpriteSheet, int hSpriteSheet, int toNextSpriteX, int numSprites, int timeToNextSprite){
 	Element::init(x, y, img, manipulateTexture, srcX, srcY, w, h, scaleX, scaleY);
 	widthSpriteSheet = wSpriteSheet;
 	heightSpriteSheet = hSpriteSheet;
 	this->toNextSpriteX = toNextSpriteY = toNextSpriteX;
-	numImatges = numImgs;
-	contImatges = 1;
-	fpsAnimacio = fpsAnim;
-	currFpsAnim = 0;
-	numSaltsImatges = 0;
+	this->numSprites = numSprites;
+	currentSprite = 1;
+	this->timeToNextSprite = timeToNextSprite;
+	currTimeToNextSprite = 0;
+	numRowsSpritesheet = 0;
 }
 
 void ElementGame::render(){
 	videoManager->renderTexture(idImg, srcPosX, srcPosY, width, height, scaleX, scaleY, posX, posY, 0, 0, 0, SDL_FLIP_NONE);
 }
 
-void ElementGame::UpdateAnimacio(){
-	if (currFpsAnim == fpsAnimacio){
-		if (contImatges < numImatges){
-			if (srcPosX + toNextSpriteX > widthSpriteSheet){
+
+void ElementGame::UpdateAnimation() {
+	if (currTimeToNextSprite == timeToNextSprite) {
+		if (currentSprite < numSprites) {
+			if (srcPosX + toNextSpriteX > widthSpriteSheet) {
 				srcPosY += toNextSpriteY;
 				srcPosX = 0;
-				numSaltsImatges++;
+				numRowsSpritesheet++;
 			}
 			srcPosX += toNextSpriteX;
-			contImatges++;
+			currentSprite++;
 		}
-		else{
+		else {
 			srcPosX = _srcPosX;
-			contImatges = 1;
-			if (numSaltsImatges > 0){
-				for (int i = 0; i < numSaltsImatges; i++)
+			currentSprite = 1;
+			if (numRowsSpritesheet > 0) {
+				for (int i = 0; i < numRowsSpritesheet; i++)
 					srcPosY -= toNextSpriteY;
-				numSaltsImatges = 0;
+				numRowsSpritesheet = 0;
 			}
 		}
-		currFpsAnim = 0;
+		currTimeToNextSprite = 0;
 	}
-	else{
-		currFpsAnim++;
+	else {
+		currTimeToNextSprite++;
 	}
 }

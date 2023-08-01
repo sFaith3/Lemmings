@@ -9,10 +9,10 @@ private:
 
 	static Cursor* cInstance; /*!<	Singleton instance*/
 
-	Sint32 idImg1, idImg2;
-	int width1, height1, width2, height2;
+	Sint32 idImgNormal, idImgHover;
+	int widthNormal, heightNormal, widthHover, heightHover;
 
-	bool changedCursor; // El cursor ha canviat al que surt quan és a sobre d'un Lemming.
+	bool changedCursor; // To change the cursor between normal and hover.
 
 	InputManager* inputManager;
 
@@ -22,8 +22,8 @@ public:
 	//! Gets Singleton instance
 	static Cursor* getInstanceCursor();
 
-	void Update();
+	void update();
 
-	bool GetChangedCursor();
-	void ChangeCursor();
+	bool isCursorChanged();
+	void changeCursor();
 };

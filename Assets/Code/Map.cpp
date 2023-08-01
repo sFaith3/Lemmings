@@ -2,54 +2,70 @@
 
 
 Map::Map(){
-	tManager = tinyManager::getInstanceTinyManager();
+	mapTMX = false;
+	idFileMap = NULL;
+	pathTilesets = "";
+	sizeTile = 0;
+
+	tinyManager = tinyManager::getInstanceTinyManager();
 }
 
 Map::~Map(){
-
+	for (auto tileset : tilesets) {
+		delete tileset;
+	}
 }
 
 
-void Map::init(int x, int y, bool mapTmx, const char* fileMap, const char* layerCollision, int numLayers, const char* rutaTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
+void Map::init(int x, int y, bool mapTMX, const char* fileMap, const char* layerCollision, int numLayers, const char* pathTilesets, bool haveSpacingTileset, int numTilesets, int srcX, int srcY, int w, int h){
+	this->mapTMX = mapTMX;
 	idFileMap = NULL;
+	this->pathTilesets = pathTilesets;
 	sizeTile = 0;
 	
-	this->mapTmx = mapTmx;
-
-	tManager->Init();
-	tManager->LoadTmx(fileMap, layerCollision);
-	this->rutaTilesets = rutaTilesets;
-	if (mapTmx){
-		for (int i = 0; i < numLayers; i++){
-			vector <vector<int> > mapa = tManager->LoadMap(i);
-			if (mapa.size() > 0){
-				for (int i = 0; i < numTilesets; i++){
-					tinyManager::Tileset* tileSet = tManager->LoadTileset(i, haveSpacingTileset, mapa, x, y);
-					tilesets.push_back(tileSet); // S'obté el tileset.
-				}
-				// Es seteja l'id de la img del tileset, que es desa al ResourceManager, en el objecte 'Tileset'.
-				string idImgTileset = rutaTilesets + tilesets.back()->getRutaTileset();
-				const char* _idImgTileset = idImgTileset.c_str();
-				tilesets.back()->setIdImg(videoManager->getTextureID(_idImgTileset));
-			}
-		}
-		mapCollision = tManager->LoadMapCollision();
-		sizeTile = tManager->GetTileSize();
+	tinyManager->Init();
+	tinyManager->LoadTMX(fileMap, layerCollision);
+	if (mapTMX){
+		initMapTMX(x, y, numLayers, haveSpacingTileset, numTilesets, srcX, srcY);
 	}
 	else{
 		idFileMap = videoManager->getTextureID(fileMap);
+		Element::init(x, y, fileMap, false, srcX, srcY, w, h, 1, 1);
 	}
 
-	if (mapTmx)
-		Element::init(x, y, NULL, false, srcX, srcY, tManager->GetWidthMap(), tManager->GetHeightMap(), 1, 1);
-	else
-		Element::init(x, y, fileMap, false, srcX, srcY, w, h, 1, 1);
+	tinyManager->DestroyTMX();
+}
 
-	tManager->DestroyTMX();
+void Map::initMapTMX(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets, const int srcX, const int srcY) {
+	loadMapAndTilesets(x, y, numLayers, haveSpacingTileset, numTilesets);
+	sizeTile = tinyManager->GetTileSize();
+	mapCollision = tinyManager->GetLoadedMapCollision();
+
+	Element::init(x, y, NULL, false, srcX, srcY, tinyManager->GetMapWidth(), tinyManager->GetMapHeight(), 1, 1);
+}
+
+void Map::loadMapAndTilesets(const int x, const int y, const int numLayers, const bool haveSpacingTileset, const int numTilesets) {
+	for (int i = 0; i < numLayers; i++) {
+		vector <vector<int>> map = tinyManager->GetLoadedMap(i);
+		if (map.empty())
+			continue;
+
+		for (int currNumTilesets = 0; currNumTilesets < numTilesets; currNumTilesets++) {
+			tinyManager::Tileset* tileSet = tinyManager->GetLoadedTileset(currNumTilesets, haveSpacingTileset, map, x, y);
+			tilesets.push_back(tileSet);
+		}
+		setTilesetImgID();
+	}
+}
+
+void Map::setTilesetImgID() {
+	string idImgTileset = pathTilesets + tilesets.back()->getPathTileset();
+	const char* _idImgTileset = idImgTileset.c_str();
+	tilesets.back()->setIdImg(videoManager->getTextureID(_idImgTileset));
 }
 
 void Map::render(){
-	if (mapTmx){
+	if (mapTMX){
 		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
 			(*itTilesets)->render(videoManager);
 	}
@@ -71,7 +87,7 @@ int Map::GetSizeTile(){
 }
 
 
-void Map::SetPositionTiles(int x, int y){
+void Map::SetPositionTiles(const int x, const int y){
 	for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++){
 		vector <vector<tinyManager::Tileset::Tile*> > tiles = (*itTilesets)->getTiles();
 		for (int j = 0; j < (*itTilesets)->getSizeYTiles(); j++){
@@ -83,37 +99,33 @@ void Map::SetPositionTiles(int x, int y){
 	}
 }
 
-
-void Map::SetScaleTiles(float x, float y){
+void Map::SetScaleTiles(const float x, const float y){
 	for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
 		(*itTilesets)->setScaleTiles(x, y);
 }
 
 
-int Map::GetMapa(int x, int y){
-	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size()))
-		return mapCollision[y][x];
-
-	return 0;
+int Map::GetMap(const int x, const int y) {
+	return isWithinRangeOfMap(x, y) ? mapCollision[y][x] : 0;
 }
 
-void Map::DestroyPosMapa(int x, int y){
-	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size())) {
-		mapCollision[y][x] = 0;
-		for (itTilesets = tilesets.begin(); itTilesets != tilesets.end(); itTilesets++)
-			(*itTilesets)->removeTile(x, y);
+void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision) {
+	if (!isWithinRangeOfMap(x, y))
+		return;
+
+	mapCollision[y][x] = typeCollision;
+}
+
+void Map::ChangeMapAtPos(const int x, const int y, const int typeCollision, const int newTile) {
+	if (!isWithinRangeOfMap(x, y))
+		return;
+
+	mapCollision[y][x] = typeCollision;
+	for (auto tileset : tilesets) {
+		tileset->changeTileAtPos(x, y, newTile);
 	}
 }
 
-void Map::CrearPosMapa(int x, int y, int tipo){
-	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size())) {
-		mapCollision[y][x] = tipo;
-	}
-}
-
-void Map::CrearPosMapa(int x, int y, int tipo, int layer, int idTile){
-	if ((x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size())) {
-		mapCollision[y][x] = tipo;
-		tilesets[layer]->changeTile(x, y, idTile);
-	}
+bool Map::isWithinRangeOfMap(const int x, const int y) {
+	return (x >= 0 && y >= 0) && (x < mapCollision[0].size() && y < mapCollision.size());
 }

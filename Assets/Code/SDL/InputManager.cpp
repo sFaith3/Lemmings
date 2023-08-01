@@ -1,9 +1,10 @@
 #include "InputManager.h"
 #include "SDL.h"
 
-InputManager* InputManager::iInstance = NULL;
+InputManager *InputManager::iInstance = NULL;
 
-InputManager::InputManager(){
+InputManager::InputManager()
+{
 	number = -1;
 	quit = false;
 	esc = false;
@@ -11,32 +12,35 @@ InputManager::InputManager(){
 	pause = false;
 	clickLeft = false;
 	clickRight = false;
-	enter = false;
 }
 
 InputManager::~InputManager(){
-
 }
 
-
-InputManager* InputManager::getInstanceInput(){
-	if (iInstance == NULL){
-
+InputManager *InputManager::getInstanceInput()
+{
+	if (iInstance == NULL)
+	{
 		iInstance = new InputManager();
 	}
 	return iInstance;
 }
 
-
-void InputManager::Update(){
-	SDL_Event test_event;
-	SDL_Scancode tecla;
+void InputManager::update()
+{
 	back = false;
-	while (SDL_PollEvent(&test_event)) {
-		switch (test_event.type) {
+
+	SDL_Event test_event;
+	SDL_Scancode key;
+
+	while (SDL_PollEvent(&test_event))
+	{
+		switch (test_event.type)
+		{
 		case SDL_KEYDOWN:
-			tecla = test_event.key.keysym.scancode;
-			switch (tecla){
+			key = test_event.key.keysym.scancode;
+			switch (key)
+			{
 			case SDL_SCANCODE_ESCAPE:
 				esc = true;
 				break;
@@ -70,9 +74,6 @@ void InputManager::Update(){
 			case SDL_SCANCODE_9:
 				number = NINE;
 				break;
-				/*case SDL_SCANCODE_:
-					enter = true;
-					break;*/
 			case SDL_SCANCODE_PAUSE:
 				pause = true;
 				break;
@@ -81,8 +82,9 @@ void InputManager::Update(){
 			}
 			break;
 		case SDL_KEYUP:
-			tecla = test_event.key.keysym.scancode;
-			switch (tecla){
+			key = test_event.key.keysym.scancode;
+			switch (key)
+			{
 			case SDL_SCANCODE_0:
 			case SDL_SCANCODE_1:
 			case SDL_SCANCODE_2:
@@ -95,9 +97,6 @@ void InputManager::Update(){
 			case SDL_SCANCODE_9:
 				number = -1;
 				break;
-				/*case SDL_SCANCODE_:
-					enter = false;
-					break;*/
 			default:
 				break;
 			}
@@ -121,74 +120,79 @@ void InputManager::Update(){
 	}
 }
 
+void InputManager::getMouseXY(int& x, int& y)
+{
+	SDL_GetMouseState(&x, &y);
+}
 
-void InputManager::SetCursorRelative(bool active){
+int InputManager::getNumber()
+{
+	return number;
+}
+
+void InputManager::setCursorRelative(bool active)
+{
 	if (active)
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 	else
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
-
-int InputManager::CheckNumber(){
-	return number;
+void InputManager::setNumber(int num)
+{
+	number = num;
 }
 
-bool InputManager::CheckQuit(){
+bool InputManager::isQuit()
+{
 	return quit;
 }
 
-bool InputManager::CheckESC(){
+bool InputManager::isESC()
+{
 	return esc;
 }
 
-bool InputManager::CheckBack(){
+bool InputManager::isBack()
+{
 	return back;
 }
 
-bool InputManager::CheckPause(){
+bool InputManager::isPause()
+{
 	return pause;
 }
 
-bool InputManager::CheckClickLeft(){
+bool InputManager::isClickLeft()
+{
 	return clickLeft;
 }
 
-bool InputManager::CheckClickRight(){
+bool InputManager::isClickRight()
+{
 	return clickRight;
 }
 
-/*bool InputManager::CheckEnter(){
-	return enter;
-}*/
-
-
-void InputManager::ResetNumber(){
+void InputManager::resetNumber()
+{
 	number = -1;
 }
 
-void InputManager::ResetESC(){
+void InputManager::resetESC()
+{
 	esc = false;
 }
 
-void InputManager::ResetClick(){
+void InputManager::resetClick()
+{
 	if (clickLeft)
 		clickLeft = false;
 	if (clickRight)
 		clickRight = false;
 }
 
-void InputManager::ResetPause(){
+void InputManager::resetPause()
+{
 	if (pause)
 		pause = false;
-}
-
-
-void InputManager::SetNumber(int num){
-	number = num;
-}
-
-
-void InputManager::GetMouseXY(int& x, int& y){
-	SDL_GetMouseState(&x, &y);
 }

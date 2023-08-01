@@ -20,10 +20,10 @@ Before you start, make sure you have an IDE/Compiler such as [Visual Studio](htt
 
 # Installation
 
-> **Note** If you are on Windows, you can go to the second step
+> **Note** If you are on Windows, you can skip the first step
 
 1. [Hello SDL](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php).
-2. Download the last version of [SDL2](https://github.com/libsdl-org/SDL/releases), [SDL2_image](https://github.com/libsdl-org/SDL_image/releases) and [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer/releases) corresponding to your operating system (if you are on Windows, see the next).
+2. Download the last version of [SDL2](https://github.com/libsdl-org/SDL/releases), [SDL2_image](https://github.com/libsdl-org/SDL_image/releases) and [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer/releases) corresponding to your operating system.
 
 ## Windows
 

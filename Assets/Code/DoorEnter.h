@@ -5,16 +5,16 @@ class DoorEnter :
 	public ElementGame
 {
 private:
-	int timeToBeReady; // Temps que triga a passar a l'estat següent d'obrir les portes.
-	int timeToSpawn; // Temps que triga a instanciar un Lemming.
-	int _timeToSpawn; // Igual que l'anterior, però aquesta fa d'auxiliar en el càlcul que es fa per variar, in game, la variable anterior.
-	int lastTime; // Auxiliar per a calcular el temps en que s'ha d'instanciar un Lemming.
+	int timeToBeReady; // Time it takes to switch to the next state after opening the doors.
+	int currentTimeToSpawn; // The current time it takes to instantiate an element.
+	int initialTimeToSpawn; // For auxiliary purposes in the 'currentTimeToSpawn' calculation.
+	int lastSpawnTime; // Auxiliary to calculate the time to instantiate an element.
 
-	bool spawnning; // S'activa quan ha completat el temps. De manera, que indica a SceneGame, quan s'ha d'instanciar un Lemming.
-	int leftToSpawn; // Elements que falten per crear.
+	bool isSpawning; // This is activated when the time is completed. So it tells SceneGame where an element has to be spawned.
+	int remainingToSpawn; // Elements remaining to be spawned.
 
 	enum EstatsEnum{
-		NOT_READY, OPENNING, READY, EMPTY
+		NOT_READY, OPENING, READY, EMPTY
 	};
 	int currEstat;
 
@@ -22,16 +22,14 @@ private:
 	bool soundOpen;
 
 public:
-	DoorEnter(int x, int y, int timeToSpawn, int numInstancies);
+	DoorEnter(int x, int y, int currentTimeToSpawn, int numInstancies);
 	~DoorEnter();
 
-	void update(int temps);
+	int getRemainingToSpawn();
+	bool getIsSpawning();
 
-	bool getSpawnning();
-
-	void setTimeToSpawn(int temps);
-
-	int getNumToSpawn();
+	void update(int time);
+	void updateTimeToSpawn(int time);
 
 	void notMoreSpawns();
 };

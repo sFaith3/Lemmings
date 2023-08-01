@@ -93,9 +93,6 @@
     <ClCompile Include="Assets\Code\Map.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Assets\Code\Minimap.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Assets\Code\Scene.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -130,9 +127,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Assets\Code\tinyManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="Assets\Code\Trap.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Assets\Code\Word.cpp">
@@ -200,9 +194,6 @@
     <ClInclude Include="Assets\Code\Map.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Assets\Code\Minimap.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Assets\Code\Scene.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -234,9 +225,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Assets\Code\tinyManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Assets\Code\Trap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Assets\Code\Utils.h">

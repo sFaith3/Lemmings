@@ -1,23 +1,21 @@
 #include "Cursor.h"
 
-
 Cursor* Cursor::cInstance = NULL;
 
-Cursor::Cursor(){
-	ElementHUD::init(0, 0, "Assets/Art/Images/Cursor/normalCursor.png", false, 0, 0, 12, 12, 1, 1);
+Cursor::Cursor() {
+	const int DimensionsNormal = 12;
+	ElementHUD::init(0, 0, "Assets/Art/Images/Cursor/cursorNormal.png", false, 0, 0, DimensionsNormal, DimensionsNormal, 1, 1);
 
-	idImg1 = idImg;
-	width1 = 12;
-	height1 = 12;
-	idImg2 = videoManager->getTextureID("Assets/Art/Images/Cursor/changedCursor2.png");
-	width2 = 14;
-	height2 = 14;
+	idImgNormal = idImg;
+	widthNormal = heightNormal = DimensionsNormal;
+	idImgHover = videoManager->getTextureID("Assets/Art/Images/Cursor/cursorHover.png");
+	const int DimensionsHover = 14;
+	widthHover = heightHover = DimensionsHover;
 
 	changedCursor = false;
 
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
-
 
 Cursor::~Cursor()
 {
@@ -32,27 +30,20 @@ Cursor* Cursor::getInstanceCursor(){
 }
 
 
-void Cursor::Update(){
-	inputManager->GetMouseXY(posX, posY);
+void Cursor::update(){
+	inputManager->getMouseXY(posX, posY);
 	posX -= width / 2;
 	posY -= height / 2;
 }
 
 
-bool Cursor::GetChangedCursor(){
+bool Cursor::isCursorChanged(){
 	return changedCursor;
 }
 
-void Cursor::ChangeCursor(){
+void Cursor::changeCursor() {
 	changedCursor = !changedCursor;
-	if (changedCursor){
-		idImg = idImg2;
-		width = width2;
-		height = height2;
-	}
-	else{
-		idImg = idImg1;
-		width = width1;
-		height = height1;
-	}
+	idImg = changedCursor ? idImgHover : idImgNormal;
+	width = changedCursor ? widthHover : widthNormal;
+	height = changedCursor ? heightHover : heightNormal;
 }

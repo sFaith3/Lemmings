@@ -1,12 +1,10 @@
 #include "SceneCodeLevel.h"
 
-
 SceneCodeLevel* SceneCodeLevel::gInstance = NULL;
 
 SceneCodeLevel::SceneCodeLevel()
 {
 }
-
 
 SceneCodeLevel::~SceneCodeLevel()
 {

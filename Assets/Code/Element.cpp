@@ -1,15 +1,22 @@
 #include "Element.h"
 
-
 Element::Element(){
+	posX = posY = 0;
+	idImg = -1;
+	srcPosX = _srcPosX = srcPosY = 0;
+	width = height = 0;
+	scaleX = scaleY = 1.f;
+
+	pixelCount = 0;
+
 	videoManager = SingletonManager::getInstanceSingleton()->getVideoManager();
 	audioManager = SingletonManager::getInstanceSingleton()->getAudioManager();
 }
 
-
 Element::~Element()
 {
 }
+
 
 void Element::init(int x, int y, const char* img, bool manipulateTexture, int srcX, int srcY, int w, int h, float scaleX, float scaleY){
 	posX = x;
@@ -23,7 +30,7 @@ void Element::init(int x, int y, const char* img, bool manipulateTexture, int sr
 	this->scaleY = scaleY;
 
 	if (manipulateTexture){
-		//The texture must be locked to access and get the number of pixels
+		// The texture must be locked to access and get the number of pixels
 		videoManager->lockTexture(idImg);
 		pixelCount = videoManager->getPixelCount(height);
 		videoManager->unlockTexture(idImg);
@@ -31,36 +38,36 @@ void Element::init(int x, int y, const char* img, bool manipulateTexture, int sr
 }
 
 
-int Element::GetPosX(){
+int Element::getPosX(){
 	return posX;
 }
 
-int Element::GetPosY(){
+int Element::getPosY(){
 	return posY;
 }
 
-int Element::GetWidth(){
+int Element::getWidth(){
 	return width;
 }
 
-int Element::GetHeight(){
+int Element::getHeight(){
 	return height;
 }
 
 
-void Element::SetPosition(int x, int y){
+void Element::setPosition(int x, int y){
 	posX = x;
 	posY = y;
 }
 
-void Element::SetScale(float x, float y){
+void Element::setScale(float x, float y){
 	scaleX = x;
 	scaleY = y;
 }
 
 
-void Element::ChangePixelColor(Uint32 colorKey, Uint32 newColor){
-	//Lock to manipulate pixels
+void Element::changePixelColor(Uint32 colorKey, Uint32 newColor){
+	// Lock to manipulate pixels
 	videoManager->lockTexture(idImg);
 	
 	Uint32* pixels = videoManager->getPixels();
@@ -70,6 +77,6 @@ void Element::ChangePixelColor(Uint32 colorKey, Uint32 newColor){
 		}
 	}
 	
-	//Unlock to "save" manipulation
+	// Unlock to "save" manipulation
 	videoManager->unlockTexture(idImg);
 }
