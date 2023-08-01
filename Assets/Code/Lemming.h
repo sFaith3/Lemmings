@@ -19,7 +19,7 @@ private:
 	int limitX; // A margin to calculate the displacement and not cross the map.
 
 	StatesEnum currState;
-	int direction; // Direction when moving: 0 / 2.
+	int direction; // Direction when moving: 0: Right / 2: Left.
 
 	const int fallMaxTime = 60;
 	int currFallTime;
@@ -100,7 +100,6 @@ public:
 	void Pick(Map* map, int x2, int y2);
 	void Immobilize(Map* map, int x1, int x2, int y1, int y2);
 	void PutStep(Map* map, int x1, int x2, int y2);
-	void BuildStairs();
 	void Fall();
 	void CheckExplosion(int time);
 	void Explode(Map* map, int x1, int y1, int x2, int y2);

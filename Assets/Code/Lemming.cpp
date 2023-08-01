@@ -2,6 +2,39 @@
 
 
 Lemming::Lemming(){
+	mapPosX = mapPosY = 0;
+	width = height = 0;
+
+	limitX = 0;
+
+	currState = FALL;
+	direction = 0;
+
+	currFallTime = lifeTime = 0;
+
+	displacement = 0;
+
+	hasUmbrella = false;
+	canClimb = false;
+
+	initialFallenDead = isDead = false;
+
+	isGoingToExplode = false;
+
+	levelTime = 0;
+
+	isImmobilized = false;
+
+	isRescued = false;
+
+	currNumberStairsBuilt = 0;
+
+	for (int i = 0; i < MaxSounds; i++) {
+		idSounds[i] = -1;
+	}
+
+	flipType = SDL_FLIP_NONE;
+
 	inputManager = SingletonManager::getInstanceSingleton()->getInputManager();
 }
 
@@ -52,11 +85,11 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 	case MOVE:
 		if (map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x2 - 1, y2 + 1) == 0)
 			SetFall();
-		else if (direction == 0) { // Cap a la dreta.
+		else if (direction == 0) { // To the right.
 			if (map->GetMap(x2, y2 - 1) != 0 && map->GetMap(x2, y2 - 2) == 0)
-				Move(true); // Diagonal cap amunt.
+				Move(true); // Diagonal up.
 			else if (map->GetMap(x2, y2) == 0 && map->GetMap(x2, y2 + 1) != 0)
-				Move(false); // Cap avall.
+				Move(false); // Down.
 			else if (map->GetMap(x2 + 1, y2 - 2) != 0) {
 				if (map->GetMap(x2 + 1, y2 - 2) == 1 && canClimb) {
 					SetClimb();
@@ -69,11 +102,11 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 				Move();
 			}
 		}
-		else {
+		else { // To the left.
 			if (map->GetMap(x1, y2 - 1) != 0 && map->GetMap(x1, y2 - 2) == 0)
-				Move(true); // Diagonal cap amunt.
+				Move(true); // Diagonal up.
 			else if (map->GetMap(x1, y2) == 0 && map->GetMap(x1, y2 + 1) != 0)
-				Move(false); // Cap avall.
+				Move(false); // Down.
 			else if (map->GetMap(x1, y2 - 2) != 0) {
 
 				if (map->GetMap(x1, y2 - 2) == 1 && canClimb) {
@@ -93,7 +126,8 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		}
 		else {
 			Fall();
-			if (map->GetMap(x1 + displacement, y2 + displacement) != 0 || map->GetMap(x2 - displacement, y2 + displacement) != 0) {
+			if (map->GetMap(x1 + displacement, y2 + displacement) != 0
+				|| map->GetMap(x2 - displacement, y2 + displacement) != 0) {
 				if (initialFallenDead) {
 					SetFallenDeath();
 				}
@@ -104,7 +138,8 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		}
 		break;
 	case BREAK:
-		if ((map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x1, y1 + 1) == 0) || (map->GetMap(x2 + 1, y2 + 1) == 0 && map->GetMap(x2, y1 + 1) == 0)) {
+		if ((map->GetMap(x1 + 1, y2 + 1) == 0 && map->GetMap(x1, y1 + 1) == 0)
+			|| (map->GetMap(x2 + 1, y2 + 1) == 0 && map->GetMap(x2, y1 + 1) == 0)) {
 			SetMove();
 		}
 		else {
@@ -113,7 +148,8 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		break;
 	case GLIDE:
 		Glide();
-		if (map->GetMap(x1 + displacement, y2 + displacement) != 0 || map->GetMap(x2 - displacement, y2 + displacement) != 0)
+		if (map->GetMap(x1 + displacement, y2 + displacement) != 0
+			|| map->GetMap(x2 - displacement, y2 + displacement) != 0)
 			SetMove();
 		break;
 	case CLIMB:
@@ -151,7 +187,7 @@ void Lemming::update(Map* map, int x1, int y1, int x2, int y2, int time) {
 		}
 		break;
 	case STAIRS:
-		// **** --- Quan la posici� estigui b�, s'ha de treure el "-1" de la condici�. --- ****
+		// TODO: When the position is fixed, the '-1' must be removed from the condition.
 		if ((direction == 0 && (map->GetMap(x2 + 1, y2 - 1) != 0 && map->GetMap(x2 + 2, y2 - 1) != 0)) ||
 			(direction == 2 && (map->GetMap(x1 - 1, y2 - 1) != 0 && map->GetMap(x1 - 2, y2 - 1) != 0))) {
 			SetMove();
@@ -244,38 +280,38 @@ bool Lemming::GetIsRescued(){
 
 bool Lemming::SetSkill(int numUses, int skill, int time){
 	if (numUses > 0){
-		switch (skill){ // Si no tenen l'habilitat posada, se'ls hi posa.
-		case 2: // TREPAR
+		switch (skill){ // If they don't have the skill, they're put in.
+		case 2: // CLIMB
 			if (!canClimb && currState != IMMOBILE){
 				canClimb = true;
 				return true;
 			}
 			break;
-		case 3: // PARAIGUES
+		case 3: // UMBRELLA
 			if (!hasUmbrella && currState != IMMOBILE){
 				hasUmbrella = true;
 				return true;
 			}
 			break;
-		case 4: // EXPLOSIO
+		case 4: // EXPLODING
 			if (!isGoingToExplode && currState != EXPLODING && currState != EXPLOSION && currState != FALL){
 				SetLevelTimeToExplode(time);
 				return true;
 			}
 			break;
-		case 5: // PARAT
+		case 5: // IMMOBILE
 			if (currState != IMMOBILE && currState != FALL && currState != CLIMB){
 				SetImmobilize();
 				return true;
 			}
 			break;
-		case 6: // ESGRAONS
+		case 6: // STEPS
 			if (currState != STAIRS && currState != IMMOBILE && currState != FALL && currState != CLIMB){
 				SetBuiltStairs();
 				return true;
 			}
 			break;
-		case 7: // TRENCAR MUR
+		case 7: // BREAK WALL
 			if (currState != BREAK && currState != IMMOBILE && currState != FALL && currState != CLIMB){
 				SetBreakWall();
 				return true;
@@ -299,12 +335,9 @@ bool Lemming::SetSkill(int numUses, int skill, int time){
 	return false;
 }
 
-void Lemming::SetDirection(int dir){
+void Lemming::SetDirection(int dir) {
 	direction = dir;
-	if (flipType == SDL_FLIP_NONE)
-		flipType = SDL_FLIP_HORIZONTAL;
-	else
-		flipType = SDL_FLIP_NONE;
+	flipType = dir == 0 ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
 }
 
 void Lemming::SetMove(){
@@ -491,8 +524,8 @@ void Lemming::Climb(){
 	}
 }
 
+// Destroy the terrain downward.
 void Lemming::Dig(Map* map, int x2, int y2){
-	// Destrucci� del terreny.
 	if (currentSprite == 6){
 		for (int i = -1; i < 2; i++){
 			map->ChangeMapAtPos(x2 + i, y2, 0, 0);
@@ -501,8 +534,8 @@ void Lemming::Dig(Map* map, int x2, int y2){
 	}
 }
 
+// Destroy the terrain downward and diagonally.
 void Lemming::Pick(Map* map, int x2, int y2){
-	// Destrucci� del terreny.
 	if (currentSprite == 5){
 		for (int i = 0; i < 3; i++){
 			for (int j = 0; j < 4; j++){
@@ -546,10 +579,6 @@ void Lemming::PutStep(Map* map, int x1, int x2, int y2){
 	}
 }
 
-void Lemming::BuildStairs() {
-
-}
-
 void Lemming::Fall(){
 	posY += displacement;
 
@@ -569,9 +598,9 @@ void Lemming::CheckExplosion(int time){
 	}
 }
 
+// Destroys the terrain around it.
 void Lemming::Explode(Map* map, int x1, int y1, int x2, int y2){
 	if (currentSprite == numSprites){
-		// Destrucci� del terreny.
 		for (int i = -6; i < 3; i++){
 			map->ChangeMapAtPos(x1, y2 + i, 0, 0);
 			map->ChangeMapAtPos(x1 + 1, y2 + i, 0, 0);
